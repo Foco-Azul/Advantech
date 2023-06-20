@@ -29,6 +29,7 @@ function Hero({ hero }: any) {
             alt="mockup"
           />
         </div>
+ 
       </div>
     </section>
   );
