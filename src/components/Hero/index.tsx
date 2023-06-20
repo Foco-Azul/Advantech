@@ -23,7 +23,7 @@ function Hero({ hero }: any) {
           <Image
             src={`${
               process.env.NEXT_PUBLIC_STRAPI_URL
-            }/uploads/format_webp${hero.media.data.attributes.url.slice(8)}`}
+            }uploads/format_webp${hero.media.data.attributes.url.slice(8)}`}
             width={hero.media.data.attributes.width}
             height={hero.media.data.attributes.height}
             alt="mockup"
