@@ -25,7 +25,7 @@ async function getPricingData() {
 
     return data;
   } catch (error) {
-    console.log(error);
+  
     throw new Error(`Failed to fetch data, ${error}`);
   }
 }
@@ -62,7 +62,7 @@ export default async function Page() {
   ];
 
   const heroData = await getHeroData();
-  console.log(heroData.data.attributes.media);
+ 
   const hero = heroData.data.attributes;
 
   return (

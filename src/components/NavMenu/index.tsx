@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from "next/image";
+import Login from "../Login/Login";
 
 import { cn } from "@/lib/utils";
 import {
@@ -130,23 +131,11 @@ function NavMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Logueo</NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-white shadow-lg">
-            <ul className="grid w-[100px] gap-3 p-1 md:w-[100px]  lg:w-[200px] ">
-              <a href="/api/auth/login">Login</a>
-              <a href="/api/auth/logout">Logout</a>
-              {
-                user && (
-                  <div>
-                    <img src={user.picture || ''} alt={user.name || ''} />
-                    <h2>{user.name}</h2>
-                    <p>{user.email}</p>
-                  </div>
-                )
-              }
 
-            </ul>
-          </NavigationMenuContent>
+
+          <Login></Login>
+
+
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
