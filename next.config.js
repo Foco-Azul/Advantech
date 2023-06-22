@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["saas.focoazul.com", "lh3.googleusercontent.com"],
+    domains: ["admin.advantech.com.ec", "lh3.googleusercontent.com"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "saas.focoazul.com",
+        hostname: "admin.advantech.com.ec",
         port: "",
         pathname: "/uploads/format_webp/**",
       },
@@ -14,3 +14,5 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+
