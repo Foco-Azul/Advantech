@@ -7,6 +7,12 @@ export default function RootLayout({
 }) {
   return (
     <UserProvider>
+      <head>
+        <script
+          async
+          src="https://js.stripe.com/v3/pricing-table.js">
+        </script>
+      </head>
       <html lang="en">
         <body>{children}</body>
       </html>

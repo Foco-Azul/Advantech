@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 #card-element {
     border-radius: 0.5rem;
     padding: 12px;
@@ -11,4 +7,8 @@
     background: O#18001d;
     box-sizing: border-box;
     color: rgb(255, 255, 255);
+}
+
+#container-card-element{
+    background-color: #18001d;
 }
