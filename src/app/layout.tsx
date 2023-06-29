@@ -1,5 +1,6 @@
 import "./globals.css";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
+import Head from "next/head";
 export default function RootLayout({
   children,
 }: {
@@ -7,12 +8,12 @@ export default function RootLayout({
 }) {
   return (
     <UserProvider>
-      <head>
+      <Head>
         <script
           async
           src="https://js.stripe.com/v3/pricing-table.js">
         </script>
-      </head>
+      </Head>
       <html lang="en">
         <body>{children}</body>
       </html>

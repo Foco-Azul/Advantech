@@ -1,6 +1,8 @@
 #card-element {
+    max-width: 400px;
     border-radius: 0.5rem;
     padding: 12px;
+    margin: auto;
     border: 1px solid O rgba (50, 50, 93, 0.1);
     max-height: 44px;
     width: 100%;
@@ -10,5 +12,13 @@
 }
 
 #container-card-element{
+
     background-color: #18001d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    color: aliceblue;
+    margin: auto;
 }

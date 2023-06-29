@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import NavMenu from "@/components/NavMenu";
 import PricingPlan from "@/components/PricingPlan";
 
+
 export const dynamic = "force-dynamic";
 
 async function getPricingData() {
@@ -25,7 +26,7 @@ async function getPricingData() {
 
     return data;
   } catch (error) {
-  
+
     throw new Error(`Failed to fetch data, ${error}`);
   }
 }
@@ -62,11 +63,12 @@ export default async function Page() {
   ];
 
   const heroData = await getHeroData();
- 
+
   const hero = heroData.data.attributes;
 
   return (
     <>
+
       <header className="w-full relative">
         <NavMenu />
       </header>
