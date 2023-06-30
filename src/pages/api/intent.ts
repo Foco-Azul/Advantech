@@ -12,13 +12,13 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-   const body = JSON.parse(req.body)
-   const paymentIntents = await stripe.paymentIntents.create({
-    amount:body.amount,
-    currency: "usd",
-    payment_method_types: ["card"],
-    description: body.description
-   })
+      const body = JSON.parse(req.body)
+      const paymentIntents = await stripe.paymentIntents.create({
+        amount: body.amount,
+        currency: "usd",
+        payment_method_types: ["card"],
+        description: body.description
+      })
 
       res.status(200).json(paymentIntents);
     } catch (error: any) {
