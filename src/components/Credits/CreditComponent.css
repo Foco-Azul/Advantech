@@ -1,0 +1,86 @@
+.subscription-component {
+    display: flex;
+    justify-content: space-between;
+}
+
+.subscription-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 200px;
+    text-align: center;
+}
+
+.subscription-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.subscription-card p {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.subscription-card button {
+    background-color: #03a9f4;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+.popup {
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+.popup-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 300px;
+    text-align: center;
+}
+
+.popup-content h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.popup-content p {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.popup-content button {
+    background-color: #03a9f4;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+.close-button {
+    position: relative;
+    left: 49%;
+    bottom: 13px;
+    width: 30px;
+    height: 30px;
+    background-color: red !important;
+    padding: 1px !important;
+    border-radius: 18px !important;
+}

@@ -26,7 +26,7 @@ const CARD_ELEMENT_OPTIONS = {
 function CardSection() {
     return (
         <label>
-            Card details
+            Coloca los datos de tu tarjeta
             <CardElement options={CARD_ELEMENT_OPTIONS} />
         </label>
     );

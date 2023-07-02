@@ -6,19 +6,16 @@
     border: 1px solid O rgba (50, 50, 93, 0.1);
     max-height: 44px;
     width: 100%;
-    background: O#18001d;
     box-sizing: border-box;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
 }
 
-#container-card-element{
-
-    background-color: #18001d;
+#container-card-element {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     max-width: 1200px;
-    color: aliceblue;
+    color: rgb(0, 0, 0);
     margin: auto;
 }

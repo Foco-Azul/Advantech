@@ -18,7 +18,7 @@ function Login() {
 
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`,
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
                 {
                     method: "GET",
                     headers: {
@@ -57,7 +57,8 @@ function Login() {
                             data: {
                                 email: userEmail,
                                 username: user.name,
-                                plan: 4
+                                plan: 4,
+                                vencimiento: "2023-01-01"
                               },
                         }
                         ),

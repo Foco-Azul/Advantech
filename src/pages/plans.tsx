@@ -1,6 +1,9 @@
 import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import './plans.css'
+import Pasarela from '../components/Pasarela/Pasarela';
+import CreditComponent from "@/components/Credits/CreditComponent";
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 
 export default function Plans() {
@@ -23,7 +26,7 @@ export default function Plans() {
 
     const confirmPayment = async (clientSecret: string) => {
         const stripe = await stripePromise;
-        console.log("stripe:",stripe)
+        console.log("stripe:", stripe)
         const elements = stripe?.elements();
         console.log("elements:", elements)
         const cardElement = elements?.getElement(CardElement);
@@ -62,10 +65,12 @@ export default function Plans() {
     return (
         <div id="container-card-element">
             <h1>Plans</h1>
-            <Elements stripe={stripePromise}>
-                <CardElement id="card-element" options={cardStyle} />
-            </Elements>
-            <button onClick={createPayment}>Enviar</button>
+
+            <br></br>
+            <UserProvider>
+                <CreditComponent></CreditComponent>
+            </UserProvider>
+
             <br></br>
         </div>
     );

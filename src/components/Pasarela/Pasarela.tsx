@@ -9,12 +9,24 @@ import CheckoutForm from "./CheckoutForm";
 // This is your test publishable API key.
 const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_KEYS_PUBLIC}`);
 
-export default function Pasarela() {
+interface PasarelaProps {
+  price: number;
+  plan: string;
+  creditos: number;
+  userCredits: number | null;
+  planid: number | null;
+  planvencimiento: number;
+  userid: number | null;
+}
+
+const Pasarela: React.FC<PasarelaProps> = ({ price, plan, userid, creditos, planvencimiento, userCredits, planid }) => {
   return (
     <div className="App">
       <Elements stripe={stripePromise}>
-        <CheckoutForm />
+        <CheckoutForm userid={userid} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} planvencimiento={planvencimiento} />
       </Elements>
     </div>
   );
 }
+
+export default Pasarela;
