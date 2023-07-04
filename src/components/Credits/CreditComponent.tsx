@@ -38,7 +38,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     };
 
     return (
-        <div className="subscription-card">
+        <div className="credit-card">
             <p>Tus créditos actuales: {userCredits}</p>
             <p>Cantidad de créditos a comprar</p>
             <input
@@ -52,9 +52,9 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <button onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
 
             {isOpen && (
-                <div className="popup">
-                    <div className="popup-content">
-                        <button className="close-button" onClick={handleClose}>
+                <div className="credit-popup">
+                    <div className="credit-popup-content">
+                        <button className="credit-close-button" onClick={handleClose}>
                             X
                         </button>
                         <h4>Confirmar tus creditos</h4>
@@ -137,10 +137,12 @@ const CreditComponent: React.FC = () => {
         }
     }
 
+    const currentDate = new Date();
+    const vencimientoDate = userVencimiento ? new Date(userVencimiento) : null;
     return (
-        <div className="subscription-component">
+        <div className="credit-component">
             <UserProvider>
-                <SubscriptionCard
+                {(vencimientoDate && vencimientoDate > currentDate) && <SubscriptionCard
                     userPlanPrice={userPlanPrice}
                     userCredits={userCredits}
                     uservencimiento={userVencimiento}
@@ -150,7 +152,9 @@ const CreditComponent: React.FC = () => {
                     planid={planId}
                     planvencimiento={0}
                     userid={userId}
-                />
+                />}
+                {(vencimientoDate && vencimientoDate < currentDate) && 
+                <h2>Tu suscripción esta vencida</h2>}
             </UserProvider>
         </div>
     );

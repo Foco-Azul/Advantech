@@ -2,7 +2,11 @@ import * as React from "react";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import './Login.css'; // Reemplaza "Login.css" con el nombre de tu archivo CSS
 
-function Login() {
+interface LoginProps {
+  loginname: string;
+}
+
+function Login({ loginname }: LoginProps) {
   const { user, error, isLoading } = useUser();
 
   React.useEffect(() => {
@@ -106,7 +110,7 @@ function Login() {
               window.location.href = "/api/auth/login";
             }}
           >
-            Login
+            {loginname}
           </button>
         </div>
       )}

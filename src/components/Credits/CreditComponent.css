@@ -1,9 +1,9 @@
-.subscription-component {
+.credit-component {
     display: flex;
     justify-content: space-between;
 }
 
-.subscription-card {
+.credit-card {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -12,17 +12,17 @@
     text-align: center;
 }
 
-.subscription-card h3 {
+.credit-card h3 {
     font-size: 18px;
     margin-bottom: 8px;
 }
 
-.subscription-card p {
+.credit-card p {
     font-size: 14px;
     margin-bottom: 16px;
 }
 
-.subscription-card button {
+.credit-card button {
     background-color: #03a9f4;
     border: none;
     border-radius: 4px;
@@ -32,7 +32,7 @@
     padding: 8px 16px;
 }
 
-.popup {
+.credit-popup {
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
@@ -45,7 +45,7 @@
     z-index: 9999;
 }
 
-.popup-content {
+.credit-popup-content {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -54,17 +54,17 @@
     text-align: center;
 }
 
-.popup-content h3 {
+.credit-popup-content h3 {
     font-size: 18px;
     margin-bottom: 8px;
 }
 
-.popup-content p {
+.credit-popup-content p {
     font-size: 14px;
     margin-bottom: 16px;
 }
 
-.popup-content button {
+.credit-popup-content button {
     background-color: #03a9f4;
     border: none;
     border-radius: 4px;
@@ -74,7 +74,7 @@
     padding: 8px 16px;
 }
 
-.close-button {
+.credit-close-button {
     position: relative;
     left: 49%;
     bottom: 13px;

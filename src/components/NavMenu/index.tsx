@@ -121,7 +121,7 @@ function NavMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Login />
+          <Login loginname={"Login"} />
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

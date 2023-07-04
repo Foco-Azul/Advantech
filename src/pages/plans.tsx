@@ -4,6 +4,7 @@ import './plans.css'
 import Pasarela from '../components/Pasarela/Pasarela';
 import CreditComponent from "@/components/Credits/CreditComponent";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
+import SearchComponent from "@/components/SearchComponent/SearchComponent";
 
 
 export default function Plans() {
@@ -64,12 +65,13 @@ export default function Plans() {
 
     return (
         <div id="container-card-element">
-            <h1>Planes flexibles que se adaptan a tu necesidad de datos</h1>
+            <h1>Compra tus créditos</h1>
             <br></br>
             <UserProvider>
                 <CreditComponent></CreditComponent>
             </UserProvider>
             <br></br>
+            <SearchComponent />
         </div>
     );
 }

@@ -1,0 +1,27 @@
+.plans-back {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="920" height="807" viewBox="0 0 1920 1897" fill="none"><ellipse cx="927" cy="366.5" rx="3116" ry="440.5" fill="%2389BAE7" fill-opacity="0.2"/></svg>');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    min-height: 100vh;
+}
+
+.plans2-h1 {
+    font-size: 35px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+}
+
+.plans2-h2 {
+    font-size: 21px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+    margin-top: 20px;
+    color: #002BC3;
+}
