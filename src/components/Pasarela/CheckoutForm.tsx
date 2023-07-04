@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import CardSection from './CardSection';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -7,7 +7,7 @@ import './CheckoutForm.css';
 interface CheckoutFormProps {
   price: number;
   plan: string;
-  creditos: number
+  creditos: number;
   userCredits: number | null;
   planid: number | null;
   planvencimiento: number;
@@ -18,25 +18,24 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
   const stripe = useStripe();
   const elements = useElements();
   const { user, error, isLoading } = useUser();
-  const [payerror, setPayerror] = React.useState<string | null>(null);
+  const [payerror, setPayerror] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(true);
+  const [showPaymentButton, setShowPaymentButton] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event: { preventDefault: () => void; }) => {
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
     const cardElement = elements.getElement(CardElement);
     if (!cardElement) {
-      // Handle the case when CardElement is null
-      console.log("CardElement es nulo")
       return;
     }
+
+    setLoading(true);
 
     const createPayment = async () => {
       const res = await fetch("/api/intent", {
@@ -47,10 +46,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
         }),
       });
       const data = await res.json();
-      console.log(data);
-      console.log("Data client", data.client_secret)
       return data.client_secret;
-
     };
 
     const result = await stripe.confirmCardPayment(await createPayment(), {
@@ -62,33 +58,27 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
       },
     });
 
+    setLoading(false);
+
     if (result.error) {
-      // Show error to your customer (for example, insufficient funds)
       setPayerror(result.error.message || null);
+      setShowForm(true);
+      setShowPaymentButton(true);
       console.log(result.error.message);
     } else {
-      // The payment has been processed!
-      console.log("El pago se proceso correctamente")
+      console.log("El pago se procesó correctamente");
       if (result.paymentIntent.status === 'succeeded') {
+        setShowForm(false);
+        setShowPaymentButton(false);
 
         if (userCredits === null) {
-          userCredits = 0; // Set a default value or handle the null case appropriately
+          userCredits = 0;
         }
 
-        // Obtener la fecha actual
         var fechaActual = new Date();
-
-        // Obtener el número de meses a sumar (planvencimiento)
         var mesesASumar = planvencimiento;
-
-        // Sumar los meses a la fecha actual
         fechaActual.setMonth(fechaActual.getMonth() + mesesASumar);
-
-        // Obtener el resultado en formato de fecha
-        var fechaVencimiento = fechaActual.toISOString(); // Formato: "YYYY-MM-DDTHH:mm:ss.sssZ"
-
-        // Utilizar la fechaVencimiento en tu código
-        console.log(fechaVencimiento);
+        var fechaVencimiento = fechaActual.toISOString();
 
         const postResponse = await fetch(
           `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userid}`,
@@ -96,7 +86,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-
             },
             body: JSON.stringify({
               data: {
@@ -116,26 +105,31 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           console.log(postResponse.status);
           throw new Error(`Failed to create user, ${postResponse.status}`);
         }
-        // Show a success message to your customer
-        // There's a risk of the customer closing the window before callback
-        // execution. Set up a webhook or plugin to listen for the
-        // payment_intent.succeeded event that handles any business critical
-        // post-payment actions.
       }
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardSection />
-      {payerror && (
-        <div className='payerror'>
-          {payerror}
+      {showForm && (
+        <div>
+          <CardSection />
         </div>
       )}
-      <button disabled={!stripe}>Confirmar pago de {price}</button>
+      <br></br>
+      {payerror && (
+        <div className='payerror'>
+          {payerror} Verifica si los datos de tu tarjeta son correctos.
+        </div>
+      )}
+      {!loading && showPaymentButton && (
+        <div>
+          <button disabled={!stripe} className='checkoutform-button'>Confirmar pago de ${price}</button>
+        </div>
+      )}
+      {loading && <div>Procesando el pago...</div>}
     </form>
   );
-}
+};
 
 export default CheckoutForm;

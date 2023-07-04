@@ -46,28 +46,37 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
 
     return (
         <div className="subscription-card">
-            <h2>{plan}</h2>
-            <h3>Precio: ${price}</h3>
-            <h3>Créditos: {creditos}</h3>
-            <h3>Suscripción x {planvencimiento} meses</h3>
-            <h3>{ buscador ? "Acceso al buscador" : "Sin acceso al buscador"}</h3>
-            <h3>{ api ? "Acceso a la api" : "Sin acceso a la api"}</h3>
+            <h2 className="subscription-plan">{plan}</h2>
+            <h3 className="subscription-price">${price}</h3>
+            <h3 className="subscription-pricecredits">${price / creditos} / crédito</h3>
+            <hr className="subscription-hr" />
+            <div className="subscription-caracteristics">
+                <h3>Créditos: {creditos}</h3>
+                <h3>Duración de {planvencimiento} meses</h3>
+                <h3>{buscador ? "Acceso al buscador" : "Sin acceso al buscador"}</h3>
+                <h3>{api ? "Acceso a la api" : "Sin acceso a la api"}</h3>
+                <h3>Formato de entrega de datos</h3>
+            </div>
             {(uservencimiento && new Date(uservencimiento) < new Date()) && (price !== 0) && (
-                <button onClick={handleSubscribe}>Suscribirse</button>
+                <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
             )}
             {(uservencimiento && new Date(uservencimiento) > new Date()) && (userPlanPrice !== null && price > userPlanPrice) && (price !== 0) && (
-                <button onClick={handleSubscribe}>Suscribirse</button>
+                <button  className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
             )}
             {isOpen && (
                 <div className="popup">
                     <div className="popup-content">
-                        <button className="close-button" onClick={handleClose}>
+                        <button className="subscription-close-button" onClick={handleClose}>
                             X
                         </button>
                         <h4>Confirmar tu suscripción</h4>
-                        <h3>Plan {plan}</h3>
-                        <p>Precio: ${price}</p>
+                        <h2 className="subscription-plan" >Plan {plan}</h2>
+                        <h3 className="subscription-price">Precio: ${price}</h3>
                         <p>Créditos a obtener {creditos}</p>
+                        <hr className="subscription-hr" />
+                        <br></br>
+                        <p>Coloca los datos de tu tarjeta</p>
+                        <br></br>
                         <Pasarela userid={userid} planvencimiento={planvencimiento} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} />
                     </div>
                 </div>

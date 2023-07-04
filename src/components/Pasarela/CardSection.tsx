@@ -3,7 +3,6 @@
 */
 import React from 'react';
 import { CardElement } from '@stripe/react-stripe-js';
-//import './CardSectionStyles.css'
 
 const CARD_ELEMENT_OPTIONS = {
     style: {
@@ -11,7 +10,7 @@ const CARD_ELEMENT_OPTIONS = {
             color: "#32325d",
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: "antialiased",
-            fontSize: "16px",
+            fontSize: "18px",
             "::placeholder": {
                 color: "#aab7c4",
             },
@@ -25,8 +24,7 @@ const CARD_ELEMENT_OPTIONS = {
 
 function CardSection() {
     return (
-        <label>
-            Coloca los datos de tu tarjeta
+        <label className='cardsection'>
             <CardElement options={CARD_ELEMENT_OPTIONS} />
         </label>
     );

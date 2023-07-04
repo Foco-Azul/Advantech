@@ -64,13 +64,11 @@ export default function Plans() {
 
     return (
         <div id="container-card-element">
-            <h1>Plans</h1>
-
+            <h1>Planes flexibles que se adaptan a tu necesidad de datos</h1>
             <br></br>
             <UserProvider>
                 <CreditComponent></CreditComponent>
             </UserProvider>
-
             <br></br>
         </div>
     );

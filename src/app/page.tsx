@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import NavMenu from "@/components/NavMenu";
 import PricingPlan from "@/components/PricingPlan";
-import {Providers} from "./providers";
+import { Providers } from "./providers";
 
 export const dynamic = "force-dynamic";
 
@@ -67,15 +67,19 @@ export default async function Page() {
   const hero = heroData.data.attributes;
 
   return (
-    <Providers>
-      <>
-        <header className="w-full relative">
-          <NavMenu />
-        </header>
-        <Hero hero={hero} />
-        <PricingPlan plans={pricings} />
-        <Footer />
-      </>
+    <Providers >
+
+      <div className="hero-back">
+        <>
+          <header className="w-full relative">
+            <NavMenu />
+          </header>
+          <Hero hero={hero} />
+          <PricingPlan plans={pricings} />
+          <Footer />
+        </>
+      </div>
+
     </Providers>
 
 

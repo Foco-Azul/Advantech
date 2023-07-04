@@ -3,3 +3,31 @@
   color: white;
   padding: 10px;
 }
+
+
+.checkoutform-button {
+  height: 42px;
+  border-radius: 6px;
+  background: var(--brand-primary, #009FDE);
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+  min-width: 225px;
+  color: var(--white, #FFF);
+  text-align: center;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  margin-top: 15px;
+  transition: 0.5s;
+}
+
+
+.checkoutform-button:hover {
+  background-color: #0099CC;
+  box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+  transition: 0.5s;
+}
+
+
+

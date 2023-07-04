@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Image from "next/image";
 import Login from "../Login/Login";
+import Brand from "./Brand.svg"
+import "./NavMenu.css"
 
 import { cn } from "@/lib/utils";
 import {
@@ -17,7 +19,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-const components: { title: string; href: string }[] = [
+const components = [
   {
     title: "Guía de uso",
     href: "/docs/primitives/alert-dialog",
@@ -31,7 +33,7 @@ const components: { title: string; href: string }[] = [
     href: "/docs/primitives/progress",
   },
   {
-    title: "Coomparación con otras herramientas",
+    title: "Comparación con otras herramientas",
     href: "/docs/primitives/scroll-area",
   },
   {
@@ -40,7 +42,7 @@ const components: { title: string; href: string }[] = [
   },
 ];
 
-const others: { title: string; href: string }[] = [
+const others = [
   {
     title: "Contacto",
     href: "/docs/primitives/alert-dialog",
@@ -63,10 +65,7 @@ const others: { title: string; href: string }[] = [
   },
 ];
 
-
-
 function NavMenu() {
-
   const { user, error, isLoading } = useUser();
 
   if (isLoading) return <div>Loading...</div>;
@@ -74,6 +73,9 @@ function NavMenu() {
 
   return (
     <NavigationMenu>
+      <div className="nav-image">
+        <Image src={Brand} alt="Company Logo" width={100} height={30}/>
+      </div>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/docs" legacyBehavior passHref>
@@ -86,19 +88,7 @@ function NavMenu() {
           <NavigationMenuTrigger>Productos</NavigationMenuTrigger>
           <NavigationMenuContent className="bg-white shadow-lg">
             <ul className="grid gap-3 p-1 min-w-[200px] md:max-w-[400px] lg:max-w-[500px] lg:grid-cols-1">
-              <ListItem href="/docs" title="Buscador"></ListItem>
-              <ListItem
-                href="/docs/installation"
-                title="Datos por Email"
-              ></ListItem>
-              <ListItem
-                href="/docs/primitives/typography"
-                title="Datos por Descarga"
-              ></ListItem>
-              <ListItem
-                href="/docs/primitives/typography"
-                title="Datos por API"
-              ></ListItem>
+              {/* Product items */}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -131,11 +121,7 @@ function NavMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-
-
-          <Login></Login>
-
-
+          <Login />
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

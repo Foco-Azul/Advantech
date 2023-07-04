@@ -1,101 +1,121 @@
 .subscription-component {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1100px;
-    margin: auto;
-    margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: auto;
+  margin-top: 50px;
 }
 
 .subscription-card {
-    width: 300px;
-    max-width: 250px;
-    height: 300px;
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .subscription-card h2 {
-    color: #333333;
-    font-size: 18px;
-    font-weight: 500;
-    margin: 0;
-  }
-  
-  .subscription-card h3 {
-    color: #333333;
-    font-size: 14px;
-    margin: 0;
-  }
-  
-  .subscription-card button {
-    background-color: #33B5E5;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .subscription-card button:hover {
-    background-color: #0099CC;
-  }
-  
+  width: 300px;
+  max-width: 250px;
+  height: auto;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 8px 24px -8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscription-plan {
+  font-size: 23px;
+  opacity: 60%;
+}
+
+.subscription-pricecredits {
+  opacity: 60%;
+}
+
+.subscription-caracteristics {
+  align-items: left;
+  margin-top: 15px;
+}
+
+.subscription-price {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.subscription-hr {
+  color: black;
+  height: 8px;
+  size: 8px;
+  width: 100%;
+}
+
+.subscription-card-button {
+  height: 42px;
+  border-radius: 6px;
+  background: var(--brand-primary, #009FDE);
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+  min-width: 225px;
+  color: var(--white, #FFF);
+  text-align: center;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  margin-top: 15px;
+  transition: 0.5s;
+}
+
+.subscription-card-button:hover {
+  background-color: #0099CC;
+  box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+  transition: 0.5s;
+}
+
 
 .popup {
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 
 .popup-content {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    width: 300px;
-    text-align: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+  text-align: center;
 }
 
-.popup-content h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
+
+.subscription-popup-content-button {
+  height: 52px;
+  border-radius: 6px;
+  background: var(--brand-primary, #009FDE);
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+  min-width: 225px;
+  color: var(--white, #FFF);
+  text-align: center;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
 }
 
-.popup-content p {
-    font-size: 14px;
-    margin-bottom: 16px;
-}
-
-.popup-content button {
-    background-color: #03a9f4;
-    border: none;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 8px 16px;
-}
-
-.close-button {
-    position: relative;
-    left: 49%;
-    bottom: 13px;
-    width: 30px;
-    height: 30px;
-    background-color: red !important;
-    padding: 1px !important;
-    border-radius: 18px !important;
+.subscription-close-button {
+  position: relative;
+  left: 49%;
+  bottom: 27px;
+  width: 30px;
+  height: 30px;
+  background-color: red !important;
+  color: #FFFFFF;
+  padding: 1px !important;
+  border-radius: 18px !important;
 }
