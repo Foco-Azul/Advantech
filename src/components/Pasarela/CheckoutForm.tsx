@@ -3,6 +3,7 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import CardSection from './CardSection';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import './CheckoutForm.css';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface CheckoutFormProps {
   price: number;
@@ -22,6 +23,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
   const [showForm, setShowForm] = useState(true);
   const [showPaymentButton, setShowPaymentButton] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  const handleCardSectionFocus = () => {
+    setPayerror(null);
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -70,6 +76,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
       if (result.paymentIntent.status === 'succeeded') {
         setShowForm(false);
         setShowPaymentButton(false);
+        setPaymentSuccess(true); // Actualiza el estado para indicar que el pago fue exitoso
 
         if (userCredits === null) {
           userCredits = 0;
@@ -110,25 +117,34 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {showForm && (
-        <div>
-          <CardSection />
-        </div>
-      )}
-      <br></br>
-      {payerror && (
-        <div className='payerror'>
-          {payerror} Verifica si los datos de tu tarjeta son correctos.
-        </div>
-      )}
-      {!loading && showPaymentButton && (
-        <div>
-          <button disabled={!stripe} className='checkoutform-button'>Confirmar pago de ${price}</button>
-        </div>
-      )}
-      {loading && <div>Procesando el pago...</div>}
-    </form>
+    <div>
+      {paymentSuccess == false && <><p>Coloca los datos de tu tarjeta</p><br></br></>}
+      <form onSubmit={handleSubmit} >
+        {showForm && (
+          <div onMouseEnter={handleCardSectionFocus} >
+            <CardSection />
+          </div>
+        )}
+        <br></br>
+        {payerror && (
+          <div className='payerror'>
+            {payerror}
+          </div>
+        )}
+        {paymentSuccess && ( // Muestra el div verde si el pago fue exitoso
+          <div style={{ color: 'green' }}>
+            El pago fue exitoso
+          </div>
+        )}
+        {!loading && showPaymentButton && (
+          <div>
+            <button disabled={!stripe} className='checkoutform-button'>Confirmar pago de ${price}</button>
+          </div>
+        )}
+        {loading && <CircularProgress />}
+      </form>
+    </div>
+
   );
 };
 

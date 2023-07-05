@@ -12,6 +12,7 @@ margin: auto;
 .subscription-card {
   width: 300px;
   max-width: 250px;
+  min-height: 373px;
   height: auto;
   background-color: #FFFFFF;
   border-radius: 20px;
@@ -122,4 +123,9 @@ margin: auto;
   color: #FFFFFF;
   padding: 1px !important;
   border-radius: 18px !important;
+}
+
+
+.subscription-caracteristics svg {
+margin-right: 15px;
 }

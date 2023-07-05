@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import "./SuscriptionComponent.css";
 import Pasarela from '../Pasarela/Pasarela';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHippo, faHourglassStart, faCediSign, faMagnifyingGlass, faDatabase, faTable } from "@fortawesome/free-solid-svg-icons";
 
 interface SubscriptionCardProps {
     price: number;
@@ -51,17 +53,17 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
             <h3 className="subscription-pricecredits">${price / creditos} / crédito</h3>
             <hr className="subscription-hr" />
             <div className="subscription-caracteristics">
-                <h3>Créditos: {creditos}</h3>
-                <h3>Duración de {planvencimiento} meses</h3>
-                <h3>{buscador ? "Acceso al buscador" : "Sin acceso al buscador"}</h3>
-                <h3>{api ? "Acceso a la api" : "Sin acceso a la api"}</h3>
-                <h3>Formato de entrega de datos</h3>
+                <h3><FontAwesomeIcon icon={faCediSign} style={{color: "#009fde",}} />Créditos: {creditos}</h3>
+                <h3><FontAwesomeIcon icon={faHourglassStart} style={{color: "#009fde",}}/>Duración de {planvencimiento} meses</h3>
+                <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{color: "#009fde",}}/>{buscador ? "Acceso al buscador" : "Sin acceso al buscador"}</h3>
+                <h3><FontAwesomeIcon icon={faDatabase} style={{color: "#009fde",}} />{api ? "Acceso a la api" : "Sin acceso a la api"}</h3>
+                <h3><FontAwesomeIcon icon={faTable} style={{color: "#009fde",}} />Formato de entrega de datos</h3>
             </div>
             {(uservencimiento && new Date(uservencimiento) < new Date()) && (price !== 0) && (
                 <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
             )}
             {(uservencimiento && new Date(uservencimiento) > new Date()) && (userPlanPrice !== null && price > userPlanPrice) && (price !== 0) && (
-                <button  className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
+                <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
             )}
             {isOpen && (
                 <div className="popup">
@@ -74,8 +76,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                         <h3 className="subscription-price">Precio: ${price}</h3>
                         <p>Créditos a obtener {creditos}</p>
                         <hr className="subscription-hr" />
-                        <br></br>
-                        <p>Coloca los datos de tu tarjeta</p>
                         <br></br>
                         <Pasarela userid={userid} planvencimiento={planvencimiento} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} />
                     </div>
@@ -198,3 +198,5 @@ const SubscriptionComponent: React.FC = () => {
 };
 
 export default SubscriptionComponent;
+
+

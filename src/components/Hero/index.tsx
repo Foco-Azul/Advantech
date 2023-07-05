@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import "./Hero.css";
+import Carousel from "./Carousel";
+
+
 
 function Hero({ hero }: any) {
   return (
@@ -24,6 +27,7 @@ function Hero({ hero }: any) {
           <a href="#" className="hero-icon-container">
             {hero.cta} <ArrowRight className="hero-icon" />
           </a>
+          <Carousel/>
         </div>
       </div>
     </section>
