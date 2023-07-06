@@ -38,12 +38,8 @@ function Login({ loginname }: LoginProps) {
       }
       const data = await response.json();
       console.log(data);
-      // Buscar el correo electrónico en el array de objetos
-      const userEmail = user.email?.split("@")[0]; // Obtener la parte del correo antes del símbolo "@" si está definido
-      if (!userEmail) {
-        return;
-      }
-      const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === userEmail);
+
+      const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
 
       if (foundUser) {
         console.log("El correo electrónico existe en el array de objetos.");
@@ -62,7 +58,7 @@ function Login({ loginname }: LoginProps) {
             },
             body: JSON.stringify({
               data: {
-                email: userEmail,
+                email: user.email,
                 username: user.name,
                 plan: 4,
                 vencimiento: "2023-01-01",
