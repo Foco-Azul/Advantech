@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import './Login.css'; // Reemplaza "Login.css" con el nombre de tu archivo CSS
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 interface LoginProps {
   loginname: string;
@@ -106,7 +108,7 @@ function Login({ loginname }: LoginProps) {
               window.location.href = "/api/auth/login";
             }}
           >
-            {loginname}
+            <FontAwesomeIcon icon={faUser} style={{ color: "#009fde", }} /> {loginname}
           </button>
         </div>
       )}

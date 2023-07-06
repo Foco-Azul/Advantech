@@ -3,7 +3,6 @@ import Seccion_2 from "@/components/Inicio/Seccion_2";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import NavMenu from "@/components/NavMenu";
-import PricingPlan from "@/components/PricingPlan";
 import { Providers } from "./providers";
 
 export const dynamic = "force-dynamic";
@@ -77,7 +76,6 @@ export default async function Page() {
             <NavMenu />
           </header>
           <Hero hero={hero} />
-          <PricingPlan plans={pricings} />
           <Seccion_2 />
           <Seccion_1 />
           <Footer />
