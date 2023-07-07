@@ -66,8 +66,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                 <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
             )}
             {isOpen && (
-                <div className="popup">
-                    <div className="popup-content">
+                <div className="subscription-popup">
+                    <div className="subscription-popup-content">
                         <button className="subscription-close-button" onClick={handleClose}>
                             X
                         </button>

@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+.hamburger-menu{
+  padding: 9px 20px;
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  padding: 0;
+}
+
+.hamburger-button span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: #0099CC;
+}
+
+/* Estilos para el popup */
+.popup {
+  position: fixed;
+  max-height: 226px;
+  top: 0px; /* Ajusta la distancia desde la parte superior según sea necesario */
+  right: 0px; /* Ajusta la distancia desde la parte derecha según sea necesario */
+  transform: translate(0, 0);
+  background-color: white;
+  z-index: 10000;
+  width: 300px;
+  padding: 20px;
+  animation: fade-in 0.3s forwards;
+    color: var(--gray-800, #3E4265);
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  text-transform: uppercase;
+  padding: 25px 20px;
+  border-bottom-left-radius: 6px;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    right: -100%; /* Inicio fuera de la pantalla hacia la derecha */
+  }
+  to {
+    opacity: 1;
+    right: 0px; /* Posición final ajustada */
+  }
+}
+
+
+
+.popup ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popup ul li {
+  margin-bottom: 10px;
+  color: var(--gray-800, #3E4265);
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.popup button {
+  display: block;
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+  min-width: 99px;
+  color: #ffffff;
+  background-color: #0099CC;
+  text-align: center;
+  font-size: 14px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  transition: 0.5s;
+  padding: 9px 20px;
+  line-height: 18px;
+}
+
+.popup button:hover {
+  background-color: #999;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según sea necesario */
+  z-index: 9999; /* Asegúrate de que la capa overlay esté por encima de otros elementos */
+}
+
+
+
+@media (min-width: 525px) {
+  .hamburger-menu {
+    display: none;
+  }
+}

@@ -1,8 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
 .plans-back {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="920" height="807" viewBox="0 0 1920 1897" fill="none"><ellipse cx="927" cy="366.5" rx="3116" ry="440.5" fill="%2389BAE7" fill-opacity="0.2"/></svg>');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top center;
+    background: var(--degradado-1, linear-gradient(180deg, rgba(137, 186, 231, 0.47) 0%, rgba(137, 186, 231, 0.253) 10%, rgba(217, 217, 217, 0.05) 20%));
     min-height: 100vh;
 }
 

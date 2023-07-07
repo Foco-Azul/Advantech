@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import './Login.css'; // Reemplaza "Login.css" con el nombre de tu archivo CSS
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 interface LoginProps {
   loginname: string;
@@ -38,12 +40,8 @@ function Login({ loginname }: LoginProps) {
       }
       const data = await response.json();
       console.log(data);
-      // Buscar el correo electrónico en el array de objetos
-      const userEmail = user.email?.split("@")[0]; // Obtener la parte del correo antes del símbolo "@" si está definido
-      if (!userEmail) {
-        return;
-      }
-      const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === userEmail);
+
+      const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
 
       if (foundUser) {
         console.log("El correo electrónico existe en el array de objetos.");
@@ -62,7 +60,7 @@ function Login({ loginname }: LoginProps) {
             },
             body: JSON.stringify({
               data: {
-                email: userEmail,
+                email: user.email,
                 username: user.name,
                 plan: 4,
                 vencimiento: "2023-01-01",
@@ -91,7 +89,7 @@ function Login({ loginname }: LoginProps) {
     <div className="login-container">
       {user && (
         <div className="login-container">
-          <p>{user.email?.split("@")[0]}</p> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+          <p className="login-name">{user.email?.split("@")[0]}</p> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
           <button
             className="logout-button"
             onClick={() => {
@@ -110,7 +108,7 @@ function Login({ loginname }: LoginProps) {
               window.location.href = "/api/auth/login";
             }}
           >
-            {loginname}
+            <FontAwesomeIcon icon={faUser} style={{ color: "#009fde", }} /> {loginname}
           </button>
         </div>
       )}

@@ -3,24 +3,21 @@
 @tailwind utilities;
 
 #card-element {
-    border-radius: 0.5rem;
-    padding: 12px;
-    border: 1px solid O rgba (50, 50, 93, 0.1);
-    max-height: 44px;
-    width: 100%;
-    background: O#18001d;
-    box-sizing: border-box;
-    color: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  padding: 12px;
+  border: 1px solid O rgba (50, 50, 93, 0.1);
+  max-height: 44px;
+  width: 100%;
+  background: O#18001d;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
 }
 
 .hero-back {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="920" height="807" viewBox="0 0 1920 1897" fill="none"><ellipse cx="927" cy="366.5" rx="3116" ry="440.5" fill="%2389BAE7" fill-opacity="0.2"/></svg>');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top center;
-  }
+  background: var(--degradado-1, linear-gradient(180deg, rgba(137, 186, 231, 0.47) 0%, rgba(137, 186, 231, 0.253) 10%, rgba(217, 217, 217, 0.05) 20%));
+}
 
-  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
 body {
   font-family: 'Manrope', sans-serif;
