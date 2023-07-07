@@ -1,6 +1,6 @@
-import Seccion_1 from "@/components/Inicio/Seccion_1";
-import Seccion_2 from "@/components/Inicio/Seccion_2";
-import Footer from "@/components/Footer";
+import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta";
+import SeccionAyuda from "@/components/Inicio/SeccionAyuda/SeccionAyuda";
+import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Hero";
 import NavMenu from "@/components/NavMenu";
 import PricingPlan from "@/components/PricingPlan";
@@ -78,8 +78,8 @@ export default async function Page() {
           </header>
           <Hero hero={hero} />
           <PricingPlan plans={pricings} />
-          <Seccion_2 />
-          <Seccion_1 />
+          <SeccionAyuda/>
+          <SeccionCreaTuCuenta />
           <Footer />
         </>
       </div>
