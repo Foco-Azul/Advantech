@@ -1,13 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
+.nav-container{
+height: 70px;
+}
 
 .nav {
+  position: fixed;
+  top: 0px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
+  z-index: 999999;
+  background-color: #d3e6f7;
 }
 
 .navigation-menu-list {
@@ -18,8 +25,8 @@
 }
 
 .nav-image {
-  padding: 5px;
-  margin-right: 25px;
+  padding: 10px;
+ 
 }
 
 .navigation-menu-button {
@@ -61,6 +68,19 @@
   text-transform: uppercase;
   padding: 9px 20px;
 }
+
+/* NavMenu.css */
+
+.nav-container.scrolled {
+  box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 35%);
+
+}
+
+.nav.scrolled {
+  box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 35%);
+
+}
+
 
 
 

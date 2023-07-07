@@ -1,0 +1,24 @@
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.carousel-item {
+  flex: 0 0 calc(33.33% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
+  margin: 0 5px; /* Ajusta el margen entre los elementos según tus necesidades */
+}
+
+.carousel-image {
+  width: auto;
+  height: 100%;
+}
+
+.carousel-images{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 70%;
+}
+

@@ -89,7 +89,7 @@ function Login({ loginname }: LoginProps) {
     <div className="login-container">
       {user && (
         <div className="login-container">
-          <p>{user.email?.split("@")[0]}</p> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+          <p className="login-name">{user.email?.split("@")[0]}</p> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
           <button
             className="logout-button"
             onClick={() => {

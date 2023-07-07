@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
 .hamburger-menu{
   padding: 9px 20px;
 }
@@ -24,6 +26,7 @@
 /* Estilos para el popup */
 .popup {
   position: fixed;
+  max-height: 226px;
   top: 0px; /* Ajusta la distancia desde la parte superior según sea necesario */
   right: 0px; /* Ajusta la distancia desde la parte derecha según sea necesario */
   transform: translate(0, 0);
@@ -32,6 +35,15 @@
   width: 300px;
   padding: 20px;
   animation: fade-in 0.3s forwards;
+    color: var(--gray-800, #3E4265);
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  text-transform: uppercase;
+  padding: 25px 20px;
+  border-bottom-left-radius: 6px;
 }
 
 @keyframes fade-in {
@@ -55,16 +67,32 @@
 
 .popup ul li {
   margin-bottom: 10px;
+  color: var(--gray-800, #3E4265);
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .popup button {
   display: block;
+  margin: 0px;
   margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #ccc;
-  border: none;
-  color: #fff;
-  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+  min-width: 99px;
+  color: #ffffff;
+  background-color: #0099CC;
+  text-align: center;
+  font-size: 14px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  transition: 0.5s;
+  padding: 9px 20px;
+  line-height: 18px;
 }
 
 .popup button:hover {

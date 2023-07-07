@@ -1,18 +1,23 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from 'react';
+import Imagencarrusel from "./Screenshot 1.png";
+import Imagencarrusel2 from "./Screenshot 2.png";
+import "./Carousel.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Carousel: React.FC = () => {
     const phrases = [
-        '1Lorem ipsum dolor sit amet.',
-        '2Consectetur adipiscing elit.',
-        '3Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        '4Ut enim ad minim veniam.',
-        '5Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        '6Lorem ipsum dolor sit amet.',
-        '7Consectetur adipiscing elit.',
-        '8Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        '9Ut enim ad minim veniam.',
-        '10Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        { id: 1, text: '', image: Imagencarrusel },
+        { id: 2, text: '', image: Imagencarrusel2 },
+        { id: 3, text: '', image: Imagencarrusel },
+        { id: 4, text: '', image: Imagencarrusel2 },
+        { id: 5, text: '', image: Imagencarrusel },
+        { id: 6, text: '', image: Imagencarrusel2 },
+        { id: 7, text: '', image: Imagencarrusel },
+        { id: 8, text: '', image: Imagencarrusel2 },
+        { id: 9, text: '', image: Imagencarrusel },
+        { id: 10, text: '', image: Imagencarrusel2 },
     ];
 
     const [currentPhrase, setCurrentPhrase] = useState(0);
@@ -40,16 +45,24 @@ const Carousel: React.FC = () => {
     return (
         <div className="carousel">
             <button className="carousel-button" onClick={prevPhrase}>
-                Prev
+                <FontAwesomeIcon icon={faCircleChevronLeft} size="2xl" style={{ color: "#009fde", }} />
             </button>
-            {renderedPhrases.map((phrase, index) => (
-                <h2 key={index} className="carousel-title">{phrase}</h2>
-            ))}
+            <div  className="carousel-images">
+                {renderedPhrases.map((phrase) => (
+                    <div key={phrase.id} className="carousel-item">
+                        <h2 className="carousel-title">{phrase.text}</h2>
+                        {phrase.image && (
+                            <img src={phrase.image.src} alt="Carousel Image" className="carousel-image" />
+                        )}
+                    </div>
+                ))}
+            </div>
             <button className="carousel-button" onClick={nextPhrase}>
-                Next
+                <FontAwesomeIcon icon={faCircleChevronRight} size="2xl" style={{ color: "#009fde", }} />
             </button>
         </div>
     );
 };
 
 export default Carousel;
+

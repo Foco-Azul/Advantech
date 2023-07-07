@@ -30,3 +30,11 @@
     transition: 0.5s;
     color: aliceblue;
 }
+
+
+
+@media (max-width: 525px) {
+    .login-name {
+        display: none;
+    }
+}
