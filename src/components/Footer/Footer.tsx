@@ -1,5 +1,5 @@
 import Image from "next/image";
-import './Footer.css'
+import './Footer.css';
 import Logo from "./image/logo-advantech-datos.svg"
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
