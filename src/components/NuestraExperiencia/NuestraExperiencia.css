@@ -1,0 +1,37 @@
+.nuestraexperiencia-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: auto;
+}
+
+.nuestraexperiencia-title {
+    color: var(--brand-primary, #009FDE);
+    text-align: center;
+    font-family: Manrope, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 140%;
+}
+
+.nuestraexperiencia-subtitle {
+    color: var(--gray-900, #131022);
+    text-align: center;
+    font-family: Manrope, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%;
+}
+
+.nuestraexperiencia-text {
+    color: var(--gray-700, #585C7B);
+    text-align: center;
+    font-family: Manrope, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+}

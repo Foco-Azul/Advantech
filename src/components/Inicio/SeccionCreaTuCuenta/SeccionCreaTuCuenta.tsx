@@ -2,7 +2,7 @@ import Image from "next/image";
 import './SeccionCreaTuCuenta.css'
 import ImageGrafico from "./image/grafico.svg"
 
-async function SeccionCreaTuCuenta() {
+function SeccionCreaTuCuenta() {
   return (
         <section>
             <div className="seccion_1">

@@ -1,3 +1,4 @@
+
 import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta";
 import SeccionAyuda from "@/components/Inicio/SeccionAyuda/SeccionAyuda";
 import SeccionRecursos from "@/components/Inicio/SeccionRecursos/SeccionRecursos";
@@ -9,14 +10,11 @@ import { Providers } from "./providers";
 
 export const dynamic = "force-dynamic";
 
-
-export default async function Page() {
-
+export default function Page() {
 
 
   return (
-    <Providers >
-
+    <Providers>
       <div className="hero-back">
         <>
           <header className="w-full relative">
@@ -25,14 +23,11 @@ export default async function Page() {
           <Hero/>
           <SeccionProductos/>
           <SeccionRecursos/>
-          <SeccionAyuda/>
+          <SeccionAyuda />
           <SeccionCreaTuCuenta />
           <Footer />
         </>
       </div>
-
     </Providers>
-
-
   );
 }

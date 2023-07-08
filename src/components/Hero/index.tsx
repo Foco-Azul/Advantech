@@ -5,7 +5,7 @@ import Carousel from "./Carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 
-function Hero({ hero }: any) {
+function Hero() {
 
   return (
     <section >

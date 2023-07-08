@@ -70,7 +70,9 @@ const BurguerMenu: React.FC = () => {
       {isPopupOpen && (
         <div className="popup">
           <ul>
-            <li>¿POR QUÉ ADVANTECH?</li>
+            <Link href="/sobre-nosotros" legacyBehavior passHref>
+              <li>¿POR QUÉ ADVANTECH?</li>
+            </Link>
             <li>PRODUCTOS</li>
             <li>RECURSOS</li>
             <li>
