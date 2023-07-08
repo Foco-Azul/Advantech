@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareFacebook} from  "@fortawesome/free-brands-svg-icons";
 
-async function Footer() {
+function Footer() {
 
   return (
     <footer className="footer-home">

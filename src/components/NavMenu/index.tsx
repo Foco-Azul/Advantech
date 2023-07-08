@@ -40,7 +40,7 @@ function NavMenu() {
       </div>
       <ul className="navigation-menu-list">
         <li className="navigation-menu-item">
-          <Link href="/" legacyBehavior passHref>
+          <Link href="/sobre-nosotros" legacyBehavior passHref>
             <a>¿POR QUÉ ADVANTECH?</a>
           </Link>
         </li>
@@ -73,7 +73,7 @@ function NavMenu() {
           </div>
           <ul className="navigation-menu-list">
             <li className="navigation-menu-item">
-              <Link href="/" legacyBehavior passHref>
+              <Link href="/sobre-nosotros" legacyBehavior passHref>
                 <a>¿POR QUÉ ADVANTECH?</a>
               </Link>
             </li>
