@@ -2,7 +2,7 @@ import Image from "next/image";
 import './SeccionCreaTuCuenta.css'
 import ImageGrafico from "./image/grafico.svg"
 
-async function Seccion_1() {
+async function SeccionCreaTuCuenta() {
   return (
         <section>
             <div className="seccion_1">
@@ -20,6 +20,6 @@ async function Seccion_1() {
     )
 }
 
-export default Seccion_1;
+export default SeccionCreaTuCuenta;
 
   

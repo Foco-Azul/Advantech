@@ -3,7 +3,7 @@ import './Footer.css';
 import Logo from "./image/logo-advantech-datos.svg"
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareFacebook} from  "@fortawesome/free-brands-svg-icons";
+import { faSquareFacebook, faTwitter, faInstagram, faYoutube} from  "@fortawesome/free-brands-svg-icons";
 
 async function Footer() {
 
@@ -16,10 +16,10 @@ async function Footer() {
             <Image src={Logo} alt="Company Logo" width={164} height={133}/>
           <div className="footer-rrss">
 
-            <Link href="/docs" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} size="xs" /></Link>
-            <Link href="/docs" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} size="xs" /></Link>
-            <Link href="/docs" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} size="xs" /></Link>
-            <Link href="/docs" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} size="xs" /></Link>
+            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} /></Link>
+            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faTwitter} /></Link>
+            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faInstagram} /></Link>
+            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faYoutube} /></Link>
           </div>
             <div>
               <p>Duis euismod enim, facilisis risus tellus pharetra lectus diam neque. Nec ultrices mi faucibus est. Magna ullamcorper potenti elementum ultricies auctor nec volutpat augue.</p>
