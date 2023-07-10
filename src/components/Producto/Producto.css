@@ -9,6 +9,7 @@
 }
 
 .producto-card {
+    margin: auto;
     border-radius: 8px;
     margin-top: 70px;
     background: var(--white, #FFF);
@@ -44,7 +45,7 @@
 
 .producto-text {
     color: var(--gray-700, #585C7B);
-    font-family: Manrope;
+    font-family: Manrope,sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
