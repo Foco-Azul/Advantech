@@ -8,6 +8,7 @@ import './planes.css'
 import NuestraExperiencia from '@/components/NuestraExperiencia/NuestraExperiencia';
 import Producto from '@/components/Producto/Producto';
 import SeccionCreaTuCuenta from '@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta';
+import ObtencionDatos from '@/components/ObtencionDatos/ObtencionDatos';
 
 export default function Sobrenosotros() {
     return (
@@ -30,7 +31,10 @@ export default function Sobrenosotros() {
             <Producto />
             <br></br>
             <br></br>
-            <SeccionCreaTuCuenta/>
+            <SeccionCreaTuCuenta />
+            <br></br>
+            <br></br>
+            <ObtencionDatos></ObtencionDatos>
             <Footer />
         </div>
     );
