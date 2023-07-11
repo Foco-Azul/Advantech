@@ -39,9 +39,7 @@
 .seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont{
     max-width: 570px;
     padding: 20px 20px 20px 20px;
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
+    box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.06);
 }
 
 .seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont > h4{

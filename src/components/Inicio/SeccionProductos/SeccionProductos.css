@@ -33,3 +33,26 @@
 .productos-der{
     width: 800px;
 }
+
+
+.acordeon {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .acordeon-cabecera {
+    background-color: #f5f5f5;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .acordeon-contenido {
+    padding: 10px;
+    display: none;
+  }
+  
+  .acordeon.abierto .acordeon-contenido {
+    display: block;
+  }
+  
