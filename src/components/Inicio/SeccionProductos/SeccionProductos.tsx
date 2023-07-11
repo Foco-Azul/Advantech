@@ -1,13 +1,6 @@
-import Image from "next/image";
 import './SeccionProductos.css'
-import Link from "next/link";
-import ImageRecursos from "./image/imagen-advantech-laptop.svg"
-import IconLaptop from "./image/icon-laptop.svg"
-import IconBuscador from "./image/icon-buscador.svg"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
-async function SeccionProductos() {
+function SeccionProductos() {
   return (
         <section className="seccion-productos">
             <div className="productos-contenido">

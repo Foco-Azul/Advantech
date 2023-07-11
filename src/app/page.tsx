@@ -1,4 +1,3 @@
-
 import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta";
 import SeccionAyuda from "@/components/Inicio/SeccionAyuda/SeccionAyuda";
 import SeccionRecursos from "@/components/Inicio/SeccionRecursos/SeccionRecursos";
