@@ -12,7 +12,10 @@ export const dynamic = "force-dynamic";
 
 export const metadata:Metadata ={
   title:"Advantech datos",
-  description:"esta es una descripcion de prueba"
+  description:"esta es una descripcion de prueba",
+  openGraph: {
+    images: ['./logo-image.png'],
+  },
 }
 export default function Page() {
   return (

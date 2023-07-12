@@ -1,6 +1,6 @@
 import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import './creditos.css'
+//import './creditos.css'
 import NavMenu from '@/components/NavMenu/index';
 import Pasarela from '@/components/Pasarela/Pasarela';
 import CreditComponent from "@/components/Credits/CreditComponent";
