@@ -14,7 +14,7 @@ export const metadata:Metadata ={
   title:"Advantech datos",
   description:"esta es una descripcion de prueba",
   openGraph: {
-    images: ['https://admin.advantech.com.ec/uploads/thumbnail_logo_26fd28ce2d.png']
+    images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   }
 }
 export default function Page() {
