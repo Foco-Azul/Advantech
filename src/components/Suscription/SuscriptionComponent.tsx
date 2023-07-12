@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import "./SuscriptionComponent.css";
 import Pasarela from '../Pasarela/Pasarela';

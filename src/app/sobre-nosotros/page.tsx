@@ -3,7 +3,7 @@ import Footer from '@/components/Footer/Footer';
 import NavMenu from '@/components/NavMenu/index';
 import SobreNosotros from '@/components/SobreNosotros/SobreNosotros';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
-import "../app/globals.css"
+import "../globals.css"
 import './planes.css'
 import NuestraExperiencia from '@/components/NuestraExperiencia/NuestraExperiencia';
 import Producto from '@/components/Producto/Producto';
