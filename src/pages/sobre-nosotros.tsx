@@ -9,6 +9,12 @@ import NuestraExperiencia from '@/components/NuestraExperiencia/NuestraExperienc
 import Producto from '@/components/Producto/Producto';
 import SeccionCreaTuCuenta from '@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta';
 import ObtencionDatos from '@/components/ObtencionDatos/ObtencionDatos';
+import { Metadata } from "next";
+
+export const metadata:Metadata ={
+    title:"Sobre nosotros",
+    description:"esta es una descripcion de prueba"
+  }
 
 export default function Sobrenosotros() {
     return (

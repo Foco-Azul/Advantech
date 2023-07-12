@@ -6,9 +6,14 @@ import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Hero";
 import NavMenu from "@/components/NavMenu";
 import { Providers } from "./providers";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
+export const metadata:Metadata ={
+  title:"Advantech datos",
+  description:"esta es una descripcion de prueba"
+}
 export default function Page() {
 
 

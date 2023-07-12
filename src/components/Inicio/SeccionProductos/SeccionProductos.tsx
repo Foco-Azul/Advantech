@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import './SeccionProductos.css';
+import Image from 'next/image';
+import ImageEmail from "./image/imagen-email.svg"
 
 function SeccionProductos() {
   const [isOpen, setIsOpen] = useState([false, false, false, false]);
@@ -26,6 +28,7 @@ function SeccionProductos() {
               <h3>Datos por email</h3>
             </div>
             <div className="acordeon-contenido">
+              <Image src={ImageEmail} width={150} height={150} alt='advantech-email'></Image>
               <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>
             </div>
           </div>

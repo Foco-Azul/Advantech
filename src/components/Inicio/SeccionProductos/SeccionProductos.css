@@ -8,9 +8,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    padding: 0 20px;
 }
 .productos-izq{
-    width: 550px;
+    width: 500px;
 }
 .productos-izq > h4{
     font-size: 24px;
@@ -31,7 +33,7 @@
 
 
 .productos-der{
-    width: 800px;
+    width: 700px;
 }
 
 
@@ -42,17 +44,27 @@
   }
   
   .acordeon-cabecera {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     padding: 10px;
     cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
   }
   
   .acordeon-contenido {
     padding: 10px;
     display: none;
+    font-size: 16px;
+    font-weight: 400;
   }
   
   .acordeon.abierto .acordeon-contenido {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .acordeon.abierto .acordeon-contenido > p{
+    padding: 0 30px;
+    max-width: 520px;
   }
   
