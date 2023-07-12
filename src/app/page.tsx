@@ -15,8 +15,6 @@ export const metadata:Metadata ={
   description:"esta es una descripcion de prueba"
 }
 export default function Page() {
-
-
   return (
     <Providers>
       <div className="hero-back">
@@ -24,9 +22,9 @@ export default function Page() {
           <header className="w-full relative">
             <NavMenu />
           </header>
-          <Hero/>
-          <SeccionProductos/>
-          <SeccionRecursos/>
+          <Hero />
+          <SeccionProductos />
+          <SeccionRecursos />
           <SeccionAyuda />
           <SeccionCreaTuCuenta />
           <Footer />
