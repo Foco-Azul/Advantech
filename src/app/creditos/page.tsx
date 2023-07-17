@@ -7,7 +7,15 @@ import CreditComponent from "@/components/Credits/CreditComponent";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import SearchComponent from "@/components/SearchComponent/SearchComponent";
 import Footer from '@/components/Footer/Footer';
+import { Metadata } from "next";
 
+export const metadata:Metadata ={
+    title:"Creditos",
+    description:"esta es una descripcion de prueba",
+    openGraph: {
+      images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
+    }
+  }
 
 export default function Creditos() {
 
