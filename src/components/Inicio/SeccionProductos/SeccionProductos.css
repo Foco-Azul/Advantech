@@ -44,6 +44,9 @@
   }
   
   .acordeon-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #ffffff;
     padding: 10px;
     cursor: pointer;

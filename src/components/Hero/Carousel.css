@@ -3,11 +3,12 @@
   align-items: center;
   justify-content: space-between;
   height: 300px;
+  width: 70%;
 }
 
 .carousel-item {
   flex: 0 0 calc(33.33% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
-  margin: 0 5px; /* Ajusta el margen entre los elementos según tus necesidades */
+  margin: auto; /* Ajusta el margen entre los elementos según tus necesidades */
 }
 
 .carousel-image {
@@ -20,6 +21,14 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  max-width: 70%;
 }
 
+@media only screen and (max-width: 768px) {
+  .carousel {
+    width: 90%;
+  }
+  .carousel-item {
+    flex: unset;
+  }
+
+}
