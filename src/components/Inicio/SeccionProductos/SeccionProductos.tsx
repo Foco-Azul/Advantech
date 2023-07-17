@@ -25,10 +25,9 @@ function SeccionProductos() {
         <div className="productos-der">
           <div className={`acordeon ${isOpen[0] ? 'abierto' : ''}`}>
             <div className="acordeon-cabecera" onClick={() => toggleAccordion(0)}>
-              <h3>Datos por email</h3>
+              <h3>Datos por buscador</h3>
             </div>
             <div className="acordeon-contenido">
-              <Image src={ImageEmail} width={150} height={150} alt='advantech-email'></Image>
               <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>
             </div>
           </div>
@@ -38,13 +37,14 @@ function SeccionProductos() {
               <h3>Datos por email</h3>
             </div>
             <div className="acordeon-contenido">
+              <Image src={ImageEmail} width={150} height={150} alt='advantech-email'></Image>
               <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>
             </div>
           </div>
 
           <div className={`acordeon ${isOpen[2] ? 'abierto' : ''}`}>
             <div className="acordeon-cabecera" onClick={() => toggleAccordion(2)}>
-              <h3>Datos por email</h3>
+              <h3>Datos por descargas</h3>
             </div>
             <div className="acordeon-contenido">
               <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>
@@ -53,7 +53,7 @@ function SeccionProductos() {
 
           <div className={`acordeon ${isOpen[3] ? 'abierto' : ''}`}>
             <div className="acordeon-cabecera" onClick={() => toggleAccordion(3)}>
-              <h3>Datos por email</h3>
+              <h3>Datos por API</h3>
             </div>
             <div className="acordeon-contenido">
               <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>

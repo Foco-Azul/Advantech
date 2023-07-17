@@ -1,0 +1,79 @@
+.seccion-suscripcion{
+    padding: 50px 0;
+}
+
+.seccion-suscripcion > div{
+    max-width: 1300px;
+    margin: auto;
+}
+
+.seccion-suscripcion-encabezado{
+    text-align: center;
+}
+
+.seccion-suscripcion-encabezado > h2{
+    font-size: 32px;
+    font-weight: 800;
+    max-width: 700px;
+    margin: auto;
+}
+
+.seccion-suscripcion-encabezado > p{
+    font-size: 16px;
+    font-weight: 400;
+    margin: auto;
+    max-width: 600px;
+}
+
+.seccion-suscripcion-tipo{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 50px 0;
+}
+
+.seccion-suscripcion-tipo-empresa,
+.seccion-suscripcion-tipo-persona{
+    max-width: 570px;
+    padding: 20px 20px 20px 20px;
+    box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.06);
+}
+
+.seccion-suscripcion-tipo-empresa > h4,
+.seccion-suscripcion-tipo-persona > h4{
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+.seccion-suscripcion-tipo-empresa > p,
+.seccion-suscripcion-tipo-persona > p{   
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.seccion-suscripcion-tipo-empresa > a,
+.seccion-suscripcion-tipo-persona > a{  
+    margin-right: 10px;
+    font-weight: 600;
+    color: #009FDE;
+    margin-left: 10px;
+}
+
+.seccion-suscripcion-footer{
+    text-align: center;
+}
+.seccion-suscripcion-footer > button{
+    margin-bottom: 30px;
+}
+.seccion-suscripcion-footer > a{
+    margin-right: 10px;
+}
+
+@media only screen and (max-width: 525px) {
+
+    .seccion-suscripcion-tipo-empresa,
+    .seccion-suscripcion-tipo-persona{
+        margin-bottom: 50px;
+    }
+}

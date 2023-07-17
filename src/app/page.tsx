@@ -2,6 +2,7 @@ import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/Seccion
 import SeccionAyuda from "@/components/Inicio/SeccionAyuda/SeccionAyuda";
 import SeccionRecursos from "@/components/Inicio/SeccionRecursos/SeccionRecursos";
 import SeccionProductos from "@/components/Inicio/SeccionProductos/SeccionProductos";
+import SeccionSuscripcion from "@/components/Inicio/SeccionSuscripcion/SeccionSuscripcion";
 import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Hero";
 import NavMenu from "@/components/NavMenu";
@@ -26,9 +27,9 @@ export default function Page() {
             <NavMenu />
           </header>
           <Hero />
+          <SeccionSuscripcion />
           <SeccionProductos />
           <SeccionRecursos />
-          <SeccionAyuda />
           <SeccionCreaTuCuenta />
           <Footer />
         </>
