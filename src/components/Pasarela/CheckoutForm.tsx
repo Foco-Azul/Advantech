@@ -106,6 +106,27 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           }
         );
 
+        const posthistorial = await fetch(
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: {
+                auth_0_user: userid,
+                creditos: creditos,
+                fecha: fechaActual,
+                precio:price,
+                plane: planid
+              },
+            }
+            ),
+            cache: "no-store",
+          }
+        );
+
         if (postResponse.status === 200) {
           console.log("Usuario actualizado con éxito.");
         } else {

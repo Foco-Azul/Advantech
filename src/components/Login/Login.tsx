@@ -62,8 +62,8 @@ function Login({ loginname }: LoginProps) {
               data: {
                 email: user.email,
                 username: user.name,
-                plan: 4,
                 vencimiento: "2023-01-01",
+                plan: 4
               },
             }),
             cache: "no-store",
