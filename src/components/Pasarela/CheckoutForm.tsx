@@ -106,29 +106,33 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           }
         );
 
-        const posthistorial = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              data: {
-                auth_0_user: userid,
-                creditos: creditos,
-                fecha: fechaActual,
-                precio:price,
-                plane: planid
-              },
-            }
-            ),
-            cache: "no-store",
-          }
-        );
-
         if (postResponse.status === 200) {
+          const posthistorial = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: {
+                  auth_0_user: userid,
+                  creditos: creditos,
+                  fecha: fechaActual,
+                  precio: price,
+                  plane: planid
+                },
+              }
+              ),
+              cache: "no-store",
+            }
+          );
           console.log("Usuario actualizado con éxito.");
+
+          // Redirect to "/busqueda" after 2 seconds
+          setTimeout(() => {
+            window.location.href = "/busqueda";
+          }, 2000);
         } else {
           console.log(postResponse.status);
           throw new Error(`Failed to create user, ${postResponse.status}`);
@@ -158,14 +162,13 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           </div>
         )}
         {!loading && showPaymentButton && (
-          <div>
-            <button disabled={!stripe} className='checkoutform-button'>Confirmar pago de ${price}</button>
+          <div className='checkoutform-container-button'>
+            <button disabled={!stripe} className='checkoutform-button'>Confirmar pago de ${price.toFixed(2)}</button>
           </div>
         )}
         {loading && <CircularProgress />}
       </form>
     </div>
-
   );
 };
 

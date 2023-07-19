@@ -1,31 +1,29 @@
-
-
 .subscription-component {
   display: flex;
   justify-content: center;
-  max-width: 1100px;
+  max-width: 100%;
   margin: auto;
   align-items: center;
   margin-top: 50px;
   flex-wrap: wrap;
-margin: auto;
+  margin: auto;
 }
 
 .subscription-card {
-  width: 300px;
-  max-width: 250px;
-  min-height: 373px;
+  width: 416px;
+  min-height: 544px;
   height: auto;
   background-color: #FFFFFF;
-  border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 8px 24px -8px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.06);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   margin: 10px;
 }
+
 
 .subscription-plan {
   font-size: 23px;
@@ -39,11 +37,18 @@ margin: auto;
 .subscription-caracteristics {
   align-items: left;
   margin-top: 15px;
+  width: 336px;
 }
 
 .subscription-price {
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 800;
+}
+
+.subscription-card-header {
+  display: flex;
+  flex-direction: column;
+align-items: center;
 }
 
 .subscription-hr {
@@ -58,7 +63,7 @@ margin: auto;
   border-radius: 6px;
   background: var(--brand-primary, #009FDE);
   box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
-  min-width: 225px;
+  width: 336px;
   color: var(--white, #FFF);
   text-align: center;
   font-size: 16px;
@@ -118,7 +123,7 @@ margin: auto;
 .subscription-close-button {
   position: relative;
   left: 49%;
-  bottom: 27px;
+  bottom: 13px;
   width: 30px;
   height: 30px;
   background-color: red !important;
@@ -129,5 +134,5 @@ margin: auto;
 
 
 .subscription-caracteristics svg {
-margin-right: 15px;
+  margin-right: 15px;
 }

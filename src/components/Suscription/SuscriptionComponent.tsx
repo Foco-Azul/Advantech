@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import "./SuscriptionComponent.css";
 import Pasarela from '../Pasarela/Pasarela';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHippo, faHourglassStart, faCediSign, faMagnifyingGlass, faDatabase, faTable } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,11 +19,21 @@ interface SubscriptionCardProps {
     userid: number | null;
     buscador: boolean;
     api: boolean;
+    xlsx: boolean;
+    csv: boolean;
+    txt: boolean;
+    pdf: boolean;
+    soporte: boolean;
 }
 
 interface Plan {
     id: number;
     attributes: {
+        XLSX: boolean;
+        CSV: boolean;
+        TXT: boolean;
+        PDF: boolean;
+        Soporte: boolean;
         Plan: string;
         Buscador: boolean;
         Precio: number;
@@ -33,10 +44,9 @@ interface Plan {
         API: boolean;
         Creditos: number;
     };
-
 }
 
-const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid }) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleSubscribe = () => {
@@ -49,16 +59,37 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
 
     return (
         <div className="subscription-card">
-            <h2 className="subscription-plan">{plan}</h2>
-            <h3 className="subscription-price">${price}</h3>
-            <h3 className="subscription-pricecredits">${price / creditos} / crédito</h3>
+            <div className="subscription-card-header">
+                <h2 className="subscription-plan">{plan}</h2>
+                <h3 className="subscription-price"> {(price != 0) ? `$ ${price}` : "Desde $10"}</h3>
+                <h3 className="subscription-pricecredits">   {(price != 0) ? ` ${price / creditos} / crédito` : ""}</h3>
+            </div>
             <hr className="subscription-hr" />
             <div className="subscription-caracteristics">
-                <h3><FontAwesomeIcon icon={faCediSign} style={{color: "#009fde",}} />Créditos: {creditos}</h3>
-                <h3><FontAwesomeIcon icon={faHourglassStart} style={{color: "#009fde",}}/>Duración de {planvencimiento} meses</h3>
-                <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{color: "#009fde",}}/>{buscador ? "Acceso al buscador" : "Sin acceso al buscador"}</h3>
-                <h3><FontAwesomeIcon icon={faDatabase} style={{color: "#009fde",}} />{api ? "Acceso a la api" : "Sin acceso a la api"}</h3>
-                <h3><FontAwesomeIcon icon={faTable} style={{color: "#009fde",}} />Formato de entrega de datos</h3>
+                <h3><FontAwesomeIcon icon={faCediSign} style={{ color: "#009fde", }} />
+                    {(price != 0) ? ` ${creditos} créditos` : "Compra los créditos que necesites"}
+                </h3>
+                <h3><FontAwesomeIcon icon={faHourglassStart} style={{ color: "#009fde", }} />
+                    Duración de {planvencimiento} meses
+                </h3>
+                <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
+                    {buscador ? "Acceso al buscador" : "Sin acceso al buscador"}
+                </h3>
+                <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
+                    {soporte ? `Soporte ${plan}` : "Sin soporte"}
+                </h3>
+                <h3><FontAwesomeIcon icon={faDatabase} style={{ color: "#009fde", }} />
+                    {api ? "Acceso a la api" : "Sin acceso a la api"}
+                </h3>
+                <h3><FontAwesomeIcon icon={faTable} style={{ color: "#009fde", }} />
+                    Formato de entrega de datos
+                    <p>
+                        {[pdf ? "PDF" : null, xlsx ? "XLSX" : null, csv ? "CSV" : null, txt ? "TXT" : null]
+                            .filter(element => element !== null)
+                            .join(", ")}
+                    </p>
+
+                </h3>
             </div>
             {(uservencimiento && new Date(uservencimiento) < new Date()) && (price !== 0) && (
                 <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
@@ -66,6 +97,10 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
             {(uservencimiento && new Date(uservencimiento) > new Date()) && (userPlanPrice !== null && price > userPlanPrice) && (price !== 0) && (
                 <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
             )}
+            {(price == 0) &&
+                <Link href="/alacarta" legacyBehavior passHref>
+                    <button className='subscription-card-button' > Saber más del plan a la carta </button>
+                </Link>}
             {isOpen && (
                 <div className="subscription-popup">
                     <div className="subscription-popup-content">
@@ -78,7 +113,15 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                         <p>Créditos a obtener {creditos}</p>
                         <hr className="subscription-hr" />
                         <br></br>
-                        <Pasarela userid={userid} planvencimiento={planvencimiento} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} />
+                        <Pasarela
+                            userid={userid}
+                            planvencimiento={planvencimiento}
+                            price={price}
+                            plan={plan}
+                            creditos={creditos}
+                            userCredits={userCredits}
+                            planid={planid}
+                        />
                     </div>
                 </div>
             )}
@@ -115,7 +158,6 @@ const SubscriptionComponent: React.FC = () => {
                     setUserCredits(userCredits);
                     setUserVencimiento(userVencimiento);
                     setUserId(userId);
-
                     console.log("Precio:", userPlanData)
                     console.log("Creditos:", userCredits)
                     console.log("Uservencimiento:", userVencimiento)
@@ -175,7 +217,6 @@ const SubscriptionComponent: React.FC = () => {
 
     return (
         <div className="subscription-component">
-
             <UserProvider>
                 {plans.map(plan => (
                     <SubscriptionCard
@@ -191,6 +232,11 @@ const SubscriptionComponent: React.FC = () => {
                         userid={userId}
                         buscador={plan.attributes.Buscador}
                         api={plan.attributes.API}
+                        xlsx={plan.attributes.XLSX}
+                        csv={plan.attributes.CSV}
+                        txt={plan.attributes.TXT}
+                        pdf={plan.attributes.PDF}
+                        soporte={plan.attributes.Soporte}
                     />
                 ))}
             </UserProvider>

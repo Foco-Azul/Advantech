@@ -4,33 +4,91 @@
 }
 
 .credit-card {
-    background-color: #ffffff;
+    width: 416px;
+    min-height: 544px;
+    height: auto;
+    background-color: #FFFFFF;
     border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    width: 200px;
-    text-align: center;
+    box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.06);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px;
 }
 
 .credit-card h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
+    color: var(--gray-900, #131022);
+    text-align: center;
+
+    /* Heading / H2 */
+    font-family: Manrope, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%;
+    /* 41.6px */
 }
 
 .credit-card p {
-    font-size: 14px;
-    margin-bottom: 16px;
+    color: var(--gray-600, #9397AD);
+    text-align: center;
+
+    /* Body/XL */
+    font-family: Manrope, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+    /* 32px */
 }
 
-.credit-card button {
-    background-color: #03a9f4;
-    border: none;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 8px 16px;
+.credit-button{
+    height: 42px;
+    border-radius: 6px;
+    background: var(--brand-primary, #009FDE);
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+    width: 336px;
+    color: var(--white, #FFF);
+    text-align: center;
+    font-size: 16px;
+    font-family: Manrope, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%;
+    margin-top: 15px;
+    transition: 0.5s;
 }
+
+.credit-button:hover {
+    background-color: #0099CC;
+    box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+    transition: 0.5s;
+}
+
+
+
+.credit-hr {
+    color: black;
+    height: 8px;
+    size: 8px;
+    width: 100%;
+}
+
+.credit-input {
+    color: var(--gray-900, #131022);
+    text-align: center;
+    font-family: Manrope, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%;
+    border: 2px solid;
+    border-color: #0099CC;
+    border-radius: 5px;
+}
+
 
 .credit-popup {
     background-color: rgba(0, 0, 0, 0.8);
@@ -43,44 +101,42 @@
     left: 0;
     width: 100%;
     z-index: 9999;
-}
-
-.credit-popup-content {
+  }
+  
+  .credit-popup-content {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    width: 300px;
+    padding: 20px;
+    width: 400px;
     text-align: center;
-}
-
-.credit-popup-content h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-}
-
-.credit-popup-content p {
-    font-size: 14px;
-    margin-bottom: 16px;
-}
-
-.credit-popup-content button {
-    background-color: #03a9f4;
-    border: none;
-    border-radius: 4px;
-    color: #ffffff;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 8px 16px;
-}
-
-.credit-close-button {
+  }
+  
+  
+  .credit-popup-content-button {
+    height: 52px;
+    border-radius: 6px;
+    background: var(--brand-primary, #009FDE);
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+    min-width: 225px;
+    color: var(--white, #FFF);
+    text-align: center;
+    font-size: 16px;
+    font-family: Manrope, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%;
+  }
+  
+  .credit-close-button {
     position: relative;
     left: 49%;
     bottom: 13px;
-    width: 30px;
+    width: 30px ;
     height: 30px;
-    background-color: red !important;
-    padding: 1px !important;
-    border-radius: 18px !important;
-}
+    background-color: red ;
+    color: #FFFFFF;
+    padding: 1px ;
+    border-radius: 28px ;
+  }
+

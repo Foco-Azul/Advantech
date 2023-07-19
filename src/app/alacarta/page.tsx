@@ -1,6 +1,6 @@
 import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-//import './creditos.css'
+import './alacarta.css'
 import NavMenu from '@/components/NavMenu/index';
 import Pasarela from '@/components/Pasarela/Pasarela';
 import CreditComponent from "@/components/Credits/CreditComponent";
@@ -8,19 +8,20 @@ import { UserProvider } from '@auth0/nextjs-auth0/client';
 import SearchComponent from "@/components/SearchComponent/SearchComponent";
 import Footer from '@/components/Footer/Footer';
 import { Metadata } from "next";
+import Tabla from "@/components/Tabla/Tabla";
 
-export const metadata:Metadata ={
-    title:"Creditos",
-    description:"esta es una descripcion de prueba",
+export const metadata: Metadata = {
+    title: "Creditos",
+    description: "esta es una descripcion de prueba",
     openGraph: {
-      images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
+        images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
     }
-  }
+}
 
-export default function Creditos() {
+export default function Alacarta() {
 
     return (
-        <div>
+        <div className="alacarta-back">
             <header className="w-full relative">
                 <UserProvider>
                     <NavMenu />
@@ -28,15 +29,19 @@ export default function Creditos() {
             </header>
             <br></br>
             <br></br>
-            <div id="container-card-element">
-                <h1>Compra tus créditos</h1>
-                <br></br>
-                <UserProvider>
-                    <CreditComponent></CreditComponent>
-                </UserProvider>
-                {/* <br></br>
-                <SearchComponent /> */}
+            <h2 className="alacarta-h2">PLAN A LA CARTA</h2>
+            <h1 className="alacarta-h1">Compra créditos según tus necesidades</h1>
 
+            <div id="container-card-element" className="alacarta-container">
+                <br></br>
+                <div className="alacarta-items">
+                    <Tabla></Tabla>
+                    <UserProvider>
+                        <CreditComponent></CreditComponent>
+                    </UserProvider>
+                    {/* <br></br>
+                <SearchComponent /> */}
+                </div>
             </div>
             <Footer></Footer>
         </div>

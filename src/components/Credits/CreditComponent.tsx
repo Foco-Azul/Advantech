@@ -29,28 +29,49 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setBuyCredits(Number(event.target.value));
+        const inputValue = Number(event.target.value);
+        if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 20000) {
+            setBuyCredits(inputValue);
+        }
     };
 
-    const procesarPago = () => {
-        const nuevoPrecio = buycredits / 2;
-        // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
-        console.log('Nuevo precio:', nuevoPrecio);
-    };
+    let nuevoPrecio = 0;
+    if (buycredits >= 0 && buycredits < 5000) {
+        nuevoPrecio = buycredits * 0.11;
+    } else if (buycredits >= 5000 && buycredits < 10000) {
+        nuevoPrecio = buycredits * 0.10;
+    } else if (buycredits >= 10000 && buycredits < 15000) {
+        nuevoPrecio = buycredits * 0.09;
+    } else if (buycredits >= 15000 && buycredits < 20000) {
+        nuevoPrecio = buycredits * 0.08;
+    } else {
+        // Handle other cases here (if needed)
+        nuevoPrecio = buycredits * 0.08; // Default to the lowest price per credit
+    }
+     
+    // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
+    console.log('Nuevo precio:', nuevoPrecio);
+
 
     return (
         <div className="credit-card">
-            <p>Tus créditos actuales: {userCredits}</p>
-            <p>Cantidad de créditos a comprar</p>
+            <p className="credit-card-p">Tus créditos actuales: {userCredits}</p>
+            <h3>Cantidad de créditos a comprar</h3>
             <input
+                className="credit-input"
                 type="number"
-                value={buycredits}
+                min={50}
+                max={20000}
+                value={buycredits.toString()}
                 onChange={handleInputChange}
                 placeholder="Ingrese la cantidad de créditos"
             />
-            <p>Precio: ${buycredits / 2}</p>
+            <hr className="credit-hr" />
 
-            <button onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
+            <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
+            <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
+
+            <button  className="credit-button" onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
 
             {isOpen && (
                 <div className="credit-popup">
@@ -59,15 +80,16 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                             X
                         </button>
                         <h4>Confirmar tus creditos</h4>
-                        <p>Precio: ${buycredits / 2}</p>
+                        <p>Precio: ${nuevoPrecio.toFixed(2)}</p>
                         <p>Créditos a obtener {buycredits}</p>
+                        <br></br>
                         <Pasarela
                             planvencimiento={planvencimiento}
-                            price={buycredits / 2}
+                            price={nuevoPrecio}
                             plan={plan}
                             creditos={buycredits}
                             userCredits={userCredits}
-                            planid={planid}
+                            planid={4}
                             userid={userid}
                         />
                     </div>
@@ -143,24 +165,34 @@ const CreditComponent: React.FC = () => {
     return (
         <div className="credit-component">
             <UserProvider>
-                {(vencimientoDate && vencimientoDate > currentDate) && <SubscriptionCard
+                <SubscriptionCard
                     userPlanPrice={userPlanPrice}
                     userCredits={userCredits}
                     uservencimiento={userVencimiento}
                     price={0}
                     plan={'de creditos'}
                     creditos={0}
-                    planid={planId}
+                    planid={4}
                     planvencimiento={0}
                     userid={userId}
-                />}
-                {(vencimientoDate && vencimientoDate < currentDate) && 
-                <h2>Tu suscripción esta vencida</h2>}
+                />
+                {/* {(vencimientoDate && vencimientoDate > currentDate) &&
+                    <SubscriptionCard
+                        userPlanPrice={userPlanPrice}
+                        userCredits={userCredits}
+                        uservencimiento={userVencimiento}
+                        price={0}
+                        plan={'de creditos'}
+                        creditos={0}
+                        planid={4}
+                        planvencimiento={0}
+                        userid={userId}
+                    />}
+                {(vencimientoDate && vencimientoDate < currentDate) &&
+                    <h2>Tu suscripción está vencida</h2>} */}
             </UserProvider>
         </div>
     );
 };
 
 export default CreditComponent;
-
-
