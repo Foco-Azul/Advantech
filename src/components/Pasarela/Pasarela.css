@@ -5,3 +5,9 @@
     justify-content: center;
     margin: auto;
 }
+
+.checkoutform-container-button{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}

@@ -46,6 +46,11 @@ height: 70px;
   line-height: 18px;
 }
 
+.navigation-menu-button:hover{
+  box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+  transform: scale(0.95);
+}
+
 .nav-conteiner-buttons {
   display: flex;
   flex-direction: row;
