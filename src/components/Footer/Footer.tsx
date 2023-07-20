@@ -39,10 +39,8 @@ function Footer() {
               <div>
                 <h2 className="column-title">PRODUCTOS</h2>
                 <ul>
+                    <li className="list-row"><a href='#' className="link">Obtención de datos</a></li>
                     <li className="list-row"><a href='#' className="link">Precios</a></li>
-                    <li className="list-row"><a href='#' className="link">Datos por buscador</a></li>
-                    <li className="list-row"><a href='#' className="link">Datos por descargas</a></li>
-                    <li className="list-row"><a href='#' className="link">Datos por API</a></li>
                 </ul>
               </div>
               <div>
