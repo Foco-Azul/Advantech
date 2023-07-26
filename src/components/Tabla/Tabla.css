@@ -40,3 +40,15 @@
 .tabla-tr {
     background: var(--brand-primary, #009fde0f);
 }
+
+.tabla-head{
+    background: var(--brand-primary, #009FDE);
+    color: #FFF;
+    border-top-left-radius: 8px;    
+    font-family: Manrope, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%;
+height: 50px;
+}
