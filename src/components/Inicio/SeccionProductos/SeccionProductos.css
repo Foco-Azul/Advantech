@@ -7,23 +7,22 @@
     margin: auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     padding: 0 20px;
 }
 .productos-izq{
-    width: 500px;
+    width: 460px;
 }
 .productos-izq > h4{
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 800;
     margin-bottom: 25px;
     color: #20ABE2;
 }
 .productos-izq > h2{
     font-size: 32px;
     font-weight: 800;
-    max-width: 600px;
     color: #131022;
 }
 .productos-izq > p{
@@ -33,41 +32,30 @@
 
 
 .productos-der{
-    width: 700px;
+    width: 800px;
+}
+.productos-pestañas{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
+.productos-pestañas > button{
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+}
 
-.acordeon {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 20px;
-  }
-  
-  .acordeon-cabecera {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffff;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 600;
-  }
-  
-  .acordeon-contenido {
-    padding: 10px;
-    display: none;
-    font-size: 16px;
-    font-weight: 400;
-  }
-  
-  .acordeon.abierto .acordeon-contenido {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .acordeon.abierto .acordeon-contenido > p{
-    padding: 0 30px;
-    max-width: 520px;
-  }
-  
+.productos-pestañas > button.pestaña-activo{
+  background-color: #009FDE;
+  color: #ffffff;
+}
+
+.productos-contenido > img{
+  margin: auto;
+}
+
+.productos-contenido > p.contenido-activo{
+  display: block;
+}

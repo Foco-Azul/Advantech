@@ -14,42 +14,33 @@ function Footer() {
         <div className="footer-content">
           <div className="footer-izq">
             <Image src={Logo} alt="Company Logo" width={164} height={133}/>
-          <div className="footer-rrss">
-
-            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} /></Link>
-            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faTwitter} /></Link>
-            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faInstagram} /></Link>
-            <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faYoutube} /></Link>
-          </div>
-            <div>
-              <p>Duis euismod enim, facilisis risus tellus pharetra lectus diam neque. Nec ultrices mi faucibus est. Magna ullamcorper potenti elementum ultricies auctor nec volutpat augue.</p>
+            <div className="footer-rrss">
+              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} /></Link>
+              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faTwitter} /></Link>
+              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faInstagram} /></Link>
+              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faYoutube} /></Link>
             </div>
           </div>
           <div className="footer-home-links">    
               <div>
+                <h2 className="column-title">RECURSOS</h2>
+                <ul>
+                    <li className="list-row"><a href='#' className="link">Buscar datos</a></li>
+                    <li className="list-row"><a href='#' className="link">Documentación</a></li>
+                    <li className="list-row"><a href='#' className="link">Uso por industria</a></li>
+                    <li className="list-row"><a href='#' className="link">Ventajas</a></li>
+                    <li className="list-row"><a href='#' className="link">Monitorio uptime</a></li>
+                </ul>
+              </div>
+              <div>
                 <h2 className="column-title">ADVANTECH</h2>
                 <ul>
-                    <li className="list-row"><a href='#' className="link">Sobre nosotros</a></li>
+                    <li className="list-row"><a href='#' className="link">¿Quienes somos?</a></li>
                     <li className="list-row"><a href='#' className="link">Contáctanos</a></li>
                     <li className="list-row"><a href='#' className="link">Únete al equipo</a></li>
                     <li className="list-row"><a href='#' className="link">Casos de éxito</a></li>
                     <li className="list-row"><a href='#' className="link">Respaldo legal</a></li>
-                </ul>
-              </div>
-              <div>
-                <h2 className="column-title">PRODUCTOS</h2>
-                <ul>
-                    <li className="list-row"><a href='#' className="link">Obtención de datos</a></li>
                     <li className="list-row"><a href='#' className="link">Precios</a></li>
-                </ul>
-              </div>
-              <div>
-                <h2 className="column-title">RECURSOS</h2>
-                <ul>
-                    <li className="list-row"><a href='#' className="link">Documentación</a></li>
-                    <li className="list-row"><a href='#' className="link">Uso por industria</a></li>
-                    <li className="list-row"><a href='#' className="link">Comparación con otras herramientas</a></li>
-                    <li className="list-row"><a href='#' className="link">Monitorio uptime</a></li>
                 </ul>
               </div>
               <div>

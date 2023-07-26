@@ -1,4 +1,7 @@
-.seccion_1{
+.seccion-crea-tu-cuenta > div{
+    padding: 0 20px;
+}
+.crea-tu-cuenta{
     display: flex;
     background-color: #131022;
     max-width: 1200px;
@@ -8,26 +11,30 @@
     justify-content: space-evenly;
     min-height: 390px;
     align-items: center;
+    padding: 0 20px;
 }
-.seccion_1 > .content-izq{
+.crea-tu-cuenta > .content-izq{
     max-width: 610px;
     padding: 20px;
 }
-.seccion_1 > .content-izq > h2{
+.crea-tu-cuenta > .content-izq > h2{
     color: #0196D2;
     font-size: 24px;
+    font-weight: 800;
     margin-bottom: 10px;
 }
 
-.seccion_1 > .content-izq > h3{
+.crea-tu-cuenta > .content-izq > h3{
     color: #ffffff;
     font-size: 32px;
+    font-weight: 800;
     margin-bottom: 10px;
 }
 
-.seccion_1 > .content-izq > p{
+.crea-tu-cuenta > .content-izq > p{
     color: #C5C7D2;
     font-size: 16px;
+    font-weight: 400;
     margin-bottom: 10px;
 } 
 

@@ -2,8 +2,8 @@ import Image from "next/image";
 import './SeccionRecursos.css'
 import Link from "next/link";
 import ImageRecursos from "./image/imagen-advantech-laptop.svg"
-import IconLaptop from "./image/icon-laptop.svg"
-import IconBuscador from "./image/icon-buscador.svg"
+import IconIndustria from "./image/icon-industria.svg"
+import IconCheck from "./image/icon-check.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
@@ -25,13 +25,13 @@ async function SeccionRecursos() {
                 </div>
                 <div className="seccion-recursos-inferior">
                     <div className="seccion-recursos-inferior-cont">
-                        <Image src={IconLaptop} width={80} height={80} alt="advantech-recursos"></Image>
+                        <Image src={IconIndustria} width={80} height={80} alt="advantech-recursos"></Image>
                         <h4>Uso por industria</h4>
                         <p>Aprende cómo la utilización de datos puede ayudarte a obtener una ventaja competittiva en tu rubro.</p>
                         <Link href="#" legacyBehavior passHref>Ver más</Link><FontAwesomeIcon icon={faArrowRight} />
                     </div>
                     <div className="seccion-recursos-inferior-cont">
-                        <Image src={IconBuscador} width={80} height={80} alt="advantech-recursos"></Image>
+                        <Image src={IconCheck} width={80} height={80} alt="advantech-recursos"></Image>
                         <h4>¿Cómo nos diferenciamos?</h4>
                         <p>Olvídate de crear múltiples registros o búsquedas en libros, digitliza tu proceso de obtención de datos.</p>
                         <Link href="#" legacyBehavior passHref>Ver comparación</Link><FontAwesomeIcon icon={faArrowRight} />
