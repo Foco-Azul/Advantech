@@ -8,32 +8,38 @@ import Hero from "@/components/Inicio/Hero";
 import NavMenu from "@/components/NavMenu";
 import { Providers } from "./providers";
 import { Metadata } from "next";
+import { UserProvider } from '@auth0/nextjs-auth0/client';
+
 
 export const dynamic = "force-dynamic";
 
-export const metadata:Metadata ={
-  title:"Advantech datos",
-  description:"esta es una descripcion de prueba",
+export const metadata: Metadata = {
+  title: "Advantech datos",
+  description: "esta es una descripcion de prueba",
   openGraph: {
     images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   }
 }
 export default function Page() {
   return (
-    <Providers>
-      <div className="hero-back">
-        <>
-          <header className="w-full relative">
-            <NavMenu />
-          </header>
-          <Hero />
-          <SeccionSuscripcion />
-          <SeccionProductos />
-          <SeccionRecursos />
-          <SeccionCreaTuCuenta />
-          <Footer />
-        </>
-      </div>
-    </Providers>
+    <UserProvider>
+      <Providers>
+        <div className="hero-back">
+          <>
+            <header className="w-full relative">
+              <UserProvider>
+                <NavMenu />
+              </UserProvider>
+            </header>
+            <Hero />
+            <SeccionSuscripcion />
+            <SeccionProductos />
+            <SeccionRecursos />
+            <SeccionCreaTuCuenta />
+            <Footer />
+          </>
+        </div>
+      </Providers>
+    </UserProvider>
   );
 }

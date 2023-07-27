@@ -160,6 +160,7 @@ const CreditComponent: React.FC = () => {
         }
     }
 
+
     const currentDate = new Date();
     const vencimientoDate = userVencimiento ? new Date(userVencimiento) : null;
     return (
@@ -173,23 +174,10 @@ const CreditComponent: React.FC = () => {
                     plan={'de creditos'}
                     creditos={0}
                     planid={4}
-                    planvencimiento={0}
+                    planvencimiento={6}
                     userid={userId}
                 />
-                {/* {(vencimientoDate && vencimientoDate > currentDate) &&
-                    <SubscriptionCard
-                        userPlanPrice={userPlanPrice}
-                        userCredits={userCredits}
-                        uservencimiento={userVencimiento}
-                        price={0}
-                        plan={'de creditos'}
-                        creditos={0}
-                        planid={4}
-                        planvencimiento={0}
-                        userid={userId}
-                    />}
-                {(vencimientoDate && vencimientoDate < currentDate) &&
-                    <h2>Tu suscripción está vencida</h2>} */}
+
             </UserProvider>
         </div>
     );
