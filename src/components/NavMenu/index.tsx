@@ -96,7 +96,7 @@ function NavMenu() {
             </Link>
           </div>
         <div className="nav-conteiner-buttons">
-          <Login loginname={"Ingresar"} />
+          <Login loginname={"INGRESAR"} />
           <Link href="/planes" legacyBehavior passHref>
             <button className="navigation-menu-button" >NUESTROS PLANES</button>
           </Link>
