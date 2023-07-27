@@ -15,7 +15,8 @@
     font-size: 32px;
     font-weight: 800;
     max-width: 700px;
-    margin: auto;
+    margin: 0 auto 30px auto;
+    line-height: 34px;
 }
 
 .seccion-suscripcion-encabezado > p{

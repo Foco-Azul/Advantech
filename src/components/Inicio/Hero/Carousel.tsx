@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Imagencarrusel from "./Screenshot 1.png";
-import Imagencarrusel2 from "./Screenshot 2.png";
+import Imagencarrusel from "./image/Screenshot 1.png";
+import Imagencarrusel2 from "./image/Screenshot 2.png";
 import "./Carousel.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";

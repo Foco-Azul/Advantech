@@ -4,7 +4,7 @@ import SeccionRecursos from "@/components/Inicio/SeccionRecursos/SeccionRecursos
 import SeccionProductos from "@/components/Inicio/SeccionProductos/SeccionProductos";
 import SeccionSuscripcion from "@/components/Inicio/SeccionSuscripcion/SeccionSuscripcion";
 import Footer from "@/components/Footer/Footer";
-import Hero from "@/components/Hero";
+import Hero from "@/components/Inicio/Hero";
 import NavMenu from "@/components/NavMenu";
 import { Providers } from "./providers";
 import { Metadata } from "next";

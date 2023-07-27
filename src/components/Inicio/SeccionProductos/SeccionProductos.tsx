@@ -29,10 +29,10 @@ function SeccionProductos() {
             <button className={activeTab === 'DATOS POR API' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR API')}>DATOS POR API</button>
           </div>
           <div className='productos-contenido'>
-            {activeTab === 'DATOS POR BUSCADOR' && <p>contenido de la pestaña DATOS POR BUSCADOR</p>}
+            {activeTab === 'DATOS POR BUSCADOR' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
             {activeTab === 'DATOS POR EMAIL' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
-            {activeTab === 'DATOS POR DESCARGAR' && <p>contenido de la pestaña DATOS POR DESCARGAR</p>}
-            {activeTab === 'DATOS POR API' && <p>contenido de la pestaña DATOS POR API</p>}
+            {activeTab === 'DATOS POR DESCARGAR' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
+            {activeTab === 'DATOS POR API' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
           </div>
         </div>
       </div>

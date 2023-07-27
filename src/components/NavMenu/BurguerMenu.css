@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
+.hero-grid{
+  padding: 50px 0;
+}
+
 .hamburger-menu{
   padding: 9px 20px;
 }
