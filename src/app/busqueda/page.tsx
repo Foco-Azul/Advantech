@@ -208,9 +208,7 @@ export default function Busqueda() {
         </div>
         {/* <button className='busqueda-menu-button' onClick={handleSearch}>Realizar búsqueda</button> */}
       </div>
-      <br></br>
-      <br></br>
-      <br></br>
+
       <UserProvider>
         <SearchComponent/>
       </UserProvider>
