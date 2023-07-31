@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
-.hero-grid{
-  padding: 50px 0;
-}
-
 .hamburger-menu{
   padding: 9px 20px;
 }
@@ -30,14 +26,11 @@
 /* Estilos para el popup */
 .popup {
   position: fixed;
-  max-height: 226px;
   top: 0px; /* Ajusta la distancia desde la parte superior según sea necesario */
   right: 0px; /* Ajusta la distancia desde la parte derecha según sea necesario */
   transform: translate(0, 0);
   background-color: white;
   z-index: 10000;
-  width: 300px;
-  padding: 20px;
   animation: fade-in 0.3s forwards;
     color: var(--gray-800, #3E4265);
   font-family: Manrope, sans-serif;
@@ -46,10 +39,31 @@
   font-weight: 600;
   line-height: 160%;
   text-transform: uppercase;
-  padding: 25px 20px;
+  padding: 0 25px 20px 25px;
   border-bottom-left-radius: 6px;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
 }
-
+.popup .sub-menu{
+  padding-left: 25px;
+  font-weight: 400;
+}
+.popup-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  margin: 10px 0;
+}
+.popup .popup-header > .nav-image-mobile > img{
+  width: auto;
+  height: 70px;
+}
+.popup-header > a{
+  padding: 15px;
+}
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -67,16 +81,27 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 
 .popup ul li {
-  margin-bottom: 10px;
   color: var(--gray-800, #3E4265);
   font-family: Manrope, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   text-transform: uppercase;
+  padding: 10px 0;
+  margin: 10px 0;
+}
+.popup-menu-title > a{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.popup-menu-title > a > span{
+  margin-right: 20px;
 }
 
 .popup button {
@@ -112,8 +137,26 @@
   background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según sea necesario */
   z-index: 9999; /* Asegúrate de que la capa overlay esté por encima de otros elementos */
 }
+.popup-footer{
+  position: fixed;
+  bottom: 0%;
+  left: 15%;
+  padding: 20px;
+}
 
-
+.popup-footer > .login-container > div > button{
+  background-color: #ffffff;
+  color: #0099CC;
+  padding: 15px 70px;
+  margin: 10px 0;
+  width: max-content;
+}
+.popup-footer > .login-container > div{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
 
 @media (min-width: 525px) {
   .hamburger-menu {

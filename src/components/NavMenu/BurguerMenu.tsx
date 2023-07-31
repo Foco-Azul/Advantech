@@ -2,6 +2,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./BurguerMenu.css";
 import Link from "next/link";
+import Login from "../Login/Login";
+import Brand from "./Brand.svg";
+import Image from "next/image";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp, faXmark, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 interface PopupProps {
   isOpen: boolean;
@@ -10,6 +15,24 @@ interface PopupProps {
 
 const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
   const popupRef = useRef<HTMLDivElement>(null);
+  const [isRecursosOpen, setRecursosOpen] = useState(false);
+  const [isAdvantechOpen, setAdvantechOpen] = useState(false);
+
+  const toggleRecursos = () => {
+    setRecursosOpen(!isRecursosOpen);
+    // Si también está abierto el submenú de Advantech, lo cerramos
+    if (isAdvantechOpen) {
+      setAdvantechOpen(false);
+    }
+  };
+
+  const toggleAdvantech = () => {
+    setAdvantechOpen(!isAdvantechOpen);
+    // Si también está abierto el submenú de Recursos, lo cerramos
+    if (isRecursosOpen) {
+      setRecursosOpen(false);
+    }
+  };
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -35,14 +58,22 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="popup" ref={popupRef}>
-      <ul>
-        <li>¿POR QUÉ ADVANTECH?</li>
-        <li>PRODUCTOS</li>
+     <ul>
         <li>RECURSOS</li>
-        <Link href="/planes" legacyBehavior passHref>
-          <button className="navigation-menu-button" >NUESTROS PLANES</button>
+        <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Buscar datos</Link></li>
+        <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Documentación</Link></li>
+        <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Uso por industria</Link></li>
+        <Link href="/sobre-nosotros" legacyBehavior passHref>
+          <li>¿POR QUÉ ADVANTECH?</li>
         </Link>
-        <li>NUESTROS PLANES</li>
+        <li className="sub-menu"><Link href="/#" legacyBehavior passHref>¿Quienes somos?</Link></li>
+        <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Contáctanos</Link></li>
+        <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Únete al equipo</Link></li>
+        <li>
+          <Link href="/planes" legacyBehavior passHref>
+            NUESTROS PLANES
+          </Link>
+        </li>
       </ul>
       <button onClick={onClose}>Cerrar</button>
     </div>
@@ -50,6 +81,24 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
 };
 
 const BurguerMenu: React.FC = () => {
+  const [isRecursosOpen, setRecursosOpen] = useState(false);
+  const [isAdvantechOpen, setAdvantechOpen] = useState(false);
+
+  const toggleRecursos = () => {
+    setRecursosOpen(!isRecursosOpen);
+    // Si también está abierto el submenú de Advantech, lo cerramos
+    if (isAdvantechOpen) {
+      setAdvantechOpen(false);
+    }
+  };
+
+  const toggleAdvantech = () => {
+    setAdvantechOpen(!isAdvantechOpen);
+    // Si también está abierto el submenú de Recursos, lo cerramos
+    if (isRecursosOpen) {
+      setRecursosOpen(false);
+    }
+  };
   const [isPopupOpen, setPopupOpen] = useState(false);
 
   const togglePopup = () => {
@@ -69,19 +118,38 @@ const BurguerMenu: React.FC = () => {
       </button>
       {isPopupOpen && (
         <div className="popup">
+          <div className="popup-header">
+            <div className="nav-image-mobile"><Link href="/" legacyBehavior passHref><Image src={Brand} alt={"Company-Logo"} /></Link></div>
+            <a onClick={closePopup}><FontAwesomeIcon icon={faXmark} size="xl" /></a>
+          </div>
           <ul>
-            <Link href="/sobre-nosotros" legacyBehavior passHref>
-              <li>¿POR QUÉ ADVANTECH?</li>
-            </Link>
-            <li>PRODUCTOS</li>
-            <li>RECURSOS</li>
-            <li>
-              <Link href="/planes" legacyBehavior passHref>
-                NUESTROS PLANES
-              </Link>
+            <li className="popup-menu-title"><a onClick={toggleRecursos}>RECURSOS <span><FontAwesomeIcon icon={isRecursosOpen ? faChevronDown : faChevronRight} size="xl"/></span></a>
+              {/* Aquí utilizamos la variable 'isRecursosOpen' para mostrar u ocultar el submenú */}
+              {isRecursosOpen && (
+              <div>
+                <ul>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Buscar datos</Link></li>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Documentación</Link></li>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Uso por industria</Link></li>
+                </ul>
+              </div>
+               )}
             </li>
+            <li className="popup-menu-title"><a onClick={toggleAdvantech}>¿POR QUÉ ADVANTECH? <span><FontAwesomeIcon icon={isAdvantechOpen ? faChevronDown : faChevronRight} size="xl"/></span></a>
+            {isAdvantechOpen && (
+              <div>
+                <ul>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>¿Quienes somos?</Link></li>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Contáctanos</Link></li>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Únete al equipo</Link></li>
+                </ul>
+              </div>
+            )}
+            </li>
+            <li><Link href="/planes" legacyBehavior passHref> NUESTROS PLANES</Link></li>
           </ul>
-          <button onClick={closePopup}>Cerrar</button>
+          <div className="popup-footer"><Login loginname={"INGRESAR"} /></div>
+
         </div>
       )}
       {isPopupOpen && <div className="overlay" onClick={closePopup} />}

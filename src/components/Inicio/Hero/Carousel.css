@@ -1,9 +1,13 @@
-.carousel {
+.carousel,
+.carousel-marcas {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 300px;
   width: 70%;
+}
+.carousel-marcas{
+  justify-content: center;
 }
 
 .carousel-item {
@@ -25,7 +29,8 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .carousel {
+  .carousel,
+  .carousel-marcas {
     width: 90%;
   }
   .carousel-item {

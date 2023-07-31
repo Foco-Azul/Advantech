@@ -28,13 +28,13 @@ async function SeccionRecursos() {
                         <Image src={IconIndustria} width={80} height={80} alt="advantech-recursos"></Image>
                         <h4>Uso por industria</h4>
                         <p>Aprende cómo la utilización de datos puede ayudarte a obtener una ventaja competittiva en tu rubro.</p>
-                        <Link href="#" legacyBehavior passHref>Ver más</Link><FontAwesomeIcon icon={faArrowRight} />
+                        <Link href="#" legacyBehavior passHref><a>Ver más <FontAwesomeIcon icon={faArrowRight} /></a></Link>
                     </div>
                     <div className="seccion-recursos-inferior-cont">
                         <Image src={IconCheck} width={80} height={80} alt="advantech-recursos"></Image>
                         <h4>¿Cómo nos diferenciamos?</h4>
                         <p>Olvídate de crear múltiples registros o búsquedas en libros, digitliza tu proceso de obtención de datos.</p>
-                        <Link href="#" legacyBehavior passHref>Ver comparación</Link><FontAwesomeIcon icon={faArrowRight} />
+                        <Link href="#" legacyBehavior passHref><a>Ver comparación <FontAwesomeIcon icon={faArrowRight} /></a></Link>
                     </div>
                 </div>
             </div>

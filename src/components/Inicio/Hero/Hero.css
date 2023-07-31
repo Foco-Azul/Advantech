@@ -1,4 +1,7 @@
 
+.hero-grid{
+    padding: 50px 0 0 0;
+  }
 
 .hero-short-title {
     color: var(--brand-primary, #009FDE);
@@ -68,7 +71,7 @@
 }
 
 .hero-short-input {
-    width: 100%;
+    width: 90%;
     max-width: 500px;
     height: 49px;
     flex-shrink: 0;
