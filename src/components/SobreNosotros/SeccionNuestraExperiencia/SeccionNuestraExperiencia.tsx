@@ -1,4 +1,4 @@
-import './NuestraExperiencia.css';
+import './SeccionNuestraExperiencia.css';
 
 function NuestraExperiencia() {
 

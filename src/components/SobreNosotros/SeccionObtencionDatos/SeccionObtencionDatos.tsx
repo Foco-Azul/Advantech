@@ -1,4 +1,4 @@
-import './ObtencionDatos.css';
+import './SeccionObtencionDatos.css';
 import Image from "next/image";
 import Archive from "./Archive.svg"
 import Datos from "./Datos.png"

@@ -6,7 +6,7 @@ import Marca_3 from "./image/logo-2.svg"
 import Marca_4 from "./image/logo-3.svg"
 import Marca_5 from "./image/logo-4.svg"
 import Marca_6 from "./image/logo-5.svg"
-import "./Carousel.css"
+import "./Marcas.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -42,8 +42,8 @@ const Marca: React.FC = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 3 ? 0 : prevPhrase + 1));
-    }, 3000);
+      setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 5 ? 0 : prevPhrase + 1));
+    }, 993000);
 
     return () => {
       clearInterval(timer);
@@ -51,14 +51,14 @@ const Marca: React.FC = () => {
   }, [phrases.length]);
 
   const nextPhrase = () => {
-    setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 3 ? 0 : prevPhrase + 1));
+    setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 5 ? 0 : prevPhrase + 1));
   };
 
   const prevPhrase = () => {
-    setCurrentPhrase((prevPhrase) => (prevPhrase === 0 ? phrases.length - 3 : prevPhrase - 1));
+    setCurrentPhrase((prevPhrase) => (prevPhrase === 0 ? phrases.length - 5 : prevPhrase - 1));
   };
 
-  const renderedPhrases = isMobile ? phrases.slice(currentPhrase, currentPhrase + 1) : phrases.slice(currentPhrase, currentPhrase + 3);
+  const renderedPhrases = isMobile ? phrases.slice(currentPhrase, currentPhrase + 1) : phrases.slice(currentPhrase, currentPhrase + 5);
 
   return (
     <div className="carousel-marcas">

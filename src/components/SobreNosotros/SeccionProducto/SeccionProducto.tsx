@@ -1,9 +1,11 @@
 import Image from "next/image";
-import './Producto.css';
+import './SeccionProducto.css';
 import Producto1 from "./image/Producto1.svg"
 import Producto2 from "./image/Producto2.svg"
 import icon from "./image/icon.svg"
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 function Producto() {
 
@@ -30,9 +32,9 @@ function Producto() {
             <Image className="producto-icon" src={icon} alt="Company Logo" /> <p>Datos de diversas fuentes presentados de manera automática</p>
           </div>
           <br></br>
-          <a href="#" className="producto-icon-container">
-            Realiza una consulta <ArrowRight className="hero-icon" />
-          </a>
+          <Link href="#" legacyBehavior passHref><a className="producto-icon-container">
+            Realiza una consulta <FontAwesomeIcon icon={faArrowRight} className="hero-icon"/>
+          </a></Link>
         </div>
       </div>
       <div className="producto-card">
@@ -54,9 +56,9 @@ function Producto() {
             <Image src={icon} alt="Company Logo" className="producto-icon" /> <p>Datos de diversas fuentes presentados de manera automática</p>
           </div>
           <br></br>
-          <a href="#" className="producto-icon-container">
-            Agenda un demo <ArrowRight className="hero-icon" />
-          </a>
+          <Link href="#" legacyBehavior passHref><a className="producto-icon-container">
+            Agenda un demo <FontAwesomeIcon icon={faArrowRight} className="hero-icon"/>
+          </a></Link>
         </div>
       </div>
       <br></br>

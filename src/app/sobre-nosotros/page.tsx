@@ -1,14 +1,15 @@
 import React from 'react';
 import Footer from '@/components/Footer/Footer';
 import NavMenu from '@/components/NavMenu/index';
-import SobreNosotros from '@/components/SobreNosotros/SobreNosotros';
+import SeccionSobreNosotros from '@/components/SobreNosotros/SeccionSobreNosotros/SeccionSobreNosotros';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "../globals.css"
 import './planes.css'
-import NuestraExperiencia from '@/components/NuestraExperiencia/NuestraExperiencia';
-import Producto from '@/components/Producto/Producto';
-import SeccionCreaTuCuenta from '@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta';
-import ObtencionDatos from '@/components/ObtencionDatos/ObtencionDatos';
+import SeccionNuestraExperiencia from '@/components/SobreNosotros/SeccionNuestraExperiencia/SeccionNuestraExperiencia';
+import SeccionProducto from '@/components/SobreNosotros/SeccionProducto/SeccionProducto';
+import SeccionUneteAlEquipo from '@/components/SobreNosotros/SeccionUneteAlEquipo/SeccionUneteAlEquipo';
+import SeccionObtencionDatos from '@/components/SobreNosotros/SeccionObtencionDatos/SeccionObtencionDatos';
+import SeccionAliados from '@/components/SobreNosotros/SeccionAliados/SeccionAliados';
 import { Metadata } from "next";
 
 export const metadata:Metadata ={
@@ -31,19 +32,22 @@ export default function Sobrenosotros() {
             <br></br>
             <br></br>
             <br></br>
-            <SobreNosotros />
+            <SeccionSobreNosotros />
             <br></br>
             <br></br>
-            <NuestraExperiencia />
+            <SeccionNuestraExperiencia />
             <br></br>
             <br></br>
-            <Producto />
+            <SeccionProducto />
+            <br />
+            <br />
+            <SeccionAliados/>
             <br></br>
             <br></br>
-            <SeccionCreaTuCuenta />
-            <br></br>
-            <br></br>
-            <ObtencionDatos></ObtencionDatos>
+            <SeccionObtencionDatos/>
+            <br />
+            <br />
+            <SeccionUneteAlEquipo />
             <Footer />
         </div>
     );

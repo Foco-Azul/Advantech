@@ -66,7 +66,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
         <Link href="/sobre-nosotros" legacyBehavior passHref>
           <li>¿POR QUÉ ADVANTECH?</li>
         </Link>
-        <li className="sub-menu"><Link href="/#" legacyBehavior passHref>¿Quienes somos?</Link></li>
+        <li className="sub-menu"><Link href="/sobre-nosotros" legacyBehavior passHref>¿Quienes somos?</Link></li>
         <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Contáctanos</Link></li>
         <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Únete al equipo</Link></li>
         <li>
@@ -139,7 +139,7 @@ const BurguerMenu: React.FC = () => {
             {isAdvantechOpen && (
               <div>
                 <ul>
-                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>¿Quienes somos?</Link></li>
+                  <li className="sub-menu"><Link href="/sobre-nosotros" legacyBehavior passHref>¿Quienes somos?</Link></li>
                   <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Contáctanos</Link></li>
                   <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Únete al equipo</Link></li>
                 </ul>

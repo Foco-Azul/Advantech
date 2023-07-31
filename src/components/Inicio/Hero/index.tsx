@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import "./Hero.css";
 import Carousel from "./Carousel";
-import Marcas from "./Marcas";
+import Marcas from '@/components/Marcas/Marcas';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 

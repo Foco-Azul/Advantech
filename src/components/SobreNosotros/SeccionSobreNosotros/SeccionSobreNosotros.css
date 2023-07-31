@@ -19,7 +19,7 @@
 .sobrenosotros-title {
     color: var(--brand-primary, #009FDE);
     font-family: Manrope, sans-serif;
-    font-size: 28px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 800;
     line-height: 130%;
@@ -28,7 +28,7 @@
 .sobrenosotros-subtitle {
     color: var(--gray-900, #131022);
     font-family: Manrope, sans-serif;
-    font-size: 42px;
+    font-size: 32px;
     font-style: normal;
     font-weight: 800;
     line-height: 130%;
@@ -68,11 +68,9 @@
 
 .sobrenosotros-icon-container {
     color: var(--brand-primary, #009FDE);
-    text-align: center;
     font-family: Manrope, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: 160%;
-    display: flex;
 }

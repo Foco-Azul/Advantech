@@ -9,19 +9,15 @@ import Brand from "./Brand.svg";
 import "./NavMenu.css";
 import Image from "next/image";
 import BurguerMenu from "./BurguerMenu";
-import { useRouter, useSearchParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 function NavMenu() {
-  const router = useRouter();
+  const isHomePage = window.location.pathname === '/';
   const [hasScrolled, setHasScrolled] = useState(false);
   const { user, error, isLoading } = useUser();
   const [showSubRecursos, setShowSubRecursos] = useState(false); // Nuevo estado para controlar la visibilidad
   const [showSubAdvantech, setShowSubAdvantech] = useState(false); // Nuevo estado para controlar la visibilidad
-
-   // Use the useSearchParams hook to get the search params
-   const searchParams = useSearchParams();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -108,11 +104,8 @@ function NavMenu() {
             </Link>
           </div>
         <div className="nav-conteiner-buttons">
-          {/* Verifica si searchParams es null antes de acceder a 'pathname' */}
-          {searchParams?.get('pathname') === '/' && (
-            <Link href="/#" passHref>
-              <a>Buscar</a>
-            </Link>
+          {!isHomePage && (
+          <Link href="/#" passHref><button><FontAwesomeIcon icon={faMagnifyingGlass} /> Buscar</button></Link>
           )}
           <div className="login-escritorio"><Login loginname={"INGRESAR"} /></div>
           <Link href="/planes" legacyBehavior passHref>
