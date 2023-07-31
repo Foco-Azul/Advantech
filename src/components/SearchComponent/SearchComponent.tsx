@@ -3,6 +3,11 @@ import "./SearchComponent.css";
 import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
+import SeccionCreaTuCuenta from '../Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta';
+import SubscriptionComponent from '../Suscription/SuscriptionComponent';
+import CreditComponent from '../Credits/CreditComponent';
+import Tabla from '../Tabla/Tabla';
+import TablaBusqueda from './TablaBusqueda'
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -18,6 +23,11 @@ const SearchComponent: React.FC = () => {
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
     const [planId, setPlanId] = useState<number | null>(null);
+    const currentDate = new Date();
+    const vencimientoDate = userVencimiento ? new Date(userVencimiento) : null;
+    const isPlanVencido = vencimientoDate ? vencimientoDate < currentDate : false;
+    const [DatosTabla, setDatosTabla] = useState<any>(null);
+    const [SeleccionUsuario, setSeleccionUsuario] = useState<string[]>([]);
 
     async function getuser() {
         try {
@@ -105,6 +115,7 @@ const SearchComponent: React.FC = () => {
                 if (secondResponse.ok) {
                     const secondJsonData = await secondResponse.json();
                     const noticias = secondJsonData.data;
+                    setDatosTabla(noticias)
                     console.log(noticias)
 
                     let primeraPropiedad;
@@ -147,7 +158,9 @@ const SearchComponent: React.FC = () => {
             console.log("Query_id:", data.query_id);
             const selectionObj: SelectionObject = {}; // Provide type information here
 
-            selectionObj[NombreRuc] = ["0"];
+            // selectionObj[NombreRuc] = ["0", "1"];
+
+            selectionObj[NombreRuc] = SeleccionUsuario;
 
             const response = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
                 method: 'POST',
@@ -281,65 +294,110 @@ const SearchComponent: React.FC = () => {
         return xlsData;
     };
 
+    const handleSelectedItems = (selectedItems: string[]) => {
+        // Aquí puedes manejar los elementos seleccionados como desees
+        console.log('Elementos seleccionados:', selectedItems);
+        setSeleccionUsuario(selectedItems)
+    };
 
 
     return (
+
+
         <UserProvider>
-            <div className='search'>
-                <div>
-                    <input
-                        type="text"
-                        value={searchInputValue}
-                        onChange={(e) => setSearchInputValue(e.target.value)}
-                        className='search-inputs'
-                    />
-                    <select id="sourceSelector">
-                        <option value="noticias">Noticias</option>
-                        <option value="noticias">Noticias</option>
-                        <option value="noticias">Noticias</option>
-                        <option value="noticias">Noticias</option>
-                        {/* Agrega otros elementos de fuente aquí si es necesario */}
-                    </select>
-                    <button onClick={handleButtonClick} className='search-menu-button'>Obtener noticias</button>
-                </div>
-                <br></br>
-                <br></br>
-
-                {propiedadArray.length > 0 && (
-                    <div>
-                        <p>Selecciona una propiedad:</p>
-                        <select>
-                            {propiedadArray.map((property, index) => (
-                                <option key={index} value={property}>
-                                    {property}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                )}
-                <br></br>
-                <br></br>
-
-                {data ? (
-                    <div >
-                        <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
-                    </div>
+            {user ? (
+                isPlanVencido ? (
+                    <>
+                        <h2 className='busqueda-h2'>TU PLAN A VENCIDO, ACTUALIZA TU SUSCRIPCIÓN</h2>
+                        <br></br>
+                        <SubscriptionComponent></SubscriptionComponent>
+                    </>
                 ) : (
-                    <p>Loading...</p>
-                )}
-                {isSecondApiResponseSuccessful && (
-                    <button className='search-menu-button' onClick={handleThirdApiButtonClick}>Ejecutar tercera API</button>
-                )}
+                    userCredits !== null && userCredits <= 0 ? (
+                        <>
+                            <h2 className='busqueda-h2'>TUS CRÉDITOS SE AGOTARON, COMPRA MÁS PARA CONTINUAR</h2>
+                            <br></br>
+                            <div className="busqueda-creditos">
+                                <Tabla></Tabla>
+                                <UserProvider>
+                                    <CreditComponent></CreditComponent>
+                                </UserProvider>
+                            </div>
+                        </>
+                    ) : (
+                        < div className='search'>
+                            <div>
+                                <input
+                                    type="text"
+                                    value={searchInputValue}
+                                    onChange={(e) => setSearchInputValue(e.target.value)}
+                                    className='search-inputs'
+                                />
+                                <select id="sourceSelector" value="noticias">
+                                    <option value="noticias">Noticias 1</option>
+                                    <option value="noticias">Noticias 2</option>
+                                    <option value="noticias">Noticias 3</option>
+                                    <option value="noticias">Noticias 4</option>
+                                    {/* Agrega otros elementos de fuente aquí si es necesario */}
+                                </select>
+                                <button onClick={handleButtonClick} className='search-menu-button'>
+                                    Obtener noticias
+                                </button>
+                            </div>
+                            <br />
+                            <br />
 
-                <>
-                    {Datos && <button className='busqueda-menu-button' onClick={handleConvertToPdf}>Convertir a PDF</button>}
-                    {Datos && <button className='busqueda-menu-button' onClick={handleConvertToXls}>Convertir a XLS</button>}
-                    {/* 
-                <button className='busqueda-menu-button' onClick={ }>Convertir a CSV</button>
-                <button className='busqueda-menu-button' onClick={ }>Convertir a TXT</button> */}
-                </>
-            </div>
-        </UserProvider>
+                            {/* {propiedadArray.length > 0 && (
+                                <div>
+                                    <p>Selecciona una propiedad:</p>
+                                    <select>
+                                        {propiedadArray.map((property, index) => (
+                                            <option key={index} value={property}>
+                                                {property}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            )} */}
+
+                            {data ? (
+                                <div>
+                                    {/* <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre> */}
+                                    <p>Selecciona los datos que quieres traer</p>
+                                    <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                </div>
+                            ) : (
+                                <p>Loading...</p>
+                            )}
+                            {isSecondApiResponseSuccessful && (
+                                <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
+                                    Obtener en detalle los datos seleccionados
+                                </button>
+                            )}
+
+                            <>
+                                {Datos && (
+                                    <>
+                                        <button className='busqueda-menu-button' onClick={handleConvertToPdf}>
+                                            Convertir a PDF
+                                        </button>
+                                        <button className='busqueda-menu-button' onClick={handleConvertToXls}>
+                                            Convertir a XLS
+                                        </button>
+                                        {/* 
+                    <button className='busqueda-menu-button' onClick={}>Convertir a CSV</button>
+                    <button className='busqueda-menu-button' onClick={}>Convertir a TXT</button> */}
+                                    </>
+                                )}
+                            </>
+                        </div>)
+                )
+            ) : (
+                <><h2 className='busqueda-h2'>CREA TU CUENTA PARA CONTINUAR</h2><br></br><SeccionCreaTuCuenta></SeccionCreaTuCuenta></>
+            )}
+        </UserProvider >
+
+
     );
 };
 

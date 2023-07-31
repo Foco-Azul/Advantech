@@ -1,0 +1,73 @@
+.tablabusqueda-head{
+    background-color: #0099cc;
+    color: white;
+    text-align: center;
+    height: 45px;
+}
+
+.tablabusqueda-tabla{
+    text-align: center;
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+    margin: 15px;
+    margin-bottom: 0px;
+    min-width: 1100px;
+}
+
+
+.tablabusqueda-container-button{
+    margin: 0px 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #0099CC;
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+    border-bottom-left-radius: 6PX;
+    border-bottom-right-radius: 6PX;
+}
+
+.tablabusqueda-button{
+    border-radius: 6px;
+    margin: 10px;
+    border: 1px solid #009FDE;
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+    min-width: 99px;
+    color: #0099CC;
+    text-align: center;
+    background-color: white;
+    font-size: 14px;
+    font-family: Manrope, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    transition: 0.5s;
+    padding: 9px 20px;
+    line-height: 18px;
+}
+
+.tablabusqueda-button:hover{
+    transform: scale(0.90);
+}
+
+th,td{
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #0099cc12;
+  }
+
+.tablabusqueda-esquinaizquierda{
+    border-top-left-radius: 6px;
+}
+
+.tablabusqueda-esquinaderecha{
+    border-top-right-radius: 6px;
+}
+
+p{
+    text-align: center;
+}
+
+.tablabusqueda-page-number{
+    color: white;
+}

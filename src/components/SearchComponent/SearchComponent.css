@@ -15,6 +15,10 @@
     line-height: 18px;
 }
 
+.search-menu-button:hover {
+transform: scaleX(0.9);
+}
+
 .search-inputs {
     height: 49px;
     flex-shrink: 0;
@@ -44,3 +48,14 @@
     word-break: break-all;
   }
   
+  .busqueda-creditos{
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+}
