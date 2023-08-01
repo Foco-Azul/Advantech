@@ -21,7 +21,7 @@ function Hero() {
           <br></br>
           <br></br>
           <h2 className="hero-description">
-            Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador.          </h2>
+            Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador. </h2>
           <br></br>
           <br></br>
           <button className="hero-button">
@@ -29,7 +29,7 @@ function Hero() {
           </button>
           <br></br>
           <a href="#" className="hero-icon-container">
-            ¿Como funciona? <ArrowRight className="hero-icon" />
+            ¿Cómo funciona? <ArrowRight className="hero-icon" />
           </a>
           <br></br>
           <Carousel />

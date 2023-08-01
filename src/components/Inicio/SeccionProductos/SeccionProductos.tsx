@@ -24,13 +24,11 @@ function SeccionProductos() {
         <div className="productos-der">
           <div className='productos-pestañas'>
             <button className={activeTab === 'DATOS POR BUSCADOR' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR BUSCADOR')}>DATOS POR BUSCADOR</button>
-            <button className={activeTab === 'DATOS POR EMAIL' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR EMAIL')}>DATOS POR EMAIL</button>
             <button className={activeTab === 'DATOS POR DESCARGAR' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR DESCARGAR')}>DATOS POR DESCARGAR</button>
             <button className={activeTab === 'DATOS POR API' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR API')}>DATOS POR API</button>
           </div>
           <div className='productos-contenido'>
             {activeTab === 'DATOS POR BUSCADOR' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
-            {activeTab === 'DATOS POR EMAIL' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
             {activeTab === 'DATOS POR DESCARGAR' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
             {activeTab === 'DATOS POR API' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
           </div>

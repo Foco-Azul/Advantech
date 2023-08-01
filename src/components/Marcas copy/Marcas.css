@@ -8,7 +8,7 @@
 }
 
 .carousel-marcas .carousel-item {
-  flex: 0 0 calc(16.6% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
+  flex: 0 0 calc(20% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
   margin: auto; /* Ajusta el margen entre los elementos según tus necesidades */
 }
 
@@ -23,7 +23,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
 }
 
 @media only screen and (max-width: 768px) {

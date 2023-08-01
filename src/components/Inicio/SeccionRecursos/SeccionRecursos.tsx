@@ -17,7 +17,7 @@ async function SeccionRecursos() {
                         <h2>Intuitivo para un uso diario,</h2>
                         <h2>con documentación para guiarte</h2>
                         <p>Ya sea que seas un principiante o un experto en el análisis de datos, en nuestra documentación encontrarás tutoriales y consejos para aprovechar al máximo tu suscripción.</p>
-                        <button className="hero-button">Ver documentación</button>
+                        <button className="hero-button">¿Cómo funciona?</button>
                     </div>
                     <div className="seccion-recursos-superior-der">
                         <Image src={ImageRecursos} width={500} height={361} alt="advantech-recursos"></Image>
@@ -32,9 +32,9 @@ async function SeccionRecursos() {
                     </div>
                     <div className="seccion-recursos-inferior-cont">
                         <Image src={IconCheck} width={80} height={80} alt="advantech-recursos"></Image>
-                        <h4>¿Cómo nos diferenciamos?</h4>
+                        <h4>Conoce nuestras ventajas</h4>
                         <p>Olvídate de crear múltiples registros o búsquedas en libros, digitliza tu proceso de obtención de datos.</p>
-                        <Link href="#" legacyBehavior passHref><a>Ver comparación <FontAwesomeIcon icon={faArrowRight} /></a></Link>
+                        <Link href="#" legacyBehavior passHref><a>Ver ventajas <FontAwesomeIcon icon={faArrowRight} /></a></Link>
                     </div>
                 </div>
             </div>

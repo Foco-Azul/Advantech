@@ -22,29 +22,35 @@ function ObtencionDatos() {
         <div className="obtenciondatos-items-container">
           <div className="obtenciondatos-column">
             <div className="obtenciondatos-items">
-              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Consejo de la Judicatura</p>
+              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Superintendencia de compañías</p>
             </div>
             <div className="obtenciondatos-items">
-              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Senescrypt</p>
-            </div>
-            <div className="obtenciondatos-items">
-              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Fiscalía general del Estado</p>
-            </div>
-          </div>
-          <div className="obtenciondatos-column">
-            <div className="obtenciondatos-items">
-              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>SRI</p>
+              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Función Judicial</p>
             </div>
             <div className="obtenciondatos-items">
               <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Municipio de Quito</p>
             </div>
             <div className="obtenciondatos-items">
-              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Supercías</p>
+              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Servicio de Rentas Internas</p>
+            </div>
+          </div>
+          <div className="obtenciondatos-column">
+            <div className="obtenciondatos-items">
+              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Ministerio de Gobierno</p>
+            </div>
+            <div className="obtenciondatos-items">
+              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Fiscalía General del Estado</p>
+            </div>
+            <div className="obtenciondatos-items">
+              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Senescyt</p>
+            </div>
+            <div className="obtenciondatos-items">
+              <Image src={Archive} alt="Company Logo" className="obtenciondatos-archive-icon" /> <p>Ministerio de Educación</p>
             </div>
           </div>
         </div>
         <br></br>
-        <button className="obtenciondatos-button">Inicia gratis</button>
+        <button className="obtenciondatos-button">Ver fuentes de créditos</button>
       </div>
     </div>
   );

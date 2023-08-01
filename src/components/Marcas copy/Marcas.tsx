@@ -42,8 +42,8 @@ const Marca: React.FC = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 6 ? 0 : prevPhrase + 1));
-    }, 3000);
+      setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 5 ? 0 : prevPhrase + 1));
+    }, 993000);
 
     return () => {
       clearInterval(timer);
@@ -51,17 +51,20 @@ const Marca: React.FC = () => {
   }, [phrases.length]);
 
   const nextPhrase = () => {
-    setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 6 ? 0 : prevPhrase + 1));
+    setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 5 ? 0 : prevPhrase + 1));
   };
 
   const prevPhrase = () => {
-    setCurrentPhrase((prevPhrase) => (prevPhrase === 0 ? phrases.length - 6 : prevPhrase - 1));
+    setCurrentPhrase((prevPhrase) => (prevPhrase === 0 ? phrases.length - 5 : prevPhrase - 1));
   };
 
-  const renderedPhrases = isMobile ? phrases.slice(currentPhrase, currentPhrase + 1) : phrases.slice(currentPhrase, currentPhrase + 6);
+  const renderedPhrases = isMobile ? phrases.slice(currentPhrase, currentPhrase + 1) : phrases.slice(currentPhrase, currentPhrase + 5);
 
   return (
     <div className="carousel-marcas">
+      <button className="carousel-button" onClick={prevPhrase}>
+        <FontAwesomeIcon icon={faCircleChevronLeft} size="2xl" style={{ color: "#009fde" }} />
+      </button>
       <div className={`carousel-images ${isMobile ? "mobile" : ""}`}>
         {renderedPhrases.map((phrase) => (
           <div key={phrase.id} className="carousel-item">
@@ -72,6 +75,9 @@ const Marca: React.FC = () => {
           </div>
         ))}
       </div>
+      <button className="carousel-button" onClick={nextPhrase}>
+        <FontAwesomeIcon icon={faCircleChevronRight} size="2xl" style={{ color: "#009fde" }} />
+      </button>
     </div>
   );
 };

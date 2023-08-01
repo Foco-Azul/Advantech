@@ -49,6 +49,7 @@
 .popup .sub-menu{
   padding-left: 25px;
   font-weight: 400;
+  text-transform: none;
 }
 .popup-header{
   display: flex;

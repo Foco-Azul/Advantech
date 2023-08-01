@@ -23,7 +23,7 @@ async function SeccionRecursos() {
                         <h4>Para empresas <FontAwesomeIcon icon={faCircleRight} style={{color: "#009fde",}} /></h4>
                         <p>Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas.</p>
                     </div>
-                    <div className="seccion-suscripcion-tipo-persona">
+                    <div className="seccion-suscripcion-tipo-persona ocultar">
                         <Image src={IconPeople} width={80} height={80} alt="advantech-suscripcion"></Image>
                         <h4>Para personas <FontAwesomeIcon icon={faCircleRight} style={{color: "#009fde",}} /></h4>
                         <p>Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas. </p>

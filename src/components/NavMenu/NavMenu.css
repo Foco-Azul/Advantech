@@ -75,7 +75,8 @@ height: 70px;
   font-weight: 600;
   line-height: 160%;
   text-transform: uppercase;
-  padding: 9px 20px;
+  padding: 9px 10px;
+  margin: 0px 10px;
   cursor: pointer;
 }
 .navigation-sub_menu-trigger{
@@ -88,13 +89,13 @@ height: 70px;
   visibility: hidden;
   opacity: 0;
   transform: translateY(-20px);
-  transition: visibility .3s,opacity .3s ease,transform .5s cubic-bezier(.33,0,.6,1.58);
+  transition: visibility .3s,opacity .6s ease,transform .5s cubic-bezier(.33,0,.6,1.58);
 }
 .navigation-sub_menu-trigger.visible{
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
-  transition: visibility .3s,opacity .3s ease,transform .5s cubic-bezier(.33,0,.6,1.58);
+  transition: visibility .3s,opacity .6s ease,transform .5s cubic-bezier(.33,0,.6,1.58);
 }
 
 .navigation-sub_menu-trigger > ul > li{
@@ -118,7 +119,9 @@ height: 70px;
   background-color: #ffffff;
 }
 
-
+.btn-buscar{
+  display: none;
+}
 
 
 @media (max-width: 525px) {
@@ -127,7 +130,9 @@ height: 70px;
   .login-escritorio{
     display: none;
   }
-
+  .btn-buscar{
+    display: block;
+  }
   .navigation-menu-button{
     display: none;
   }

@@ -22,5 +22,7 @@
 body {
   font-family: 'Manrope', sans-serif;
 }
-
+.ocultar{
+  display: none;
+}
 /* Otros estilos globales */
