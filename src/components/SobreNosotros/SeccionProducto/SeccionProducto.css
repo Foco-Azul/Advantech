@@ -54,13 +54,11 @@
 
 .producto-icon-container {
     color: var(--brand-primary, #009FDE);
-    text-align: center;
     font-family: Manrope, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: 160%;
-    display: flex;
 }
 
 .producto-check {

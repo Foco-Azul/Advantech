@@ -2,7 +2,7 @@ import * as React from "react";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import './Login.css'; // Reemplaza "Login.css" con el nombre de tu archivo CSS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUserTie } from "@fortawesome/free-solid-svg-icons";
 
 interface LoginProps {
   loginname: string;
@@ -89,14 +89,14 @@ function Login({ loginname }: LoginProps) {
     <div className="login-container">
       {user && (
         <div className="login-container">
-          <p className="login-name">{user.email?.split("@")[0]}</p> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+          <p className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {user.email?.split("@")[0]}</p> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
           <button
             className="logout-button"
             onClick={() => {
               window.location.href = "/api/auth/logout";
             }}
           >
-            Logout
+            LOGOUT
           </button>
         </div>
       )}

@@ -1,8 +1,9 @@
 import Image from "next/image";
-import './SobreNosotros.css';
+import './SeccionSobreNosotros.css';
 import Gif from "./image/SobreNosotros.gif"
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 function SobreNosotros() {
 
@@ -17,9 +18,8 @@ function SobreNosotros() {
         <br></br>
         <button className="sobrenosotros-button">Nuestra experiencia</button>
         <br></br>
-        <a href="#" className="sobrenosotros-icon-container">
-          ¿Cómo obtenemos datos? <ArrowRight className="hero-icon" />
-        </a>
+        <Link href="#" legacyBehavior passHref><a className="sobrenosotros-icon-container">¿Cómo obtenemos datos?<FontAwesomeIcon icon={faArrowRight} className="hero-icon"/></a></Link>
+
       </div>
       <div className="sobrenosotros-columna2">
         <Image src={Gif} alt="Company Logo" />

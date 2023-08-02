@@ -9,12 +9,15 @@ import Brand from "./Brand.svg";
 import "./NavMenu.css";
 import Image from "next/image";
 import BurguerMenu from "./BurguerMenu";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 function NavMenu() {
+  const isHomePage = window.location.pathname === '/';
   const [hasScrolled, setHasScrolled] = useState(false);
   const { user, error, isLoading } = useUser();
   const [showSubRecursos, setShowSubRecursos] = useState(false); // Nuevo estado para controlar la visibilidad
-
+  const [showSubAdvantech, setShowSubAdvantech] = useState(false); // Nuevo estado para controlar la visibilidad
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,9 +43,7 @@ function NavMenu() {
           <a className="navigation-menu-trigger">RECURSOS</a>
         </li>
         <li className="navigation-menu-item">
-          <Link href="/sobre-nosotros" legacyBehavior passHref>
-            <a>¿POR QUÉ ADVANTECH?</a>
-          </Link>
+          <Link href="/sobre-nosotros" legacyBehavior passHref><a>¿POR QUÉ ADVANTECH?</a></Link>
         </li>
       </ul>
     </div>
@@ -72,22 +73,32 @@ function NavMenu() {
               onMouseEnter={() => setShowSubRecursos(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
               onMouseLeave={() => setShowSubRecursos(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
             >
-              <a className="navigation-menu-trigger">RECURSOS</a>
-              {showSubRecursos && ( // Mostrar el div de sub_recursos cuando showSubRecursos es true
-                <div className="navigation-sub_menu-trigger">
+              <a className="navigation-menu-trigger">RECURSOS <FontAwesomeIcon icon={showSubRecursos ? faChevronUp : faChevronDown}/></a>
+                <div className={`navigation-sub_menu-trigger  ${showSubRecursos ? "visible" : ""} `}>
                   <ul>
                     <li><Link href="/#" legacyBehavior passHref>Buscar datos</Link></li>
                     <li><Link href="/#" legacyBehavior passHref>Documentación</Link></li>
                     <li><Link href="/#" legacyBehavior passHref>Uso por industria</Link></li>
                   </ul>
                 </div>
-              )}
             </li>
-            <li className="navigation-menu-item">
-              <Link href="/sobre-nosotros" legacyBehavior passHref>
-                <a>¿POR QUÉ ADVANTECH?</a>
-              </Link>
+            <li
+              className="navigation-menu-item"
+              onMouseEnter={() => setShowSubAdvantech(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
+              onMouseLeave={() => setShowSubAdvantech(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
+            >
+              <a className="navigation-menu-trigger">¿POR QUÉ ADVANTECH? <FontAwesomeIcon icon={showSubAdvantech ? faChevronUp : faChevronDown}/></a>
+                <div className={`navigation-sub_menu-trigger  ${showSubAdvantech ? "visible" : ""} `}>
+                  <ul>
+                    <li><Link href="/sobre-nosotros" legacyBehavior passHref>¿Quienes somos?</Link></li>
+                    <li><Link href="/#" legacyBehavior passHref>Contáctanos</Link></li>
+                    <li><Link href="/#" legacyBehavior passHref>Únete al equipo</Link></li>
+                  </ul>
+                </div>
             </li>
+            {!isHomePage && (
+          <Link href="/#" passHref><button><FontAwesomeIcon icon={faMagnifyingGlass} /> BUSCAR</button></Link>
+          )}
           </ul>
         </div>
         <div className="nav-image">
@@ -96,7 +107,10 @@ function NavMenu() {
             </Link>
           </div>
         <div className="nav-conteiner-buttons">
-          <Login loginname={"INGRESAR"} />
+        {!isHomePage && (
+          <Link href="/#" passHref><button className="btn-buscar"><FontAwesomeIcon icon={faMagnifyingGlass} /> Buscar</button></Link>
+          )}
+          <div className="login-escritorio"><Login loginname={"INGRESAR"} /></div>
           <Link href="/planes" legacyBehavior passHref>
             <button className="navigation-menu-button" >NUESTROS PLANES</button>
           </Link>
