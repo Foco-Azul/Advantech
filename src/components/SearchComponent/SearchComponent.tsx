@@ -28,6 +28,14 @@ const SearchComponent: React.FC = () => {
     const isPlanVencido = vencimientoDate ? vencimientoDate < currentDate : false;
     const [DatosTabla, setDatosTabla] = useState<any>(null);
     const [SeleccionUsuario, setSeleccionUsuario] = useState<string[]>([]);
+    const [CreditosFuentes, setCreditosFuente] = useState<any[]>([]);
+    const [selectedSource, setSelectedSource] = useState<string>(''); // Initialize the selected source state as an empty string
+    const [selectedFuenteCredito, setSelectedFuenteCredito] = useState<number | null>(null);
+    const seleccionUsuarioCount = SeleccionUsuario.length;
+
+
+    // ... (existing code)
+
 
     async function getuser() {
         try {
@@ -48,6 +56,30 @@ const SearchComponent: React.FC = () => {
 
             console.log("founduser", foundUser)
             return foundUser;
+        } catch (error) {
+            throw new Error(`Failed to fetch data, ${error}`);
+        }
+    }
+
+
+    async function creditosfuentes() {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/creditos-fuentes`, {
+
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                },
+                cache: "no-store",
+            });
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data, ${response.status}`);
+            }
+            const data = await response.json();
+            setCreditosFuente(data.data)
+            console.log("creditos-fuentes", data.data)
+            return data;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
         }
@@ -79,6 +111,8 @@ const SearchComponent: React.FC = () => {
             .catch((error) => {
                 console.error('Failed to fetch user data:', error);
             });
+        creditosfuentes()
+
     }, [user]);
 
     const handleButtonClick = async () => {
@@ -180,7 +214,7 @@ const SearchComponent: React.FC = () => {
                 setDatos(jsonData);
                 setData(jsonData);
                 if (userCredits) {
-                    var restacreditos = userCredits - 4
+                    var restacreditos =selectedFuenteCredito && userCredits - selectedFuenteCredito * seleccionUsuarioCount
                     const postResponse = await fetch(
                         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
                         {
@@ -300,6 +334,19 @@ const SearchComponent: React.FC = () => {
         setSeleccionUsuario(selectedItems)
     };
 
+    const handleSourceSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedValue = e.target.value;
+        setSelectedSource(selectedValue); // Update the selected source state when the user selects an option
+
+        // Find the selected fuente object from the CreditosFuentes array
+        const selectedFuenteObj = CreditosFuentes.find(
+            (fuenteObj) => fuenteObj.attributes.fuente === selectedValue
+        );
+
+        // Update the selectedFuenteCredito state with the corresponding credito value
+        setSelectedFuenteCredito(selectedFuenteObj ? selectedFuenteObj.attributes.credito : null);
+    };
+
 
     return (
 
@@ -333,17 +380,26 @@ const SearchComponent: React.FC = () => {
                                     onChange={(e) => setSearchInputValue(e.target.value)}
                                     className='search-inputs'
                                 />
-                                <select id="sourceSelector" value="noticias">
-                                    <option value="noticias">Noticias 1</option>
-                                    <option value="noticias">Noticias 2</option>
-                                    <option value="noticias">Noticias 3</option>
-                                    <option value="noticias">Noticias 4</option>
-                                    {/* Agrega otros elementos de fuente aquí si es necesario */}
+                                <select
+                                    id="sourceSelector"
+                                    value={selectedSource}
+                                    onChange={handleSourceSelect}
+                                >
+                                    <option value="" disabled hidden>
+                                        Seleccionar fuente
+                                    </option>
+                                    {CreditosFuentes.map((fuente) => (
+                                        <option key={fuente.id} value={fuente.attributes.fuente}>
+                                            {fuente.attributes.fuente}
+                                        </option>
+                                    ))}
                                 </select>
+
                                 <button onClick={handleButtonClick} className='search-menu-button'>
-                                    Obtener noticias
+                                    Obtener datos
                                 </button>
                             </div>
+
                             <br />
                             <br />
 
@@ -367,14 +423,36 @@ const SearchComponent: React.FC = () => {
                                     <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
                                 </div>
                             ) : (
-                                <p>Loading...</p>
+                                <>
+                                    {/* <p>Loading...</p> */}
+                                </>
                             )}
                             {isSecondApiResponseSuccessful && (
-                                <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
-                                    Obtener en detalle los datos seleccionados
-                                </button>
-                            )}
+                                <>
+                                    <br></br>
+                                    <div>
+                                        <p>Mis créditos:{userCredits}</p>
+                                        <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito * seleccionUsuarioCount}</p>
+                                    </div>
 
+
+                                    {
+                                        userCredits && selectedFuenteCredito && userCredits >= selectedFuenteCredito * seleccionUsuarioCount &&
+                                        seleccionUsuarioCount > 0 &&
+                                        <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
+                                            Obtener en detalle los datos seleccionados
+                                        </button>
+                                    }
+
+
+                                    {
+                                        userCredits && selectedFuenteCredito && userCredits < selectedFuenteCredito * seleccionUsuarioCount &&
+                                        <p>Tus créditos no son suficientes para traer estos datos</p>
+                                    }
+
+                                </>
+
+                            )}
                             <>
                                 {Datos && (
                                     <>
@@ -405,4 +483,3 @@ export default SearchComponent;
 function convertToXls(data: any) {
     throw new Error('Function not implemented.');
 }
-

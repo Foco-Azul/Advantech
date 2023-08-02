@@ -9,6 +9,10 @@ interface Data {
   fecha: string;
 }
 
+interface SortedData extends Data {
+  key: string;
+}
+
 interface TablaBusquedaProps {
   data: { [key: string]: { [key: string]: Data } } | null;
   onSelectedItems: (selectedItems: string[]) => void;
@@ -20,7 +24,9 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [paginatedData, setPaginatedData] = useState<{ [key: string]: { [key: string]: Data } } | null>(null);
+  const [paginatedData, setPaginatedData] = useState<SortedData[] | null>(null);
+  const [sortColumn, setSortColumn] = useState<keyof Data>("fecha");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   useEffect(() => {
     if (data) {
@@ -35,91 +41,45 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
   useEffect(() => {
     if (data) {
-      // Paginate the data based on the currentPage
-      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-      const propertyKeys = Object.keys(data);
-      let itemCount = 0;
+      // Convertimos los datos en un array de objetos para poder ordenarlos
+      const dataArray: SortedData[] = Object.entries(data).flatMap(([propertyKey, items]) =>
+        Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
+      );
 
-      const paginatedData: { [key: string]: { [key: string]: Data } } = {};
-      for (let i = 0; i < propertyKeys.length && itemCount < startIndex + ITEMS_PER_PAGE; i++) {
-        const propertyKey = propertyKeys[i];
-        const items = data[propertyKey];
-        const itemKeys = Object.keys(items);
-
-        for (let j = 0; j < itemKeys.length && itemCount < startIndex + ITEMS_PER_PAGE; j++) {
-          const itemKey = itemKeys[j];
-          if (itemCount >= startIndex) {
-            paginatedData[propertyKey] = paginatedData[propertyKey] || {};
-            paginatedData[propertyKey][itemKey] = items[itemKey];
-          }
-          itemCount++;
+      // Ordenamos los datos según la columna y el orden seleccionados
+      dataArray.sort((a, b) => {
+        if (sortColumn === "fecha") {
+          const dateA = new Date(a.fecha).getTime();
+          const dateB = new Date(b.fecha).getTime();
+          return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+        } else {
+          const valueA = a[sortColumn];
+          const valueB = b[sortColumn];
+          return sortOrder === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
         }
-      }
+      });
 
+      // Paginamos los datos ordenados según la página actual
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const paginatedData = dataArray.slice(startIndex, startIndex + ITEMS_PER_PAGE);
       setPaginatedData(paginatedData);
     }
-  }, [data, currentPage]);
+  }, [data, currentPage, sortColumn, sortOrder]);
 
-  const toggleSelectItem = (propertyKey: string, itemKey: string) => {
-    const selectedItem = `${itemKey}`;
+  useEffect(() => {
+    // Call the onSelectedItems prop whenever the selection changes
+    onSelectedItems(selectedItems);
+  }, [selectedItems, onSelectedItems]);
+
+  const toggleSelectItem = (itemKey: string) => {
     setSelectedItems(prevSelectedItems => {
-      if (prevSelectedItems.includes(selectedItem)) {
-        return prevSelectedItems.filter(item => item !== selectedItem);
+      if (prevSelectedItems.includes(itemKey)) {
+        return prevSelectedItems.filter(item => item !== itemKey);
       } else {
-        return [...prevSelectedItems, selectedItem];
+        return [...prevSelectedItems, itemKey];
       }
     });
   };
-
-  const renderTableHeader = () => {
-    return (
-      <tr>
-        <th className='tablabusqueda-esquinaizquierda'>SELECCIÓN</th>
-        <th>LUGAR</th>
-        <th>ESTADO</th>
-        <th>DELITO</th>
-        <th>UNIDAD</th>
-        <th className='tablabusqueda-esquinaderecha'>FECHA</th>
-      </tr>
-    );
-  };
-
-  const renderTableData = () => {
-    if (!paginatedData) {
-      return null;
-    }
-
-    return Object.keys(paginatedData).map(propertyKey => {
-      const items = paginatedData[propertyKey];
-
-      return Object.keys(items).map(itemKey => {
-        const item = items[itemKey];
-        const isSelected = selectedItems.includes(`${itemKey}`);
-
-        return (
-          <tr key={`${itemKey}`}>
-            <td>
-              <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={() => toggleSelectItem(propertyKey, itemKey)}
-              />
-            </td>
-            <td>{item.lugar}</td>
-            <td>{item.estado}</td>
-            <td>{item.delito}</td>
-            <td>{item.unidad}</td>
-            <td>{item.fecha}</td>
-          </tr>
-        );
-      });
-    });
-  };
-
-  // Call the onSelectedItems prop whenever the selection changes
-  useEffect(() => {
-    onSelectedItems(selectedItems);
-  }, [selectedItems, onSelectedItems]);
 
   const handleNextPage = () => {
     setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
@@ -129,6 +89,68 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
   };
 
+  const handleSort = (column: keyof Data) => {
+    if (sortColumn === column) {
+      setSortOrder(prevOrder => (prevOrder === "asc" ? "desc" : "asc"));
+    } else {
+      setSortColumn(column);
+      setSortOrder("asc");
+    }
+  };
+
+  const renderTableHeader = () => {
+    const isSortingColumn = (column: keyof Data) => sortColumn === column;
+    const isAscending = sortOrder === "asc";
+
+    return (
+      <tr>
+        <th className='tablabusqueda-esquinaizquierda'>SELECCIÓN</th>
+        <th onClick={() => handleSort("lugar")}>
+          LUGAR {isSortingColumn("lugar") && (isAscending ? "▲" : "▼")}
+        </th>
+        <th onClick={() => handleSort("estado")}>
+          ESTADO {isSortingColumn("estado") && (isAscending ? "▲" : "▼")}
+        </th>
+        <th onClick={() => handleSort("delito")}>
+          DELITO {isSortingColumn("delito") && (isAscending ? "▲" : "▼")}
+        </th>
+        <th onClick={() => handleSort("unidad")}>
+          UNIDAD {isSortingColumn("unidad") && (isAscending ? "▲" : "▼")}
+        </th>
+        <th className='tablabusqueda-esquinaderecha' onClick={() => handleSort("fecha")}>
+          FECHA {isSortingColumn("fecha") && (isAscending ? "▲" : "▼")}
+        </th>
+      </tr>
+    );
+  };
+
+  const renderTableData = () => {
+    if (!paginatedData) {
+      return null;
+    }
+
+    return paginatedData.map(item => {
+      const isSelected = selectedItems.includes(item.key);
+
+      return (
+        <tr key={item.key}>
+          <td>
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={() => toggleSelectItem(item.key)}
+            />
+          </td>
+          <td>{item.lugar}</td>
+          <td>{item.estado}</td>
+          <td>{item.delito}</td>
+          <td>{item.unidad}</td>
+          <td>{item.fecha}</td>
+        </tr>
+      );
+    });
+  };
+
   return (
     <div>
       <table className='tablabusqueda-tabla'>
@@ -136,9 +158,9 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         <tbody>{renderTableData()}</tbody>
       </table>
       <div className='tablabusqueda-container-button'>
-        {currentPage != 1 && <button className='tablabusqueda-button' onClick={handlePrevPage} disabled={currentPage === 1}>ANTERIOR</button>}
+        {currentPage !== 1 && <button className='tablabusqueda-button' onClick={handlePrevPage} disabled={currentPage === 1}>ANTERIOR</button>}
         {totalPages > 1 && <span className='tablabusqueda-page-number'>Página {currentPage} de {totalPages}</span>}
-        {currentPage != totalPages && <button className='tablabusqueda-button' onClick={handleNextPage} disabled={currentPage === totalPages}>SIGUIENTE</button>}
+        {currentPage !== totalPages && <button className='tablabusqueda-button' onClick={handleNextPage} disabled={currentPage === totalPages}>SIGUIENTE</button>}
       </div>
     </div>
   );
