@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+.plans-back {
+    background: var(--degradado-1, linear-gradient(180deg, rgba(137, 186, 231, 0.47) 0%, rgba(137, 186, 231, 0.253) 10%, rgba(217, 217, 217, 0.05) 20%));
+    min-height: 100vh;
+}
+
+.plans2-h1 {
+    font-size: 35px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+}
+
+.plans2-h2 {
+    font-size: 21px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+    margin-top: 20px;
+    color: #002BC3;
+}

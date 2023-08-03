@@ -96,9 +96,6 @@ function NavMenu() {
                   </ul>
                 </div>
             </li>
-            {!isHomePage && (
-          <Link href="/#" passHref><button><FontAwesomeIcon icon={faMagnifyingGlass} /> BUSCAR</button></Link>
-          )}
           </ul>
         </div>
         <div className="nav-image">
@@ -108,7 +105,7 @@ function NavMenu() {
           </div>
         <div className="nav-conteiner-buttons">
         {!isHomePage && (
-          <Link href="/#" passHref><button className="btn-buscar"><FontAwesomeIcon icon={faMagnifyingGlass} /> Buscar</button></Link>
+          <Link href="/#" passHref className="btn-buscar"><button><FontAwesomeIcon icon={faMagnifyingGlass} /> &nbsp; <span>BUSCAR</span></button></Link>
           )}
           <div className="login-escritorio"><Login loginname={"INGRESAR"} /></div>
           <Link href="/planes" legacyBehavior passHref>

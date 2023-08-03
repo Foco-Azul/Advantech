@@ -6,6 +6,12 @@ import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "../globals.css"
 import './planes.css'
 import { Metadata } from "next";
+import SeccionTablaPlanes from '@/components/Planes/SeccionTablaPlanes/SeccionTablaPlanes';
+import SeccionFuncionalidades from '@/components/Planes/SeccionFuncionalidades/SeccionFuncionalidades';
+import SeccionTiposConsultas from '@/components/Planes/SeccionTiposConsultas/SeccionTiposConsultas';
+import SeccionPreguntas from '@/components/Planes/SeccionPreguntas/SeccionPreguntas';
+import SeccionEmpresas from '@/components/Planes/SeccionEmpresas/SeccionEmpresas';
+import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta";
 
 export const metadata:Metadata ={
     title:"Planes",
@@ -29,6 +35,12 @@ export default function Planes() {
             <UserProvider>
                 <SubscriptionComponent />
             </UserProvider>
+            <SeccionTablaPlanes/>
+            <SeccionFuncionalidades/>
+            <SeccionTiposConsultas/>
+            <SeccionPreguntas/>
+            <SeccionEmpresas/>
+            <SeccionCreaTuCuenta/>
             <Footer/>
         </div>
     );

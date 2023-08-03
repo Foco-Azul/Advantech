@@ -1,0 +1,54 @@
+.seccion-funcionalidades{
+    padding: 50px 0;
+}
+.seccion-funcionalidades > div{
+    margin: auto;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.seccion-titulo{
+    max-width: 580px;
+}
+.seccion-titulo > h4{
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 25px;
+    color: #20ABE2;
+}
+.seccion-titulo > h2{
+    font-size: 32px;
+    font-weight: 800;
+    color: #131022;
+}
+.seccion-funcionalidades .tarjeta-informativa{
+    max-width: 440px;
+    padding: 20px;
+    margin: 50px 50px;
+    box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.06);
+}
+
+.seccion-funcionalidades .tarjeta-informativa > h4{
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+.seccion-funcionalidades .tarjeta-informativa > p{   
+    margin-bottom: 20px;
+}
+.seccion-funcionalidades .tarjeta-informativa > ul > li{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;   
+}
+.seccion-funcionalidades .tarjeta-informativa > ul > li > svg{
+    color: #009fde;
+}
+@media screen and (max-width: 525px) {
+    .seccion-funcionalidades .tarjeta-informativa{
+        margin: auto ;
+    }
+}

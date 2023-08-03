@@ -1,0 +1,31 @@
+.seccion-tabla-planes{
+    padding: 100px 0;
+}
+.seccion-tabla-planes > div{
+    max-width: 85vw;
+    margin: auto;
+    min-width: 300px;
+    overflow-x: auto;
+    padding: 50px 20px;
+}
+.seccion-tabla-planes > div > table{
+    text-align: center;
+    font-size: 14px;
+    margin: auto;
+}
+.seccion-tabla-planes > div > table  tr{
+    margin: 10px;
+}
+.seccion-tabla-planes > div > table th{
+    text-align: initial;
+    width: 310px;
+    min-width: 310px;
+}
+.seccion-tabla-planes > div > table td{ 
+    background-color: #E2EEF9;
+	border-right: 20px solid #fff;	
+    border-left: 20px solid #fff;
+    width: 310px;
+    min-width: 310px;
+    padding: 10px 20px;
+}

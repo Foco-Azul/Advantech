@@ -87,17 +87,11 @@ const BurguerMenu: React.FC = () => {
   const toggleRecursos = () => {
     setRecursosOpen(!isRecursosOpen);
     // Si también está abierto el submenú de Advantech, lo cerramos
-    if (isAdvantechOpen) {
-      setAdvantechOpen(false);
-    }
   };
 
   const toggleAdvantech = () => {
     setAdvantechOpen(!isAdvantechOpen);
     // Si también está abierto el submenú de Recursos, lo cerramos
-    if (isRecursosOpen) {
-      setRecursosOpen(false);
-    }
   };
   const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -146,10 +140,14 @@ const BurguerMenu: React.FC = () => {
               </div>
             )}
             </li>
-            <li><Link href="/planes" legacyBehavior passHref> NUESTROS PLANES</Link></li>
+            <li className="perfil">
+              <Login loginname={"INGRESAR"} />
+            </li>
           </ul>
-          <div className="popup-footer"><Login loginname={"INGRESAR"} /></div>
-
+          <div className="popup-footer">
+            <Login loginname={"INGRESAR"} />
+            <button className="navigation-menu-button" >NUESTROS PLANES</button>
+          </div>
         </div>
       )}
       {isPopupOpen && <div className="overlay" onClick={closePopup} />}

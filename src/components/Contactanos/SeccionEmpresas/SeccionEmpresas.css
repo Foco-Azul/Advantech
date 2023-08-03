@@ -1,0 +1,16 @@
+.seccion-empresas > div  .tipos-consultas-head-container {
+    margin: auto;
+}
+.seccion-empresas > div  .tipos-consultas-head-title {
+    color: var(--brand-primary, #131022);
+    font-family: Manrope, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 140%;
+    padding: 10px 0;
+}
+.seccion-empresas .empresas-marcas{
+    display: flex;
+    flex-wrap: wrap;
+}

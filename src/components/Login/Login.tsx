@@ -1,8 +1,10 @@
 import * as React from "react";
+import { useState } from "react";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import './Login.css'; // Reemplaza "Login.css" con el nombre de tu archivo CSS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUserTie, faChevronDown, faChevronUp, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 interface LoginProps {
   loginname: string;
@@ -10,6 +12,12 @@ interface LoginProps {
 
 function Login({ loginname }: LoginProps) {
   const { user, error, isLoading } = useUser();
+  const [showSubPerfil, setShowSubPerfil] = useState(false); // Nuevo estado para controlar la visibilidad
+  const [isPerfilOpen, setPerfilOpen] = useState(false);
+
+  const toggleRecursos = () => {
+    setPerfilOpen(!isPerfilOpen);
+  };
 
   React.useEffect(() => {
     if (user) {
@@ -88,16 +96,65 @@ function Login({ loginname }: LoginProps) {
   return (
     <div className="login-container">
       {user && (
-        <div className="login-container">
-          <p className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {user.email?.split("@")[0]}</p> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
-          <button
-            className="logout-button"
-            onClick={() => {
-              window.location.href = "/api/auth/logout";
-            }}
+        <div>
+          <div className="login-container-pc" 
+            onMouseEnter={() => setShowSubPerfil(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
+            onMouseLeave={() => setShowSubPerfil(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
           >
-            LOGOUT
-          </button>
+            <a className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {user.email?.split("@")[0]} &nbsp; <FontAwesomeIcon icon={showSubPerfil ? faChevronUp : faChevronDown}/></a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+            <div className={`navigation-sub_menu-trigger  ${showSubPerfil ? "visible" : ""} `}>
+              <ul>
+                <li><Link href="/#" legacyBehavior passHref>Mi cuenta</Link></li>
+                <li><Link href="/#" legacyBehavior passHref>Mis datos</Link></li>
+                <li><Link href="/#" legacyBehavior passHref>Historial de pagos</Link></li>
+                <li onClick={() => {window.location.href = "/api/auth/logout";}}>Salir</li>
+              </ul>
+            </div>
+            {/*
+            <button
+              className="logout-button"
+              onClick={() => {
+                window.location.href = "/api/auth/logout";
+              }}
+            >
+              LOGOUT
+            </button>
+            */}
+          </div>
+          <div className="login-container-movil" 
+            onMouseEnter={() => setShowSubPerfil(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
+            onMouseLeave={() => setShowSubPerfil(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
+          >
+            <div className="popup-menu-title"><a onClick={toggleRecursos}>{user.email?.split("@")[0]} <span><FontAwesomeIcon icon={isPerfilOpen ? faChevronDown : faChevronRight} size="xl"/></span> </a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+            {isPerfilOpen && (
+              <div>
+                <ul>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Mi cuenta</Link></li>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Mis datos</Link></li>
+                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Historial de pagos</Link></li>
+                </ul>
+              </div>
+            )}
+            </div>
+            <button
+              className="logout-button"
+              onClick={() => {
+                window.location.href = "/api/auth/logout";
+              }}
+            >
+              SALIR
+            </button>
+            {/*
+            <button
+              className="logout-button"
+              onClick={() => {
+                window.location.href = "/api/auth/logout";
+              }}
+            >
+              LOGOUT
+            </button>
+            */}
+          </div>
         </div>
       )}
       {!user && (
@@ -108,7 +165,7 @@ function Login({ loginname }: LoginProps) {
               window.location.href = "/api/auth/login";
             }}
           >
-            <FontAwesomeIcon icon={faUser} style={{ color: "#009fde", }} /> {loginname}
+            <FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
           </button>
         </div>
       )}

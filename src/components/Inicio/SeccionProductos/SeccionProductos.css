@@ -50,7 +50,10 @@
   background-color: #ffffff;
   border: 2px solid #009fde;
 }
-
+.productos-pestañas > button:hover{
+  background-color: #009FDE;
+  color: #ffffff;
+}
 .productos-pestañas > button.pestaña-activo{
   background-color: #009FDE;
   color: #ffffff;

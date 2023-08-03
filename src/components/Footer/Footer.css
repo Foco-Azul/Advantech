@@ -76,5 +76,12 @@
     }
     .footer-izq{
         margin: auto;
+        padding-bottom: 0;
+    }
+    .footer-home-links {
+        padding-top: 0;
+    }
+    .footer-home-links > div{
+        margin-bottom: 10px;
     }
 }

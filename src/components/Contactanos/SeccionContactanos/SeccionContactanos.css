@@ -1,0 +1,35 @@
+.seccion-contactanos{
+    padding: 50px 0;
+}
+.seccion-contactanos .contactanos-contenido{
+    margin: auto;
+    padding: 0 20px;
+}
+.seccion-contactanos .seccion-titulo{
+  max-width: 580px;
+}
+.seccion-contactanos .seccion-titulo > h4{
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  color: #20ABE2;
+}
+.seccion-contactanos .seccion-titulo > h2{
+  font-size: 42px;
+  font-weight: 800;
+  color: #131022;
+}
+.seccion-contactanos .seccion-titulo > p{
+  max-width: 420px;
+  margin: 30px 0;
+}
+
+.seccion-contactanos .seccion-titulo ul > li{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;   
+}
+.seccion-contactanos .seccion-titulo ul > li > svg{
+  color: #009fde;
+}

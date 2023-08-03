@@ -1,0 +1,96 @@
+.seccion-Tipos-Consultas{
+    padding: 100px 0;
+}
+.seccion-Tipos-Consultas > div{
+    margin: auto;
+    min-width: 300px;
+    overflow-x: auto;
+    padding: 50px 20px;
+}
+
+.seccion-Tipos-Consultas > div  .tipos-consultas-head-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 620px;
+    margin: auto;
+}
+
+.seccion-Tipos-Consultas > div  .tipos-consultas-head-title {
+    color: var(--brand-primary, #009FDE);
+    text-align: center;
+    font-family: Manrope, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 140%;
+    padding: 10px 0;
+}
+
+.seccion-Tipos-Consultas > div  .tipos-consultas-head-subtitle {
+    color: var(--gray-900, #131022);
+    text-align: center;
+    font-family: Manrope, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%;
+    padding: 10px 0;
+}
+
+.seccion-Tipos-Consultas > div  .tipos-consultas-head-text {
+    color: var(--gray-700, #585C7B);
+    text-align: center;
+    font-family: Manrope, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+    max-width: 500px;
+    padding: 10px 0;
+}
+
+.seccion-Tipos-Consultas .contenedor-tabla{
+    margin: auto;
+    min-width: 300px;
+    overflow-x: auto;
+    padding: 50px 20px;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table{
+    margin: auto;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > thead > tr{
+    background-color: #E7F1FA;
+    text-align: center;
+    font-size: 16px;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > thead > tr > th:nth-child(1){
+    width: 368px;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > thead > tr > th:nth-child(2){
+    width: 300px;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > thead > tr > th:nth-child(3){
+    width: 661px;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > thead > tr > th:nth-child(4){
+    width: 140px;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > thead > tr > th:nth-child(5){
+    width: 171px;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > tbody tr:nth-child(even) {
+    background-color: #E7F1FA;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > thead > tr > th,
+.seccion-Tipos-Consultas .contenedor-tabla > table > tbody > tr > td{ 
+    padding: 11px 20px;
+}
+
+.seccion-Tipos-Consultas .contenedor-tabla > table > tbody > tr > td:nth-child(4),
+.seccion-Tipos-Consultas .contenedor-tabla > table > tbody > tr > td:nth-child(5){
+    text-align: center;
+}
+.seccion-Tipos-Consultas .contenedor-tabla > table > tbody > tr{
+    font-size: 14px;
+}

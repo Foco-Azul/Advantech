@@ -69,6 +69,7 @@
 }
 .seccion-suscripcion-footer > a{
     margin-right: 10px;
+    color: #009FDE;
 }
 
 @media only screen and (max-width: 525px) {
