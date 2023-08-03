@@ -2,7 +2,7 @@ import Image from "next/image";
 import './SeccionSuscripcion.css'
 import Link from "next/link";
 import IconPc from "./image/icon-pc.svg"
-import IconPeople from "./image/icon-people.svg"
+import ImageSuscripcion from "./image/image-suscripcion.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleRight} from "@fortawesome/free-solid-svg-icons";
 
@@ -18,15 +18,13 @@ async function SeccionRecursos() {
                     <p>Advantech Datos es una suscripción que te brinda acceso a bases de datos de personas de distintas fuentes públicas.</p>
                 </div>
                 <div className="seccion-suscripcion-tipo">
+                    <div className="suscripcion-imagen">
+                        <Image src={ImageSuscripcion} alt="Advantech Datos"></Image>
+                    </div>
                     <div className="seccion-suscripcion-tipo-empresa">
                         <Image src={IconPc} width={80} height={80} alt="advantech-suscripcion"></Image>
-                        <h4>Para empresas <FontAwesomeIcon icon={faCircleRight} style={{color: "#009fde",}} /></h4>
-                        <p>Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas.</p>
-                    </div>
-                    <div className="seccion-suscripcion-tipo-persona ocultar">
-                        <Image src={IconPeople} width={80} height={80} alt="advantech-suscripcion"></Image>
-                        <h4>Para personas <FontAwesomeIcon icon={faCircleRight} style={{color: "#009fde",}} /></h4>
-                        <p>Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas. Descripción de beneficios de los planes para empresas. </p>
+                        <h4>Planes a tu medida</h4>
+                        <p>Nuestros planes están preparados para que puedas lograr tus objetivos empresariales y personales. Nuestros datos son consultados de distintas fuentes públicas así nos aseguramos de brindarte datos fiables y actualizados periódicamente.</p>
                     </div>
                 </div>
                 <div className="seccion-suscripcion-footer">

@@ -27,10 +27,14 @@ function SeccionProductos() {
             <button className={activeTab === 'DATOS POR DESCARGAR' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR DESCARGAR')}>DATOS POR DESCARGAR</button>
             <button className={activeTab === 'DATOS POR API' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR API')}>DATOS POR API</button>
           </div>
-          <div className='productos-contenido'>
-            {activeTab === 'DATOS POR BUSCADOR' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
-            {activeTab === 'DATOS POR DESCARGAR' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
-            {activeTab === 'DATOS POR API' && <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>}
+          <div className={'pestaña-contenido ' + (activeTab === 'DATOS POR BUSCADOR' ? 'contenido-activo' : '')}>
+            <Image src={ImageEmail} width={700} height={480} alt="advantech-email" />
+          </div>
+          <div  className={'pestaña-contenido ' + (activeTab === 'DATOS POR DESCARGAR' ? 'contenido-activo' : '')}>
+            <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>
+          </div>
+          <div  className={'pestaña-contenido ' + (activeTab === 'DATOS POR API' ? 'contenido-activo' : '')}>
+            <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>
           </div>
         </div>
       </div>

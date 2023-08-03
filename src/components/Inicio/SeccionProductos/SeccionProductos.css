@@ -58,11 +58,16 @@
   background-color: #009FDE;
   color: #ffffff;
 }
-
-.productos-contenido > img{
+.pestaña-contenido{
+  display: none;
+}
+.pestaña-contenido > img{
   margin: auto;
 }
 
 .productos-contenido > p.contenido-activo{
+  display: block;
+}
+.contenido-activo{
   display: block;
 }

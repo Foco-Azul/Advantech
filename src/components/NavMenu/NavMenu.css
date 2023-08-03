@@ -119,6 +119,12 @@ height: 70px;
   padding: 5px 100px 5px 20px;
   text-transform: initial;
   margin: 5px 0;
+  color: var(--gray-800, #3E4265);
+  font-family: Manrope, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
 }
 
 .navigation-sub_menu-trigger > ul > li:hover{
@@ -160,10 +166,14 @@ height: 70px;
   }
   .nav > .nav-image{
     max-width: 120px;
+    flex: auto;
   }
   .scrolled .nav-image > img{
     opacity: 1;
     height: unset;
     padding: unset;
+  }
+  .nav-conteiner-buttons{
+    justify-content: flex-end;
   }
 }

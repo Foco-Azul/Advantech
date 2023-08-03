@@ -168,7 +168,9 @@
 .popup-footer > .login-container .login-container-movil .popup-menu-title{
   display: none;
 }
-
+.popup > ul > li.perfil > div > div > button{
+  display: none;
+}
 @media (min-width: 525px) {
   .hamburger-menu {
     display: none;

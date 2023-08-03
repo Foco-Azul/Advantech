@@ -58,8 +58,12 @@
     font-weight: 600;
     color: #009FDE;
     margin-left: 10px;
+    transition: 0.5s;
 }
-
+.seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont > a:hover{
+    transform: scale(1.05);
+    margin-left: 20px;
+}
 .hero-button {
     height: 52px;
     border-radius: 6px;

@@ -59,6 +59,11 @@
     font-style: normal;
     font-weight: 600;
     line-height: 160%;
+    transition: 0.5s;
+}
+.producto-icon-container:hover{
+    transform: scale(1.05);
+    margin-left: 20px;
 }
 
 .producto-check {
