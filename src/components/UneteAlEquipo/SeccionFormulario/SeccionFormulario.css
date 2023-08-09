@@ -1,0 +1,101 @@
+.formulario-unete_al_equipo {
+  padding: 20px;
+  margin: 70px 0px;
+}
+.formulario-unete_al_equipo .unete_al_equipo .formulario-contenido{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: 1085px;
+  margin: auto;
+}
+.formulario-unete_al_equipo .formulario-contenedor{
+  background-color: #ffffff;
+  padding: 40px;
+  box-shadow: 0px -2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px -4.6px 12px -1px rgba(19, 16, 34, 0.06);
+  max-width: 1300px;
+  margin: auto;
+  width: fit-content;
+}
+.formulario-unete_al_equipo .formulario-contenedor .campos{
+  display: flex;
+  flex-direction: column;
+  margin: 0 40px;
+}
+.formulario-unete_al_equipo .campos label{
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  line-height: 26px;
+  color: #131022;
+}
+.formulario-unete_al_equipo .campos input,
+.formulario-unete_al_equipo .campos select{
+  width: 462px;
+  padding: 13px 10px;
+  border: 1px solid #D4D7E5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.formulario-unete_al_equipo .campos textarea{
+  resize: none;
+  width: 462px;
+  padding: 13px 10px;
+  border: 1px solid #D4D7E5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: 100px;
+}
+.formulario-unete_al_equipo .acuerdo label{
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.formulario-unete_al_equipo .acuerdo label input{
+  margin: 0 10px;
+  width: 24px;
+  height: 24px;
+}
+.formulario-unete_al_equipo .acuerdo label p{
+  font-size: 16px;
+  font-weight: 400;
+  color: #585C7B;
+}
+.formulario-unete_al_equipo .acuerdo label a{
+  color: #009FDE;
+}
+.formulario-unete_al_equipo .formulario-footer{
+  text-align: center;
+}
+.hero-button {
+  height: 52px;
+  border-radius: 6px;
+  background: var(--brand-primary, #009FDE);
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+  min-width: 225px;
+  color: var(--white, #FFF);
+  text-align: center;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  margin-top: 15px;
+  transition: 0.5s;
+  text-align: center;
+}
+
+
+.hero-button:hover {
+  box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+  transform: scale(0.95);
+}
+@media only screen and (max-width: 525px) {
+  .formulario-unete_al_equipo .campos textarea,
+  .formulario-unete_al_equipo .campos input,
+  .formulario-unete_al_equipo .campos select{
+      max-width: 67vw;
+  }
+}

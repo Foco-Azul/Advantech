@@ -5,6 +5,10 @@
     margin: auto;
     padding: 0 20px;
     max-width: 1300px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
 }
 .seccion-contactanos .seccion-titulo{
   max-width: 580px;
@@ -33,4 +37,7 @@
 }
 .seccion-contactanos .seccion-titulo ul > li > svg{
   color: #009fde;
+}
+.seccion-contactanos .seccion-imagen{
+  max-width: 650px;
 }

@@ -1,5 +1,3 @@
-"use client";
-import React, { useState } from 'react';
 import './SeccionContactanos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";

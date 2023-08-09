@@ -1,0 +1,94 @@
+.formulario-contactanos {
+  padding: 20px;
+  margin: 70px 0px;
+}
+.formulario-contactanos .formulario-contenedor{
+  background-color: #ffffff;
+  padding: 40px;
+  box-shadow: 0px -2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px -4.6px 12px -1px rgba(19, 16, 34, 0.06);
+  border-radius: 8px;
+}
+.formulario-contactanos .formulario-contenedor .campos{
+  display: flex;
+  flex-direction: column;
+}
+.formulario-contactanos .campos label{
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  line-height: 26px;
+  color: #131022;
+}
+.formulario-contactanos .campos input,
+.formulario-contactanos .campos select{
+  width: 462px;
+  padding: 13px 10px;
+  border: 1px solid #D4D7E5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.formulario-contactanos .campos input:focus,
+.formulario-contactanos .campos select:focus,
+.formulario-contactanos .campos textarea:focus {
+  border-color: #9E9E9E; /* Cambia el color a tu preferencia */
+  outline: none; /* Esto quita el contorno predeterminado en algunos navegadores */
+}
+.formulario-contactanos .campos textarea{
+  resize: none;
+  width: 462px;
+  padding: 13px 10px;
+  border: 1px solid #D4D7E5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: 100px;
+}
+.formulario-contactanos .acuerdo label{
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+.formulario-contactanos .acuerdo label input{
+  margin: 0 10px;
+  width: 24px;
+  height: 24px;
+}
+.formulario-contactanos .acuerdo label p{
+  font-size: 16px;
+  font-weight: 400;
+  color: #585C7B;
+}
+.formulario-contactanos .acuerdo label a{
+  color: #009FDE;
+}
+.hero-button {
+  height: 52px;
+  border-radius: 6px;
+  background: var(--brand-primary, #009FDE);
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+  min-width: 225px;
+  color: var(--white, #FFF);
+  text-align: center;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  margin-top: 15px;
+  transition: 0.5s;
+}
+
+
+.hero-button:hover {
+  box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+  transform: scale(0.95);
+}
+@media only screen and (max-width: 525px) {
+  .formulario-contactanos .campos textarea,
+  .formulario-contactanos .campos input,
+  .formulario-contactanos .campos select{
+      max-width: 80vw;
+  }
+  .formulario-contactanos .formulario-contenedor{
+    padding: 40px 10px;
+  }
+}

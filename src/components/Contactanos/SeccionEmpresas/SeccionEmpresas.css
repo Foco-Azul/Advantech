@@ -13,4 +13,16 @@
 .seccion-empresas .empresas-marcas{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+}
+.seccion-empresas .empresas-marcas img{
+    max-width: 33%;
+}
+.seccion-empresas .aliados-contenido{
+    padding: 0 20px;
+}
+@media only screen and (max-width: 525px) {
+    .seccion-empresas .empresas-marcas img{
+        max-width: 100%;
+    }
 }

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
-import ImageEquipo from './image-equipo.png'
+import ImageEquipo from './image-equipo.svg'
 import './SeccionUneteAlEquipo.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";
@@ -15,8 +15,8 @@ function SeccionUneteAlEquipo() {
           <h2>Forma parte de una empresa en crecimiento</h2>
           <p>Estamos en constante búsqueda de mentes curiosas y apasionadas por el mundo de los datos. Si te apasiona el análisis, la transformación y la interpretación de información, envíanos tu postulación.</p>
         </div>
-        <div>
-          <Image src={ImageEquipo} alt='Advantech Datos' width={800} height={400}></Image>
+        <div className='seccion-imagen'>
+          <Image src={ImageEquipo} alt='Advantech Datos'></Image>
         </div>
       </div>
     </section>

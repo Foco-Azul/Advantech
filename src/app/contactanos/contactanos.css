@@ -7,6 +7,10 @@
 .contactanos-section{
     max-width: 1300px;
     margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
 }
 .contactanos-section > div{
     max-width: 600px;

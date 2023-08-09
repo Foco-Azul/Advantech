@@ -13,8 +13,8 @@ function Hero() {
       <div className="hero-grid">
         <div className="hero-content">
           <br></br>
-          <br></br>
           <h1 className="hero-short-title">Desbloquea el potencial de los datos para impulsar tu organización al siguiente nivel</h1>
+          <h1 className="hero-short-title-movil">Desbloquea <br /> el potencial <br /> de los datos</h1>
           <br></br>
           <br></br>
           <input className="hero-short-input" placeholder={ `Buscar en Advantech`} />
@@ -22,7 +22,6 @@ function Hero() {
           <br></br>
           <h2 className="hero-description">
             Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador. </h2>
-          <br></br>
           <br></br>
           <button className="hero-button">
             Crear cuenta

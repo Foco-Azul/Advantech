@@ -8,6 +8,7 @@ import './contactanos.css'
 import { Metadata } from "next";
 import SeccionContactanos from "@/components/Contactanos/SeccionContactanos/SeccionContactanos";
 import SeccionEmpresas from "@/components/Contactanos/SeccionEmpresas/SeccionEmpresas";
+import SeccionFormulario from "@/components/Contactanos/SeccionFormulario/SeccionFormulario";
 
 export const metadata:Metadata ={
     title:"Contactanos",
@@ -30,6 +31,9 @@ export default function Contactanos() {
                 <div>
                     <SeccionContactanos/>
                     <SeccionEmpresas/>
+                </div>
+                <div>
+                    <SeccionFormulario/>
                 </div>
             </section>
             <Footer/>
