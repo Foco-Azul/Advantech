@@ -17,6 +17,7 @@
     max-width: 700px;
     margin: 0 auto 30px auto;
     line-height: 34px;
+    color: #131022;
 }
 
 .seccion-suscripcion-encabezado > p{
@@ -24,6 +25,7 @@
     font-weight: 400;
     margin: auto;
     max-width: 600px;
+    color: #585C7B;
 }
 
 .seccion-suscripcion-tipo{
@@ -51,12 +53,14 @@
     font-weight: 800;
     margin-bottom: 20px;
     margin-left: 10px;
+    color: #131022;
 }
 .seccion-suscripcion-tipo-empresa > p,
 .seccion-suscripcion-tipo-persona > p{   
     margin-bottom: 20px;
     margin-left: 10px;
     text-align: initial;
+    color: #585C7B;
 }
 
 .seccion-suscripcion-tipo-empresa > a,
@@ -70,18 +74,7 @@
 .seccion-suscripcion-footer{
     text-align: center;
 }
-.seccion-suscripcion-footer > button{
-    margin-bottom: 30px;
-}
-.seccion-suscripcion-footer > a{
-    margin-right: 10px;
-    color: #009FDE;
-    transition: 0.5s;
-}
-.seccion-suscripcion-footer > a:hover{
-    transform: scale(1.05);
-    margin-left: 20px;
-}
+
 .suscripcion-imagen{
     width: 600px;
     height: 600px;

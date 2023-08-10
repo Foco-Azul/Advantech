@@ -17,7 +17,7 @@
     font-size: 24px;
     font-weight: 800;
     margin-bottom: 25px;
-    color: #20ABE2;
+    color: #009FDE;
 }
 .seccion-recursos > div > .seccion-recursos-superior > .seccion-recursos-superior-izq > h2{ 
     font-size: 32px;
@@ -28,6 +28,7 @@
 .seccion-recursos > div > .seccion-recursos-superior > .seccion-recursos-superior-izq > p{ 
     max-width: 420px;
     margin: 30px 0;
+    color: #585C7B;
 }
 
 .seccion-recursos > div > .seccion-recursos-inferior{
@@ -47,10 +48,12 @@
     font-weight: 800;
     margin-bottom: 20px;
     margin-left: 10px;
+    color: #131022;
 }
 .seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont > p{   
     margin-bottom: 20px;
     margin-left: 10px;
+    color: #585C7B;
 }
 
 .seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont > a{  
@@ -64,22 +67,7 @@
     transform: scale(1.05);
     margin-left: 20px;
 }
-.hero-button {
-    height: 52px;
-    border-radius: 6px;
-    background: var(--brand-primary, #009FDE);
-    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
-    min-width: 225px;
-    color: var(--white, #FFF);
-    text-align: center;
-    font-size: 16px;
-    font-family: Manrope, sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 160%;
-    margin-top: 15px;
-    transition: 0.5s;
-}
+
 
 @media only screen and (max-width: 525px) {
     .seccion-recursos > div > .seccion-recursos-superior,

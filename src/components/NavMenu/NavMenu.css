@@ -37,7 +37,7 @@ height: 70px;
   opacity: 1;
   transition: opacity 1.5s ease;
   transition: height 1.5s ease;
-
+  cursor: pointer;
 }
 .scrolled .nav-image > img{
   opacity: 0;

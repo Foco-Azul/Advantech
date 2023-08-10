@@ -13,7 +13,9 @@ function Footer() {
 
         <div className="footer-content">
           <div className="footer-izq">
-            <Image src={Logo} alt="Company Logo" width={164} height={133}/>
+            <Link href="/" legacyBehavior passHref>
+              <Image src={Logo} alt="Company Logo" width={164} height={133}/>
+            </Link>
             <div className="footer-rrss">
               <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} /></Link>
               <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faTwitter} /></Link>
@@ -25,32 +27,32 @@ function Footer() {
               <div>
                 <h2 className="column-title">RECURSOS</h2>
                 <ul>
-                    <li className="list-row"><a href='#' className="link">Buscar datos</a></li>
-                    <li className="list-row"><a href='#' className="link">Documentación</a></li>
-                    <li className="list-row"><a href='#' className="link">Uso por industria</a></li>
-                    <li className="list-row"><a href='#' className="link">Ventajas</a></li>
-                    <li className="list-row"><a href='#' className="link">Monitorio uptime</a></li>
+                    <li className="list-row"><a href='/busqueda' className="link">Buscar datos</a></li>
+                    <li className="list-row"><a href='/documentacion' className="link">Documentación</a></li>
+                    <li className="list-row"><a href='/uso-por-industria' className="link">Uso por industria</a></li>
+                    <li className="list-row"><a href='/ventajas' className="link">Ventajas</a></li>
+                    <li className="list-row"><a href='/' className="link">Monitorio uptime</a></li>
                 </ul>
               </div>
               <div>
                 <h2 className="column-title">ADVANTECH</h2>
                 <ul>
-                    <li className="list-row"><a href='#' className="link">¿Quienes somos?</a></li>
-                    <li className="list-row"><a href='#' className="link">Contáctanos</a></li>
-                    <li className="list-row"><a href='#' className="link">Únete al equipo</a></li>
-                    <li className="list-row"><a href='#' className="link">Casos de éxito</a></li>
-                    <li className="list-row"><a href='#' className="link">Respaldo legal</a></li>
-                    <li className="list-row"><a href='#' className="link">Precios</a></li>
+                    <li className="list-row"><a href='/sobre-nosotros' className="link">¿Quienes somos?</a></li>
+                    <li className="list-row"><a href='/contactanos' className="link">Contáctanos</a></li>
+                    <li className="list-row"><a href='/unete-al-equipo' className="link">Únete al equipo</a></li>
+                    <li className="list-row"><a href='/casos-de-exito' className="link">Casos de éxito</a></li>
+                    <li className="list-row"><a href='/respaldo-legal' className="link">Respaldo legal</a></li>
+                    <li className="list-row"><a href='/planes' className="link">Precios</a></li>
                 </ul>
               </div>
               <div>
                 <h2 className="column-title">MI CUENTA</h2>
                 <ul>
-                    <li className="list-row"><a href='#' className="link">Mi cuenta</a></li>
-                    <li className="list-row"><a href='#' className="link">Mis datos</a></li>
-                    <li className="list-row"><a href='#' className="link">Historial de pagos</a></li>
-                    <li className="list-row"><a href='#' className="link">Saldo y uso de créditos</a></li>
-                    <li className="list-row"><a href='#' className="link">Historial de busquedas</a></li>
+                    <li className="list-row"><a href='/mi-cuenta' className="link">Mi cuenta</a></li>
+                    <li className="list-row"><a href='/mi-cuenta' className="link">Mis datos</a></li>
+                    <li className="list-row"><a href='/mi-cuenta' className="link">Historial de pagos</a></li>
+                    <li className="list-row"><a href='/mi-cuenta' className="link">Saldo y uso de créditos</a></li>
+                    <li className="list-row"><a href='/mi-cuenta' className="link">Historial de busquedas</a></li>
                 </ul>
               </div>
           </div>

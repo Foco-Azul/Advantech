@@ -7,27 +7,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 
 function Hero() {
-
   return (
     <section >
       <div className="hero-grid">
         <div className="hero-content">
           <br></br>
-          <h1 className="hero-short-title">Desbloquea el potencial de los datos para impulsar tu organización al siguiente nivel</h1>
+          <h1 className="hero-short-title">Desbloquea el potencial de los datos</h1>
+          <h2 className="hero-short-title">Impulsa tu organización al siguiente nivel</h2>
           <h1 className="hero-short-title-movil">Desbloquea <br /> el potencial <br /> de los datos</h1>
           <br></br>
-          <br></br>
           <input className="hero-short-input" placeholder={ `Buscar en Advantech`} />
-          <br></br>
           <br></br>
           <h2 className="hero-description">
             Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador. </h2>
           <br></br>
-          <button className="hero-button">
+          <a href="/api/auth/login" className="hero-button" >
             Crear cuenta
-          </button>
+          </a>
           <br></br>
-          <a href="#" className="hero-icon-container">
+          <a href="/documentacion" className="hero-icon-container">
             ¿Cómo funciona? <ArrowRight className="hero-icon" />
           </a>
           <br></br>

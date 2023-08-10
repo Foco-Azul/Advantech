@@ -28,9 +28,7 @@ async function SeccionRecursos() {
                     </div>
                 </div>
                 <div className="seccion-suscripcion-footer">
-                    <button className="hero-button">Ver planes de precios</button>
-                    <br />
-                    <Link href="#" legacyBehavior passHref><a>Ver productos <FontAwesomeIcon icon={faArrowRight} /></a></Link>
+                    <Link href={"planes"}><button className="hero-button">Ver planes de precios</button></Link>
                 </div>
             </div>
         </section>

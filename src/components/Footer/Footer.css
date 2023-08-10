@@ -20,7 +20,9 @@
     max-width: 400px;
     padding: 50px 25px; 
 }
-
+.footer-izq img{
+    cursor: pointer;
+}
 .footer-rrss{
     display: flex;
     justify-content: center;
@@ -47,11 +49,13 @@
     font-weight: 600;
     font-size: 16px;
     text-transform: uppercase;
+    color: #131022;
 }
 .list-row{
     line-height: 25px;
     font-size: 16px;
     font-weight: normal;
+    color: #585C7B;
 }
 
 .link:hover{
@@ -59,9 +63,9 @@
 }
 
 .footer-final{
-    background-color: #2a3249;
+    background: var(--gray-900, #131022);
     height: 50px;
-    color: #fff;
+    color: #ffffff;
     text-align: center;
 }
 

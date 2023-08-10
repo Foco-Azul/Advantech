@@ -122,9 +122,9 @@ const BurguerMenu: React.FC = () => {
               {isRecursosOpen && (
               <div>
                 <ul>
-                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Buscar datos</Link></li>
-                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Documentación</Link></li>
-                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Uso por industria</Link></li>
+                  <li className="sub-menu"><Link href="/busqueda" legacyBehavior passHref>Buscar datos</Link></li>
+                  <li className="sub-menu"><Link href="/documentacion" legacyBehavior passHref>Documentación</Link></li>
+                  <li className="sub-menu"><Link href="/uso-por-industria" legacyBehavior passHref>Uso por industria</Link></li>
                 </ul>
               </div>
                )}
@@ -134,8 +134,8 @@ const BurguerMenu: React.FC = () => {
               <div>
                 <ul>
                   <li className="sub-menu"><Link href="/sobre-nosotros" legacyBehavior passHref>¿Quienes somos?</Link></li>
-                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Contáctanos</Link></li>
-                  <li className="sub-menu"><Link href="/#" legacyBehavior passHref>Únete al equipo</Link></li>
+                  <li className="sub-menu"><Link href="/contactanos" legacyBehavior passHref>Contáctanos</Link></li>
+                  <li className="sub-menu"><Link href="/unete-al-equipo" legacyBehavior passHref>Únete al equipo</Link></li>
                 </ul>
               </div>
             )}

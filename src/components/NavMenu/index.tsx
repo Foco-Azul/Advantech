@@ -76,9 +76,9 @@ function NavMenu() {
               <a className="navigation-menu-trigger">RECURSOS <FontAwesomeIcon icon={showSubRecursos ? faChevronUp : faChevronDown}/></a>
                 <div className={`navigation-sub_menu-trigger  ${showSubRecursos ? "visible" : ""} `}>
                   <ul>
-                    <li><Link href="/#" legacyBehavior passHref>Buscar datos</Link></li>
-                    <li><Link href="/#" legacyBehavior passHref>Documentación</Link></li>
-                    <li><Link href="/#" legacyBehavior passHref>Uso por industria</Link></li>
+                    <li><Link href="/busqueda" legacyBehavior passHref>Buscar datos</Link></li>
+                    <li><Link href="/documentacion" legacyBehavior passHref>Documentación</Link></li>
+                    <li><Link href="/uso-por-industria" legacyBehavior passHref>Uso por industria</Link></li>
                   </ul>
                 </div>
             </li>
@@ -91,8 +91,8 @@ function NavMenu() {
                 <div className={`navigation-sub_menu-trigger  ${showSubAdvantech ? "visible" : ""} `}>
                   <ul>
                     <li><Link href="/sobre-nosotros" legacyBehavior passHref>¿Quienes somos?</Link></li>
-                    <li><Link href="/#" legacyBehavior passHref>Contáctanos</Link></li>
-                    <li><Link href="/#" legacyBehavior passHref>Únete al equipo</Link></li>
+                    <li><Link href="/contactanos" legacyBehavior passHref>Contáctanos</Link></li>
+                    <li><Link href="/unete-al-equipo" legacyBehavior passHref>Únete al equipo</Link></li>
                   </ul>
                 </div>
             </li>
@@ -105,7 +105,7 @@ function NavMenu() {
           </div>
         <div className="nav-conteiner-buttons">
         {!isHomePage && (
-          <Link href="/#" passHref className="btn-buscar"><button><FontAwesomeIcon icon={faMagnifyingGlass} /> &nbsp; <span>BUSCAR</span></button></Link>
+          <Link href="/busqueda" passHref className="btn-buscar"><button><FontAwesomeIcon icon={faMagnifyingGlass} /> &nbsp; <span>BUSCAR</span></button></Link>
           )}
           <div className="login-escritorio"><Login loginname={"INGRESAR"} /></div>
           <Link href="/planes" legacyBehavior passHref>

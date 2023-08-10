@@ -38,6 +38,12 @@
   border-radius: 8px;
   margin-bottom: 20px;
 }
+.formulario-unete_al_equipo  .campos input:focus,
+.formulario-unete_al_equipo  .campos select:focus,
+.formulario-unete_al_equipo  .campos textarea:focus {
+  border-color: #9E9E9E; /* Cambia el color a tu preferencia */
+  outline: none; /* Esto quita el contorno predeterminado en algunos navegadores */
+}
 .formulario-unete_al_equipo .campos textarea{
   resize: none;
   width: 462px;

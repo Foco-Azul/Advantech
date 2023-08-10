@@ -14,10 +14,21 @@
     max-width: 1076px;
     padding: 0 20px;
 }
-.hero-short-title-movil {
+h2.hero-short-title {
     color: var(--brand-primary, #009FDE);
     text-align: center;
     font-size: 35px;
+    font-family: Manrope, sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%;
+    max-width: 1076px;
+    padding: 0 20px;
+}
+.hero-short-title-movil {
+    color: var(--brand-primary, #009FDE);
+    text-align: center;
+    font-size: 30px;
     font-family: Manrope, sans-serif;
     font-style: normal;
     font-weight: 800;
@@ -41,25 +52,23 @@
     font-style: normal;
     font-weight: 400;
     line-height: 160%;
-    max-width: 1076px;
+    max-width: 620px;
     padding: 0 20px;
 }
 
 .hero-button {
-    height: 52px;
     border-radius: 6px;
     background: var(--brand-primary, #009FDE);
     box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
-    min-width: 225px;
     color: var(--white, #FFF);
     text-align: center;
     font-size: 16px;
     font-family: Manrope, sans-serif;
     font-style: normal;
     font-weight: 600;
-    line-height: 160%;
     margin-top: 15px;
     transition: 0.5s;
+    padding: 15px 30px;
 }
 
 
@@ -80,6 +89,9 @@
     display: flex;
     transition: 0.5s;
 }
+.hero-icon-container svg {
+    height: 20px;
+}
 .hero-icon-container:hover{
     transform: scale(1.05);
     margin-left: 20px;
@@ -95,7 +107,11 @@
     background: #FFF;
     box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.12);
 }
-
+.hero-short-input:focus{
+    box-shadow: 0px 2px 6.400000095367432px -1px rgba(25, 168, 225, 0.1), 0px 4.400000095367432px 12px -1px rgba(25, 168, 225, 0.2);
+    outline: none; /* Esto quita el contorno predeterminado en algunos navegadores */
+    border: none;
+}
 .hero-short-input ::placeholder {
     color: var(--gray-600, #9397AD);
     font-family: Manrope;
