@@ -160,10 +160,10 @@ const SeccionFormulario: React.FC = () => {
                 required
               >
                 <option value="">Selecciona una opción</option>
-                <option value="Opcion 1">Opcion 1</option>
-                <option value="Opcion 2">Opcion 2</option>
-                <option value="Opcion 3">Opcion 3</option>
-                <option value="Opcion 4">Opcion 4</option>
+                <option value="0-3 años">0 - 3 años</option>
+                <option value="3-6 años">3 - 6 años</option>
+                <option value="6-9 años">6 - 9 años</option>
+                <option value="+10 años">+10 años</option>
               </select>
             </div>
             <div className='campos'>

@@ -39,7 +39,7 @@ const Carousel: React.FC = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 3 ? 0 : prevPhrase + 1));
-    }, 3000);
+    }, 6000);
 
     return () => {
       clearInterval(timer);
