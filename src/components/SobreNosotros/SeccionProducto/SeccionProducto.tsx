@@ -32,7 +32,7 @@ function Producto() {
             <Image className="producto-icon" src={icon} alt="Company Logo" /> <p>Datos de diversas fuentes presentados de manera automática</p>
           </div>
           <br></br>
-          <Link href="#" legacyBehavior passHref><a className="producto-icon-container">
+          <Link href="/contactanos" legacyBehavior passHref><a className="producto-icon-container">
             Realiza una consulta <FontAwesomeIcon icon={faArrowRight} className="hero-icon"/>
           </a></Link>
         </div>
@@ -56,8 +56,8 @@ function Producto() {
             <Image src={icon} alt="Company Logo" className="producto-icon" /> <p>Datos de diversas fuentes presentados de manera automática</p>
           </div>
           <br></br>
-          <Link href="#" legacyBehavior passHref><a className="producto-icon-container">
-            Contáctanos <FontAwesomeIcon icon={faArrowRight} className="hero-icon"/>
+          <Link href="/planes" legacyBehavior passHref><a className="producto-icon-container">
+            Nuestros planes <FontAwesomeIcon icon={faArrowRight} className="hero-icon"/>
           </a></Link>
         </div>
       </div>

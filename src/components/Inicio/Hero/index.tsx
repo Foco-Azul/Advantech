@@ -15,8 +15,8 @@ function Hero() {
           <h1 className="hero-short-title">Desbloquea el potencial de los datos</h1>
           <h2 className="hero-short-title">Impulsa tu organización al siguiente nivel</h2>
           <h1 className="hero-short-title-movil">Desbloquea <br /> el potencial <br /> de los datos</h1>
-          <br></br>
-          <input className="hero-short-input" placeholder={ `Buscar en Advantech`} />
+            <FontAwesomeIcon className="icon-search" icon={faMagnifyingGlass} size="xl" />
+            <input className="hero-short-input" placeholder={ `Buscar en Advantech`} />
           <br></br>
           <h2 className="hero-description">
             Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador. </h2>

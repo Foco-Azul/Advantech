@@ -3,7 +3,7 @@ import './SeccionNuestraExperiencia.css';
 function NuestraExperiencia() {
 
   return (
-    <div className="nuestraexperiencia-container">
+    <div className="nuestraexperiencia-container" id='nuestra-experiencia'>
       <br></br>
       <h2 className="nuestraexperiencia-title">Nuestra Experiencia</h2>
       <br></br>

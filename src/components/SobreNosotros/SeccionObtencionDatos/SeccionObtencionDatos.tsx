@@ -2,6 +2,7 @@ import './SeccionObtencionDatos.css';
 import Image from "next/image";
 import Archive from "./Archive.svg"
 import Datos from "./Datos.png"
+import Link from 'next/link';
 
 
 function ObtencionDatos() {
@@ -50,7 +51,7 @@ function ObtencionDatos() {
           </div>
         </div>
         <br></br>
-        <button className="obtenciondatos-button">Ver fuentes de créditos</button>
+        <Link href="/planes"><button className="obtenciondatos-button">Ver fuentes de créditos</button></Link>
       </div>
     </div>
   );

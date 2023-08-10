@@ -16,9 +16,9 @@ function SobreNosotros() {
         <br></br>
         <p className="sobrenosotros-text">Armados con las tecnologías más avanzadas, nuestro compromiso es obtener el mayor valor de sus datos, de cualquier manera que se presenten, continuamente.</p>
         <br></br>
-        <button className="sobrenosotros-button">Nuestra experiencia</button>
+        <Link href={"/sobre-nosotros#nuestra-experiencia"}><button className="sobrenosotros-button">Nuestra experiencia</button></Link>
         <br></br>
-        <Link href="#" legacyBehavior passHref><a className="sobrenosotros-icon-container">¿Cómo obtenemos datos?<FontAwesomeIcon icon={faArrowRight} className="hero-icon"/></a></Link>
+        <Link href="/planes" legacyBehavior passHref><a className="sobrenosotros-icon-container">¿Cómo obtenemos datos?<FontAwesomeIcon icon={faArrowRight} className="hero-icon"/></a></Link>
 
       </div>
       <div className="sobrenosotros-columna2">
