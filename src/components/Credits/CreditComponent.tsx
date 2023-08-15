@@ -19,6 +19,7 @@ interface SubscriptionCardProps {
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [buycredits, setBuyCredits] = useState(0);
+    const [priceTiers, setPriceTiers] = useState<any[]>([]);
 
     const handleSubscribe = () => {
         setIsOpen(true);
@@ -30,25 +31,53 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = Number(event.target.value);
-        if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 20000) {
+        if (!isNaN(inputValue) && inputValue >= priceTiers[0]?.attributes.minimo && inputValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo) {
             setBuyCredits(inputValue);
         }
     };
 
-    let nuevoPrecio = 0;
-    if (buycredits >= 0 && buycredits < 5000) {
-        nuevoPrecio = buycredits * 0.11;
-    } else if (buycredits >= 5000 && buycredits < 10000) {
-        nuevoPrecio = buycredits * 0.10;
-    } else if (buycredits >= 10000 && buycredits < 15000) {
-        nuevoPrecio = buycredits * 0.09;
-    } else if (buycredits >= 15000 && buycredits < 20000) {
-        nuevoPrecio = buycredits * 0.08;
-    } else {
-        // Handle other cases here (if needed)
-        nuevoPrecio = buycredits * 0.08; // Default to the lowest price per credit
+    async function planalacarta() {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/plan-a-la-cartas`, {
+
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                },
+                cache: "no-store",
+            });
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data, ${response.status}`);
+            }
+            const data = await response.json();
+            const planalacarta = data.data
+            console.log("planalacarta:", planalacarta)
+            return planalacarta;
+        } catch (error) {
+            throw new Error(`Failed to fetch data, ${error}`);
+        }
     }
-     
+
+    useEffect(() => {
+        // Lógica para obtener los datos de la API y establecer los price tiers
+        planalacarta().then((data) => {
+            setPriceTiers(data);
+            setBuyCredits(data[0]?.attributes.minimo); // Establecer el valor inicial como el mínimo de la API
+        });
+    }, []);
+
+
+    let nuevoPrecio = 0;
+    if (buycredits > 0) {
+        const selectedTier = priceTiers.find(tier => buycredits >= tier.attributes.minimo && buycredits <= tier.attributes.maximo);
+        if (selectedTier) {
+            nuevoPrecio = buycredits * selectedTier.attributes.preciocredito;
+        } else {
+            nuevoPrecio = buycredits * priceTiers[priceTiers.length - 1].attributes.preciocredito;
+        }
+    }
+
     // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
     console.log('Nuevo precio:', nuevoPrecio);
 
@@ -60,8 +89,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <input
                 className="credit-input"
                 type="number"
-                min={50}
-                max={20000}
+                min={priceTiers[0]?.attributes.minimo}
+                max={priceTiers[priceTiers.length - 1]?.attributes.maximo}
                 value={buycredits.toString()}
                 onChange={handleInputChange}
                 placeholder="Ingrese la cantidad de créditos"
@@ -71,7 +100,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
             <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
 
-            <button  className="credit-button" onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
+            <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
 
             {isOpen && (
                 <div className="credit-popup">
@@ -134,6 +163,7 @@ const CreditComponent: React.FC = () => {
             .catch((error) => {
                 console.error('Failed to fetch user data:', error);
             });
+
     }, [user]);
 
     async function getuser() {
@@ -159,6 +189,7 @@ const CreditComponent: React.FC = () => {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
+
 
 
     const currentDate = new Date();

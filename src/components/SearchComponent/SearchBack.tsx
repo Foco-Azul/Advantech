@@ -149,7 +149,7 @@ const SearchComponent: React.FC = () => {
                     const secondJsonData = await secondResponse.json();
                     const noticias = secondJsonData.data;
                     setDatosTabla(noticias);
-                    console.log(noticias)
+
                     let primeraPropiedad;
                     for (let propiedad in noticias) {
                         if (noticias.hasOwnProperty(propiedad)) {
@@ -251,7 +251,7 @@ const SearchComponent: React.FC = () => {
     const handleConvertToPdf = () => {
         if (Datos && Datos.data) {
             const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
-            const jsonobject = Datos.data
+            const jsonobject = JSON.parse(Datos.data);
             const jsonDataString = JSON.stringify(jsonobject, null, 2);
 
             // Agregar imagen como encabezado solo en la primera página
