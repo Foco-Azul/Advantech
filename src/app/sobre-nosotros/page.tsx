@@ -32,15 +32,17 @@ export default function Sobrenosotros() {
             <br></br>
             <br></br>
             <br></br>
-            <SeccionSobreNosotros />
-            <br></br>
-            <br></br>
-            <SeccionNuestraExperiencia />
-            <br></br>
-            <br></br>
-            <SeccionProducto />
-            <br />
-            <br />
+            <div className='secciones-fondo'>
+                <SeccionSobreNosotros />
+                <br></br>
+                <br></br>
+                <SeccionNuestraExperiencia />
+                <br></br>
+                <br></br>
+                <SeccionProducto />
+                <br />
+                <br />
+            </div>
             <SeccionAliados/>
             <br></br>
             <br></br>

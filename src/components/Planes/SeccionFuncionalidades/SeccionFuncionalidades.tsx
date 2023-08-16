@@ -22,9 +22,12 @@ function SeccionFuncionalidades() {
                 <h4>Créditos</h4>
                 <p>Los créditos son nuestro tipo de transacción, estos se te descontarán cada que realices  una búsqueda, dependiendo de:</p>
                 <ul>
-                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Cantidad de datos que se requiera</span></li>
-                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Tipo de datos requeridos</span></li>
-                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Fuentes públicas consultadas en tu busqueda</span></li>
+                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Cada registro de datos tiene un valor en créditos.</span></li>
+                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Los créditos se adquieren a través de la compra de planes de suscripción.</span></li>
+                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Los créditos se incorporan a la billetera del usuario cada vez que se adquiere o se renueva un plan.</span></li>
+                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Los créditos se mantendrán activos en la billetera siempre y cuando tengan un plan vigente.</span></li>
+                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>En caso de vencerse el plan, los créditos van a quedar en la billetera del usuario hasta que compre un nuevo plan. Una vez actualizado el plan, los créditos vuelven a estar disponibles y se suman a los nuevos.
+</span></li>
                 </ul>
             </div>
             <div className="tarjeta-informativa">
