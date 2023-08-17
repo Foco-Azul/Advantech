@@ -28,9 +28,10 @@
     justify-content: center;
     gap: 20px;
     margin: 20px 0;
-
 }
-
+.footer-rrss > svg{
+    cursor: pointer;
+}
 .footer-home-links{
     display: flex;
     padding-top: 50px;

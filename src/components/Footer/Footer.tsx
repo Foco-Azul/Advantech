@@ -3,7 +3,7 @@ import './Footer.css';
 import Logo from "./image/logo-advantech-datos.svg"
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareFacebook, faTwitter, faInstagram, faYoutube} from  "@fortawesome/free-brands-svg-icons";
+import { faSquareFacebook, faTwitter, faInstagram, faYoutube, faLinkedin} from  "@fortawesome/free-brands-svg-icons";
 
 function Footer() {
 
@@ -17,10 +17,7 @@ function Footer() {
               <Image src={Logo} alt="Company Logo" width={164} height={133}/>
             </Link>
             <div className="footer-rrss">
-              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faSquareFacebook} /></Link>
-              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faTwitter} /></Link>
-              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faInstagram} /></Link>
-              <Link href="#" legacyBehavior passHref><FontAwesomeIcon icon={faYoutube} /></Link>
+              <Link href="https://www.linkedin.com/advantechint" legacyBehavior passHref target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></Link>
             </div>
           </div>
           <div className="footer-home-links">    

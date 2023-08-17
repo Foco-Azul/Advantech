@@ -25,8 +25,10 @@ export default function UsoPorIndustria() {
                     <NavMenu />
                 </UserProvider>
             </header>
+            <div className='secciones-fondo'>
             <SeccionUsoPorIndustria/>
             <SeccionUsoDeDatos/>
+            </div>
             <SeccionCreaTuCuenta/>
             <Footer/>
         </div>

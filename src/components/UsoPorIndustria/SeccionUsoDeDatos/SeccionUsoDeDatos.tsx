@@ -47,14 +47,17 @@ function SeccionUsoDeDatos() {
             <div className="seccion-titulo">
               <h4>Uso de datos en RRHH</h4>
               <h2>Evaluación de personal</h2>
-              <p>Atenderemos con gusto a todas tus consultas y te ayudaremos a poder adquirir nuestros planes.</p>
+              <p>
+                En el sector de Recursos Humanos (RRHH), el uso de datos públicos puede ser valioso para diversas actividades relacionadas con la gestión de talento y el desarrollo de estrategias para la fuerza laboral de una empresa. <br /><br />
+                A continuación, te muestro algunas formas en las que se utilizan los datos públicos en el sector de RRHH:
+              </p>
               <ul>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Obtén una mejor explicación sobre nuestros planes</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Realiza consultas sobre nuestra documentación</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Descubre los casos de uso para tu empresa</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Evaluación de riesgos</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Evaluación de riesgos</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Evaluación de riesgos</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Búsqueda y reclutamiento de talento</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Validación de información del candidato</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Evaluación de cultura y fit cultural</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Análisis de mercado laboral</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Planificación de la sucesión y desarrollo profesional</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Investigación de antecedentes: laboral y educativo, y obtener información adicional que pueda ser relevante para la toma de decisiones de contratación</span></li>
               </ul>
             </div>
             <div className='imagen'>

@@ -82,6 +82,7 @@
   align-items: center;
   gap: 15px;
   padding: 10px 0;   
+  max-width: 500px;
 }
 .seccion-uso_de_datos .seccion-titulo ul > li > svg{
   color: #009fde;
@@ -120,5 +121,7 @@
   .uso_de_datos-pestaña-contenido .imagen{
     flex: unset;
   }
-
+  .uso_de_datos-pestaña-contenido.contenido-activo{
+    padding: 20px 10px;
+  }
 }

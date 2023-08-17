@@ -28,7 +28,7 @@ function SeccionPreguntas() {
               <FontAwesomeIcon icon={isOpen[0] ? faChevronUp : faChevronDown} />
             </div>
             <div className="acordeon-contenido">
-              <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>
+              <p>Los créditos dentro de nuestro servicio son la moneda de cambio para la compra de datos, dependiendo la fuente consultada es el monto que se descuenta de los créditos.</p>
             </div>
           </div>
 
@@ -39,7 +39,7 @@ function SeccionPreguntas() {
             </div>
             <div className="acordeon-contenido">
               <p>
-                Los créditos se van a encontrar en una billetera personal, la cual va a permanecer activa siempre y cuando tenga la suscripción activa, una vez pasado el tiempo de suscripción, el usuario tiene que renovar el plan, para poder acceder nuevamente a sus créditos, en caso de haber quedado en la billetera créditos sin usar, estos se suman a los nuevos créditos del plan de suscripción. En caso de que te consumas los créditos y todavía te quede tiempo de suscripción, podes comprar nuevamente el mismo plan, hacer un upgrade, o elegir el plan que mas te convenga para obtener nuevamente créditos.
+              Los créditos se van a encontrar en una billetera personal, la cual va a permanecer activa siempre y cuando tenga la suscripción activa, una vez pasado el tiempo de suscripción, el usuario tiene que renovar el plan, para poder acceder nuevamente a sus créditos, en caso de haber quedado en la billetera créditos sin usar, estos se suman a los nuevos créditos del plan de suscripción. En caso de que te consumas los créditos y todavía te quede tiempo de suscripción, podes comprar nuevamente el mismo plan, hacer un upgrade, o elegir el plan que mas te convenga para obtener nuevamente créditos.
               </p>
             </div>
           </div>
@@ -50,7 +50,7 @@ function SeccionPreguntas() {
               <FontAwesomeIcon icon={isOpen[2] ? faChevronUp : faChevronDown} />
             </div>
             <div className="acordeon-contenido">
-              <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>
+              <p>Todos los planes van a tener soporte de un personal de Advantech vía mail, pero los que suscriban al plan ENTERPRISE, van a tener además la posibilidad de contactarnos a nuestro teléfono de contacto. </p>
             </div>
           </div>
 
@@ -60,7 +60,7 @@ function SeccionPreguntas() {
               <FontAwesomeIcon icon={isOpen[3] ? faChevronUp : faChevronDown} />
             </div>
             <div className="acordeon-contenido">
-              <p>Vitae varius euismod egestas egestas lacus. Augue vitae arcu sollicitudin metus iaculis amet, eu at amet. Netus pulvinar tristique ridiculus sed. Viverra ut viverra aenean nisl. Tortor lorem cum congue a. Orci mattis massa tortor magna massa nisi, aliquet risus. Ornare cras aenean pellentesque quam pulvinar at. Libero mollis tortor erat sed. Adipiscing lectus nisi commodo vel. Id augue vitae, hendrerit iaculis.</p>
+              <p>En el inicio el usuario podrá establecer si el plan seleccionado se va a renovar automáticamente o que la suscripción finalice una vez terminado el periodo.</p>
             </div>
           </div>
         </div>

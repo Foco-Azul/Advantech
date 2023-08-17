@@ -10,6 +10,7 @@ import SeccionProducto from '@/components/SobreNosotros/SeccionProducto/SeccionP
 import SeccionUneteAlEquipo from '@/components/SobreNosotros/SeccionUneteAlEquipo/SeccionUneteAlEquipo';
 import SeccionObtencionDatos from '@/components/SobreNosotros/SeccionObtencionDatos/SeccionObtencionDatos';
 import SeccionAliados from '@/components/SobreNosotros/SeccionAliados/SeccionAliados';
+import SeccionClientes from '@/components/SobreNosotros/SeccionClientes/SeccionClientes';
 import { Metadata } from "next";
 
 export const metadata:Metadata ={
@@ -47,6 +48,8 @@ export default function Sobrenosotros() {
             <br></br>
             <br></br>
             <SeccionObtencionDatos/>
+            <br /><br />
+            <SeccionClientes/>
             <br />
             <br />
             <SeccionUneteAlEquipo />

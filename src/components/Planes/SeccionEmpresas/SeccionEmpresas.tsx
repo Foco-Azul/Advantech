@@ -1,5 +1,5 @@
 import './SeccionEmpresas.css';
-import Marcas from '@/components/Marcas/Marcas';
+import MarcasClientes from '@/components/MarcasClientes/MarcasClientes';
 
 function SeccionEmpresas() {
 
@@ -11,7 +11,7 @@ function SeccionEmpresas() {
             <h3 className="tipos-consultas-head-subtitle">Muchas empresas de Ecuador confían en nuestros servicios, forma parte de ellas.</h3>
             <p className="tipos-consultas-head-text">Advantech fue creada en 2004 para brindar servicios de consultoría innovadora a compañías que buscan mejorar sus procesos.</p>
         </div>
-        <Marcas/>
+        <MarcasClientes/>
       </div>
     </section>
   )
