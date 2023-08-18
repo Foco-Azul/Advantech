@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Marca_1 from "./image/datafast.jpg"
-import Marca_2 from "./image/diners.jpg"
-import Marca_3 from "./image/pichincha.jpg"
+import Marca_1 from "./image/datafast.png"
+import Marca_2 from "./image/diners.png"
+import Marca_3 from "./image/pichincha.png"
 import "./MarcasClientes.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
