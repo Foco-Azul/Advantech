@@ -1,0 +1,44 @@
+.seccion-ventajas{
+    padding: 50px 0;
+}
+.seccion-ventajas .ventajas-contenido{
+    margin: auto;
+    padding: 0 20px;
+    max-width: 1300px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.seccion-ventajas .seccion-titulo{
+  max-width: 580px;
+}
+.seccion-ventajas .seccion-titulo > h4{
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  color: #20ABE2;
+}
+.seccion-ventajas .seccion-titulo > h2{
+  font-size: 42px;
+  font-weight: 800;
+  color: #131022;
+  line-height: 54px
+}
+.seccion-ventajas .seccion-titulo > p{
+  max-width: 540px;
+  margin: 30px 0;
+}
+
+.seccion-ventajas .seccion-titulo ul > li{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;   
+}
+.seccion-ventajas .seccion-titulo ul > li > svg{
+  color: #009fde;
+}
+.seccion-ventajas .seccion-imagen{
+  max-width: 650px;
+}
