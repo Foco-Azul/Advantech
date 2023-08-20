@@ -1,4 +1,4 @@
-.carousel-marcas {
+.carousel-marcas-aliados {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,18 +7,19 @@
   padding: 20px 0;
 }
 
-.carousel-marcas .carousel-item {
-  flex: 0 0 calc(16.6% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
+.carousel-marcas-aliados .carousel-item {
+  flex: 0 0 calc(25% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
   margin: auto; /* Ajusta el margen entre los elementos según tus necesidades */
 }
 
-.carousel-marcas .carousel-image {
+.carousel-marcas-aliados .carousel-image {
   width: auto;
   height: 100%;
   margin: auto;
+  max-height: 100px;
 }
 
-.carousel-marcas .carousel-images{
+.carousel-marcas-aliados .carousel-images{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -27,10 +28,10 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .carousel-marcas {
+  .carousel-marcas-aliados {
     width: 90%;
   }
-  .carousel-marcas .carousel-item {
+  .carousel-marcas-aliados .carousel-item {
     flex: unset;
   }
 

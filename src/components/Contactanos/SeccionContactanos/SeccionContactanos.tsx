@@ -1,6 +1,7 @@
 import './SeccionContactanos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";
+import { faEnvelopesBulk} from "@fortawesome/free-solid-svg-icons";
 
 function SeccionContactanos() {
   return (
@@ -16,6 +17,10 @@ function SeccionContactanos() {
             <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Descubre los casos de uso para tu empresa</span></li>
           </ul>
           <p>En nuestra página de Documentación encontrarás tutoriales sobre el uso de nuestros productos y contacto directo de soporte técnico.</p>
+          <div className='contacto'>
+            <FontAwesomeIcon icon={faEnvelopesBulk} size="2xl" />
+            <p>Envíanos un correo electrónico haciendo clic en el ícono de la izquierda o al correo contacto@advantech.com</p>
+          </div>
         </div>
       </div>
     </section>

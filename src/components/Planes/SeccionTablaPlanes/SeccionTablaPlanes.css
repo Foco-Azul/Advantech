@@ -1,5 +1,5 @@
 .seccion-tabla-planes{
-    padding: 100px 0;
+    padding: 50px 0;
 }
 .seccion-tabla-planes > div{
     max-width: 85vw;
@@ -17,9 +17,15 @@
     margin: 10px;
 }
 .seccion-tabla-planes > div > table th{
+    font-size: 14px;
     text-align: initial;
     width: 310px;
     min-width: 310px;
+    font-weight: 700;
+}
+.seccion-tabla-planes > div > table tr.header td{
+    font-size: 14px;
+    font-weight: 700;
 }
 .seccion-tabla-planes > div > table td{ 
     background-color: #E2EEF9;
@@ -28,4 +34,10 @@
     width: 310px;
     min-width: 310px;
     padding: 10px 20px;
+}
+
+@media only screen and (max-width: 525px) {
+    .seccion-tabla-planes{
+        display: none;
+    }
 }

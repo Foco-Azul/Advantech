@@ -5,7 +5,7 @@ import Pasarela from '../Pasarela/Pasarela';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHippo, faHourglassStart, faCediSign, faMagnifyingGlass, faDatabase, faTable } from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass, faDatabase, faTable, faCalendarDays, faHeadset, faDownload, faFile} from "@fortawesome/free-solid-svg-icons";
 
 interface SubscriptionCardProps {
     price: number;
@@ -66,22 +66,22 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
             </div>
             <hr className="subscription-hr" />
             <div className="subscription-caracteristics">
-                <h3><FontAwesomeIcon icon={faCediSign} style={{ color: "#009fde", }} />
-                    {(price != 0) ? ` ${creditos} créditos` : "Compra los créditos que necesites"}
+                <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
+                    {(price != 0) ? ` ${creditos} créditos` : `Hasta  ${creditos} créditos`}
                 </h3>
-                <h3><FontAwesomeIcon icon={faHourglassStart} style={{ color: "#009fde", }} />
+                <h3><FontAwesomeIcon icon={faCalendarDays} style={{ color: "#009fde", }}  />
                     Duración de {planvencimiento} meses
                 </h3>
                 <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
                     {buscador ? "Acceso al buscador" : "Sin acceso al buscador"}
                 </h3>
-                <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
-                    {soporte ? `Soporte ${plan}` : "Sin soporte"}
+                <h3><FontAwesomeIcon icon={faHeadset} style={{ color: "#009fde", }} />
+                    {soporte ? `Soporte ${plan}` : "Soporte personalizado"}
                 </h3>
-                <h3><FontAwesomeIcon icon={faDatabase} style={{ color: "#009fde", }} />
-                    {api ? "Acceso a la api" : "Sin acceso a la api"}
+                <h3><FontAwesomeIcon icon={faDownload} style={{ color: "#009fde", }} />
+                    {soporte ? `Entrega de datos (Lotes | Email)` : "Entrega de datos (Lotes | Email)"}
                 </h3>
-                <h3><FontAwesomeIcon icon={faTable} style={{ color: "#009fde", }} />
+                <h3><FontAwesomeIcon icon={faFile} style={{ color: "#009fde", }} />
                     Formato de entrega de datos
                     <p>
                         {[pdf ? "PDF" : null, xlsx ? "XLSX" : null, csv ? "CSV" : null, txt ? "TXT" : null]

@@ -26,7 +26,7 @@ const SeccionFormulario: React.FC = () => {
     phone: '',
     pais: '',
     agreeTerms: false,
-    cargo: '',
+    cargo: 'Postulacion abierta',
     pdf: null,
   });
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false); // Nuevo estado para verificar si se envió el formulario
@@ -187,10 +187,7 @@ const SeccionFormulario: React.FC = () => {
                 required
               >
                 <option value="">Selecciona una opción</option>
-                <option value="Opcion 1">Opcion 1</option>
-                <option value="Opcion 2">Opcion 2</option>
-                <option value="Opcion 3">Opcion 3</option>
-                <option value="Opcion 4">Opcion 4</option>
+                <option value="Postulacion abierta">Postulacion abierta</option>
               </select>
             </div>
             <div className='campos'>

@@ -13,16 +13,19 @@
 .seccion-empresas .empresas-marcas{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
-.seccion-empresas .empresas-marcas img{
+.seccion-empresas .empresas-marcas >div{
     max-width: 33%;
 }
 .seccion-empresas .aliados-contenido{
     padding: 0 20px;
 }
 @media only screen and (max-width: 525px) {
-    .seccion-empresas .empresas-marcas img{
-        max-width: 100%;
+    .seccion-empresas .empresas-marcas > div{
+        max-width: 70%;
+        padding: 20px;
+        margin: auto;
     }
 }

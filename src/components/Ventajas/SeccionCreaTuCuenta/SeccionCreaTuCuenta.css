@@ -1,0 +1,43 @@
+.seccion-crea-tu-cuenta > div{
+    padding: 0 20px;
+}
+.crea-tu-cuenta{
+    display: flex;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    margin: 50px auto;
+    justify-content: space-evenly;
+    min-height: 390px;
+    align-items: center;
+    padding: 0 20px;
+    border-radius: 8px;
+    background: var(--gray-900, #131022);
+}
+.crea-tu-cuenta > .content-izq{
+    padding: 20px;
+    text-align: center;
+}
+.crea-tu-cuenta > .content-izq > h4{
+    color: #0196D2;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #009FDE;
+}
+
+.crea-tu-cuenta > .content-izq > h2{
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 10px;
+
+}
+
+.crea-tu-cuenta > .content-izq > p{
+    color: #EFF2FC;
+    font-size: 16px;
+    font-weight: 400;
+    max-width: 450px;
+    margin: 0 auto 10px auto;
+} 
+

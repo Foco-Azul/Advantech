@@ -1,27 +1,20 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import Marca_1 from "./image/logo.svg"
-import Marca_2 from "./image/logo-1.svg"
-import Marca_3 from "./image/logo-2.svg"
-import Marca_4 from "./image/logo-3.svg"
-import Marca_5 from "./image/logo-4.svg"
-import Marca_6 from "./image/logo-5.svg"
-import "./Marcas.css"
+import Marca_1 from "./image/datafast.png"
+import Marca_2 from "./image/diners.png"
+import Marca_3 from "./image/pichincha.png"
+import "./MarcasClientes.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-const Marca: React.FC = () => {
+const MarcasClientes: React.FC = () => {
   const phrases = [
     { id: 1, text: '', image: Marca_1},
     { id: 2, text: '', image: Marca_2 },
     { id: 3, text: '', image: Marca_3},
-    { id: 4, text: '', image: Marca_4 },
-    { id: 5, text: '', image: Marca_5},
-    { id: 6, text: '', image: Marca_6 },
-    { id: 7, text: '', image: Marca_1},
-    { id: 8, text: '', image: Marca_2 },
-    { id: 9, text: '', image: Marca_3},
-    { id: 10, text: '', image: Marca_4 },
+    { id: 4, text: '', image: Marca_1},
+    { id: 5, text: '', image: Marca_2 },
+    { id: 6, text: '', image: Marca_3},
   ];
 
   const [currentPhrase, setCurrentPhrase] = useState(0);
@@ -42,7 +35,7 @@ const Marca: React.FC = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 6 ? 0 : prevPhrase + 1));
+      setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 3 ? 0 : prevPhrase + 1));
     }, 3000);
 
     return () => {
@@ -51,17 +44,17 @@ const Marca: React.FC = () => {
   }, [phrases.length]);
 
   const nextPhrase = () => {
-    setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 6 ? 0 : prevPhrase + 1));
+    setCurrentPhrase((prevPhrase) => (prevPhrase === phrases.length - 3 ? 0 : prevPhrase + 1));
   };
 
   const prevPhrase = () => {
-    setCurrentPhrase((prevPhrase) => (prevPhrase === 0 ? phrases.length - 6 : prevPhrase - 1));
+    setCurrentPhrase((prevPhrase) => (prevPhrase === 0 ? phrases.length - 3 : prevPhrase - 1));
   };
 
-  const renderedPhrases = isMobile ? phrases.slice(currentPhrase, currentPhrase + 1) : phrases.slice(currentPhrase, currentPhrase + 6);
+  const renderedPhrases = isMobile ? phrases.slice(currentPhrase, currentPhrase + 1) : phrases.slice(currentPhrase, currentPhrase + 3);
 
   return (
-    <div className="carousel-marcas">
+    <div className="carousel-marcas-clientes">
       <div className={`carousel-images ${isMobile ? "mobile" : ""}`}>
         {renderedPhrases.map((phrase) => (
           <div key={phrase.id} className="carousel-item">
@@ -76,4 +69,4 @@ const Marca: React.FC = () => {
   );
 };
 
-export default Marca;   
+export default MarcasClientes;   

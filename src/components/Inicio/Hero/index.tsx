@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import "./Hero.css";
 import Carousel from "./Carousel";
-import Marcas from '@/components/Marcas/Marcas';
+import MarcasClientes from '@/components/MarcasClientes/MarcasClientes';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +30,7 @@ function Hero() {
           </a>
           <br></br>
           <Carousel />
-          <Marcas />
+          <MarcasClientes />
         </div>
       </div>
     </section>

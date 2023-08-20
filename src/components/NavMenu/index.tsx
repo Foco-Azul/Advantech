@@ -11,9 +11,10 @@ import Image from "next/image";
 import BurguerMenu from "./BurguerMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { usePathname } from 'next/navigation'
 
 function NavMenu() {
-  const isHomePage = window.location.pathname === '/';
+  const pathname = usePathname()
   const [hasScrolled, setHasScrolled] = useState(false);
   const { user, error, isLoading } = useUser();
   const [showSubRecursos, setShowSubRecursos] = useState(false); // Nuevo estado para controlar la visibilidad
@@ -64,6 +65,7 @@ function NavMenu() {
 
 
   return (
+    
     <div className={`nav-container ${hasScrolled ? "scrolled" : ""}`}>
       <nav className={`nav ${hasScrolled ? "scrolled" : ""}`}>
         <div className="navigation-menu-container">
@@ -104,7 +106,7 @@ function NavMenu() {
             </Link>
           </div>
         <div className="nav-conteiner-buttons">
-        {!isHomePage && (
+        {pathname!="/" && (
           <Link href="/busqueda" passHref className="btn-buscar"><button><FontAwesomeIcon icon={faMagnifyingGlass} /> &nbsp; <span>BUSCAR</span></button></Link>
           )}
           <div className="login-escritorio"><Login loginname={"INGRESAR"} /></div>

@@ -1,5 +1,5 @@
 import './SeccionAliados.css';
-import Marcas from '@/components/Marcas/Marcas';
+import MarcasAliados from '@/components/MarcasAliados/MarcasAliados';
 
 function SeccionAliados() {
 
@@ -7,7 +7,7 @@ function SeccionAliados() {
     <section className='seccion-aliados'>
       <div className='aliados-contenido'>
         <h4>Aliados estratégicos</h4>
-        <Marcas/>
+        <MarcasAliados/>
       </div>
     </section>
   )

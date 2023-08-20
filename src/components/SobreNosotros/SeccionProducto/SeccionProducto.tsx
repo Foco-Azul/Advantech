@@ -32,7 +32,7 @@ function Producto() {
             <Image className="producto-icon" src={icon} alt="Company Logo" /> <p>Datos de diversas fuentes presentados de manera automática</p>
           </div>
           <br></br>
-          <Link href="/contactanos" legacyBehavior passHref><a className="producto-icon-container">
+          <Link href="/busqueda" legacyBehavior passHref><a className="producto-icon-container">
             Realiza una consulta <FontAwesomeIcon icon={faArrowRight} className="hero-icon"/>
           </a></Link>
         </div>

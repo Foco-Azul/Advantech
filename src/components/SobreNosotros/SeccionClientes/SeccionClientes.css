@@ -1,0 +1,14 @@
+.seccion-aliados{
+
+}
+.aliados-contenido{
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+.aliados-contenido > h4{
+    font-size: 24px;
+    font-weight: 800;
+    margin: 10px auto;
+    color: #585C7B;
+}
