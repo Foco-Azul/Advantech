@@ -59,31 +59,37 @@ const SeccionFormulario: React.FC = () => {
     e.preventDefault();
   
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('data', JSON.stringify({
+        nombres: formData.name,
+        apellidos: formData.lastName,
+        email: formData.email,
+        telefono: formData.phone,
+        residencia: formData.pais,
+        referencias: formData.referencia,
+        experiencia: formData.experiencia,
+        postulacion: formData.cargo
+      }));
+
+      // Agregar el archivo PDF al FormData
+      if (formData.pdf) {
+        formDataToSend.append('files.cv', formData.pdf);
+      }
+
       const postResponse = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/formulario-unete-al-equipos`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
           },
-          body: JSON.stringify({
-            data: {
-              nombres: formData.name,
-              apellidos: formData.lastName,
-              email: formData.email,
-              telefono: formData.phone,
-              residencia: formData.pais,
-              referencias: formData.referencia,
-              experiencia: formData.experiencia,
-              postulacion: formData.cargo
-            },
-          }),
-          cache: "no-store",
+          body: formDataToSend,
+          cache: 'no-store',
         }
       );
+
       if (postResponse.status === 200) {
-        console.log("Formulario enviado con éxito");
+        console.log("Formulario enviado con exito");
         setFormSubmitted(true);
       } else {
         console.log(postResponse.status);
@@ -101,7 +107,7 @@ const SeccionFormulario: React.FC = () => {
         {formSubmitted ? (
             // Mostrar mensaje de envío correcto si el formulario se ha enviado
             <div className="mensaje-envio">
-              <p>¡Gracias por enviar tu psotulación!</p>
+              <p>¡Gracias por enviar tu postulación!</p>
             </div>
           ) : (
         <form className="unete_al_equipo" onSubmit={handleSubmit}>
