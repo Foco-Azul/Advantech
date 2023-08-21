@@ -27,6 +27,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const [paginatedData, setPaginatedData] = useState<SortedData[] | null>(null);
   const [sortColumn, setSortColumn] = useState<keyof Data>("fecha");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     if (data) {
@@ -34,19 +35,16 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
       setTotalPages(totalPages);
 
-      // Update currentPage if it exceeds the new totalPages after changing data
       setCurrentPage(prevPage => Math.min(prevPage, totalPages));
     }
   }, [data]);
 
   useEffect(() => {
     if (data) {
-      // Convertimos los datos en un array de objetos para poder ordenarlos
       const dataArray: SortedData[] = Object.entries(data).flatMap(([propertyKey, items]) =>
         Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
       );
 
-      // Ordenamos los datos según la columna y el orden seleccionados
       dataArray.sort((a, b) => {
         if (sortColumn === "fecha") {
           const dateA = new Date(a.fecha).getTime();
@@ -59,15 +57,58 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         }
       });
 
-      // Paginamos los datos ordenados según la página actual
+      // Filtrar los datos según el término de búsqueda
+      let filteredData = dataArray.filter(item => {
+        const searchTerms = searchTerm.toLowerCase().split(' ');
+        return searchTerms.every(term =>
+          [
+            item.lugar.toLowerCase(),
+            item.estado.toLowerCase(),
+            item.delito.toLowerCase(),
+            item.unidad.toLowerCase(),
+            item.fecha.toLowerCase()
+          ].some(field => field.includes(term))
+        );
+      });
+
+      // Si no hay coincidencias exactas, realizar búsqueda por aproximación retrocediendo letra por letra
+      if (filteredData.length === 0) {
+        const newFilteredData = [];
+        for (let i = searchTerm.length - 1; i >= 1; i--) {
+          const truncatedSearchTerm = searchTerm.substring(0, i);
+          const approximateFilteredData = dataArray.filter(item =>
+            [
+              item.lugar.toLowerCase(),
+              item.estado.toLowerCase(),
+              item.delito.toLowerCase(),
+              item.unidad.toLowerCase(),
+              item.fecha.toLowerCase()
+            ].some(field => field.includes(truncatedSearchTerm))
+          );
+          if (approximateFilteredData.length > 0) {
+            newFilteredData.push(...approximateFilteredData);
+            break;
+          }
+        }
+        filteredData = newFilteredData;
+      }
+
+      // Calcular el número total de páginas basado en los datos filtrados
+      const totalFilteredItems = filteredData.length;
+      const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
+      setTotalPages(totalPages);
+
+      // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
+      setCurrentPage(prevPage => Math.min(prevPage, totalPages));
+
+      // Realizar la paginación en los datos filtrados
       const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-      const paginatedData = dataArray.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-      setPaginatedData(paginatedData);
+      const paginatedFilteredData = filteredData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+      setPaginatedData(paginatedFilteredData);
     }
-  }, [data, currentPage, sortColumn, sortOrder]);
+  }, [data, currentPage, sortColumn, sortOrder, searchTerm]);
 
   useEffect(() => {
-    // Call the onSelectedItems prop whenever the selection changes
     onSelectedItems(selectedItems);
   }, [selectedItems, onSelectedItems]);
 
@@ -101,15 +142,12 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const renderTableHeader = () => {
     const isSortingColumn = (column: keyof Data) => sortColumn === column;
     const isAscending = sortOrder === "asc";
-
+  
     return (
       <tr>
         <th className='tablabusqueda-esquinaizquierda'>SELECCIÓN</th>
         <th onClick={() => handleSort("lugar")}>
           LUGAR {isSortingColumn("lugar") && (isAscending ? "▲" : "▼")}
-        </th>
-        <th onClick={() => handleSort("estado")}>
-          ESTADO {isSortingColumn("estado") && (isAscending ? "▲" : "▼")}
         </th>
         <th onClick={() => handleSort("delito")}>
           DELITO {isSortingColumn("delito") && (isAscending ? "▲" : "▼")}
@@ -129,20 +167,63 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       return null;
     }
 
-    return paginatedData.map(item => {
+    const searchTerms = searchTerm.toLowerCase().split(' ');
+
+    let filteredData = paginatedData.filter(item => {
+      return searchTerms.every(term =>
+        [
+          item.lugar.toLowerCase(),
+          item.estado.toLowerCase(),
+          item.delito.toLowerCase(),
+          item.unidad.toLowerCase(),
+          item.fecha.toLowerCase()
+        ].some(field => field.includes(term))
+      );
+    });
+
+    // Si no hay coincidencias exactas, realizar búsqueda por aproximación retrocediendo letra por letra
+    if (filteredData.length === 0) {
+      const newFilteredData = [];
+      for (let i = searchTerm.length - 1; i >= 1; i--) {
+        const truncatedSearchTerm = searchTerm.substring(0, i);
+        const approximateFilteredData = paginatedData.filter(item =>
+          [
+            item.lugar.toLowerCase(),
+            item.estado.toLowerCase(),
+            item.delito.toLowerCase(),
+            item.unidad.toLowerCase(),
+            item.fecha.toLowerCase()
+          ].some(field => field.includes(truncatedSearchTerm))
+        );
+        if (approximateFilteredData.length > 0) {
+          newFilteredData.push(...approximateFilteredData);
+          break;
+        }
+      }
+      filteredData = newFilteredData;
+    }
+
+    return filteredData.map(item => {
       const isSelected = selectedItems.includes(item.key);
 
+      const rowStyle = isSelected ? { boxShadow: 'inset 0px 0px 10px rgba(0 0 0 / 38%)' } : {};
+  
       return (
-        <tr key={item.key}>
+        <tr
+          key={item.key}
+          className={`table-row${isSelected ? ' selected' : ''}`}
+          onClick={() => toggleSelectItem(item.key)}
+          style={rowStyle}
+        >
           <td>
             <input
               type="checkbox"
               checked={isSelected}
               onChange={() => toggleSelectItem(item.key)}
+              onClick={e => e.stopPropagation()}
             />
           </td>
           <td>{item.lugar}</td>
-          <td>{item.estado}</td>
           <td>{item.delito}</td>
           <td>{item.unidad}</td>
           <td>{item.fecha}</td>
@@ -151,8 +232,16 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     });
   };
 
+
   return (
-    <div>
+    <div >
+      <input
+        className='search-input-table'
+        type="text"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+        placeholder="Filtra tus datos"
+      />
       <table className='tablabusqueda-tabla'>
         <thead className='tablabusqueda-head'>{renderTableHeader()}</thead>
         <tbody>{renderTableData()}</tbody>

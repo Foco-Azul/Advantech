@@ -133,7 +133,7 @@ const SearchComponent: React.FC = () => {
                 const jsonData = await response.json();
                 setData(jsonData);
 
-                const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_public_data', {
+                const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -141,6 +141,7 @@ const SearchComponent: React.FC = () => {
                     body: JSON.stringify({
                         query_id: jsonData.query_id,
                         creator_key: 'valid_api_key',
+                        selection:{},
                         key: 'valid_api_key'
                     }),
                 });
