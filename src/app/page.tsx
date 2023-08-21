@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   }
 }
+
 export default function Page() {
   return (
     <UserProvider>
