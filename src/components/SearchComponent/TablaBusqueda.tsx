@@ -142,7 +142,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const renderTableHeader = () => {
     const isSortingColumn = (column: keyof Data) => sortColumn === column;
     const isAscending = sortOrder === "asc";
-  
+
     return (
       <tr>
         <th className='tablabusqueda-esquinaizquierda'>SELECCIÓN</th>
@@ -207,7 +207,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       const isSelected = selectedItems.includes(item.key);
 
       const rowStyle = isSelected ? { boxShadow: 'inset 0px 0px 10px rgba(0 0 0 / 38%)' } : {};
-  
+
       return (
         <tr
           key={item.key}
@@ -235,13 +235,15 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
   return (
     <div >
+      <p className='buscador-label'>Puedes buscar especificamente</p>
       <input
         className='search-input-table'
         type="text"
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
-        placeholder="Filtra tus datos"
+        placeholder="ej: Quito robo"
       />
+      <p>Selecciona los datos que quieres traer en detalle</p>
       <table className='tablabusqueda-tabla'>
         <thead className='tablabusqueda-head'>{renderTableHeader()}</thead>
         <tbody>{renderTableData()}</tbody>

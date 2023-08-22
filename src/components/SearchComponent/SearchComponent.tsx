@@ -32,10 +32,7 @@ const SearchComponent: React.FC = () => {
     const [selectedSource, setSelectedSource] = useState<string>(''); // Initialize the selected source state as an empty string
     const [selectedFuenteCredito, setSelectedFuenteCredito] = useState<number | null>(null);
     const seleccionUsuarioCount = SeleccionUsuario.length;
-
-
-    // ... (existing code)
-
+    const [mostrartabla, setMostrartabla] = useState(true);
 
     async function getuser() {
         try {
@@ -141,7 +138,7 @@ const SearchComponent: React.FC = () => {
                     body: JSON.stringify({
                         query_id: jsonData.query_id,
                         creator_key: 'valid_api_key',
-                        selection:{},
+                        selection: {},
                         key: 'valid_api_key'
                     }),
                 });
@@ -217,7 +214,7 @@ const SearchComponent: React.FC = () => {
                 setDatos(jsonData);
                 setData(jsonData);
                 if (userCredits) {
-                    var restacreditos = selectedFuenteCredito && userCredits - selectedFuenteCredito * seleccionUsuarioCount
+                    var restacreditos = selectedFuenteCredito && userCredits - selectedFuenteCredito
                     const postResponse = await fetch(
                         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
                         {
@@ -236,7 +233,7 @@ const SearchComponent: React.FC = () => {
                         }
                     );
                 }
-
+                setMostrartabla(false)
             }
         } catch (error) {
             console.error('Error al ejecutar la tercera API:', error);
@@ -292,7 +289,6 @@ const SearchComponent: React.FC = () => {
             doc.save(`${NombreRuc} - Advantech.pdf`);
         }
     };
-
 
     const handleConvertToXls = () => {
         // Simular llamado a la API y descargar los datos como XLS
@@ -350,10 +346,11 @@ const SearchComponent: React.FC = () => {
         setSelectedFuenteCredito(selectedFuenteObj ? selectedFuenteObj.attributes.credito : null);
     };
 
+    const handleReloadPage = () => {
+        window.location.reload(); // This will reload the page
+    };
 
     return (
-
-
         <UserProvider>
             {user ? (
                 isPlanVencido ? (
@@ -376,54 +373,48 @@ const SearchComponent: React.FC = () => {
                         </>
                     ) : (
                         < div className='search'>
-                            <div>
-                                <input
-                                    type="text"
-                                    value={searchInputValue}
-                                    onChange={(e) => setSearchInputValue(e.target.value)}
-                                    className='search-inputs'
-                                />
-                                <select
-                                    id="sourceSelector"
-                                    value={selectedSource}
-                                    onChange={handleSourceSelect}
-                                >
-                                    <option value="" disabled hidden>
-                                        Seleccionar fuente
-                                    </option>
-                                    {CreditosFuentes.map((fuente) => (
-                                        <option key={fuente.id} value={fuente.attributes.fuente}>
-                                            {fuente.attributes.fuente}
-                                        </option>
-                                    ))}
-                                </select>
 
-                                <button onClick={handleButtonClick} className='search-menu-button'>
-                                    Obtener datos
-                                </button>
-                            </div>
-
-                            <br />
-                            <br />
-
-                            {/* {propiedadArray.length > 0 && (
+                            {!DatosTabla &&
                                 <div>
-                                    <p>Selecciona una propiedad:</p>
-                                    <select>
-                                        {propiedadArray.map((property, index) => (
-                                            <option key={index} value={property}>
-                                                {property}
+                                    <div className='buscador-container'>
+                                        <label className='buscador-label'> Ingresa un nombre completo o RUC</label>
+                                        <input
+                                            type="text"
+                                            value={searchInputValue}
+                                            onChange={(e) => setSearchInputValue(e.target.value.toUpperCase())}
+                                            className='search-inputs'
+                                            placeholder='Nombre completo o RUC'
+                                        />
+                                    </div>
+                                    <div className='buscador-container'>
+                                        <label className='buscador-label'> Selecciona la fuente de datos</label>
+                                        <select
+                                            id="sourceSelector"
+                                            value={selectedSource}
+                                            onChange={handleSourceSelect}
+                                        >
+                                            <option value="" disabled hidden>
+                                                Seleccionar fuente
                                             </option>
-                                        ))}
-                                    </select>
+                                            {CreditosFuentes.map((fuente) => (
+                                                <option key={fuente.id} value={fuente.attributes.fuente}>
+                                                    {fuente.attributes.fuente}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <button onClick={handleButtonClick} className='search-menu-button'>
+                                            Obtener datos
+                                        </button>
+                                    </div>
                                 </div>
-                            )} */}
-
+                            }
+                            <br />
+                            <br />
                             {data ? (
                                 <div>
                                     {/* <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre> */}
-                                    <p>Selecciona los datos que quieres traer</p>
-                                    <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    {mostrartabla && <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />}
+
                                 </div>
                             ) : (
                                 <>
@@ -434,20 +425,28 @@ const SearchComponent: React.FC = () => {
                                 <>
                                     <br></br>
                                     <div>
-                                        <p>Mis créditos:{userCredits}</p>
-                                        <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito * seleccionUsuarioCount}</p>
+                                        {!mostrartabla &&
+                                            <div className='json-container'>
+                                                <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
+                                            </div>
+                                        }
+                                        {mostrartabla && <><p>Mis créditos:{userCredits}</p>
+                                            <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito}</p>
+                                        </>}
+
+                                        {seleccionUsuarioCount == 0 && <button className='busqueda-menu-button' onClick={handleReloadPage}>
+                                            Iniciar una nueva búsqueda
+                                        </button>
+                                        }
+
                                     </div>
-
-
                                     {
-                                        userCredits && selectedFuenteCredito && userCredits >= selectedFuenteCredito * seleccionUsuarioCount &&
-                                        seleccionUsuarioCount > 0 &&
+                                        userCredits && selectedFuenteCredito && userCredits >= selectedFuenteCredito &&
+                                        seleccionUsuarioCount > 0 && mostrartabla &&
                                         <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
                                             Obtener en detalle los datos seleccionados
                                         </button>
                                     }
-
-
                                     {
                                         userCredits && selectedFuenteCredito && userCredits < selectedFuenteCredito * seleccionUsuarioCount &&
                                         <>
@@ -455,22 +454,22 @@ const SearchComponent: React.FC = () => {
                                             <p className='search-error'>Tus créditos no son suficientes para traer estos datos</p>
                                         </>
                                     }
-
                                 </>
-
                             )}
                             <>
                                 {Datos && (
                                     <>
-                                        <button className='busqueda-menu-button' onClick={handleConvertToPdf}>
-                                            Convertir a PDF
+                                        <div>
+                                            <button className='busqueda-menu-button' onClick={handleConvertToPdf}>
+                                                Convertir a PDF
+                                            </button>
+                                            <button className='busqueda-menu-button' onClick={handleConvertToXls}>
+                                                Convertir a XLS
+                                            </button>
+                                        </div>
+                                        <button className='busqueda-menu-button' onClick={handleReloadPage}>
+                                            Iniciar una nueva búsqueda
                                         </button>
-                                        <button className='busqueda-menu-button' onClick={handleConvertToXls}>
-                                            Convertir a XLS
-                                        </button>
-                                        {/* 
-                    <button className='busqueda-menu-button' onClick={}>Convertir a CSV</button>
-                    <button className='busqueda-menu-button' onClick={}>Convertir a TXT</button> */}
                                     </>
                                 )}
                             </>
@@ -486,6 +485,3 @@ const SearchComponent: React.FC = () => {
 };
 
 export default SearchComponent;
-function convertToXls(data: any) {
-    throw new Error('Function not implemented.');
-}
