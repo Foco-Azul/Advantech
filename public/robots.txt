@@ -1,9 +1,9 @@
-# *
+# Indica a todos los bots que todas las páginas son permitidas.
 User-agent: *
 Allow: /
 
-# Host
-Host: https://example.com
+# Define el host del sitio web.
+Host: https://datos.advantech.com.ec
 
-# Sitemaps
-Sitemap: https://example.com/sitemap.xml
+# Indica la ubicación del archivo de mapa del sitio.
+Sitemap: https://datos.advantech.com.ec/sitemap.xml

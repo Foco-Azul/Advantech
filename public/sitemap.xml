@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-</sitemapindex>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://datos.advantech.com.ec</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://datos.advantech.com.ec/planes</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://datos.advantech.com.ec/sobre-nosotros</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>
