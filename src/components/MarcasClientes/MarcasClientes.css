@@ -13,10 +13,8 @@
 }
 
 .carousel-marcas-clientes .carousel-image {
-  width: auto;
-  height: 100%;
-  margin: auto;
-  max-height: 100px;
+  width: 200px;
+  margin: 0 50px;
 }
 
 .carousel-marcas-clientes .carousel-images{

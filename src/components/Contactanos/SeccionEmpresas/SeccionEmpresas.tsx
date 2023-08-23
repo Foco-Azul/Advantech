@@ -1,8 +1,8 @@
 import './SeccionEmpresas.css';
 import Image from 'next/image';
-import Marca_1 from "./image/datafast.jpg"
-import Marca_2 from "./image/diners.jpg"
-import Marca_3 from "./image/pichincha.jpg"
+import Marca_1 from "./image/datafast.png"
+import Marca_2 from "./image/diners.png"
+import Marca_3 from "./image/pichincha.png"
 
 function SeccionEmpresas() {
 

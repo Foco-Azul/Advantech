@@ -46,7 +46,9 @@
   line-height: 140%;
   text-align: center;
 }
-
+.seccion-busqueda .informacion-texto {
+  padding: 0 25px;
+}
 .seccion-busqueda .informacion-text {
   color: var(--gray-700, #585C7B);
   font-family: Manrope,sans-serif;

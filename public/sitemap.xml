@@ -5,11 +5,35 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://datos.advantech.com.ec/alacarta</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://datos.advantech.com.ec/busqueda</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://datos.advantech.com.ec/contactanos</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://datos.advantech.com.ec/planes</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://datos.advantech.com.ec/sobre-nosotros</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://datos.advantech.com.ec/unete-al-equipo</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://datos.advantech.com.ec/uso-por-industria</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://datos.advantech.com.ec/ventajas</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

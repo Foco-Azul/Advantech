@@ -80,6 +80,38 @@ function Login({ loginname }: LoginProps) {
 
         if (postResponse.status === 200) {
           console.log("Usuario creado con éxito.");
+          try {
+            // Realizar el POST con los datos requeridos
+            const postResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+                },
+                body: JSON.stringify({
+                  data: {
+                    nombre: "nombre",
+                    asunto: "prueba",
+                    para: "cvargas@focoazul.com",
+                    contenido: "contenido de prueba",
+                  },
+                }),
+                cache: "no-store",
+              }
+            );
+      
+            if (postResponse.status === 200) {
+              console.log("Formulario enviado con exito");
+            } else {
+              console.log(postResponse.status);
+              throw new Error(`Failed to create user, ${postResponse.status}`);
+            }
+          } catch (error) {
+            console.error('Error sending form data to Strapi:', error);
+            // Maneja el error según tus necesidades
+          }
         } else {
           console.log(postResponse.status);
           throw new Error(`Failed to create user, ${postResponse.status}`);

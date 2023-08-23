@@ -127,6 +127,25 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
               cache: "no-store",
             }
           );
+          const postResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+              },
+              body: JSON.stringify({
+                data: {
+                  nombre: userid,
+                  asunto: "Compra de creditos",
+                  para: "cvargas@focoazul.com",
+                  contenido: plan,
+                },
+              }),
+              cache: "no-store",
+            }
+          );
           console.log("Usuario actualizado con éxito.");
 
           // Redirect to "/busqueda" after 2 seconds

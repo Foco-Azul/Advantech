@@ -1,7 +1,7 @@
 import './SeccionContactanos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";
-import { faEnvelopesBulk} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelopesBulk, faPhone} from "@fortawesome/free-solid-svg-icons";
 
 function SeccionContactanos() {
   return (
@@ -20,6 +20,11 @@ function SeccionContactanos() {
           <div className='contacto'>
             <FontAwesomeIcon icon={faEnvelopesBulk} size="2xl" />
             <p>Envíanos un correo electrónico haciendo clic en el ícono de la izquierda o al correo contacto@advantech.com</p>
+          </div>
+          <br />
+          <div className='contacto'>
+            <FontAwesomeIcon icon={faPhone} size="2xl" />
+            <p>Envíanos un mensaje o realiza una llamada haciendo clic en el ícono de la izquierda o al número +593(984-765-158)</p>
           </div>
         </div>
       </div>
