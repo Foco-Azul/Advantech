@@ -44,7 +44,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       const dataArray: SortedData[] = Object.entries(data).flatMap(([propertyKey, items]) =>
         Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
       );
-
+  
       dataArray.sort((a, b) => {
         if (sortColumn === "fecha") {
           const dateA = new Date(a.fecha).getTime();
@@ -56,7 +56,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
           return sortOrder === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
         }
       });
-
+  
       // Filtrar los datos según el término de búsqueda
       let filteredData = dataArray.filter(item => {
         const searchTerms = searchTerm.toLowerCase().split(' ');
@@ -70,7 +70,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
           ].some(field => field.includes(term))
         );
       });
-
+  
       // Si no hay coincidencias exactas, realizar búsqueda por aproximación retrocediendo letra por letra
       if (filteredData.length === 0) {
         const newFilteredData = [];
@@ -92,22 +92,22 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         }
         filteredData = newFilteredData;
       }
-
+  
       // Calcular el número total de páginas basado en los datos filtrados
       const totalFilteredItems = filteredData.length;
       const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
       setTotalPages(totalPages);
-
+  
       // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
       setCurrentPage(prevPage => Math.min(prevPage, totalPages));
-
+  
       // Realizar la paginación en los datos filtrados
       const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
       const paginatedFilteredData = filteredData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
       setPaginatedData(paginatedFilteredData);
     }
   }, [data, currentPage, sortColumn, sortOrder, searchTerm]);
-
+  
   useEffect(() => {
     onSelectedItems(selectedItems);
   }, [selectedItems, onSelectedItems]);
@@ -139,13 +139,22 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     }
   };
 
+  const handleSelectAll = () => {
+    if (selectedItems.length === paginatedData?.length) {
+      setSelectedItems([]);
+    } else {
+      const allKeys = paginatedData?.map(item => item.key) || [];
+      setSelectedItems(allKeys);
+    }
+  };
+
   const renderTableHeader = () => {
     const isSortingColumn = (column: keyof Data) => sortColumn === column;
     const isAscending = sortOrder === "asc";
 
     return (
       <tr>
-        <th className='tablabusqueda-esquinaizquierda'>SELECCIÓN</th>
+        <th className='tablabusqueda-esquinaizquierda' onClick={handleSelectAll}>Seleccionar todo</th>
         <th onClick={() => handleSort("lugar")}>
           LUGAR {isSortingColumn("lugar") && (isAscending ? "▲" : "▼")}
         </th>
@@ -203,6 +212,8 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       filteredData = newFilteredData;
     }
 
+
+
     return filteredData.map(item => {
       const isSelected = selectedItems.includes(item.key);
 
@@ -221,6 +232,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
               checked={isSelected}
               onChange={() => toggleSelectItem(item.key)}
               onClick={e => e.stopPropagation()}
+              className="styled-checkbox"
             />
           </td>
           <td>{item.lugar}</td>
@@ -235,7 +247,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
   return (
     <div >
-      <p className='buscador-label'>Puedes buscar especificamente</p>
+      <p className='buscador-label'>Puedes filtrar especificamente tu consulta</p>
       <input
         className='search-input-table'
         type="text"
@@ -243,7 +255,6 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         onChange={e => setSearchTerm(e.target.value)}
         placeholder="ej: Quito robo"
       />
-      <p>Selecciona los datos que quieres traer en detalle</p>
       <table className='tablabusqueda-tabla'>
         <thead className='tablabusqueda-head'>{renderTableHeader()}</thead>
         <tbody>{renderTableData()}</tbody>
