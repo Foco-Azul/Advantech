@@ -81,14 +81,11 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                 <h3><FontAwesomeIcon icon={faDownload} style={{ color: "#009fde", }} />
                     {soporte ? `Entrega de datos (Lotes | Email)` : "Entrega de datos (Lotes | Email)"}
                 </h3>
-                <h3><FontAwesomeIcon icon={faFile} style={{ color: "#009fde", }} />
-                    Formato de entrega de datos
-                    <p>
+                <h3><FontAwesomeIcon icon={faFile} style={{ color: "#009fde", }} />        
+                        Formato de entrega de datos&nbsp;  
                         {[pdf ? "PDF" : null, xlsx ? "XLSX" : null, csv ? "CSV" : null, txt ? "TXT" : null]
                             .filter(element => element !== null)
                             .join(", ")}
-                    </p>
-
                 </h3>
             </div>
             {(uservencimiento && new Date(uservencimiento) < new Date()) && (price !== 0) && (

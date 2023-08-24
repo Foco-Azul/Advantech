@@ -10,7 +10,7 @@
 }
 
 .subscription-card {
-  width: 416px;
+  width: 360px;
   min-height: 544px;
   height: auto;
   background-color: #FFFFFF;
@@ -37,7 +37,6 @@
 .subscription-caracteristics {
   align-items: left;
   margin-top: 15px;
-  width: 336px;
 }
 
 .subscription-price {
@@ -59,11 +58,9 @@ align-items: center;
 }
 
 .subscription-card-button {
-  height: 42px;
   border-radius: 6px;
   background: var(--brand-primary, #009FDE);
   box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
-  width: 336px;
   color: var(--white, #FFF);
   text-align: center;
   font-size: 16px;
@@ -73,6 +70,7 @@ align-items: center;
   line-height: 160%;
   margin-top: 15px;
   transition: 0.5s;
+  padding: 10px 20px;
 }
 
 .subscription-card-button:hover {

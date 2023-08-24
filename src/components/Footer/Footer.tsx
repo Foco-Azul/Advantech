@@ -18,6 +18,8 @@ function Footer() {
             </Link>
             <div className="footer-rrss">
               <Link href="https://www.linkedin.com/advantechint" legacyBehavior passHref target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></Link>
+              <Link href="https://twitter.com/AdvantechDatos?s=20" legacyBehavior passHref target="_blank"><FontAwesomeIcon icon={faTwitter} size="xl" /></Link>
+              <Link href="https://www.facebook.com/profile.php?id=61550513552222&mibextid=2JQ9oc" legacyBehavior passHref target="_blank"><FontAwesomeIcon icon={faSquareFacebook} size="xl" /></Link>
             </div>
           </div>
           <div className="footer-home-links">    
