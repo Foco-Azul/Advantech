@@ -96,3 +96,18 @@ p {
 .table-row:hover {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.38);
   }
+
+
+  .container-tablabusqueda{
+    display: flex;
+    flex-direction: row;
+  }
+
+
+  .city-list{
+    min-width: 250px;
+  }
+
+  .city-list-input{
+    margin: 5px;
+  }
