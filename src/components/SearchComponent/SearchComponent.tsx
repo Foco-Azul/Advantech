@@ -392,6 +392,7 @@ const SearchComponent: React.FC = () => {
                                             id="sourceSelector"
                                             value={selectedSource}
                                             onChange={handleSourceSelect}
+                                            className='search-inputs'
                                         >
                                             <option value="" disabled hidden>
                                                 Seleccionar fuente

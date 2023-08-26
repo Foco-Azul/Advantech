@@ -63,7 +63,7 @@ tr:nth-child(even) {
 }
 
 .tablabusqueda-esquinaizquierda:hover {
-  background-color: #00749b;
+    background-color: #00749b;
 }
 
 .tablabusqueda-esquinaderecha {
@@ -95,19 +95,23 @@ p {
 
 .table-row:hover {
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.38);
-  }
+}
 
 
-  .container-tablabusqueda{
+.container-tablabusqueda {
     display: flex;
     flex-direction: row;
-  }
+}
 
 
-  .city-list{
+.city-list {
     min-width: 250px;
-  }
+}
 
-  .city-list-input{
+.city-list-input {
     margin: 5px;
-  }
+}
+
+.city-list-label {
+    text-transform: capitalize !important;
+}

@@ -30,23 +30,14 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [cityCounts, setCityCounts] = useState<{ [city: string]: number }>({});
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
 
 
-
-  useEffect(() => {
-    if (data) {
-      const totalItems = Object.keys(data).reduce((count, propertyKey) => count + Object.keys(data[propertyKey]).length, 0);
-      const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-      setTotalPages(totalPages);
-
-      setCurrentPage(prevPage => Math.min(prevPage, totalPages));
-    }
-  }, [data]);
 
   useEffect(() => {
     if (data) {
       const counts: { [city: string]: number } = {};
-
+  
       // Contar ocurrencias por ciudad
       Object.entries(data).forEach(([propertyKey, items]) =>
         Object.entries(items).forEach(([itemKey, item]) => {
@@ -54,73 +45,58 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
           counts[city] = (counts[city] || 0) + 1;
         })
       );
-
+  
       setCityCounts(counts);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (data) {
-      const counts: { [city: string]: number } = {};
-
-      // Contar ocurrencias por ciudad
-      Object.entries(data).forEach(([propertyKey, items]) =>
-        Object.entries(items).forEach(([itemKey, item]) => {
-          const city = item.lugar.toLowerCase();
-          counts[city] = (counts[city] || 0) + 1;
-        })
-      );
-
-      setCityCounts(counts);
-
+  
       // Filtrar datos por ciudades seleccionadas
       const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
         Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
       ).filter(item => selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase()));
-
-      // Filtrar los datos según el término de búsqueda
-      let filteredData = filteredByCities.filter(item => {
-        const searchTerms = searchTerm.toLowerCase().split(' ');
-        return searchTerms.every(term =>
-          [
-            item.lugar.toLowerCase(),
-            item.estado.toLowerCase(),
-            item.delito.toLowerCase(),
-            item.unidad.toLowerCase(),
-            item.fecha.toLowerCase()
-          ].some(field => field.includes(term))
-        );
-      });
-
-      // Ordenar los datos
-      filteredData.sort((a, b) => {
-        if (sortColumn === "fecha") {
-          const dateA = new Date(a.fecha).getTime();
-          const dateB = new Date(b.fecha).getTime();
-          return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-        } else {
-          const valueA = a[sortColumn];
-          const valueB = b[sortColumn];
-          return sortOrder === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+  
+      // Función para realizar búsqueda por aproximación retrocediendo letra por letra
+      const searchApproximately = (term: string, data: any[]) => {
+        if (term.trim() === '') {
+          return data; // Si el término de búsqueda está vacío, mostrar todos los datos
         }
-      });
-
+  
+        for (let i = term.length; i >= 1; i--) {
+          const truncatedSearchTerm = term.toLowerCase().substring(0, i);
+          const approximateFilteredData = data.filter(item =>
+            [
+              item.lugar.toLowerCase(),
+              item.estado.toLowerCase(),
+              item.delito.toLowerCase(),
+              item.unidad.toLowerCase(),
+              item.fecha.toLowerCase()
+            ].some(field => field.includes(truncatedSearchTerm))
+          );
+          if (approximateFilteredData.length > 0) {
+            return approximateFilteredData;
+          }
+        }
+        return [];
+      };
+  
+      // Filtrar los datos según el término de búsqueda
+      let filteredData = searchApproximately(searchTerm, filteredByCities);
+  
       // Calcular el número total de páginas basado en los datos filtrados
       const totalFilteredItems = filteredData.length;
       const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
       setTotalPages(totalPages);
-
+  
       // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
-      setCurrentPage(prevPage => Math.min(prevPage, totalPages));
-
+      setCurrentPage(prevPage => Math.max(1, Math.min(prevPage, totalPages)));
+  
       // Realizar la paginación en los datos filtrados
       const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
       const endIndex = startIndex + ITEMS_PER_PAGE;
       const paginatedFilteredData = filteredData.slice(startIndex, endIndex);
       setPaginatedData(paginatedFilteredData);
     }
-  }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities]);
-
+  }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities, cityCounts]);
+  
+  
 
   useEffect(() => {
     onSelectedItems(selectedItems);
@@ -207,7 +183,6 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       );
     });
 
-
     // Si no hay coincidencias exactas, realizar búsqueda por aproximación retrocediendo letra por letra
     if (filteredData.length === 0) {
       const newFilteredData = [];
@@ -229,8 +204,6 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       }
       filteredData = newFilteredData;
     }
-
-
 
     return filteredData.map(item => {
       const isSelected = selectedItems.includes(item.key);
@@ -262,36 +235,70 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     });
   };
 
-
   const handleCityToggle = (city: string) => {
     if (selectedCities.includes(city)) {
-      setSelectedCities(prevSelectedCities => prevSelectedCities.filter(c => c !== city));
+      setSelectedCities(prevSelectedCities =>
+        prevSelectedCities.filter(c => c !== city)
+      );
     } else {
       setSelectedCities(prevSelectedCities => [...prevSelectedCities, city]);
     }
   };
 
   const renderCityList = () => {
-    const allCities = Object.keys(cityCounts);
+    const [openRegion, setOpenRegion] = useState<string | null>(null);
+
+    const toggleRegionDropdown = (region: string) => {
+      setOpenRegion(prevOpenRegion =>
+        prevOpenRegion === region ? null : region
+      );
+    };
+
+    const regionCityCounts: { [region: string]: number } = {};
+
+    Object.keys(cityCounts).forEach(city => {
+      const [region] = city.split(" - ");
+      if (region) {
+        regionCityCounts[region] = (regionCityCounts[region] || 0) + cityCounts[city];
+      }
+    });
 
     return (
       <div className="city-list">
         <h2>Filtrar por ciudades</h2>
         <ul>
-          {allCities.map(city => (
-            <li key={city}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={selectedCities.includes(city)}
-                  onChange={() => handleCityToggle(city)}
-                  className="city-list-input"
-                />
-                {city
-                  .split(" ")
-                  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(" ")} ({cityCounts[city]})
-              </label>
+          {Object.entries(regionCityCounts).map(([region, count]) => (
+            <li key={region}>
+              <button
+                className={`region-toggle-button ${openRegion === region ? "open" : ""
+                  }`}
+                onClick={() => toggleRegionDropdown(region)}
+              >
+                {region.charAt(0).toUpperCase() + region.slice(1)} ({count})
+              </button>
+              {openRegion === region && (
+                <ul className="city-dropdown-content">
+                  {Object.keys(cityCounts).map(city => {
+                    const [cityRegion, cityName] = city.split(" - ");
+                    if (cityRegion === region) {
+                      return (
+                        <li key={city}>
+                          <label className="city-list-label">
+                            <input
+                              type="checkbox"
+                              checked={selectedCities.includes(city)}
+                              onChange={() => handleCityToggle(city)}
+                              className="city-list-input"
+                            />
+                            {cityName.charAt(0).toUpperCase() + cityName.slice(1)} ({cityCounts[city]})
+                          </label>
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
@@ -299,19 +306,20 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     );
   };
 
-
   return (
     <div >
-      <p className='buscador-label'>Puedes filtrar especificamente tu consulta</p>
-      <input
-        className='search-input-table'
-        type="text"
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-        placeholder="ej: Quito robo"
-      />
       <div className='container-tablabusqueda'>
-        {renderCityList()}
+        <div>
+          <p className='buscador-label'>Puedes filtrar especificamente tu consulta</p>
+          <input
+            className='search-input-table'
+            type="text"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            placeholder="ej: Quito robo"
+          />
+          {renderCityList()}
+        </div>
         <div>
           <table className='tablabusqueda-tabla'>
             <thead className='tablabusqueda-head'>{renderTableHeader()}</thead>
@@ -324,10 +332,6 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
           </div>
         </div>
       </div>
-
-
-
-
     </div>
   );
 };
