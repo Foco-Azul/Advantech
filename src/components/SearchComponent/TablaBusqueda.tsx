@@ -28,55 +28,40 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const [sortColumn, setSortColumn] = useState<keyof Data>("fecha");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [cityCounts, setCityCounts] = useState<{ [city: string]: number }>({});
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
+
+
 
   useEffect(() => {
     if (data) {
-      const totalItems = Object.keys(data).reduce((count, propertyKey) => count + Object.keys(data[propertyKey]).length, 0);
-      const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-      setTotalPages(totalPages);
-
-      setCurrentPage(prevPage => Math.min(prevPage, totalPages));
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (data) {
-      const dataArray: SortedData[] = Object.entries(data).flatMap(([propertyKey, items]) =>
-        Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
+      const counts: { [city: string]: number } = {};
+  
+      // Contar ocurrencias por ciudad
+      Object.entries(data).forEach(([propertyKey, items]) =>
+        Object.entries(items).forEach(([itemKey, item]) => {
+          const city = item.lugar.toLowerCase();
+          counts[city] = (counts[city] || 0) + 1;
+        })
       );
-
-      dataArray.sort((a, b) => {
-        if (sortColumn === "fecha") {
-          const dateA = new Date(a.fecha).getTime();
-          const dateB = new Date(b.fecha).getTime();
-          return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-        } else {
-          const valueA = a[sortColumn];
-          const valueB = b[sortColumn];
-          return sortOrder === "asc" ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+  
+      setCityCounts(counts);
+  
+      // Filtrar datos por ciudades seleccionadas
+      const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
+        Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
+      ).filter(item => selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase()));
+  
+      // Función para realizar búsqueda por aproximación retrocediendo letra por letra
+      const searchApproximately = (term: string, data: any[]) => {
+        if (term.trim() === '') {
+          return data; // Si el término de búsqueda está vacío, mostrar todos los datos
         }
-      });
-
-      // Filtrar los datos según el término de búsqueda
-      let filteredData = dataArray.filter(item => {
-        const searchTerms = searchTerm.toLowerCase().split(' ');
-        return searchTerms.every(term =>
-          [
-            item.lugar.toLowerCase(),
-            item.estado.toLowerCase(),
-            item.delito.toLowerCase(),
-            item.unidad.toLowerCase(),
-            item.fecha.toLowerCase()
-          ].some(field => field.includes(term))
-        );
-      });
-
-      // Si no hay coincidencias exactas, realizar búsqueda por aproximación retrocediendo letra por letra
-      if (filteredData.length === 0) {
-        const newFilteredData = [];
-        for (let i = searchTerm.length - 1; i >= 1; i--) {
-          const truncatedSearchTerm = searchTerm.substring(0, i);
-          const approximateFilteredData = dataArray.filter(item =>
+  
+        for (let i = term.length; i >= 1; i--) {
+          const truncatedSearchTerm = term.toLowerCase().substring(0, i);
+          const approximateFilteredData = data.filter(item =>
             [
               item.lugar.toLowerCase(),
               item.estado.toLowerCase(),
@@ -86,27 +71,32 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
             ].some(field => field.includes(truncatedSearchTerm))
           );
           if (approximateFilteredData.length > 0) {
-            newFilteredData.push(...approximateFilteredData);
-            break;
+            return approximateFilteredData;
           }
         }
-        filteredData = newFilteredData;
-      }
-
+        return [];
+      };
+  
+      // Filtrar los datos según el término de búsqueda
+      let filteredData = searchApproximately(searchTerm, filteredByCities);
+  
       // Calcular el número total de páginas basado en los datos filtrados
       const totalFilteredItems = filteredData.length;
       const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
       setTotalPages(totalPages);
-
+  
       // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
-      setCurrentPage(prevPage => Math.min(prevPage, totalPages));
-
+      setCurrentPage(prevPage => Math.max(1, Math.min(prevPage, totalPages)));
+  
       // Realizar la paginación en los datos filtrados
       const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-      const paginatedFilteredData = filteredData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const paginatedFilteredData = filteredData.slice(startIndex, endIndex);
       setPaginatedData(paginatedFilteredData);
     }
-  }, [data, currentPage, sortColumn, sortOrder, searchTerm]);
+  }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities, cityCounts]);
+  
+  
 
   useEffect(() => {
     onSelectedItems(selectedItems);
@@ -139,13 +129,22 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     }
   };
 
+  const handleSelectAll = () => {
+    if (selectedItems.length === paginatedData?.length) {
+      setSelectedItems([]);
+    } else {
+      const allKeys = paginatedData?.map(item => item.key) || [];
+      setSelectedItems(allKeys);
+    }
+  };
+
   const renderTableHeader = () => {
     const isSortingColumn = (column: keyof Data) => sortColumn === column;
     const isAscending = sortOrder === "asc";
 
     return (
       <tr>
-        <th className='tablabusqueda-esquinaizquierda'>SELECCIÓN</th>
+        <th className='tablabusqueda-esquinaizquierda' onClick={handleSelectAll}>Seleccionar todo</th>
         <th onClick={() => handleSort("lugar")}>
           LUGAR {isSortingColumn("lugar") && (isAscending ? "▲" : "▼")}
         </th>
@@ -170,14 +169,17 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     const searchTerms = searchTerm.toLowerCase().split(' ');
 
     let filteredData = paginatedData.filter(item => {
-      return searchTerms.every(term =>
-        [
-          item.lugar.toLowerCase(),
-          item.estado.toLowerCase(),
-          item.delito.toLowerCase(),
-          item.unidad.toLowerCase(),
-          item.fecha.toLowerCase()
-        ].some(field => field.includes(term))
+      return (
+        (selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase())) &&
+        searchTerms.every(term =>
+          [
+            item.lugar.toLowerCase(),
+            item.estado.toLowerCase(),
+            item.delito.toLowerCase(),
+            item.unidad.toLowerCase(),
+            item.fecha.toLowerCase()
+          ].some(field => field.includes(term))
+        )
       );
     });
 
@@ -185,7 +187,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     if (filteredData.length === 0) {
       const newFilteredData = [];
       for (let i = searchTerm.length - 1; i >= 1; i--) {
-        const truncatedSearchTerm = searchTerm.substring(0, i);
+        const truncatedSearchTerm = searchTerm.toLowerCase().substring(0, i);
         const approximateFilteredData = paginatedData.filter(item =>
           [
             item.lugar.toLowerCase(),
@@ -221,6 +223,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
               checked={isSelected}
               onChange={() => toggleSelectItem(item.key)}
               onClick={e => e.stopPropagation()}
+              className="styled-checkbox"
             />
           </td>
           <td>{item.lugar}</td>
@@ -232,26 +235,102 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     });
   };
 
+  const handleCityToggle = (city: string) => {
+    if (selectedCities.includes(city)) {
+      setSelectedCities(prevSelectedCities =>
+        prevSelectedCities.filter(c => c !== city)
+      );
+    } else {
+      setSelectedCities(prevSelectedCities => [...prevSelectedCities, city]);
+    }
+  };
+
+  const renderCityList = () => {
+    const [openRegion, setOpenRegion] = useState<string | null>(null);
+
+    const toggleRegionDropdown = (region: string) => {
+      setOpenRegion(prevOpenRegion =>
+        prevOpenRegion === region ? null : region
+      );
+    };
+
+    const regionCityCounts: { [region: string]: number } = {};
+
+    Object.keys(cityCounts).forEach(city => {
+      const [region] = city.split(" - ");
+      if (region) {
+        regionCityCounts[region] = (regionCityCounts[region] || 0) + cityCounts[city];
+      }
+    });
+
+    return (
+      <div className="city-list">
+        <h2>Filtrar por ciudades</h2>
+        <ul>
+          {Object.entries(regionCityCounts).map(([region, count]) => (
+            <li key={region}>
+              <button
+                className={`region-toggle-button ${openRegion === region ? "open" : ""
+                  }`}
+                onClick={() => toggleRegionDropdown(region)}
+              >
+                {region.charAt(0).toUpperCase() + region.slice(1)} ({count})
+              </button>
+              {openRegion === region && (
+                <ul className="city-dropdown-content">
+                  {Object.keys(cityCounts).map(city => {
+                    const [cityRegion, cityName] = city.split(" - ");
+                    if (cityRegion === region) {
+                      return (
+                        <li key={city}>
+                          <label className="city-list-label">
+                            <input
+                              type="checkbox"
+                              checked={selectedCities.includes(city)}
+                              onChange={() => handleCityToggle(city)}
+                              className="city-list-input"
+                            />
+                            {cityName.charAt(0).toUpperCase() + cityName.slice(1)} ({cityCounts[city]})
+                          </label>
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   return (
     <div >
-      <p className='buscador-label'>Puedes buscar especificamente</p>
-      <input
-        className='search-input-table'
-        type="text"
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-        placeholder="ej: Quito robo"
-      />
-      <p>Selecciona los datos que quieres traer en detalle</p>
-      <table className='tablabusqueda-tabla'>
-        <thead className='tablabusqueda-head'>{renderTableHeader()}</thead>
-        <tbody>{renderTableData()}</tbody>
-      </table>
-      <div className='tablabusqueda-container-button'>
-        {currentPage !== 1 && <button className='tablabusqueda-button' onClick={handlePrevPage} disabled={currentPage === 1}>ANTERIOR</button>}
-        {totalPages > 1 && <span className='tablabusqueda-page-number'>Página {currentPage} de {totalPages}</span>}
-        {currentPage !== totalPages && <button className='tablabusqueda-button' onClick={handleNextPage} disabled={currentPage === totalPages}>SIGUIENTE</button>}
+      <div className='container-tablabusqueda'>
+        <div>
+          <p className='buscador-label'>Puedes filtrar especificamente tu consulta</p>
+          <input
+            className='search-input-table'
+            type="text"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            placeholder="ej: Quito robo"
+          />
+          {renderCityList()}
+        </div>
+        <div>
+          <table className='tablabusqueda-tabla'>
+            <thead className='tablabusqueda-head'>{renderTableHeader()}</thead>
+            <tbody>{renderTableData()}</tbody>
+          </table>
+          <div className='tablabusqueda-container-button'>
+            {currentPage !== 1 && <button className='tablabusqueda-button' onClick={handlePrevPage} disabled={currentPage === 1}>ANTERIOR</button>}
+            {totalPages > 1 && <span className='tablabusqueda-page-number'>Página {currentPage} de {totalPages}</span>}
+            {currentPage !== totalPages && <button className='tablabusqueda-button' onClick={handleNextPage} disabled={currentPage === totalPages}>SIGUIENTE</button>}
+          </div>
+        </div>
       </div>
     </div>
   );

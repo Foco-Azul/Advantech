@@ -84,3 +84,18 @@ transform: scaleX(0.9);
     margin-bottom: 35px;
     box-shadow: 0px 0px 30px 30px rgb(99 102 241 / 10%);
 }
+
+.buscador-label-datos{
+    margin-top: -50px !important;
+    margin-bottom: 15px !important;
+    display: flex;
+    align-items: center;
+    justify-content:center ;
+    margin: auto;
+    flex-direction: column;
+    background-color: #0099CC;
+    max-width: 450px;
+    color: white;
+    height: 35px;
+    border-radius: 6px;
+}

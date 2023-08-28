@@ -169,7 +169,7 @@ const SearchComponent: React.FC = () => {
                         // Automatically select all items and call the third API
                         const allItems = Object.keys(noticias[primeraPropiedad]);
                         handleSelectedItems(allItems);
-                        handleThirdApiButtonClick();
+
                     }
                 } else {
                     console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
@@ -392,6 +392,7 @@ const SearchComponent: React.FC = () => {
                                             id="sourceSelector"
                                             value={selectedSource}
                                             onChange={handleSourceSelect}
+                                            className='search-inputs'
                                         >
                                             <option value="" disabled hidden>
                                                 Seleccionar fuente
@@ -413,7 +414,14 @@ const SearchComponent: React.FC = () => {
                             {data ? (
                                 <div>
                                     {/* <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre> */}
-                                    {mostrartabla && <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />}
+                                    {mostrartabla &&
+                                        <>
+                                            <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
+                                            <p>Selecciona los datos que quieres traer en detalle</p>
+
+                                            <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                        </>
+                                    }
 
                                 </div>
                             ) : (
