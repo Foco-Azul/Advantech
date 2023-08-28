@@ -1,35 +1,51 @@
-.carousel{
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 300px;
-  width: 70%;
+  transition: transform 0.5s ease-in-out;
 }
 
-.carousel-item {
-  flex: 0 0 calc(33.33% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
-  margin: auto; /* Ajusta el margen entre los elementos según tus necesidades */
-}
-
-.carousel-image {
-  width: auto;
-  height: 100%;
-  margin: auto;
-}
-
-.carousel-images{
+.card {
+  width: 100px;
+  height: 100px;
+  background-color: #f0f0f0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0.5;
+  transition: opacity 0.5s ease-in-out;
 }
 
-@media only screen and (max-width: 768px) {
-  .carousel {
-    width: 90%;
-  }
-  .carousel-item {
-    flex: unset;
-  }
+.card.active {
+  opacity: 1;
+}
 
+/* Efecto de desplazamiento */
+.card:nth-child(1) {
+  animation: moveLeft 5s infinite linear;
+}
+
+.card:nth-child(2) {
+  animation: moveLeft 5s infinite linear 1s;
+}
+
+.card:nth-child(3) {
+  animation: moveLeft 5s infinite linear 2s;
+}
+
+@keyframes moveLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }

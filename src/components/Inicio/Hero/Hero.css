@@ -137,3 +137,34 @@ h2.hero-short-title {
         left: -130px;
     }
 }
+.tipos-consultas-head-title {
+    color: var(--brand-primary, #131022);
+    font-family: Manrope, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 140%;
+    padding: 10px 0;
+    text-align: center;
+}
+.empresas-marcas{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.empresas-marcas >div{
+    max-width: 13%;
+}
+.aliados-contenido{
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+@media only screen and (max-width: 525px) {
+    .empresas-marcas > div{
+        max-width: 70%;
+        padding: 20px;
+        margin: auto;
+    }
+}
