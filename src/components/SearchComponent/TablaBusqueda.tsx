@@ -37,7 +37,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   useEffect(() => {
     if (data) {
       const counts: { [city: string]: number } = {};
-  
+
       // Contar ocurrencias por ciudad
       Object.entries(data).forEach(([propertyKey, items]) =>
         Object.entries(items).forEach(([itemKey, item]) => {
@@ -45,20 +45,20 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
           counts[city] = (counts[city] || 0) + 1;
         })
       );
-  
+
       setCityCounts(counts);
-  
+
       // Filtrar datos por ciudades seleccionadas
       const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
         Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
       ).filter(item => selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase()));
-  
+
       // Función para realizar búsqueda por aproximación retrocediendo letra por letra
       const searchApproximately = (term: string, data: any[]) => {
         if (term.trim() === '') {
           return data; // Si el término de búsqueda está vacío, mostrar todos los datos
         }
-  
+
         for (let i = term.length; i >= 1; i--) {
           const truncatedSearchTerm = term.toLowerCase().substring(0, i);
           const approximateFilteredData = data.filter(item =>
@@ -76,18 +76,30 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         }
         return [];
       };
-  
+
       // Filtrar los datos según el término de búsqueda
       let filteredData = searchApproximately(searchTerm, filteredByCities);
-  
+
+      // Sort filtered data based on sortColumn and sortOrder
+      filteredData.sort((a, b) => {
+        const aValue = a[sortColumn];
+        const bValue = b[sortColumn];
+        if (aValue < bValue) {
+          return sortOrder === "asc" ? -1 : 1;
+        } else if (aValue > bValue) {
+          return sortOrder === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+
       // Calcular el número total de páginas basado en los datos filtrados
       const totalFilteredItems = filteredData.length;
       const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
       setTotalPages(totalPages);
-  
+
       // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
       setCurrentPage(prevPage => Math.max(1, Math.min(prevPage, totalPages)));
-  
+
       // Realizar la paginación en los datos filtrados
       const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
       const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -95,8 +107,8 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       setPaginatedData(paginatedFilteredData);
     }
   }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities, cityCounts]);
-  
-  
+
+
 
   useEffect(() => {
     onSelectedItems(selectedItems);
