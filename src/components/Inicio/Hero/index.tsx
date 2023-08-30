@@ -23,7 +23,8 @@ function Hero() {
             <input className="hero-short-input" placeholder={ `Buscar en Advantech`} />
           <br></br>
           <h2 className="hero-description">
-            Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador. </h2>
+            Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador.
+            </h2>
           <br></br>
           <a href="/api/auth/login" className="hero-button" >
             Crear cuenta

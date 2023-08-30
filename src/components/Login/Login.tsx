@@ -159,14 +159,8 @@ function Login({ loginname }: LoginProps) {
       )}
       {!user && (
         <div>
-          <button
-            className="logout-button"
-            onClick={() => {
-              window.location.href = "/api/auth/login";
-            }}
-          >
-            <FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
-          </button>
+          <a className="logout-button" href = "/api/auth/login"><FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
+          </a>
         </div>
       )}
     </div>
