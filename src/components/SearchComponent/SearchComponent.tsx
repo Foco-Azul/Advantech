@@ -9,6 +9,7 @@ import CreditComponent from '../Credits/CreditComponent';
 import Tabla from '../Tabla/Tabla';
 import TablaBusqueda from './TablaBusqueda'
 import CircularProgress from '@mui/material/CircularProgress';
+import { validateInput } from './InputValidationUtil'; // Import the validation function
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -35,6 +36,8 @@ const SearchComponent: React.FC = () => {
     const seleccionUsuarioCount = SeleccionUsuario.length;
     const [mostrartabla, setMostrartabla] = useState(true);
     const [isLoadingData, setIsLoadingData] = useState(false);
+    const [inputErrors, setInputErrors] = useState<{ specialCharacters?: string; emptyInput?: string }>({});
+
 
     async function getuser() {
         try {
@@ -115,101 +118,108 @@ const SearchComponent: React.FC = () => {
     }, [user]);
 
     const handleButtonClick = async () => {
-        setIsLoadingData(true);
-        try {
-            const response = await fetch('https://splunk.hctint.com:9876/data/create_search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    list: [searchInputValue],
-                    source: getSourceValue(),
-                    key: 'valid_api_key'
-                }),
-            });
+        const errors = validateInput(searchInputValue);
 
-            if (response.ok) {
-                const jsonData = await response.json();
-                setData(jsonData);
-
-                const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+        if (Object.keys(errors).length === 0) {
+            setInputErrors({}); // Reset input error
+            // Reset empty input error
+            setIsLoadingData(true);
+            try {
+                const response = await fetch('https://splunk.hctint.com:9876/data/create_search', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        query_id: jsonData.query_id,
-                        creator_key: 'valid_api_key',
-                        selection: {},
+                        list: [searchInputValue],
+                        source: getSourceValue(),
                         key: 'valid_api_key'
                     }),
                 });
 
-                if (secondResponse.ok) {
-                    const secondJsonData = await secondResponse.json();
-                    const noticias = secondJsonData.data;
-                    setDatosTabla(noticias);
-                    console.log(noticias)
-                    let primeraPropiedad;
-                    for (let propiedad in noticias) {
-                        if (noticias.hasOwnProperty(propiedad)) {
-                            primeraPropiedad = propiedad;
-                            break;
-                        }
-                    }
+                if (response.ok) {
+                    const jsonData = await response.json();
+                    setData(jsonData);
 
-                    if (primeraPropiedad !== undefined) {
-                        setNombreRuc(primeraPropiedad);
-                        const properties = [];
-                        for (let nombrePropiedad in noticias[primeraPropiedad]) {
-                            properties.push(nombrePropiedad);
-                        }
+                    const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            query_id: jsonData.query_id,
+                            creator_key: 'valid_api_key',
+                            selection: {},
+                            key: 'valid_api_key'
+                        }),
+                    });
 
-                        setPropiedadArray(properties);
-                        setIsSecondApiResponseSuccessful(true);
+                    if (secondResponse.ok) {
+                        const secondJsonData = await secondResponse.json();
+                        const noticias = secondJsonData.data;
+                        setDatosTabla(noticias);
 
-                        // Automatically select all items and call the third API
-                        const allItems = Object.keys(noticias[primeraPropiedad]);
-                        handleSelectedItems(allItems);
-
-                    }
-
-                    if (selectedFuenteCredito !== null) {
-                        const posthistorial = await fetch(
-                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                            {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                    data: {
-                                        auth_0_user: userId,
-                                        creditos: selectedFuenteCredito * -1,
-                                        fecha: currentDate,
-                                        precio: 0,
-                                        consulta: searchInputValue,
-                                        plane: planId
-                                    },
-                                }),
-                                cache: "no-store",
+                        let primeraPropiedad;
+                        for (let propiedad in noticias) {
+                            if (noticias.hasOwnProperty(propiedad)) {
+                                primeraPropiedad = propiedad;
+                                break;
                             }
-                        );
+                        }
+
+                        if (primeraPropiedad !== undefined) {
+                            setNombreRuc(primeraPropiedad);
+                            const properties = [];
+                            for (let nombrePropiedad in noticias[primeraPropiedad]) {
+                                properties.push(nombrePropiedad);
+                            }
+
+                            setPropiedadArray(properties);
+                            setIsSecondApiResponseSuccessful(true);
+
+                            // Automatically select all items and call the third API
+                            const allItems = Object.keys(noticias[primeraPropiedad]);
+                            handleSelectedItems(allItems);
+                        }
+
+                        if (selectedFuenteCredito !== null) {
+                            const posthistorial = await fetch(
+                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        data: {
+                                            auth_0_user: userId,
+                                            creditos: selectedFuenteCredito * -1,
+                                            fecha: currentDate,
+                                            precio: 0,
+                                            consulta: searchInputValue,
+                                            plane: planId
+                                        },
+                                    }),
+                                    cache: "no-store",
+                                }
+                            );
+                        }
+                    } else {
+                        console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
                     }
                 } else {
-                    console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
+                    console.error('Primera llamada a la API fallida:', response.statusText);
                 }
-            } else {
-                console.error('Primera llamada a la API fallida:', response.statusText);
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            } finally {
+                setIsLoadingData(false); // Set loading state to false after the response is received
             }
-        } catch (error) {
-            console.error('Error al obtener los datos:', error);
-        }
-        finally {
-            setIsLoadingData(false); // Set loading state to false after the response is received
+        } else {
+            setInputErrors(errors);
         }
     };
+
 
     type SelectionObject = {
         [key: string]: string[];
@@ -267,6 +277,8 @@ const SearchComponent: React.FC = () => {
         } catch (error) {
             console.error('Error al ejecutar la tercera API:', error);
         }
+
+
     };
 
 
@@ -413,6 +425,8 @@ const SearchComponent: React.FC = () => {
                                             className='search-inputs'
                                             placeholder='Nombre completo o RUC'
                                         />
+                                        {inputErrors.specialCharacters && <p className="error-message">{inputErrors.specialCharacters}</p>}
+                                        {inputErrors.emptyInput && <p className="error-message">{inputErrors.emptyInput}</p>}
                                     </div>
                                     <div className='buscador-container'>
                                         <label className='buscador-label'>Selecciona la fuente de datos</label>
@@ -431,16 +445,20 @@ const SearchComponent: React.FC = () => {
                                                 </option>
                                             ))}
                                         </select>
-                                        {!isLoadingData ?
-                                            <button onClick={handleButtonClick} className='search-menu-button'>
-                                                Obtener datos
-                                            </button> :
+                                        {selectedSource !== '' && (
                                             <>
-                                                <br></br>
-                                                <CircularProgress></CircularProgress>
+                                                {!isLoadingData ? (
+                                                    <button onClick={handleButtonClick} className='search-menu-button'>
+                                                        Obtener datos
+                                                    </button>
+                                                ) : (
+                                                    <>
+                                                        <br></br>
+                                                        <CircularProgress></CircularProgress>
+                                                    </>
+                                                )}
                                             </>
-
-                                        }
+                                        )}
 
                                     </div>
                                 </div>

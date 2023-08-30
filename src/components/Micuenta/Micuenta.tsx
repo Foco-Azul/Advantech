@@ -16,6 +16,7 @@ const Micuenta: React.FC = () => {
     const isPlanVencido = vencimientoDate ? vencimientoDate < currentDate : false;
     const [purchaseHistory, setPurchaseHistory] = useState<Array<any>>([]);
 
+    // ... your existing getuser function ...
     async function getuser() {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
@@ -49,7 +50,7 @@ const Micuenta: React.FC = () => {
                     setUserVencimiento(foundUser.attributes.vencimiento);
                     setUserId(foundUser.id)
                     setPlanId(foundUser.attributes.plan?.data.id)
-                    setPurchaseHistory(foundUser.attributes.historials.data); // Set the purchase history
+                    setPurchaseHistory(foundUser.attributes.historials.data);
                 }
             })
             .catch((error) => {
@@ -58,53 +59,126 @@ const Micuenta: React.FC = () => {
     }, [user]);
 
     const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "");
-    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null &&  purchase.attributes.creditos < 0);
+    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos < 0);
+
+    const [activeTab, setActiveTab] = useState<'datos' | 'compras' | 'busquedas'>('datos');
 
     return (
         <UserProvider>
-            <br></br>
-            <br></br>
-            <br></br>
-            <h2 className="micuenta-h2">{userEmail}</h2>
-            <h1 className="micuenta-h1">MI CUENTA</h1>
-            <br></br>
-            <br></br>
-            <h2>{userEmail}</h2>
-            <h2>Mis créditos actuales {userCredits}</h2>
-            <h2>Mi plan activo {userPlan}</h2>
-            <h2>Fecha de vencimiento del plan {userVencimiento}</h2>
-            <h2>Mi historial de compras:</h2>
-            <div className="purchase-history-container">
-                <div className="purchase-history-scroll">
-                    <h2>Mis compras:</h2>
-                    <ul>
-                        {purchaseHistoryFiltered.map((purchase: any) => (
-                            <li key={purchase.id}>
-                                <p>Fecha: {purchase.attributes.fecha}</p>
-                                <p>Precio: {purchase.attributes.precio}</p>
-                                <p>Créditos: {purchase.attributes.creditos}</p>
-                            </li>
-                        ))}
-                    </ul>
+            <div>
+                <br></br>
+                <br></br>
+                <br></br>
+                <h2 className="micuenta-h2">{userEmail}</h2>
+                <h1 className="micuenta-h1">MI CUENTA</h1>
+                <br></br>
+                <br></br>
+                <div className="micuenta-container">
+                    <div className="tab-buttons">
+                        <button
+                            className={`tab-button ${activeTab === 'datos' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('datos')}
+                        >
+                            Mis Datos
+                        </button>
+                        <button
+                            className={`tab-button ${activeTab === 'compras' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('compras')}
+                        >
+                            Historial de Compras
+                        </button>
+                        <button
+                            className={`tab-button ${activeTab === 'busquedas' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('busquedas')}
+                        >
+                            Historial de Búsquedas
+                        </button>
+                    </div>
+
+                    <div className='micuenta-datos-container'>
+                        {activeTab === 'datos' && (
+                            <div>
+                                <h2 className='micuenta-h2-datos'>Mis datos</h2>
+                                <div className='micuenta-datos'>
+                                    <div className='micuenta-datos-card'>
+                                        <span className='micuenta-datos-title'>Mis créditos actuales </span>
+                                        <span className='micuenta-datos-subtitle'>{userCredits}</span>
+                                    </div>
+                                    <div className='micuenta-datos-card'>
+                                        <span className='micuenta-datos-title'>Mi plan activo </span>
+                                        <span className='micuenta-datos-subtitle'>{userPlan}</span>
+                                    </div>
+                                    <div className='micuenta-datos-card'>
+                                        <span className='micuenta-datos-title'>Fecha de vencimiento</span>
+                                        <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        )}
+                        {activeTab === 'compras' && (
+                            <>
+                                <h2 className='micuenta-h2-datos'>Mi historial de compras</h2>
+                                <div className="purchase-history-container">
+                                    <div className="purchase-history-scroll">
+                                        <table className="micuenta-history-table">
+                                            <thead className="micuenta-history-table-head">
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Precio</th>
+                                                    <th>Créditos</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {purchaseHistoryFiltered.map((purchase: any) => (
+                                                    <tr key={purchase.id}>
+                                                        <td>{purchase.attributes.fecha}</td>
+                                                        <td>${purchase.attributes.precio}</td>
+                                                        <td>{purchase.attributes.creditos}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div></>
+
+
+                        )}
+                        {activeTab === 'busquedas' && (
+                            <>
+                                <h2 className='micuenta-h2-datos'>Mi historial de búsquedas</h2>
+                                <div className="purchase-history-container">
+                                    <div className="purchase-history-scroll">
+                                        <table className="micuenta-history-table">
+                                            <thead className="micuenta-history-table-head" >
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Consumo créditos</th>
+                                                    <th>Consulta</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {searchHistory.map((search: any) => (
+                                                    <tr key={search.id}>
+                                                        <td>{search.attributes.fecha}</td>
+                                                        <td>{search.attributes.creditos}</td>
+                                                        <td>{search.attributes.consulta}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+
+
                 </div>
+
             </div>
-            <br></br>     <br></br>
-            <h2>Mi historial de búsquedas:</h2>
-            <div className="purchase-history-container">
-                <div className="purchase-history-scroll">
-                    <ul>
-                        {searchHistory.map((search: any) => (
-                            <li key={search.id}>
-                                <p>Fecha: {search.attributes.fecha}</p>
-                                <p>Precio: {search.attributes.precio}</p>
-                                <p>Créditos: {search.attributes.creditos}</p>
-                                <p>Consulta: {search.attributes.consulta}</p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-        </UserProvider >
+        </UserProvider>
     );
 };
 

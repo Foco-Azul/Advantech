@@ -99,3 +99,9 @@ transform: scaleX(0.9);
     height: 35px;
     border-radius: 6px;
 }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}

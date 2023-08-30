@@ -1,5 +1,3 @@
-import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import './micuenta.css'
 import NavMenu from '@/components/NavMenu/index';
 import Micuenta from "@/components/Micuenta/Micuenta";
