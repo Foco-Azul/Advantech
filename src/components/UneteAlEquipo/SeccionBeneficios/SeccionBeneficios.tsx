@@ -18,8 +18,8 @@ async function SeccionBeneficios() {
                             <Image src={ImagenCheck} width={80} height={80} alt="check" />
                         </div>
                         <div>
-                            <h5>Título de beneficio #1</h5>
-                            <p>Nulla faucibus mauris pellentesque blandit faucibus non. Sit ut et at suspendisse gravida hendrerit tempus placerat.</p>
+                            <h5>Trabajo remoto</h5>
+                            <p>Ofrecemos la posibilidad de trabajar de la comodidad de tu casa, no importa en que país te encuentres.</p>
                         </div>
                     </div>
                     <div className="beneficio">
@@ -27,8 +27,8 @@ async function SeccionBeneficios() {
                             <Image src={ImagenCheck} width={80} height={80} alt="check" />
                         </div>
                         <div>
-                            <h5>Título de beneficio #2</h5>
-                            <p>Nulla faucibus mauris pellentesque blandit faucibus non. Sit ut et at suspendisse gravida hendrerit tempus placerat.</p>
+                            <h5>Flexibilidad</h5>
+                            <p>Te brindamos la flexibilidad de horarios para que puedas trabajar de la forma que más se adapte a ti.</p>
                         </div>
                     </div>
                     <div className="beneficio">
@@ -36,8 +36,8 @@ async function SeccionBeneficios() {
                             <Image src={ImagenCheck} width={80} height={80} alt="check" />
                         </div>
                         <div>
-                            <h5>Título de beneficio #3</h5>
-                            <p>Nulla faucibus mauris pellentesque blandit faucibus non. Sit ut et at suspendisse gravida hendrerit tempus placerat.</p>
+                            <h5>Gran ambiente laboral</h5>
+                            <p>Contamos con un grupo de profesionales los cuales estan dispuestos a a ayudarse entre sí.</p>
                         </div>
                     </div>
                     <div className="beneficio">
@@ -45,8 +45,8 @@ async function SeccionBeneficios() {
                             <Image src={ImagenCheck} width={80} height={80} alt="check" />
                         </div>
                         <div>
-                            <h5>Título de beneficio #4</h5>
-                            <p>Nulla faucibus mauris pellentesque blandit faucibus non. Sit ut et at suspendisse gravida hendrerit tempus placerat.</p>
+                            <h5>Crecimiento</h5>
+                            <p>A medida que vayas trabajando se te irán agregando proyectos y podrás ir ascendiendo de puesto dentro de nuestra empresa.</p>
                         </div>
                     </div>
                 </div>
