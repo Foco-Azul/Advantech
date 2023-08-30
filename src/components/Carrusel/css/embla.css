@@ -98,7 +98,6 @@
     cursor: pointer;
     width: 52px;
     height: 52px;
-    background-color: #009FDE;
     border-radius: 26px;
   }
   .embla__button:disabled {
@@ -107,7 +106,7 @@
   .embla__button__svg {
     width: 40%;
     height: 40%;
-    color: #ffffff;
+    color: #9E9E9E;
   }
   .embla__dot {
     -webkit-appearance: none;
