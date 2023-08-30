@@ -1,0 +1,36 @@
+.micuenta-h1 {
+    font-size: 35px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+}
+
+.micuenta-h2 {
+    font-size: 21px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+    margin-top: 20px;
+    color: #002BC3;
+}
+
+/* Micuenta.css */
+.purchase-history-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 300px;
+    /* Adjust the height as needed */
+    overflow: hidden;
+}
+
+.purchase-history-scroll {
+    overflow-y: scroll;
+    max-height: calc(100% - 40px);
+    /* Adjust the height to account for padding */
+}

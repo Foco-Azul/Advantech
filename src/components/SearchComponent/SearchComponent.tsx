@@ -8,6 +8,7 @@ import SubscriptionComponent from '../Suscription/SuscriptionComponent';
 import CreditComponent from '../Credits/CreditComponent';
 import Tabla from '../Tabla/Tabla';
 import TablaBusqueda from './TablaBusqueda'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -33,6 +34,7 @@ const SearchComponent: React.FC = () => {
     const [selectedFuenteCredito, setSelectedFuenteCredito] = useState<number | null>(null);
     const seleccionUsuarioCount = SeleccionUsuario.length;
     const [mostrartabla, setMostrartabla] = useState(true);
+    const [isLoadingData, setIsLoadingData] = useState(false);
 
     async function getuser() {
         try {
@@ -113,6 +115,7 @@ const SearchComponent: React.FC = () => {
     }, [user]);
 
     const handleButtonClick = async () => {
+        setIsLoadingData(true);
         try {
             const response = await fetch('https://splunk.hctint.com:9876/data/create_search', {
                 method: 'POST',
@@ -171,6 +174,29 @@ const SearchComponent: React.FC = () => {
                         handleSelectedItems(allItems);
 
                     }
+
+                    if (selectedFuenteCredito !== null) {
+                        const posthistorial = await fetch(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    data: {
+                                        auth_0_user: userId,
+                                        creditos: selectedFuenteCredito * -1,
+                                        fecha: currentDate,
+                                        precio: 0,
+                                        consulta: searchInputValue,
+                                        plane: planId
+                                    },
+                                }),
+                                cache: "no-store",
+                            }
+                        );
+                    }
                 } else {
                     console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
                 }
@@ -179,6 +205,9 @@ const SearchComponent: React.FC = () => {
             }
         } catch (error) {
             console.error('Error al obtener los datos:', error);
+        }
+        finally {
+            setIsLoadingData(false); // Set loading state to false after the response is received
         }
     };
 
@@ -355,29 +384,28 @@ const SearchComponent: React.FC = () => {
             {user ? (
                 isPlanVencido ? (
                     <>
-                        <h2 className='busqueda-h2'>TU PLAN A VENCIDO, ACTUALIZA TU SUSCRIPCIÓN</h2>
-                        <br></br>
-                        <SubscriptionComponent></SubscriptionComponent>
+                        <h2 className='busqueda-h2'>TU PLAN HA VENCIDO, ACTUALIZA TU SUSCRIPCIÓN</h2>
+                        <br />
+                        <SubscriptionComponent />
                     </>
                 ) : (
                     userCredits !== null && userCredits <= 0 ? (
                         <>
                             <h2 className='busqueda-h2'>TUS CRÉDITOS SE AGOTARON, COMPRA MÁS PARA CONTINUAR</h2>
-                            <br></br>
+                            <br />
                             <div className="busqueda-creditos">
-                                <Tabla></Tabla>
+                                <Tabla />
                                 <UserProvider>
-                                    <CreditComponent></CreditComponent>
+                                    <CreditComponent />
                                 </UserProvider>
                             </div>
                         </>
                     ) : (
-                        < div className='search'>
-
-                            {!DatosTabla &&
+                        <div className='search'>
+                            {!DatosTabla && (
                                 <div>
                                     <div className='buscador-container'>
-                                        <label className='buscador-label'> Ingresa un nombre completo o RUC</label>
+                                        <label className='buscador-label'>Ingresa un nombre completo o RUC</label>
                                         <input
                                             type="text"
                                             value={searchInputValue}
@@ -387,7 +415,7 @@ const SearchComponent: React.FC = () => {
                                         />
                                     </div>
                                     <div className='buscador-container'>
-                                        <label className='buscador-label'> Selecciona la fuente de datos</label>
+                                        <label className='buscador-label'>Selecciona la fuente de datos</label>
                                         <select
                                             id="sourceSelector"
                                             value={selectedSource}
@@ -403,12 +431,20 @@ const SearchComponent: React.FC = () => {
                                                 </option>
                                             ))}
                                         </select>
-                                        <button onClick={handleButtonClick} className='search-menu-button'>
-                                            Obtener datos
-                                        </button>
+                                        {!isLoadingData ?
+                                            <button onClick={handleButtonClick} className='search-menu-button'>
+                                                Obtener datos
+                                            </button> :
+                                            <>
+                                                <br></br>
+                                                <CircularProgress></CircularProgress>
+                                            </>
+
+                                        }
+
                                     </div>
                                 </div>
-                            }
+                            )}
                             <br />
                             <br />
                             {data ? (
@@ -481,15 +517,19 @@ const SearchComponent: React.FC = () => {
                                     </>
                                 )}
                             </>
-                        </div>)
+                        </div>
+                    )
                 )
             ) : (
-                <><h2 className='busqueda-h2'>CREA TU CUENTA PARA CONTINUAR</h2><br></br><SeccionCreaTuCuenta></SeccionCreaTuCuenta></>
+                <>
+                    <h2 className='busqueda-h2'>CREA TU CUENTA PARA CONTINUAR</h2>
+                    <br />
+                    <SeccionCreaTuCuenta />
+                </>
             )}
-        </UserProvider >
-
-
+        </UserProvider>
     );
+
 };
 
 export default SearchComponent;
