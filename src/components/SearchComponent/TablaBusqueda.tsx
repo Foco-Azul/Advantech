@@ -31,34 +31,44 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [cityCounts, setCityCounts] = useState<{ [city: string]: number }>({});
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
-
+  const [yearCounts, setYearCounts] = useState<{ [city: string]: number }>({});
 
 
   useEffect(() => {
     if (data) {
       const counts: { [city: string]: number } = {};
-  
-      // Contar ocurrencias por ciudad
+      const yearCounts: { [year: string]: number } = {};
+
+      // Contar ocurrencias por ciudad y año
       Object.entries(data).forEach(([propertyKey, items]) =>
         Object.entries(items).forEach(([itemKey, item]) => {
           const city = item.lugar.toLowerCase();
+          const year = item.fecha.split('-')[0];
           counts[city] = (counts[city] || 0) + 1;
+          yearCounts[year] = (yearCounts[year] || 0) + 1;
         })
       );
-  
+
       setCityCounts(counts);
-  
+      setYearCounts(yearCounts);
+
+
       // Filtrar datos por ciudades seleccionadas
       const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
         Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
       ).filter(item => selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase()));
-  
+
+      // Filtrar los datos por años seleccionados
+      const filteredByCitiesAndYears = filteredByCities.filter(item =>
+        selectedYears.length === 0 || selectedYears.includes(item.fecha.split('-')[0])
+      );
+
       // Función para realizar búsqueda por aproximación retrocediendo letra por letra
       const searchApproximately = (term: string, data: any[]) => {
         if (term.trim() === '') {
           return data; // Si el término de búsqueda está vacío, mostrar todos los datos
         }
-  
+
         for (let i = term.length; i >= 1; i--) {
           const truncatedSearchTerm = term.toLowerCase().substring(0, i);
           const approximateFilteredData = data.filter(item =>
@@ -76,31 +86,43 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         }
         return [];
       };
-  
+
       // Filtrar los datos según el término de búsqueda
-      let filteredData = searchApproximately(searchTerm, filteredByCities);
-  
+      let filteredData = searchApproximately(searchTerm, filteredByCitiesAndYears);
+
+      // Sort filtered data based on sortColumn and sortOrder
+      filteredData.sort((a, b) => {
+        const aValue = a[sortColumn];
+        const bValue = b[sortColumn];
+        if (aValue < bValue) {
+          return sortOrder === "asc" ? -1 : 1;
+        } else if (aValue > bValue) {
+          return sortOrder === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+
       // Calcular el número total de páginas basado en los datos filtrados
       const totalFilteredItems = filteredData.length;
       const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
       setTotalPages(totalPages);
-  
+
       // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
       setCurrentPage(prevPage => Math.max(1, Math.min(prevPage, totalPages)));
-  
+
       // Realizar la paginación en los datos filtrados
       const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
       const endIndex = startIndex + ITEMS_PER_PAGE;
       const paginatedFilteredData = filteredData.slice(startIndex, endIndex);
       setPaginatedData(paginatedFilteredData);
     }
-  }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities, cityCounts]);
-  
-  
+  }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities, selectedYears]);
+
 
   useEffect(() => {
     onSelectedItems(selectedItems);
-  }, [selectedItems, onSelectedItems]);
+  }, [selectedItems]);
+
 
   const toggleSelectItem = (itemKey: string) => {
     setSelectedItems(prevSelectedItems => {
@@ -171,6 +193,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     let filteredData = paginatedData.filter(item => {
       return (
         (selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase())) &&
+        (selectedYears.length === 0 || selectedYears.includes(item.fecha.split('-')[0])) &&
         searchTerms.every(term =>
           [
             item.lugar.toLowerCase(),
@@ -245,6 +268,53 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     }
   };
 
+  const generateYearList = () => {
+    const yearsSet = new Set<string>();
+    if (data) {
+      Object.entries(data).forEach(([propertyKey, items]) =>
+        Object.entries(items).forEach(([itemKey, item]) => {
+          const year = item.fecha.split('-')[0];
+          yearsSet.add(year);
+        })
+      );
+    }
+    return Array.from(yearsSet);
+  };
+
+  const handleYearToggle = (year: string) => {
+    if (selectedYears.includes(year)) {
+      setSelectedYears(prevSelectedYears =>
+        prevSelectedYears.filter(y => y !== year)
+      );
+    } else {
+      setSelectedYears(prevSelectedYears => [...prevSelectedYears, year]);
+    }
+  };
+
+  const renderYearList = () => {
+    return (
+      <div >
+        <h4 className='buscador-filtros-h4 '>Filtrar por años</h4>
+        <ul className="year-list">
+          {Object.entries(yearCounts).map(([year, count]) => (
+            <li key={year} className="year">
+              <label className="year-list-label">
+                <input
+                  type="checkbox"
+                  checked={selectedYears.includes(year)}
+                  onChange={() => handleYearToggle(year)}
+                  className="year-list-input"
+                />
+                {year} <span className="count">({count})</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+
   const renderCityList = () => {
     const [openRegion, setOpenRegion] = useState<string | null>(null);
 
@@ -265,7 +335,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
     return (
       <div className="city-list">
-        <h2>Filtrar por ciudades</h2>
+        <h4 className="buscador-filtros-h4">Filtrar por ciudades</h4>
         <ul>
           {Object.entries(regionCityCounts).map(([region, count]) => (
             <li key={region}>
@@ -274,7 +344,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
                   }`}
                 onClick={() => toggleRegionDropdown(region)}
               >
-                {region.charAt(0).toUpperCase() + region.slice(1)} ({count})
+                {region.charAt(0).toUpperCase() + region.slice(1)} <span className="count">({count})</span>
               </button>
               {openRegion === region && (
                 <ul className="city-dropdown-content">
@@ -290,7 +360,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
                               onChange={() => handleCityToggle(city)}
                               className="city-list-input"
                             />
-                            {cityName.charAt(0).toUpperCase() + cityName.slice(1)} ({cityCounts[city]})
+                            {cityName.charAt(0).toUpperCase() + cityName.slice(1)}  <span className="count">({cityCounts[city]}) </span>
                           </label>
                         </li>
                       );
@@ -309,18 +379,20 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   return (
     <div >
       <div className='container-tablabusqueda'>
-        <div>
-          <p className='buscador-label'>Puedes filtrar especificamente tu consulta</p>
+        <div className='buscador-filtros'>
+        <h3 className='buscador-filtros-h3'>FILTROS</h3>
+          <h4 className="buscador-filtros-h4">Filtrar por buscador</h4>
           <input
-            className='search-input-table'
+            className='search-filter-table'
             type="text"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            placeholder="ej: Quito robo"
+            placeholder="ej: Robo"
           />
           {renderCityList()}
+          {renderYearList()}
         </div>
-        <div>
+        <div className='buscador-tabla-container'>
           <table className='tablabusqueda-tabla'>
             <thead className='tablabusqueda-head'>{renderTableHeader()}</thead>
             <tbody>{renderTableData()}</tbody>
