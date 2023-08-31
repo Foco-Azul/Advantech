@@ -13,9 +13,11 @@ interface CheckoutFormProps {
   planid: number | null;
   planvencimiento: number;
   userid: number | null;
+  userCorreo: string | null;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planvencimiento }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planvencimiento, userCorreo }) => {
+  
   const stripe = useStripe();
   const elements = useElements();
   const { user, error, isLoading } = useUser();
@@ -65,7 +67,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
     });
 
     setLoading(false);
-
+    
     if (result.error) {
       setPayerror(result.error.message || null);
       setShowForm(true);
@@ -105,7 +107,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
             cache: "no-store",
           }
         );
-
         if (postResponse.status === 200) {
           const posthistorial = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
@@ -127,30 +128,55 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
               cache: "no-store",
             }
           );
-          const postResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
-              },
-              body: JSON.stringify({
-                data: {
-                  nombre: userid,
-                  asunto: "Compra de creditos",
-                  para: "cvargas@focoazul.com",
-                  contenido: plan,
+          console.log("hola: "+userCorreo);
+          console.log("hola2: "+planid);
+          console.log("hola3: "+plan);
+          if(planid==4){
+            const postResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
                 },
-              }),
-              cache: "no-store",
-            }
-          );
+                body: JSON.stringify({
+                  data: {
+                    nombre: userid,
+                    asunto: "Compra de creditos",
+                    para: userCorreo,
+                    contenido: creditos,
+                  },
+                }),
+                cache: "no-store",
+              }
+            );
+          }else{
+            const postResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+                },
+                body: JSON.stringify({
+                  data: {
+                    nombre: userid,
+                    asunto: "Nueva suscripción",
+                    para: userCorreo,
+                    contenido: plan,
+                  },
+                }),
+                cache: "no-store",
+              }
+            );
+          }
           console.log("Usuario actualizado con éxito.");
 
           // Redirect to "/busqueda" after 2 seconds
           setTimeout(() => {
-            window.location.href = "/busqueda";
+            //window.location.href = "/busqueda";
           }, 2000);
         } else {
           console.log(postResponse.status);

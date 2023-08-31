@@ -17,9 +17,9 @@ function Footer() {
               <Image src={Logo} alt="Company Logo" width={164} height={133}/>
             </Link>
             <div className="footer-rrss">
-              <Link href="https://www.linkedin.com/advantechint" legacyBehavior passHref target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></Link>
-              <Link href="https://twitter.com/AdvantechDatos?s=20" legacyBehavior passHref target="_blank"><FontAwesomeIcon icon={faTwitter} size="xl" /></Link>
-              <Link href="https://www.facebook.com/profile.php?id=61550513552222&mibextid=2JQ9oc" legacyBehavior passHref target="_blank"><FontAwesomeIcon icon={faSquareFacebook} size="xl" /></Link>
+              <Link href="https://www.linkedin.com/company/advantechint/" legacyBehavior passHref ><a target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></a></Link>
+              <Link href="https://twitter.com/AdvantechDatos?s=20" legacyBehavior passHref ><a target="_blank"><FontAwesomeIcon icon={faTwitter} size="xl" /></a></Link>
+              <Link href="https://www.facebook.com/profile.php?id=61550513552222&mibextid=2JQ9oc" legacyBehavior passHref ><a target="_blank"><FontAwesomeIcon icon={faSquareFacebook} size="xl" /></a></Link>
             </div>
           </div>
           <div className="footer-home-links">    
@@ -30,7 +30,7 @@ function Footer() {
                     <li className="list-row"><a href='/documentacion' className="link">Documentación</a></li>
                     <li className="list-row"><a href='/uso-por-industria' className="link">Uso por industria</a></li>
                     <li className="list-row"><a href='/ventajas' className="link">Ventajas</a></li>
-                    <li className="list-row"><a href='/' className="link">Monitorio uptime</a></li>
+                    <li className="list-row"><a href='https://stats.uptimerobot.com/MqqMLIxxZQ' className="link">Monitorio uptime</a></li>
                 </ul>
               </div>
               <div>

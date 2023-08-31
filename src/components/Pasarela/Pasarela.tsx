@@ -17,13 +17,14 @@ interface PasarelaProps {
   planid: number | null;
   planvencimiento: number;
   userid: number | null;
+  userCorreo: string | null;
 }
 
-const Pasarela: React.FC<PasarelaProps> = ({ price, plan, userid, creditos, planvencimiento, userCredits, planid }) => {
+const Pasarela: React.FC<PasarelaProps> = ({ price, plan, userid, creditos, planvencimiento, userCredits, planid, userCorreo }) => {
   return (
     <div className="pasarela">
       <Elements stripe={stripePromise}>
-        <CheckoutForm userid={userid} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} planvencimiento={planvencimiento} />
+        <CheckoutForm userid={userid} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} planvencimiento={planvencimiento} userCorreo={userCorreo}/>
       </Elements>
     </div>
   );

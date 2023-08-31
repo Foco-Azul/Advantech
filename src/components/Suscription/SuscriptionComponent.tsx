@@ -24,6 +24,7 @@ interface SubscriptionCardProps {
     txt: boolean;
     pdf: boolean;
     soporte: boolean;
+    userCorreo: string | null;
 }
 
 interface Plan {
@@ -46,7 +47,7 @@ interface Plan {
     };
 }
 
-const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid }) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid, userCorreo }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleSubscribe = () => {
@@ -118,6 +119,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                             creditos={creditos}
                             userCredits={userCredits}
                             planid={planid}
+                            userCorreo={userCorreo}
                         />
                     </div>
                 </div>
@@ -133,6 +135,7 @@ const SubscriptionComponent: React.FC = () => {
     const [userPlanPrice, setUserPlanPrice] = useState<number | null>(null);
     const [userCredits, setUserCredits] = useState<number | null>(null);
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
+    const [userCorreo, setUserEmail] = useState<string | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -151,13 +154,16 @@ const SubscriptionComponent: React.FC = () => {
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
+                    const userCorreo = foundUser.attributes.email;
                     setUserPlanPrice(userPlanData);
                     setUserCredits(userCredits);
                     setUserVencimiento(userVencimiento);
+                    setUserEmail(userCorreo);
                     setUserId(userId);
                     console.log("Precio:", userPlanData)
                     console.log("Creditos:", userCredits)
                     console.log("Uservencimiento:", userVencimiento)
+                    
                 }
             })
             .catch((error) => {
@@ -211,7 +217,7 @@ const SubscriptionComponent: React.FC = () => {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
-
+    console.log("UserCorreo:", userCorreo)
     return (
         <div className="subscription-component">
             <UserProvider>
@@ -234,6 +240,7 @@ const SubscriptionComponent: React.FC = () => {
                         txt={plan.attributes.TXT}
                         pdf={plan.attributes.PDF}
                         soporte={plan.attributes.Soporte}
+                        userCorreo={userCorreo}
                     />
                 ))}
             </UserProvider>
