@@ -65,7 +65,7 @@ const Micuenta: React.FC = () => {
 
     return (
         <UserProvider>
-            <div>
+            <div className="micuenta-div-container">
                 <br></br>
                 <br></br>
                 <br></br>
