@@ -121,9 +121,9 @@ p {
     margin-top: 0px;
     width: 15%;
     box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.12);
-height: min-content;
-padding: 20px;
-border-radius: 6px;
+    height: min-content;
+    padding: 20px;
+    border-radius: 6px;
 }
 
 .buscador-filtros-h3 {
@@ -157,23 +157,34 @@ border-radius: 6px;
     justify-content: space-evenly;
 }
 
-.year{
+.year {
     width: 100px;
 }
 
-.year-list-input{
+.year-list-input {
     margin: 5px;
 }
 
-.buscador-tabla-container{
+.buscador-tabla-container {
     width: 85%;
 }
 
-.open{
+.open {
     font-weight: 700;
 }
 
-.city-dropdown-content{
+.city-dropdown-content {
 
     font-weight: 600;
+}
+
+.clear-filters-button {
+    margin: auto;
+    margin-top: 20px;
+    width: 100%;
+    color: #0099CC;
+}
+
+.clear-filters-button:hover{
+    color: red;
 }

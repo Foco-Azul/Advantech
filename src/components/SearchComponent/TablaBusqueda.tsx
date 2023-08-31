@@ -56,12 +56,9 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       // Filtrar datos por ciudades seleccionadas
       const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
         Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
-      ).filter(item => selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase()));
+      ).filter(item => (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.lugar.toLowerCase())) ||
+      (selectedYears.includes(item.fecha.split('-')[0])));
 
-      // Filtrar los datos por años seleccionados
-      const filteredByCitiesAndYears = filteredByCities.filter(item =>
-        selectedYears.length === 0 || selectedYears.includes(item.fecha.split('-')[0])
-      );
 
       // Función para realizar búsqueda por aproximación retrocediendo letra por letra
       const searchApproximately = (term: string, data: any[]) => {
@@ -88,7 +85,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       };
 
       // Filtrar los datos según el término de búsqueda
-      let filteredData = searchApproximately(searchTerm, filteredByCitiesAndYears);
+      let filteredData = searchApproximately(searchTerm, filteredByCities);
 
       // Sort filtered data based on sortColumn and sortOrder
       filteredData.sort((a, b) => {
@@ -160,6 +157,12 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     }
   };
 
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setSelectedCities([]);
+    setSelectedYears([]);
+  };
+
   const renderTableHeader = () => {
     const isSortingColumn = (column: keyof Data) => sortColumn === column;
     const isAscending = sortOrder === "asc";
@@ -192,8 +195,8 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
     let filteredData = paginatedData.filter(item => {
       return (
-        (selectedCities.length === 0 || selectedCities.includes(item.lugar.toLowerCase())) &&
-        (selectedYears.length === 0 || selectedYears.includes(item.fecha.split('-')[0])) &&
+        (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.lugar.toLowerCase())) ||
+        (selectedYears.includes(item.fecha.split('-')[0])) &&
         searchTerms.every(term =>
           [
             item.lugar.toLowerCase(),
@@ -380,7 +383,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     <div >
       <div className='container-tablabusqueda'>
         <div className='buscador-filtros'>
-        <h3 className='buscador-filtros-h3'>FILTROS</h3>
+          <h3 className='buscador-filtros-h3'>FILTROS</h3>
           <h4 className="buscador-filtros-h4">Filtrar por buscador</h4>
           <input
             className='search-filter-table'
@@ -391,6 +394,9 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
           />
           {renderCityList()}
           {renderYearList()}
+          <button className="clear-filters-button" onClick={handleClearFilters}>
+            Limpiar filtros
+          </button>
         </div>
         <div className='buscador-tabla-container'>
           <table className='tablabusqueda-tabla'>

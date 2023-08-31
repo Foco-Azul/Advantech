@@ -104,7 +104,7 @@ function Login({ loginname }: LoginProps) {
             <a className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {user.email?.split("@")[0]} &nbsp; <FontAwesomeIcon icon={showSubPerfil ? faChevronUp : faChevronDown}/></a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
             <div className={`navigation-sub_menu-trigger  ${showSubPerfil ? "visible" : ""} `}>
               <ul>
-                <li><Link href="/mi-cuenta" legacyBehavior passHref>Mi cuenta</Link></li>
+                <li><Link href="/micuenta" legacyBehavior passHref>Mi cuenta</Link></li>
                 <li><Link href="/mi-cuenta" legacyBehavior passHref>Mis datos</Link></li>
                 <li><Link href="/mi-cuenta" legacyBehavior passHref>Historial de pagos</Link></li>
                 <li onClick={() => {window.location.href = "/api/auth/logout";}}>Salir</li>
