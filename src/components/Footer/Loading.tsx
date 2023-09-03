@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Logo from "./image/logo-advantech-datos.svg"
 import './Loading.css';
 
-export default function Loading(){
-    const [isVisible, setIsVisible] = useState(true);
+function Loading() {
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,3 +24,4 @@ export default function Loading(){
   );
 }
 
+export default Loading;

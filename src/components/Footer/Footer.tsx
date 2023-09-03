@@ -4,6 +4,7 @@ import Logo from "./image/logo-advantech-datos.svg"
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareFacebook, faTwitter, faInstagram, faYoutube, faLinkedin} from  "@fortawesome/free-brands-svg-icons";
+import Loading from "./Loading";
 
 function Footer() {
 
@@ -30,7 +31,7 @@ function Footer() {
                     <li className="list-row"><a href='/documentacion' className="link">Documentación</a></li>
                     <li className="list-row"><a href='/uso-por-industria' className="link">Uso por industria</a></li>
                     <li className="list-row"><a href='/ventajas' className="link">Ventajas</a></li>
-                    <li className="list-row"><a href='https://stats.uptimerobot.com/MqqMLIxxZQ' className="link">Monitorio uptime</a></li>
+                    <li className="list-row"><Link href='https://stats.uptimerobot.com/MqqMLIxxZQ' legacyBehavior passHref><a className="link" target="_blank">Monitorio uptime</a></Link></li>
                 </ul>
               </div>
               <div>
@@ -62,6 +63,7 @@ function Footer() {
             <p>© 2023 Derechos reservados Advantech</p>
         </div>
       </div>
+    
     </footer>
   );
 }

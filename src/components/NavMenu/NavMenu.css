@@ -13,7 +13,7 @@ height: 70px;
   align-items: center;
   width: 100%;
   flex-wrap: wrap;
-  z-index: 999999;
+  z-index: 99;
   background-color: #d3e6f7;
 }
 
