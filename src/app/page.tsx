@@ -3,7 +3,6 @@ import SeccionAyuda from "@/components/Inicio/SeccionAyuda/SeccionAyuda";
 import SeccionRecursos from "@/components/Inicio/SeccionRecursos/SeccionRecursos";
 import SeccionProductos from "@/components/Inicio/SeccionProductos/SeccionProductos";
 import SeccionSuscripcion from "@/components/Inicio/SeccionSuscripcion/SeccionSuscripcion";
-import Loading from "@/components/Loading/Loading";
 import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Inicio/Hero";
 import NavMenu from "@/components/NavMenu";
@@ -39,7 +38,6 @@ export default function Page() {
             <SeccionRecursos />
             <SeccionCreaTuCuenta />
             <Footer />
-            <Loading/>
           </>
         </div>
       </Providers>

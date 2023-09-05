@@ -11,7 +11,7 @@ function SeccionUneteAlEquipo() {
                     <div className="content-izq">
                         <h2>Únete al equipo</h2>
                         <p>¿Te interesa trabajar en Advantech? Somos un equipo remoto que busca superar las expectativas de nuestros clientes.</p>
-                        <Link href={"/unete-al-equipo"}><button className="hero-button">Envíanos tu CV</button></Link>
+                        <Link href={"/unete-al-equipo"}><button className="hero-button2">Envíanos tu CV</button></Link>
                     </div>
                     <div>
                         <Image src={ImageGrafico} alt="Logo" width={352} height={277}></Image>

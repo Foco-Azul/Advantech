@@ -12,6 +12,7 @@ import BurguerMenu from "./BurguerMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { usePathname } from 'next/navigation'
+import Loading from "@/components/Loading/Loading";
 
 function NavMenu() {
   const pathname = usePathname()
@@ -60,6 +61,7 @@ function NavMenu() {
       <BurguerMenu />
     </div>
   </nav>
+  <Loading/>
 </div>)
   if (error) return <div>{error.message}</div>;
 
