@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import "./Micuenta.css";
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
+import Link from "next/link";
 
 const Micuenta: React.FC = () => {
     const { user, error, isLoading } = useUser();
@@ -63,6 +64,7 @@ const Micuenta: React.FC = () => {
 
     const [activeTab, setActiveTab] = useState<'datos' | 'compras' | 'busquedas'>('datos');
 
+
     return (
         <UserProvider>
             <div className="micuenta-div-container">
@@ -103,6 +105,15 @@ const Micuenta: React.FC = () => {
                                     <div className='micuenta-datos-card'>
                                         <span className='micuenta-datos-title'>Mis créditos actuales </span>
                                         <span className='micuenta-datos-subtitle'>{userCredits}</span>
+                                        {(userCredits != null && userCredits < 5) && (
+                                            <>
+                                                <Link href={"/planes"}>
+                                                    <button className='tab-button renovar' >
+                                                        Recargar Créditos
+                                                    </button>
+                                                </Link>
+                                            </>
+                                        )}
                                     </div>
                                     <div className='micuenta-datos-card'>
                                         <span className='micuenta-datos-title'>Mi plan activo </span>
@@ -111,11 +122,22 @@ const Micuenta: React.FC = () => {
                                     <div className='micuenta-datos-card'>
                                         <span className='micuenta-datos-title'>Fecha de vencimiento</span>
                                         <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                        {(isPlanVencido) && (
+                                            <>
+                                                <Link href={"/planes"}>
+                                                    <button className='tab-button renovar' >
+                                                        Renovar Plan
+                                                    </button>
+                                                </Link>
+                                            </>
+                                        )}
                                     </div>
+                                    {/* Verificar si los créditos son 0 o el plan está vencido */}
+
                                 </div>
                             </div>
-
                         )}
+
                         {activeTab === 'compras' && (
                             <>
                                 <h2 className='micuenta-h2-datos'>Mi historial de compras</h2>
@@ -157,14 +179,24 @@ const Micuenta: React.FC = () => {
                                                     <th>Consulta</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
-                                                {searchHistory.map((search: any) => (
-                                                    <tr key={search.id}>
-                                                        <td>{search.attributes.fecha}</td>
-                                                        <td>{search.attributes.creditos}</td>
-                                                        <td>{search.attributes.consulta}</td>
-                                                    </tr>
-                                                ))}
+                                                {searchHistory.slice() // Copia el array para no modificar el original
+                                                    .sort((a, b) => {
+                                                        const dateA = new Date(a.attributes.fecha);
+                                                        const dateB = new Date(b.attributes.fecha);
+                                                        if (dateA > dateB) return -1; // Ordena por fecha en orden descendente (más reciente primero)
+                                                        if (dateA < dateB) return 1;
+                                                        return 0;
+                                                    })
+                                                    .map((search: any) => (
+                                                        <tr key={search.id}>
+                                                            <td>{search.attributes.fecha}</td>
+                                                            <td>{search.attributes.creditos}</td>
+                                                            <td>{search.attributes.consulta}</td>
+                                                        </tr>
+                                                    ))}
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -177,8 +209,8 @@ const Micuenta: React.FC = () => {
 
                 </div>
 
-            </div>
-        </UserProvider>
+            </div >
+        </UserProvider >
     );
 };
 

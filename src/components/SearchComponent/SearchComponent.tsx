@@ -182,29 +182,8 @@ const SearchComponent: React.FC = () => {
                             const allItems = Object.keys(noticias[primeraPropiedad]);
                             handleSelectedItems(allItems);
                         }
+                        console.log("data", data)
 
-                        if (selectedFuenteCredito !== null) {
-                            const posthistorial = await fetch(
-                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                                {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                        data: {
-                                            auth_0_user: userId,
-                                            creditos: selectedFuenteCredito * -1,
-                                            fecha: currentDate,
-                                            precio: 0,
-                                            consulta: searchInputValue,
-                                            plane: planId
-                                        },
-                                    }),
-                                    cache: "no-store",
-                                }
-                            );
-                        }
                     } else {
                         console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
                     }
@@ -274,6 +253,28 @@ const SearchComponent: React.FC = () => {
                     );
                 }
                 setMostrartabla(false)
+                if (selectedFuenteCredito !== null) {
+                    const posthistorial = await fetch(
+                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                data: {
+                                    auth_0_user: userId,
+                                    creditos: selectedFuenteCredito * -1,
+                                    fecha: currentDate,
+                                    precio: 0,
+                                    consulta: searchInputValue,
+                                    plane: planId
+                                },
+                            }),
+                            cache: "no-store",
+                        }
+                    );
+                }
             }
         } catch (error) {
             console.error('Error al ejecutar la tercera API:', error);
@@ -453,12 +454,9 @@ const SearchComponent: React.FC = () => {
                         {mostrartabla &&
                             <>
                                 <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
-                                {data.searchInputValue = {} ? <p>No se encontraron coincidencias</p> :
-                                    <>
-                                        <p>Selecciona los datos que quieres traer en detalle</p>
-                                        <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
-                                    </>
-                                }
+                                <>
+                                    <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                </>
                             </>
                         }
 
@@ -506,8 +504,8 @@ const SearchComponent: React.FC = () => {
                                 <Link href="/alacarta" legacyBehavior passHref>
                                     <button className='search-menu-button' >
                                         Recargar créditos en tu cuenta
-                                    </button> 
-                                </Link> 
+                                    </button>
+                                </Link>
                             </>
                         }
                         {

@@ -1,5 +1,5 @@
 .micuenta {
-    background: var(--degradado-1, linear-gradient(180deg, rgba(137, 186, 231, 0.47) 0%, rgba(137, 186, 231, 0.253) 10%, rgba(217, 217, 217, 0.05) 20%));
+    background: var(--degradado-1, linear-gradient(180deg, rgba(137, 186, 231, 0.47) 0%, rgba(137, 186, 231, 0.253) 10%, rgba(217, 217, 217, 0.05) 40%));
 }
 
 .micuenta-h1 {
@@ -155,4 +155,8 @@ tr:nth-child(even) {
 
 .micuenta-div-container{
     width: 100%;
+}
+
+.renovar{
+    transform: translateY(15px);
 }
