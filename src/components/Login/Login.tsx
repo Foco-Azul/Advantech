@@ -3,11 +3,20 @@ import { useState } from "react";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import './Login.css'; // Reemplaza "Login.css" con el nombre de tu archivo CSS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faUserTie, faChevronDown, faChevronUp, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faUserTie, faChevronDown, faChevronUp, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import crypto from 'crypto';
 
 interface LoginProps {
   loginname: string;
+}
+
+function generateApiKey(email: string): string {
+  const secret = 'tu_secreto'; // Debes reemplazar 'tu_secreto' por una cadena secreta segura
+  const hmac = crypto.createHmac('sha256', secret);
+  hmac.update(email);
+  const apiKey = hmac.digest('hex');
+  return apiKey;
 }
 
 function Login({ loginname }: LoginProps) {
@@ -51,38 +60,42 @@ function Login({ loginname }: LoginProps) {
 
       const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
 
-      if (foundUser) {
+      if (foundUser && typeof user.email === 'string') {
         console.log("El correo electrónico existe en el array de objetos.");
         // Aquí puedes hacer algo con el usuario encontrado
         console.log(foundUser);
+        console.log("api", generateApiKey(user.email))
       } else {
         console.log("El correo electrónico no existe en el array de objetos.");
 
         // Realizar el POST con los datos requeridos
-        const postResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              data: {
-                email: user.email,
-                username: user.name,
-                vencimiento: "2023-01-01",
-                plan: 4
+        if (typeof user.email === 'string') {
+          const postResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
               },
-            }),
-            cache: "no-store",
-          }
-        );
+              body: JSON.stringify({
+                data: {
+                  email: user.email,
+                  username: user.name,
+                  vencimiento: "2023-01-01",
+                  plan: 4,
+                  apikey:  generateApiKey(user.email)
+                },
+              }),
+              cache: "no-store",
+            }
+          );
 
-        if (postResponse.status === 200) {
-          console.log("Usuario creado con éxito.");
-        } else {
-          console.log(postResponse.status);
-          throw new Error(`Failed to create user, ${postResponse.status}`);
+          if (postResponse.status === 200) {
+            console.log("Usuario creado con éxito.");
+          } else {
+            console.log(postResponse.status);
+            throw new Error(`Failed to create user, ${postResponse.status}`);
+          }
         }
       }
     } catch (error) {
@@ -97,17 +110,17 @@ function Login({ loginname }: LoginProps) {
     <div className="login-container">
       {user && (
         <div>
-          <div className="login-container-pc" 
+          <div className="login-container-pc"
             onMouseEnter={() => setShowSubPerfil(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
             onMouseLeave={() => setShowSubPerfil(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
           >
-            <a className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {user.email?.split("@")[0]} &nbsp; <FontAwesomeIcon icon={showSubPerfil ? faChevronUp : faChevronDown}/></a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+            <a className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {user.email?.split("@")[0]} &nbsp; <FontAwesomeIcon icon={showSubPerfil ? faChevronUp : faChevronDown} /></a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
             <div className={`navigation-sub_menu-trigger  ${showSubPerfil ? "visible" : ""} `}>
               <ul>
                 <li><Link href="/micuenta" legacyBehavior passHref>Mi cuenta</Link></li>
                 <li><Link href="/mi-cuenta" legacyBehavior passHref>Mis datos</Link></li>
                 <li><Link href="/mi-cuenta" legacyBehavior passHref>Historial de pagos</Link></li>
-                <li onClick={() => {window.location.href = "/api/auth/logout";}}>Salir</li>
+                <li onClick={() => { window.location.href = "/api/auth/logout"; }}>Salir</li>
               </ul>
             </div>
             {/*
@@ -121,20 +134,20 @@ function Login({ loginname }: LoginProps) {
             </button>
             */}
           </div>
-          <div className="login-container-movil" 
+          <div className="login-container-movil"
             onMouseEnter={() => setShowSubPerfil(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
             onMouseLeave={() => setShowSubPerfil(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
           >
-            <div className="popup-menu-title"><a onClick={toggleRecursos}>{user.email?.split("@")[0]} <span><FontAwesomeIcon icon={isPerfilOpen ? faChevronDown : faChevronRight} size="xl"/></span> </a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
-            {isPerfilOpen && (
-              <div>
-                <ul>
-                  <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Mi cuenta</Link></li>
-                  <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Mis datos</Link></li>
-                  <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Historial de pagos</Link></li>
-                </ul>
-              </div>
-            )}
+            <div className="popup-menu-title"><a onClick={toggleRecursos}>{user.email?.split("@")[0]} <span><FontAwesomeIcon icon={isPerfilOpen ? faChevronDown : faChevronRight} size="xl" /></span> </a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+              {isPerfilOpen && (
+                <div>
+                  <ul>
+                    <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Mi cuenta</Link></li>
+                    <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Mis datos</Link></li>
+                    <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Historial de pagos</Link></li>
+                  </ul>
+                </div>
+              )}
             </div>
             <button
               className="logout-button"
@@ -159,7 +172,7 @@ function Login({ loginname }: LoginProps) {
       )}
       {!user && (
         <div>
-          <a className="logout-button" href = "/api/auth/login"><FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
+          <a className="logout-button" href="/api/auth/login"><FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
           </a>
         </div>
       )}

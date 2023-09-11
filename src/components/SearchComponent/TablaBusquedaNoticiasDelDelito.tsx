@@ -32,6 +32,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const [cityCounts, setCityCounts] = useState<{ [city: string]: number }>({});
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
   const [yearCounts, setYearCounts] = useState<{ [city: string]: number }>({});
+  const [openRegion, setOpenRegion] = useState<string | null>(null);
 
 
   useEffect(() => {
@@ -320,7 +321,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
 
   const renderCityList = () => {
-    const [openRegion, setOpenRegion] = useState<string | null>(null);
+
 
     const toggleRegionDropdown = (region: string) => {
       setOpenRegion(prevOpenRegion =>
@@ -382,11 +383,10 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
   return (
     <div >
-      {data && !data.searchInputValue && (
+      {data != null && Object.keys(data[Object.keys(data)[0]]).length === 0 && (
         <p>No se encontraron coincidencias</p>
       )}
-
-      {data && data.searchInputValue && (
+      {data && Object.keys(data[Object.keys(data)[0]]).length > 0 && (
         <>
           <p>Selecciona los datos que quieres traer en detalle</p>
 

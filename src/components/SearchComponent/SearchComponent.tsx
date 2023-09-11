@@ -7,7 +7,8 @@ import SeccionCreaTuCuenta from '../Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuen
 import SubscriptionComponent from '../Suscription/SuscriptionComponent';
 import CreditComponent from '../Credits/CreditComponent';
 import Tabla from '../Tabla/Tabla';
-import TablaBusqueda from './TablaBusqueda'
+import TablaBusquedaNoticiasDelDelito from './TablaBusquedaNoticiasDelDelito'
+import TablaBusquedaJudiciales from './TablaBusquedaJudiciales';
 import CircularProgress from '@mui/material/CircularProgress';
 import { validateInput } from './InputValidationUtil'; // Import the validation function
 import Link from "next/link";
@@ -38,7 +39,7 @@ const SearchComponent: React.FC = () => {
     const [mostrartabla, setMostrartabla] = useState(true);
     const [isLoadingData, setIsLoadingData] = useState(false);
     const [inputErrors, setInputErrors] = useState<{ specialCharacters?: string; emptyInput?: string }>({});
-
+    const [fuenteseleccionada, setFuenteseleccionada] = useState("");
 
     async function getuser() {
         try {
@@ -142,7 +143,7 @@ const SearchComponent: React.FC = () => {
                     const jsonData = await response.json();
                     setData(jsonData);
 
-                    const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+                    const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_public_data', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -150,7 +151,6 @@ const SearchComponent: React.FC = () => {
                         body: JSON.stringify({
                             query_id: jsonData.query_id,
                             creator_key: 'valid_api_key',
-                            selection: {},
                             key: 'valid_api_key'
                         }),
                     });
@@ -286,6 +286,7 @@ const SearchComponent: React.FC = () => {
 
     const getSourceValue = () => {
         const selector = document.getElementById('sourceSelector') as HTMLSelectElement;
+        setFuenteseleccionada(selector.value)
         return selector.value;
     };
 
@@ -450,16 +451,24 @@ const SearchComponent: React.FC = () => {
                 <br />
                 {data ? (
                     <div>
-                        {/* <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre> */}
-                        {mostrartabla &&
+                        {
+                            mostrartabla &&
                             <>
                                 <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
-                                <>
-                                    <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
-                                </>
+                                {fuenteseleccionada == "noticias" &&
+                                    <>
+                                        <TablaBusquedaNoticiasDelDelito data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    </>
+                                }
+
+                                {fuenteseleccionada == "judicial" &&
+                                    <>
+                                        <TablaBusquedaJudiciales data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    </>
+                                }
+
                             </>
                         }
-
                     </div>
                 ) : (
                     <>
