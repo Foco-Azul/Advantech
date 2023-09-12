@@ -39,8 +39,8 @@ function SeccionTablaPlanes() {
                         <th>Forma de entrega de datos</th>
                         <td>PDF</td>
                         <td>XLSX</td>
-                        <td>PDF | XLSX | CSV</td>
-                        <td>PDF | XLSX | CSV</td>
+                        <td>XLSX | CSV</td>
+                        <td>XLSX | CSV</td>
                     </tr>
                     <tr>
                         <th>Duración</th>

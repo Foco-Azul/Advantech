@@ -14,9 +14,10 @@ interface SubscriptionCardProps {
     planvencimiento: number;
     uservencimiento: string | number | null;
     userid: number | null;
+    userCorreo: string | null;
 }
 
-const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid }) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid, userCorreo }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [buycredits, setBuyCredits] = useState(0);
     const [priceTiers, setPriceTiers] = useState<any[]>([]);
@@ -119,8 +120,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                             creditos={buycredits}
                             userCredits={userCredits}
                             planid={4}
-                            userid={userid}
-                        />
+                            userid={userid} 
+                            userCorreo={userCorreo}                        />
                     </div>
                 </div>
             )}
@@ -136,6 +137,7 @@ const CreditComponent: React.FC = () => {
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
     const [planId, setPlanId] = useState<number | null>(null);
+    const [userCorreo, setUserCorreo] = useState<string | null>(null);
 
     useEffect(() => {
         getuser()
@@ -146,13 +148,13 @@ const CreditComponent: React.FC = () => {
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
                     const planId = foundUser.attributes.plan?.data.id
-
+                    const userCorreo = foundUser.attributes.email;
                     setUserPlanPrice(userPlanData);
                     setUserCredits(userCredits);
                     setUserVencimiento(userVencimiento);
                     setUserId(userId)
                     setPlanId(planId)
-
+                    setUserCorreo(userCorreo);
                     console.log("Precio:", userPlanData)
                     console.log("Creditos:", userCredits)
                     console.log("Uservencimiento:", userVencimiento)
@@ -206,8 +208,8 @@ const CreditComponent: React.FC = () => {
                     creditos={0}
                     planid={4}
                     planvencimiento={6}
-                    userid={userId}
-                />
+                    userid={userId} 
+                    userCorreo={userCorreo}                />
 
             </UserProvider>
         </div>

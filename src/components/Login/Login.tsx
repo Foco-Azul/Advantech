@@ -24,7 +24,6 @@ function Login({ loginname }: LoginProps) {
       getusers();
     }
   }, [user]);
-
   async function getusers() {
     // Verificar si user es undefined antes de continuar
     if (!user) {
@@ -33,7 +32,7 @@ function Login({ loginname }: LoginProps) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${user.email}`,
         {
           method: "GET",
           headers: {
@@ -48,41 +47,104 @@ function Login({ loginname }: LoginProps) {
       }
       const data = await response.json();
       console.log(data);
-
       const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
-
+      console.log("estoy en el login",user);
+      console.log("datos del usuario",foundUser);
+      const fechaHoraActual = new Date().toISOString();
+      const codigoAleatorio = Math.random().toString(36).substring(2, 8);
+      const codigoUnico = fechaHoraActual.replace(/[^a-zA-Z0-9]/g, '') + codigoAleatorio;
+      console.log(codigoUnico);      
+      console.log("user auth0");
+      if (user && user.sub && user.sub.includes("auth0")) {
+        // Realiza la acción cuando user.sub contiene "auth0"
+        console.log("El valor de user.sub contiene 'auth0'.");
+        // Agrega aquí tu código adicional
+      }
       if (foundUser) {
         console.log("El correo electrónico existe en el array de objetos.");
         // Aquí puedes hacer algo con el usuario encontrado
-        console.log(foundUser);
+        console.log(foundUser)
+        console.log(foundUser.attributes.codigo_de_verificacion);
+        if (user && user.sub && user.sub.includes("auth0") && foundUser.attributes.codigo_de_verificacion == null) {
+          console.log("estoy en el if");
+          // Realizar el POST con los datos requeridos
+         const postResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
+           {
+             method: "PUT",
+             headers: {
+               "Content-Type": "application/json",
+             },
+             body: JSON.stringify({
+               data: {
+                 codigo_de_verificacion: codigoUnico
+               },
+             }),
+             cache: "no-store",
+           }
+         );
+         if (postResponse.status === 200) {
+           console.log("Usuario creado con éxito.");
+         } else {
+           console.log(postResponse.status);
+           throw new Error(`Failed to create user, ${postResponse.status}`);
+         }
+       }
       } else {
         console.log("El correo electrónico no existe en el array de objetos.");
-
-        // Realizar el POST con los datos requeridos
-        const postResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              data: {
-                email: user.email,
-                username: user.name,
-                vencimiento: "2023-01-01",
-                plan: 4
+        if (user && user.sub && user.sub.includes("auth0")) {
+           // Realizar el POST con los datos requeridos
+          const postResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
               },
-            }),
-            cache: "no-store",
+              body: JSON.stringify({
+                data: {
+                  email: user.email,
+                  username: user.name,
+                  vencimiento: "2023-01-01",
+                  plan: 4,
+                  codigo_de_verificacion: codigoUnico
+                },
+              }),
+              cache: "no-store",
+            }
+          );
+          if (postResponse.status === 200) {
+            console.log("Usuario creado con éxito.");
+          } else {
+            console.log(postResponse.status);
+            throw new Error(`Failed to create user, ${postResponse.status}`);
           }
-        );
-
-        if (postResponse.status === 200) {
-          console.log("Usuario creado con éxito.");
-        } else {
-          console.log(postResponse.status);
-          throw new Error(`Failed to create user, ${postResponse.status}`);
+        }else{
+          // Realizar el POST con los datos requeridos
+          const postResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: {
+                  email: user.email,
+                  username: user.name,
+                  vencimiento: "2023-01-01",
+                  plan: 4
+                },
+              }),
+              cache: "no-store",
+            }
+          );
+          if (postResponse.status === 200) {
+            console.log("Usuario creado con éxito.");
+          } else {
+            console.log(postResponse.status);
+            throw new Error(`Failed to create user, ${postResponse.status}`);
+          }
         }
       }
     } catch (error) {

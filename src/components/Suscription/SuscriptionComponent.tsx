@@ -48,6 +48,7 @@ interface Plan {
 }
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid, userCorreo }) => {
+    console.log("estoy en SubscriptionCard:", userCorreo)
     const [isOpen, setIsOpen] = useState(false);
 
     const handleSubscribe = () => {
@@ -80,7 +81,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                     {soporte ? `Soporte ${plan}` : "Soporte personalizado"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faDownload} style={{ color: "#009fde", }} />
-                    {soporte ? `Entrega de datos (Lotes | Email)` : "Entrega de datos (Lotes | Email)"}
+                    {soporte ? `Entrega de datos (API | Lotes | Email)` : "Entrega de datos (API | Lotes | Email)"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faFile} style={{ color: "#009fde", }} />        
                         Formato de entrega de datos&nbsp;  
@@ -217,7 +218,7 @@ const SubscriptionComponent: React.FC = () => {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
-    console.log("UserCorreo:", userCorreo)
+    console.log("estoy en SubscriptionComponent:", userCorreo)
     return (
         <div className="subscription-component">
             <UserProvider>

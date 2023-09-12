@@ -17,7 +17,7 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planvencimiento, userCorreo }) => {
-  
+  console.log("este es mi correo: "+ userCorreo);
   const stripe = useStripe();
   const elements = useElements();
   const { user, error, isLoading } = useUser();
@@ -143,10 +143,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                 },
                 body: JSON.stringify({
                   data: {
-                    nombre: userid,
+                    nombre: userCorreo,
                     asunto: "Compra de creditos",
                     para: userCorreo,
-                    contenido: creditos,
+                    contenido: "creditos:"+creditos,
                   },
                 }),
                 cache: "no-store",
@@ -163,7 +163,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                 },
                 body: JSON.stringify({
                   data: {
-                    nombre: userid,
+                    nombre: userCorreo,
                     asunto: "Nueva suscripción",
                     para: userCorreo,
                     contenido: plan,

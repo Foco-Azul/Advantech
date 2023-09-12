@@ -38,7 +38,7 @@ function SeccionTiposConsultas() {
                             <td>Procesos Judiciales electrónicos personales</td>
                             <td>Función Judicial</td>
                             <td>Procesos judiciales, causas, expedientes, trámites y juicios actuales o históricos</td>
-                            <td>1</td>
+                            <td>2</td>
                         </tr>
                         <tr>
                             <td>Impedimiento salida del país</td>
