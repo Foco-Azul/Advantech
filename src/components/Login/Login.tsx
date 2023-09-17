@@ -78,7 +78,8 @@ function Login({ loginname }: LoginProps) {
              },
              body: JSON.stringify({
                data: {
-                 codigo_de_verificacion: codigoUnico
+                 codigo_de_verificacion: codigoUnico,
+                 auth0: false
                },
              }),
              cache: "no-store",
@@ -119,7 +120,8 @@ function Login({ loginname }: LoginProps) {
                       vencimiento: "2023-01-01",
                       plan: 4,
                       codigo_de_verificacion: codigoUnico,
-                      apikey:  generateApiKey(user.email)
+                      apikey:  generateApiKey(user.email),
+                      auth0: false
                     },
                   }),
                   cache: "no-store",
@@ -146,7 +148,8 @@ function Login({ loginname }: LoginProps) {
                     username: user.name,
                     vencimiento: "2023-01-01",
                     plan: 4,
-                    apikey:  generateApiKey(user.email)
+                    apikey:  generateApiKey(user.email),
+                    google: true
                   },
                 }),
                 cache: "no-store",
@@ -237,8 +240,8 @@ function Login({ loginname }: LoginProps) {
       )}
       {!user && (
         <div>
-          <a className="logout-button" href="/api/auth/login"><FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
-          </a>
+          <Link href="/api/auth/login" legacyBehavior passHref><button className="logout-button" ><FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
+          </button></Link>
         </div>
       )}
     </div>
