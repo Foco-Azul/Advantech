@@ -7,7 +7,7 @@ import SeccionCreaTuCuenta from '../Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuen
 import SubscriptionComponent from '../Suscription/SuscriptionComponent';
 import CreditComponent from '../Credits/CreditComponent';
 import Tabla from '../Tabla/Tabla';
-import TablaBusqueda from './TablaBusqueda'
+import TablaBusqueda from './TablaBusquedaNoticiasDelDelito'
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);

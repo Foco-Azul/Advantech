@@ -7,9 +7,11 @@ import SeccionCreaTuCuenta from '../Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuen
 import SubscriptionComponent from '../Suscription/SuscriptionComponent';
 import CreditComponent from '../Credits/CreditComponent';
 import Tabla from '../Tabla/Tabla';
-import TablaBusqueda from './TablaBusqueda'
+import TablaBusquedaNoticiasDelDelito from './TablaBusquedaNoticiasDelDelito'
+import TablaBusquedaJudiciales from './TablaBusquedaJudiciales';
 import CircularProgress from '@mui/material/CircularProgress';
 import { validateInput } from './InputValidationUtil'; // Import the validation function
+import Link from "next/link";
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -37,7 +39,7 @@ const SearchComponent: React.FC = () => {
     const [mostrartabla, setMostrartabla] = useState(true);
     const [isLoadingData, setIsLoadingData] = useState(false);
     const [inputErrors, setInputErrors] = useState<{ specialCharacters?: string; emptyInput?: string }>({});
-
+    const [fuenteseleccionada, setFuenteseleccionada] = useState("");
 
     async function getuser() {
         try {
@@ -141,7 +143,7 @@ const SearchComponent: React.FC = () => {
                     const jsonData = await response.json();
                     setData(jsonData);
 
-                    const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+                    const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_public_data', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -149,7 +151,6 @@ const SearchComponent: React.FC = () => {
                         body: JSON.stringify({
                             query_id: jsonData.query_id,
                             creator_key: 'valid_api_key',
-                            selection: {},
                             key: 'valid_api_key'
                         }),
                     });
@@ -181,29 +182,8 @@ const SearchComponent: React.FC = () => {
                             const allItems = Object.keys(noticias[primeraPropiedad]);
                             handleSelectedItems(allItems);
                         }
+                        console.log("data", data)
 
-                        if (selectedFuenteCredito !== null) {
-                            const posthistorial = await fetch(
-                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                                {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: JSON.stringify({
-                                        data: {
-                                            auth_0_user: userId,
-                                            creditos: selectedFuenteCredito * -1,
-                                            fecha: currentDate,
-                                            precio: 0,
-                                            consulta: searchInputValue,
-                                            plane: planId
-                                        },
-                                    }),
-                                    cache: "no-store",
-                                }
-                            );
-                        }
                     } else {
                         console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
                     }
@@ -273,6 +253,28 @@ const SearchComponent: React.FC = () => {
                     );
                 }
                 setMostrartabla(false)
+                if (selectedFuenteCredito !== null) {
+                    const posthistorial = await fetch(
+                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                data: {
+                                    auth_0_user: userId,
+                                    creditos: selectedFuenteCredito * -1,
+                                    fecha: currentDate,
+                                    precio: 0,
+                                    consulta: searchInputValue,
+                                    plane: planId
+                                },
+                            }),
+                            cache: "no-store",
+                        }
+                    );
+                }
             }
         } catch (error) {
             console.error('Error al ejecutar la tercera API:', error);
@@ -284,6 +286,7 @@ const SearchComponent: React.FC = () => {
 
     const getSourceValue = () => {
         const selector = document.getElementById('sourceSelector') as HTMLSelectElement;
+        setFuenteseleccionada(selector.value)
         return selector.value;
     };
 
@@ -393,158 +396,174 @@ const SearchComponent: React.FC = () => {
 
     return (
         <UserProvider>
-            {user ? (
-                isPlanVencido ? (
-                    <>
-                        <h2 className='busqueda-h2'>TU PLAN HA VENCIDO, ACTUALIZA TU SUSCRIPCIÓN</h2>
-                        <br />
-                        <SubscriptionComponent />
-                    </>
-                ) : (
-                    userCredits !== null && userCredits <= 0 ? (
-                        <>
-                            <h2 className='busqueda-h2'>TUS CRÉDITOS SE AGOTARON, COMPRA MÁS PARA CONTINUAR</h2>
-                            <br />
-                            <div className="busqueda-creditos">
-                                <Tabla />
-                                <UserProvider>
-                                    <CreditComponent />
-                                </UserProvider>
-                            </div>
-                        </>
-                    ) : (
-                        <div className='search'>
-                            {!DatosTabla && (
-                                <div>
-                                    <div className='buscador-container'>
-                                        <label className='buscador-label'>Ingresa un nombre completo o RUC</label>
-                                        <input
-                                            type="text"
-                                            value={searchInputValue}
-                                            onChange={(e) => setSearchInputValue(e.target.value.toUpperCase())}
-                                            className='search-inputs'
-                                            placeholder='Nombre completo o RUC'
-                                        />
-                                        {inputErrors.specialCharacters && <p className="error-message">{inputErrors.specialCharacters}</p>}
-                                        {inputErrors.emptyInput && <p className="error-message">{inputErrors.emptyInput}</p>}
-                                    </div>
-                                    <div className='buscador-container'>
-                                        <label className='buscador-label'>Selecciona la fuente de datos</label>
-                                        <select
-                                            id="sourceSelector"
-                                            value={selectedSource}
-                                            onChange={handleSourceSelect}
-                                            className='search-inputs'
-                                        >
-                                            <option value="" disabled hidden>
-                                                Seleccionar fuente
-                                            </option>
-                                            {CreditosFuentes.map((fuente) => (
-                                                <option key={fuente.id} value={fuente.attributes.fuente}>
-                                                    {fuente.attributes.fuente}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {selectedSource !== '' && (
-                                            <>
-                                                {!isLoadingData ? (
-                                                    <button onClick={handleButtonClick} className='search-menu-button'>
-                                                        Obtener datos
-                                                    </button>
-                                                ) : (
-                                                    <>
-                                                        <br></br>
-                                                        <CircularProgress></CircularProgress>
-                                                    </>
-                                                )}
-                                            </>
-                                        )}
 
-                                    </div>
-                                </div>
-                            )}
-                            <br />
-                            <br />
-                            {data ? (
-                                <div>
-                                    {/* <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre> */}
-                                    {mostrartabla &&
-                                        <>
-                                            <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
-                                            <p>Selecciona los datos que quieres traer en detalle</p>
-
-                                            <TablaBusqueda data={DatosTabla} onSelectedItems={handleSelectedItems} />
-                                        </>
-                                    }
-
-                                </div>
-                            ) : (
+            <div className='search'>
+                {!DatosTabla && (
+                    <div>
+                        <div className='buscador-container'>
+                            <label className='buscador-label'>Ingresa un nombre completo o RUC</label>
+                            <input
+                                type="text"
+                                value={searchInputValue}
+                                onChange={(e) => setSearchInputValue(e.target.value.toUpperCase())}
+                                className='search-inputs'
+                                placeholder='Nombre completo o RUC'
+                            />
+                            {inputErrors.specialCharacters && <p className="error-message">{inputErrors.specialCharacters}</p>}
+                            {inputErrors.emptyInput && <p className="error-message">{inputErrors.emptyInput}</p>}
+                        </div>
+                        <div className='buscador-container'>
+                            <label className='buscador-label'>Selecciona la fuente de datos</label>
+                            <select
+                                id="sourceSelector"
+                                value={selectedSource}
+                                onChange={handleSourceSelect}
+                                className='search-inputs'
+                            >
+                                <option value="" disabled hidden>
+                                    Seleccionar fuente
+                                </option>
+                                {CreditosFuentes.map((fuente) => (
+                                    <option key={fuente.id} value={fuente.attributes.fuente}>
+                                        {fuente.attributes.fuente}
+                                    </option>
+                                ))}
+                            </select>
+                            {selectedSource !== '' && (
                                 <>
-                                    {/* <p>Loading...</p> */}
-                                </>
-                            )}
-                            {isSecondApiResponseSuccessful && (
-                                <>
-                                    <br></br>
-                                    <div>
-                                        {!mostrartabla &&
-                                            <div className='json-container'>
-                                                <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
-                                            </div>
-                                        }
-                                        {mostrartabla && <><p>Mis créditos:{userCredits}</p>
-                                            <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito}</p>
-                                        </>}
-
-                                        {seleccionUsuarioCount == 0 && <button className='busqueda-menu-button' onClick={handleReloadPage}>
-                                            Iniciar una nueva búsqueda
+                                    {!isLoadingData ? (
+                                        <button onClick={handleButtonClick} className='search-menu-button'>
+                                            Obtener datos
                                         </button>
-                                        }
-
-                                    </div>
-                                    {
-                                        userCredits && selectedFuenteCredito && userCredits >= selectedFuenteCredito &&
-                                        seleccionUsuarioCount > 0 && mostrartabla &&
-                                        <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
-                                            Obtener en detalle los datos seleccionados
-                                        </button>
-                                    }
-                                    {
-                                        userCredits && selectedFuenteCredito && userCredits < selectedFuenteCredito * seleccionUsuarioCount &&
+                                    ) : (
                                         <>
                                             <br></br>
-                                            <p className='search-error'>Tus créditos no son suficientes para traer estos datos</p>
+                                            <CircularProgress></CircularProgress>
                                         </>
-                                    }
+                                    )}
                                 </>
                             )}
-                            <>
-                                {Datos && (
-                                    <>
-                                        <div>
-                                            <button className='busqueda-menu-button' onClick={handleConvertToPdf}>
-                                                Convertir a PDF
-                                            </button>
-                                            <button className='busqueda-menu-button' onClick={handleConvertToXls}>
-                                                Convertir a XLS
-                                            </button>
-                                        </div>
-                                        <button className='busqueda-menu-button' onClick={handleReloadPage}>
-                                            Iniciar una nueva búsqueda
-                                        </button>
-                                    </>
-                                )}
-                            </>
+
                         </div>
-                    )
-                )
-            ) : (
+                    </div>
+                )}
+                <br />
+                <br />
+                {data ? (
+                    <div>
+                        {
+                            mostrartabla &&
+                            <>
+                                <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
+                                {fuenteseleccionada == "noticias" &&
+                                    <>
+                                        <TablaBusquedaNoticiasDelDelito data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    </>
+                                }
+
+                                {fuenteseleccionada == "judicial" &&
+                                    <>
+                                        <TablaBusquedaJudiciales data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    </>
+                                }
+
+                            </>
+                        }
+                    </div>
+                ) : (
+                    <>
+                        {/* <p>Loading...</p> */}
+                    </>
+                )}
+                {isSecondApiResponseSuccessful && (
+                    <>
+                        <br></br>
+                        <div>
+                            {!mostrartabla &&
+                                <div className='json-container'>
+                                    <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
+                                </div>
+                            }
+                            {user && mostrartabla && <><p>Mis créditos:{userCredits}</p>
+                                <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito}</p>
+                            </>}
+
+                            {user && seleccionUsuarioCount == 0 && <button className='busqueda-menu-button' onClick={handleReloadPage}>
+                                Iniciar una nueva búsqueda
+                            </button>
+                            }
+
+                        </div>
+                        {    //Caso con créditos y usuario
+                            user && userCredits != null && selectedFuenteCredito && userCredits >= selectedFuenteCredito &&
+                            seleccionUsuarioCount > 0 && mostrartabla &&
+                            <>
+                                <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
+                                    Obtener en detalle los datos seleccionados
+                                </button>
+
+                            </>
+                        }
+                        {
+                            //Caso sin créditos
+                            user && userCredits != null && selectedFuenteCredito && (userCredits < selectedFuenteCredito) &&
+                            <>
+                                <br></br>
+                                <p className='search-error'>Tus créditos no son suficientes para traer estos datos</p>
+                                <Link href="/alacarta" legacyBehavior passHref>
+                                    <button className='search-menu-button' >
+                                        Recargar créditos en tu cuenta
+                                    </button>
+                                </Link>
+                            </>
+                        }
+                        {
+                            //Caso usuario vencido 
+                            user && isPlanVencido &&
+                            <>
+                                <br></br>
+                                <p className='search-error'>Tu plan esta vencido</p>
+                                <Link href="/planes" legacyBehavior passHref>
+                                    <button className='search-menu-button' >
+                                        Renueva tu suscripción para continuar
+                                    </button>
+                                </Link>
+                            </>
+                        }
+                        {
+                            //Caso sin usuario
+                            !user &&
+                            <>
+                                <br></br>
+                                <p className='search-error'>No tienes una cuenta</p>
+                                <Link href={"/api/auth/login"}>
+                                    <button className='search-menu-button' >
+                                        Crea tu cuenta para continuar
+                                    </button>
+                                </Link>
+                            </>
+                        }
+
+                    </>
+                )}
                 <>
-                    <h2 className='busqueda-h2'>CREA TU CUENTA PARA CONTINUAR</h2>
-                    <br />
-                    <SeccionCreaTuCuenta />
+                    {Datos && (
+                        <>
+                            <div>
+                                <button className='busqueda-menu-button' onClick={handleConvertToPdf}>
+                                    Convertir a PDF
+                                </button>
+                                <button className='busqueda-menu-button' onClick={handleConvertToXls}>
+                                    Convertir a XLS
+                                </button>
+                            </div>
+                            <button className='busqueda-menu-button' onClick={handleReloadPage}>
+                                Iniciar una nueva búsqueda
+                            </button>
+                        </>
+                    )}
                 </>
-            )}
+            </div>
         </UserProvider>
     );
 
