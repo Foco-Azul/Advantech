@@ -1,23 +1,21 @@
 import './SeccionBusqueda.css';
 import Image from "next/image";
 import Image1 from "./image/Producto1.svg"
-import Image2 from "./image/Producto2.svg"
-import Image3 from "./image/Image.svg"
+import Image2 from "./image/icon2.svg"
+import Image3 from "./image/Image2.svg"
+import Image4 from "./image/Image3.svg"
 import icon from "./image/icon.svg"
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {faCircleXmark} from "@fortawesome/free-regular-svg-icons";
 
 
 function SeccionBusqueda() {
 
   return (
     <section className='seccion-busqueda'>
-      <div className="busqueda-container">
-        <div>
-          <Image src={Image3} alt="Advantech Datos" />
-        </div>
-        <div className="informacion-card">
+      <div className="busqueda-container advantech">
+      <div className="informacion-card">
           <div className="informacion-imagen">
             <Image src={Image1} alt="Company Logo" />
           </div>
@@ -46,36 +44,42 @@ function SeccionBusqueda() {
             </div>
           </div>
         </div>
+        <div>
+          <Image src={Image4} alt="Advantech Datos" />
+        </div>
       </div>
       <div className="busqueda-container">
+        <div>
+          <Image src={Image3} alt="Advantech Datos" />
+        </div>
         <div className="informacion-card">
-          <div className="informacion-imagen">
+          <div className="informacion-imagen manual">
             <Image src={Image2} alt="Company Logo" />
           </div>
           <div className="informacion-texto">
-            <h4 className="informacion-title">Búsqueda manual</h4>
+            <h4 className="informacion-title">Búsqueda fuera de Advantech Datos</h4>
             <br></br>
-            <p className="informacion-text">Ventajas de una búsqueda manual:</p>
+            <p className="informacion-text">Al realizar una búsqueda de Advantech Datos tendrás que consultar fuentes de manera manual.</p>
             <br></br>
             <div className="informacion-check">
-              <Image src={icon} alt="Company Logo" className="informacion-icon" /> <p>Control total sobre los datos obtenidos</p>
+              <FontAwesomeIcon icon={faCircleXmark} size="lg" /><p>Tiempo y esfuerzo considerable, especialmente para grandes cantidades de datos</p>
             </div>
             <div className="informacion-check">
-              <Image src={icon} alt="Company Logo" className="informacion-icon" /> <p>Menos probabilidades de violar los términos de servicio del sitio web</p>
+              <FontAwesomeIcon icon={faCircleXmark} size="lg" /><p>El proceso no será automatizado, tendrán que realizarse búsquedas cada que se las necesite tomándonos más tiempo</p>
             </div>
             <div className="informacion-check">
-              <Image className="informacion-icon" src={icon} alt="Company Logo" /> <p>Adecuado para sitios web pequeños y de baja complejidad</p>
+              <FontAwesomeIcon icon={faCircleXmark} size="lg" /><p>Al ser una obtención de manera manual la estructura y formato pueden variar</p>
             </div>
-            <br />
-            <p className="informacion-text">Desventajas de una búsqueda manual:</p>
-            <br />
             <div className="informacion-check">
-              <Image className="informacion-icon" src={icon} alt="Company Logo" /> <p>Tiempo y esfuerzo considerable, especialmente para grandes cantidades de datos</p>
+              <FontAwesomeIcon icon={faCircleXmark} size="lg" /><p>Los datos pueden estar desactualizados, dependiendo así de factores externos para obtener los datos actuales</p>
+            </div>
+            <div className="informacion-check">
+              <FontAwesomeIcon icon={faCircleXmark} size="lg" /><p>Suele requerir la inversión de recursos humanos, lo que puede aumentar los costos operativos de una organización.</p>
+            </div>
+            <div className="informacion-check .desventaja">
+              <FontAwesomeIcon icon={faCircleXmark} size="lg" /><p>Tiempo y esfuerzo considerable, especialmente para grandes cantidades de datos</p>
             </div>
           </div>
-        </div>
-        <div>
-          <Image src={Image3} alt="Advantech Datos" />
         </div>
       </div>
     </section>

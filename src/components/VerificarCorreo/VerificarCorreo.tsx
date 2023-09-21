@@ -40,8 +40,6 @@ const VerificarCorreo: React.FC = () => {
         const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
         if (user && user.sub && user.sub.includes("auth0")) {
           // Realiza la acción cuando user.sub contiene "auth0"
-          console.log("El valor de user.sub contiene 'auth0'.");
-          // Agrega aquí tu código adicional
           if (foundUser ) {
             // Haz algo con el usuario encontrado
             const userPlanData = foundUser.attributes.plan?.data.attributes.Precio;
@@ -55,18 +53,12 @@ const VerificarCorreo: React.FC = () => {
             setUserVencimiento(userVencimiento);
             setUserId(userId);
             setPlanId(planId);
-    
-            console.log('Usuario encontrado:', foundUser);
-            console.log('Usuario auth0:', user);
-            console.log(currentUrl);
-            console.log("codigo2: ", foundUser.attributes.codigo_de_verificacion);
-            console.log("estado auth0: ", foundUser.attributes.auth0);
+
             const urlSearchParams = new URLSearchParams(window.location.search);
             const codigo = urlSearchParams.get('codigo');
+            
             if(foundUser.attributes.auth0 == false){
               if(codigo && foundUser.attributes.codigo_de_verificacion == codigo){
-                console.log("codigo1: ", codigo);
-                console.log("codigo2: ", foundUser.attributes.codigo_de_verificacion);
                 try {
                   const postResponse = await fetch(
                     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
@@ -88,7 +80,6 @@ const VerificarCorreo: React.FC = () => {
                     //se verifico la cuenta
                     setEstado(1);
                   }else{
-                    console.log(postResponse.status);
                     throw new Error(`Failed to create user, ${postResponse.status}`);
                   }
                 } catch (error) {

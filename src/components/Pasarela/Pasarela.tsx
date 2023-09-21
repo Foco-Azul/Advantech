@@ -21,7 +21,6 @@ interface PasarelaProps {
 }
 
 const Pasarela: React.FC<PasarelaProps> = ({ price, plan, userid, creditos, planvencimiento, userCredits, planid, userCorreo }) => {
-  console.log("estoy en pasarela: "+ userCorreo);
   return (
     <div className="pasarela">
       <Elements stripe={stripePromise}>

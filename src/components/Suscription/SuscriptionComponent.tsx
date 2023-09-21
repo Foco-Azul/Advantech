@@ -69,7 +69,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
     const handleClose = () => {
         setIsOpen(false);
     };
-
     return (
         <div className="subscription-card">
             <div className="subscription-card-header">
@@ -115,7 +114,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
             )}
             {(price == 0) &&
                 <Link href="/alacarta" legacyBehavior passHref>
-                    <button className='subscription-card-button' > Saber más del plan a la carta </button>
+                    <button className='subscription-card-button' > Saber más del plan personalizado </button>
                 </Link>}
             {isOpen && (
                 <div className="subscription-popup">
@@ -169,7 +168,7 @@ const SubscriptionComponent: React.FC = () => {
         getuser()
             .then((foundUser) => {
                 if (foundUser) {
-                    const userPlanData = foundUser.attributes.plan?.data.attributes.Precio;
+                    const userPlanData = foundUser.attributes.plan.data?.attributes.Precio;
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
@@ -213,7 +212,7 @@ const SubscriptionComponent: React.FC = () => {
 
     async function getuser() {
         try {
-            const respuestaUnica = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}`, {
+            const respuestaUnica = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*&filters[email][$eq]=${userEmail}`, {
 
                 method: "GET",
                 headers: {
@@ -224,31 +223,11 @@ const SubscriptionComponent: React.FC = () => {
             });
             const datosRespuesta = await respuestaUnica.json();
             const usuarioStrapi = datosRespuesta.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === userEmail);
-            if (respuestaUnica.status !== 200) {
-                throw new Error(`Failed to fetch data, ${respuestaUnica.status}`);
-            }
-            if(usuarioStrapi){
-                
-                const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${usuarioStrapi.id}?populate=*`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                    },
-                    cache: "no-store",
-                });
-                if (response.status !== 200) {
-                    throw new Error(`Failed to fetch data, ${response.status}`);
-                }
-                const data = await response.json();
-                const foundUser = data.data
-                return foundUser;
-            }
+            return usuarioStrapi;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
-    console.log("estoy en SubscriptionComponent:", userCorreo)
     return (
         <div className="subscription-component">
             <UserProvider>

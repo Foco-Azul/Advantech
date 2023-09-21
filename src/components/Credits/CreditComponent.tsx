@@ -65,7 +65,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             }
             const data = await response.json();
             const planalacarta = data.data
-            console.log("planalacarta:", planalacarta)
             return planalacarta;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -92,7 +91,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     }
 
     // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
-    console.log('Nuevo precio:', nuevoPrecio);
     return (
         <div className="credit-card">
             <p className="credit-card-p">Tus créditos actuales: {userCredits}</p>
@@ -161,12 +159,11 @@ const CreditComponent: React.FC = () => {
         getuser()
             .then((foundUser) => {
                 if (foundUser) {
-                    console.log("ESTOY EN CREDITCOMPONENT PIDIENDO UN USUARIO DE STRAPI: ", foundUser)
-                    const userPlanData = foundUser.attributes.plan?.data.attributes.Precio;
+                    const userPlanData = foundUser.attributes.plan.data?.attributes.Precio;
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
-                    const planId = foundUser.attributes.plan?.data.id
+                    const planId = foundUser.attributes?.plan?.data?.id
                     const userCorreo = foundUser.attributes.email;
                     const auth0 = foundUser.attributes.auth0;
                     setUserPlanPrice(userPlanData);
@@ -183,10 +180,9 @@ const CreditComponent: React.FC = () => {
             });
 
     }, [user]);
-
     async function getuser() {
         try {
-            const respuestaUnica = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}`, {
+            const respuestaUnica = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*&filters[email][$eq]=${userEmail}`, {
 
                 method: "GET",
                 headers: {
@@ -197,33 +193,11 @@ const CreditComponent: React.FC = () => {
             });
             const datosRespuesta = await respuestaUnica.json();
             const usuarioStrapi = datosRespuesta.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === userEmail);
-            if (respuestaUnica.status !== 200) {
-                throw new Error(`Failed to fetch data, ${respuestaUnica.status}`);
-            }
-            if(usuarioStrapi){
-                
-                const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${usuarioStrapi.id}?populate=*`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                    },
-                    cache: "no-store",
-                });
-                if (response.status !== 200) {
-                    throw new Error(`Failed to fetch data, ${response.status}`);
-                }
-                const data = await response.json();
-                const foundUser = data.data
-                return foundUser;
-            }
+            return usuarioStrapi;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
-
-
-
     const currentDate = new Date();
     const vencimientoDate = userVencimiento ? new Date(userVencimiento) : null;
     return (

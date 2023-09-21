@@ -26,11 +26,11 @@ function Hero() {
           <h2 className="hero-short-title">Impulsa tu organización al siguiente nivel</h2>
           <h1 className="hero-short-title-movil">Desbloquea <br /> el potencial <br /> de los datos</h1>
            <div className="hero-buscador-contenedor">
-            <Link href={"/busqueda"}><button className="hero-buscador-btn"><FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />Buscar en Advantech</button></Link>
+            <Link href={"/busqueda"}><button className="hero-buscador-btn"><FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />Ingresa a nuestro buscador</button></Link>
            </div>
           <br></br>
           <h2 className="hero-description">
-            Si deseas saber que datos obtendrás, confiar y mejorar tu experiencia en nuestro sitio web, no dudes en usar nuestro buscador.
+          Encuentra datos públicos actualizados de personas en Ecuador con nuestro buscador en línea. <br />¡Consulta múltiples fuentes de manera sencilla!
             </h2>
           <br></br>
           <a href="/api/auth/login" className={`hero-button ${user != undefined ? 'ocultar' : ''}`}>

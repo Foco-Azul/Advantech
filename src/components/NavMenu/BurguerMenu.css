@@ -30,7 +30,7 @@
   right: 0px; /* Ajusta la distancia desde la parte derecha según sea necesario */
   transform: translate(0, 0);
   background-color: white;
-  z-index: 99;
+  z-index: 999;
   animation: fade-in 0.3s forwards;
     color: var(--gray-800, #3E4265);
   font-family: Manrope, sans-serif;

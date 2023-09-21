@@ -79,12 +79,14 @@ function Login({ loginname }: LoginProps) {
              body: JSON.stringify({
                data: {
                  codigo_de_verificacion: codigoUnico,
-                 auth0: false
+                 auth0: false,
+                 estaactivo: true
                },
              }),
              cache: "no-store",
            }
          );
+         
          if (postResponse.status === 200) {
            console.log("Usuario creado con éxito.");
          } else {
@@ -92,6 +94,33 @@ function Login({ loginname }: LoginProps) {
            throw new Error(`Failed to create user, ${postResponse.status}`);
          }
        }
+       if (user && user.sub && user.sub.includes("google")) {
+        // Realizar el POST con los datos requeridos
+       const postResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
+         {
+           method: "PUT",
+           headers: {
+             "Content-Type": "application/json",
+           },
+           body: JSON.stringify({
+             data: {
+               codigo_de_verificacion: codigoUnico,
+               google: true,
+               estaactivo: true
+             },
+           }),
+           cache: "no-store",
+         }
+       );
+       
+       if (postResponse.status === 200) {
+         console.log("Usuario creado con éxito.");
+       } else {
+         console.log(postResponse.status);
+         throw new Error(`Failed to create user, ${postResponse.status}`);
+       }
+     }
       } else {
         console.log("El correo electrónico no existe en el array de objetos.");
         if (foundUser && typeof user.email === 'string') {
@@ -118,10 +147,10 @@ function Login({ loginname }: LoginProps) {
                       email: user.email,
                       username: user.name,
                       vencimiento: "2023-01-01",
-                      plan: 4,
                       codigo_de_verificacion: codigoUnico,
                       apikey:  generateApiKey(user.email),
-                      auth0: false
+                      auth0: false,
+                      estaactivo: true
                     },
                   }),
                   cache: "no-store",
@@ -149,7 +178,8 @@ function Login({ loginname }: LoginProps) {
                     vencimiento: "2023-01-01",
                     plan: 4,
                     apikey:  generateApiKey(user.email),
-                    google: true
+                    google: true,
+                    estaactivo: true
                   },
                 }),
                 cache: "no-store",
@@ -186,8 +216,9 @@ function Login({ loginname }: LoginProps) {
             <div className={`navigation-sub_menu-trigger  ${showSubPerfil ? "visible" : ""} `}>
               <ul>
                 <li><Link href="/micuenta" legacyBehavior passHref>Mi cuenta</Link></li>
-                <li><Link href="/mi-cuenta" legacyBehavior passHref>Mis datos</Link></li>
-                <li><Link href="/mi-cuenta" legacyBehavior passHref>Historial de pagos</Link></li>
+                <li><Link href="/micuenta/#busquedas" legacyBehavior passHref>Historial de busquedas</Link></li>
+                <li><Link href="/micuenta/#compras" legacyBehavior passHref>Historial de pagos</Link></li>
+
                 <li onClick={() => { window.location.href = "/api/auth/logout"; }}>Salir</li>
               </ul>
             </div>
@@ -210,9 +241,9 @@ function Login({ loginname }: LoginProps) {
               {isPerfilOpen && (
                 <div>
                   <ul>
-                    <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Mi cuenta</Link></li>
-                    <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Mis datos</Link></li>
-                    <li className="sub-menu"><Link href="/mi-cuenta" legacyBehavior passHref>Historial de pagos</Link></li>
+                    <li className="sub-menu"><Link href="/micuenta" legacyBehavior passHref>Mi cuenta</Link></li>
+                    <li className="sub-menu"><Link href="/micuenta/#busquedas" legacyBehavior passHref>Historial de busquedas</Link></li>
+                    <li className="sub-menu"><Link href="/micuenta/#compras" legacyBehavior passHref>Historial de pagos</Link></li>
                   </ul>
                 </div>
               )}
