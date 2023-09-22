@@ -25,6 +25,7 @@ interface SubscriptionCardProps {
     pdf: boolean;
     soporte: boolean;
     userCorreo: string | null;
+    auth0: boolean | null;
 }
 
 interface Plan {
@@ -47,8 +48,19 @@ interface Plan {
     };
 }
 
-const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid, userCorreo }) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid, userCorreo, auth0     }) => {
+    const { user} = useUser();
     const [isOpen, setIsOpen] = useState(false);
+    // Lógica para determinar cuándo mostrar cada botón
+    const shouldShowCreateAccountButton = user === undefined;
+    const shouldShowVerifyAccountButton =
+        user &&
+        user.sub &&
+        user.sub.includes('auth0') &&
+        auth0 === false;
+    const shouldShowBuyCreditsButton =
+        user &&
+        ((user.sub && user.sub.includes('auth0') && auth0 === true) || (user.sub && !user.sub.includes('auth0')));
 
     const handleSubscribe = () => {
         setIsOpen(true);
@@ -57,7 +69,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
     const handleClose = () => {
         setIsOpen(false);
     };
-
     return (
         <div className="subscription-card">
             <div className="subscription-card-header">
@@ -80,7 +91,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                     {soporte ? `Soporte ${plan}` : "Soporte personalizado"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faDownload} style={{ color: "#009fde", }} />
-                    {soporte ? `Entrega de datos (Lotes | Email)` : "Entrega de datos (Lotes | Email)"}
+                    {soporte ? `Entrega de datos (API | Lotes | Email)` : "Entrega de datos (API | Lotes | Email)"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faFile} style={{ color: "#009fde", }} />        
                         Formato de entrega de datos&nbsp;  
@@ -89,15 +100,21 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                             .join(", ")}
                 </h3>
             </div>
-            {(uservencimiento && new Date(uservencimiento) < new Date()) && (price !== 0) && (
+            {(shouldShowBuyCreditsButton && uservencimiento && new Date(uservencimiento) < new Date()) && (price !== 0) && (
                 <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
             )}
-            {(uservencimiento && new Date(uservencimiento) > new Date()) && (userPlanPrice !== null && price > userPlanPrice) && (price !== 0) && (
+            {(shouldShowBuyCreditsButton && uservencimiento && new Date(uservencimiento) > new Date()) && (userPlanPrice !== null && price > userPlanPrice) && (price !== 0) && (
                 <button className='subscription-card-button' onClick={handleSubscribe}>Suscribirse</button>
+            )}
+            {(shouldShowVerifyAccountButton && price !== 0) && (
+                <Link href={"/confirmar-correo"}><button className="subscription-card-button">Verifica tu cuenta</button></Link>
+            )}
+            {(shouldShowCreateAccountButton && price !== 0) && (
+                <Link href={"/api/auth/login"}> <button className="subscription-card-button">Ingresa con tu cuenta</button></Link>
             )}
             {(price == 0) &&
                 <Link href="/alacarta" legacyBehavior passHref>
-                    <button className='subscription-card-button' > Saber más del plan a la carta </button>
+                    <button className='subscription-card-button' > Saber más del plan personalizado </button>
                 </Link>}
             {isOpen && (
                 <div className="subscription-popup">
@@ -137,6 +154,7 @@ const SubscriptionComponent: React.FC = () => {
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
     const [userCorreo, setUserEmail] = useState<string | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
+    const [auth0, setAuth0] = useState<boolean | null>(null);
 
     useEffect(() => {
         getPlanes()
@@ -150,20 +168,18 @@ const SubscriptionComponent: React.FC = () => {
         getuser()
             .then((foundUser) => {
                 if (foundUser) {
-                    const userPlanData = foundUser.attributes.plan?.data.attributes.Precio;
+                    const userPlanData = foundUser.attributes.plan.data?.attributes.Precio;
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
                     const userCorreo = foundUser.attributes.email;
+                    const auth0 = foundUser.attributes.auth0;
                     setUserPlanPrice(userPlanData);
                     setUserCredits(userCredits);
                     setUserVencimiento(userVencimiento);
                     setUserEmail(userCorreo);
                     setUserId(userId);
-                    console.log("Precio:", userPlanData)
-                    console.log("Creditos:", userCredits)
-                    console.log("Uservencimiento:", userVencimiento)
-                    
+                    setAuth0(auth0);
                 }
             })
             .catch((error) => {
@@ -196,7 +212,7 @@ const SubscriptionComponent: React.FC = () => {
 
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
+            const respuestaUnica = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*&filters[email][$eq]=${userEmail}`, {
 
                 method: "GET",
                 headers: {
@@ -205,19 +221,13 @@ const SubscriptionComponent: React.FC = () => {
                 },
                 cache: "no-store",
             });
-            if (response.status !== 200) {
-                throw new Error(`Failed to fetch data, ${response.status}`);
-            }
-            const data = await response.json();
-            const foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
-
-            console.log("founduser", foundUser)
-            return foundUser;
+            const datosRespuesta = await respuestaUnica.json();
+            const usuarioStrapi = datosRespuesta.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === userEmail);
+            return usuarioStrapi;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
-    console.log("UserCorreo:", userCorreo)
     return (
         <div className="subscription-component">
             <UserProvider>
@@ -241,6 +251,7 @@ const SubscriptionComponent: React.FC = () => {
                         pdf={plan.attributes.PDF}
                         soporte={plan.attributes.Soporte}
                         userCorreo={userCorreo}
+                        auth0={auth0} 
                     />
                 ))}
             </UserProvider>

@@ -1,8 +1,10 @@
 "use client"
 import React, { useEffect, useState, useRef } from 'react';
 import "./Micuenta.css";
+import "./script.js";
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import Link from "next/link";
+import { useUrl } from 'nextjs-current-url';
 
 const Micuenta: React.FC = () => {
     const { user, error, isLoading } = useUser();
@@ -25,6 +27,8 @@ const Micuenta: React.FC = () => {
     const apiKeyRef = useRef<HTMLDivElement | null>(null);
     const [isCopied, setIsCopied] = useState(false);
     const [apiset, setApiset] = useState(false);
+    const { href: currentUrl, pathname } = useUrl() ?? {};
+    
 
     // Función para mostrar u ocultar la sección API
     const toggleApiSection = () => {
@@ -110,32 +114,32 @@ const Micuenta: React.FC = () => {
                 <br></br>
                 <div className="micuenta-container">
                     <div className="tab-buttons">
-                        <button
+                        <button id='datos'
                             className={`tab-button ${activeTab === 'datos' ? 'active' : ''}`}
                             onClick={() => setActiveTab('datos')}
                         >
                             Mis Datos
                         </button>
-                        <button
+                        <button id='compras'
                             className={`tab-button ${activeTab === 'compras' ? 'active' : ''}`}
                             onClick={() => setActiveTab('compras')}
                         >
                             Historial de Compras
                         </button>
-                        <button
+                        <button id='busquedas'
                             className={`tab-button ${activeTab === 'busquedas' ? 'active' : ''}`}
                             onClick={() => setActiveTab('busquedas')}
                         >
                             Historial de Búsquedas
                         </button>
-                        <button
+                        <button id='soporte'
                             className={`tab-button ${activeTab === 'soporte' ? 'active' : ''}`}
                             onClick={() => setActiveTab('soporte')}
                         >
                             Soporte
                         </button>
 
-                        {apiset && <button
+                        {apiset && <button id='api'
                             className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}
                             onClick={() => setActiveTab('api')}
                         >

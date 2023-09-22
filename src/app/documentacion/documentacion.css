@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+.busqueda-back {
+    background: var(--degradado-1, linear-gradient(180deg, rgba(137, 186, 231, 0.47) 0%, rgba(137, 186, 231, 0.253) 10%, rgba(217, 217, 217, 0.05) 20%));
+    min-height: 100vh;
+}
+
+.busqueda-h1 {
+    font-size: 35px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+}
+
+.busqueda-h2 {
+    font-size: 21px;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
+    margin-top: 140px;
+    color: #002BC3;
+}
+
+.busqueda-menu-button {
+    border-radius: 6px;
+    margin: 14px;
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+    min-width: 99px;
+    color: #ffffff;
+    background-color: #0099CC;
+    text-align: center;
+    font-size: 14px;
+    font-family: Manrope, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    transition: 0.5s;
+    padding: 9px 20px;
+    line-height: 18px;
+  }
+
+
+  .busqueda-containers-buttons{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+align-items: center;
+justify-content: space-around;
+  }
+
+  .busqueda-containers{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+align-items: center;
+justify-content: space-around;
+  }
+
+  .busqueda-menu-button:hover{
+    box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+    transform: scale(0.95);
+}
+
+
+.busqueda-inputs{
+  height: 49px;
+  flex-shrink: 0;
+  text-align: center;
+  border-radius: 6px;
+  background: #FFF;
+  box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.12);
+  margin: 5px;
+}

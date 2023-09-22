@@ -81,7 +81,7 @@ function NavMenu() {
                 <div className={`navigation-sub_menu-trigger  ${showSubRecursos ? "visible" : ""} `}>
                   <ul>
                     <li><Link href="/busqueda" legacyBehavior passHref>Buscar datos</Link></li>
-                    <li><Link href="/documentacion" legacyBehavior passHref>Documentación</Link></li>
+                    <li><Link href="/documentacion" legacyBehavior passHref>Guía de uso</Link></li>
                     <li><Link href="/uso-por-industria" legacyBehavior passHref>Uso por industria</Link></li>
                   </ul>
                 </div>

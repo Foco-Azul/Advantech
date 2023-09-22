@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import './SeccionSuscripcion.css'
 import Link from "next/link";
@@ -7,8 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleRight} from "@fortawesome/free-solid-svg-icons";
 
 async function SeccionRecursos() {
+
+
   return (
-        <section className="seccion-suscripcion">
+        <section className={`seccion-suscripcion`}>
             <div>
                 <div className="seccion-suscripcion-marcas">
 

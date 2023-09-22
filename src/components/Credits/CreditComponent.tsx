@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import "./CreditComponent.css";
 import Pasarela from '../Pasarela/Pasarela';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
 
 interface SubscriptionCardProps {
     price: number;
@@ -14,13 +15,25 @@ interface SubscriptionCardProps {
     planvencimiento: number;
     uservencimiento: string | number | null;
     userid: number | null;
+    userCorreo: string | null;
+    auth0: boolean | null;
 }
 
-const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid }) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid, userCorreo, auth0 }) => {
+    const { user} = useUser();
     const [isOpen, setIsOpen] = useState(false);
     const [buycredits, setBuyCredits] = useState(0);
     const [priceTiers, setPriceTiers] = useState<any[]>([]);
-
+    // Lógica para determinar cuándo mostrar cada botón
+    const shouldShowCreateAccountButton = user === undefined;
+    const shouldShowVerifyAccountButton =
+      user &&
+      user.sub &&
+      user.sub.includes('auth0') &&
+      auth0 === false;
+    const shouldShowBuyCreditsButton =
+      user &&
+      ((user.sub && user.sub.includes('auth0') && auth0 === true) || (user.sub && !user.sub.includes('auth0')));
     const handleSubscribe = () => {
         setIsOpen(true);
     };
@@ -52,7 +65,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             }
             const data = await response.json();
             const planalacarta = data.data
-            console.log("planalacarta:", planalacarta)
             return planalacarta;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -79,9 +91,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     }
 
     // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
-    console.log('Nuevo precio:', nuevoPrecio);
-
-
     return (
         <div className="credit-card">
             <p className="credit-card-p">Tus créditos actuales: {userCredits}</p>
@@ -99,8 +108,15 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
 
             <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
             <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
-
+            {shouldShowBuyCreditsButton && (
             <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
+            )}
+            {shouldShowVerifyAccountButton && (
+            <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
+            )}
+            {shouldShowCreateAccountButton && (
+            <Link href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></Link>
+            )}
 
             {isOpen && (
                 <div className="credit-popup">
@@ -119,8 +135,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                             creditos={buycredits}
                             userCredits={userCredits}
                             planid={4}
-                            userid={userid}
-                        />
+                            userid={userid} 
+                            userCorreo={userCorreo}                       />
                     </div>
                 </div>
             )}
@@ -136,28 +152,27 @@ const CreditComponent: React.FC = () => {
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
     const [planId, setPlanId] = useState<number | null>(null);
-
+    const [userCorreo, setUserCorreo] = useState<string | null>(null);
+    const [auth0, setAuth0] = useState<boolean | null>(null);
+    
     useEffect(() => {
         getuser()
             .then((foundUser) => {
                 if (foundUser) {
-                    const userPlanData = foundUser.attributes.plan?.data.attributes.Precio;
+                    const userPlanData = foundUser.attributes.plan.data?.attributes.Precio;
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
-                    const planId = foundUser.attributes.plan?.data.id
-
+                    const planId = foundUser.attributes?.plan?.data?.id
+                    const userCorreo = foundUser.attributes.email;
+                    const auth0 = foundUser.attributes.auth0;
                     setUserPlanPrice(userPlanData);
                     setUserCredits(userCredits);
                     setUserVencimiento(userVencimiento);
                     setUserId(userId)
                     setPlanId(planId)
-
-                    console.log("Precio:", userPlanData)
-                    console.log("Creditos:", userCredits)
-                    console.log("Uservencimiento:", userVencimiento)
-                    console.log("userid:", userId)
-                    console.log("planid:", planId)
+                    setUserCorreo(userCorreo);
+                    setAuth0(auth0);
                 }
             })
             .catch((error) => {
@@ -165,10 +180,9 @@ const CreditComponent: React.FC = () => {
             });
 
     }, [user]);
-
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
+            const respuestaUnica = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*&filters[email][$eq]=${userEmail}`, {
 
                 method: "GET",
                 headers: {
@@ -177,21 +191,13 @@ const CreditComponent: React.FC = () => {
                 },
                 cache: "no-store",
             });
-            if (response.status !== 200) {
-                throw new Error(`Failed to fetch data, ${response.status}`);
-            }
-            const data = await response.json();
-            const foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
-
-            console.log("founduser", foundUser)
-            return foundUser;
+            const datosRespuesta = await respuestaUnica.json();
+            const usuarioStrapi = datosRespuesta.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === userEmail);
+            return usuarioStrapi;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
-
-
-
     const currentDate = new Date();
     const vencimientoDate = userVencimiento ? new Date(userVencimiento) : null;
     return (
@@ -206,9 +212,9 @@ const CreditComponent: React.FC = () => {
                     creditos={0}
                     planid={4}
                     planvencimiento={6}
-                    userid={userId}
-                />
-
+                    userid={userId} 
+                    userCorreo={userCorreo}         
+                    auth0={auth0}          />
             </UserProvider>
         </div>
     );

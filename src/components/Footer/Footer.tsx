@@ -28,7 +28,7 @@ function Footer() {
                 <h2 className="column-title">RECURSOS</h2>
                 <ul>
                     <li className="list-row"><a href='/busqueda' className="link">Buscar datos</a></li>
-                    <li className="list-row"><a href='/documentacion' className="link">Documentación</a></li>
+                    <li className="list-row"><a href='/documentacion' className="link">Guía de uso</a></li>
                     <li className="list-row"><a href='/uso-por-industria' className="link">Uso por industria</a></li>
                     <li className="list-row"><a href='/ventajas' className="link">Ventajas</a></li>
                     <li className="list-row"><Link href='https://stats.uptimerobot.com/MqqMLIxxZQ' legacyBehavior passHref><a className="link" target="_blank">Monitorio uptime</a></Link></li>
@@ -40,7 +40,6 @@ function Footer() {
                     <li className="list-row"><a href='/sobre-nosotros' className="link">¿Quienes somos?</a></li>
                     <li className="list-row"><a href='/contactanos' className="link">Contáctanos</a></li>
                     <li className="list-row"><a href='/unete-al-equipo' className="link">Únete al equipo</a></li>
-                    <li className="list-row"><a href='/casos-de-exito' className="link">Casos de éxito</a></li>
                     <li className="list-row"><a href='/respaldo-legal' className="link">Respaldo legal</a></li>
                     <li className="list-row"><a href='/planes' className="link">Precios</a></li>
                 </ul>
@@ -48,11 +47,10 @@ function Footer() {
               <div>
                 <h2 className="column-title">MI CUENTA</h2>
                 <ul>
-                    <li className="list-row"><a href='/mi-cuenta' className="link">Mi cuenta</a></li>
-                    <li className="list-row"><a href='/mi-cuenta' className="link">Mis datos</a></li>
-                    <li className="list-row"><a href='/mi-cuenta' className="link">Historial de pagos</a></li>
-                    <li className="list-row"><a href='/mi-cuenta' className="link">Saldo y uso de créditos</a></li>
-                    <li className="list-row"><a href='/mi-cuenta' className="link">Historial de busquedas</a></li>
+                    <li className="list-row"><a href='/micuenta' className="link">Mis datos</a></li>
+                    <li className="list-row"><a href='/micuenta/#compras' className="link">Historial de pagos</a></li>
+                    <li className="list-row"><a href='/micuenta/#soporte' className="link">Soporte</a></li>
+                    <li className="list-row"><a href='/micuenta/#busquedas' className="link">Historial de busquedas</a></li>
                 </ul>
               </div>
           </div>

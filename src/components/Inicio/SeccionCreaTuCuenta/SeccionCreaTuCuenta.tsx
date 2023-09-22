@@ -1,11 +1,15 @@
+"use client";
 import Image from "next/image";
 import './SeccionCreaTuCuenta.css'
 import ImageGrafico from "./image/grafico.svg"
 import Link from "next/link";
-
+import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
+import React, { useEffect, useState } from 'react';
 function SeccionCreaTuCuenta() {
+    const { user } = useUser();
+    console.log("estoy en crea tu cuenta: ", user)
   return (
-        <section className="seccion-crea-tu-cuenta">
+        <section className={`seccion-crea-tu-cuenta ${user != undefined ? 'ocultar' : ''}`}>
             <div>
                 <div className="crea-tu-cuenta">
                     <div className="content-izq">
