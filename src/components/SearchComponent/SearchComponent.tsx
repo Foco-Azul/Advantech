@@ -12,6 +12,7 @@ import TablaBusquedaJudiciales from './TablaBusquedaJudiciales';
 import CircularProgress from '@mui/material/CircularProgress';
 import { validateInput } from './InputValidationUtil'; // Import the validation function
 import Link from "next/link";
+import Multisearch from "./Multisearch"
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -432,9 +433,13 @@ const SearchComponent: React.FC = () => {
                             {selectedSource !== '' && (
                                 <>
                                     {!isLoadingData ? (
-                                        <button onClick={handleButtonClick} className='search-menu-button'>
-                                            Obtener datos
-                                        </button>
+                                        <>
+                                            <button onClick={handleButtonClick} className='search-menu-button'>
+                                                Obtener datos
+                                            </button>
+
+                                        </>
+
                                     ) : (
                                         <>
                                             <br></br>
