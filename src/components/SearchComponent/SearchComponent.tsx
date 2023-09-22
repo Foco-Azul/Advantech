@@ -426,11 +426,11 @@ const SearchComponent: React.FC = () => {
                                 </option>
                                 {CreditosFuentes.map((fuente) => (
                                     <option key={fuente.id} value={fuente.attributes.fuente}>
-                                        {fuente.attributes.fuente}
+                                        {fuente.attributes.consulta}
                                     </option>
                                 ))}
                             </select>
-                            {selectedSource !== '' && (
+                            {selectedSource !== '' &&   searchInputValue != "" && (
                                 <>
                                     {!isLoadingData ? (
                                         <>

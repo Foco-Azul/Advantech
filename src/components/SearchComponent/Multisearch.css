@@ -115,3 +115,11 @@
     width: 100%;
 
   }
+
+  .input-file{
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 25px;
+width: 100%;
+  }

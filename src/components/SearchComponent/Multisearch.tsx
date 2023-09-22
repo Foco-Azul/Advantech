@@ -471,11 +471,12 @@ const Multisearch: React.FC = () => {
 
       {!data && <>
         <br></br>
-        <label className='buscador-label-excel'>Subir Excel</label>
+        <label className='buscador-label-excel'>Sube tu archivo en formato Excel (*.xlsx)</label>
         <input
           type="file"
           accept=".xlsx, .xls"
           onChange={handleFileChange}
+          className='input-file'
         />
          <br></br></>
       }
