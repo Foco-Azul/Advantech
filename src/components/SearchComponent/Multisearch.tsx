@@ -5,6 +5,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ExcelJS from 'exceljs';
 import "./Multisearch.css"
 import Noticiastable from './Noticiastable';
+import { NoticiasExcel } from './NoticiasExcel';
+import { JudicialesExcel } from './JudicialesExcel';
+import Judicialestable from './Judicialestable';
 
 const Multisearch: React.FC = () => {
   const [fileData, setFileData] = useState<string | null>(null);
@@ -261,7 +264,15 @@ const Multisearch: React.FC = () => {
 
           setData(noticias)
 
-          handleDownloadExcel(noticias);
+          if (selectedSource === "judicial") {
+            JudicialesExcel(noticias);
+          }
+
+          if (selectedSource === "noticias") {
+            NoticiasExcel(noticias);
+          }
+
+
         } else {
           console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
         }
@@ -449,7 +460,7 @@ const Multisearch: React.FC = () => {
               Seleccionar fuente
             </option>
             {CreditosFuentes.map((fuente) => (
-              <option key={fuente.id} value={fuente.attributes.fuente}>
+              <option className='options' key={fuente.id} value={fuente.attributes.fuente}>
                 {fuente.attributes.consulta}
               </option>
             ))}
@@ -465,7 +476,8 @@ const Multisearch: React.FC = () => {
           type="file"
           accept=".xlsx, .xls"
           onChange={handleFileChange}
-        /></>
+        />
+         <br></br></>
       }
 
 
@@ -479,8 +491,9 @@ const Multisearch: React.FC = () => {
       }
       {!data && fileData && fileData.split(', ').length >= 1 &&
         <>
+          <br></br>
           <p>Créditos a consumir: {fileData && selectedFuenteCredito && fileData.split(', ').length * selectedFuenteCredito}</p>
-          <button onClick={handleButtonClick} className='search-menu-button' >Mostrar Datos</button>
+          <button onClick={handleButtonClick} className='download-button mostrar-datos'  >Obtener Datos</button>
         </>}
 
       {data && (
@@ -489,12 +502,19 @@ const Multisearch: React.FC = () => {
           <p>Datos obtenidos sobre  {selectedFuenteConsulta}</p>
           <br></br>
           <div className='table-container' onClick={copyDataToClipboard}>
-            <Noticiastable dataToDownload={data} />
+
+            {fuenteseleccionada == "noticias" && <Noticiastable dataToDownload={data} />}
+            {fuenteseleccionada == "judicial" && <Judicialestable dataToDownload={data} />}
+
           </div>
 
           <div className='download-button-container'>
-            <button className='download-button excel' onClick={() => handleDownloadExcel(data)}>Descargar Excel</button>
+
+            {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data)}>Descargar Excel</button>}
+            {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data)}>Descargar Excel</button>}
+
             <button className='download-button json' onClick={handleDownloadJSON}>Descargar Json</button>
+
           </div>
         </>
       )}

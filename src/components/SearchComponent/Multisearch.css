@@ -97,6 +97,21 @@
  thead {
   position: sticky;
   top: 0;
-  background-color: #fff; /* Cambia el color de fondo según tus preferencias */
+  background-color: #0099CC; /* Cambia el color de fondo según tus preferencias */
   z-index: 1; /* Coloca el encabezado por encima del contenido desplazable */
-}
+  color: white;
+  text-align: center;
+  }
+
+  td{
+    text-align: center;
+  }
+
+
+
+  .mostrar-datos{
+    margin: auto;
+    margin-top: 20px;
+    width: 100%;
+
+  }
