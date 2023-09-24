@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import "./TablaBusqueda.css"
 
 interface Data {
-  lugar: string;
-  estado: string;
-  delito: string;
-  unidad: string;
-  fecha: string;
+  cedula: string;
+  id_canton: string;
+  nombre: string;
+  provincia: string;
   id_juicio: string;
 }
 
@@ -20,105 +19,103 @@ interface TablaBusquedaProps {
 }
 
 const ITEMS_PER_PAGE = 25;
-
-const TablaBusquedaJudiciales: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) => {
+const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [paginatedData, setPaginatedData] = useState<SortedData[] | null>(null);
-  const [sortColumn, setSortColumn] = useState<keyof Data>("fecha");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [searchTerm, setSearchTerm] = useState('');
-  // const [selectedCities, setSelectedCities] = useState<string[]>([]);
-  // const [cityCounts, setCityCounts] = useState<{ [city: string]: number }>({});
-  // const [selectedYears, setSelectedYears] = useState<string[]>([]);
-  // const [yearCounts, setYearCounts] = useState<{ [city: string]: number }>({});
-  // const [openRegion, setOpenRegion] = useState<string | null>(null);
+  const [sortColumn, setSortColumn] = useState<keyof Data>("provincia");
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [cityCounts, setCityCounts] = useState<{ [city: string]: number }>({});
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
+  const [yearCounts, setYearCounts] = useState<{ [city: string]: number }>({});
+  const [openRegion, setOpenRegion] = useState<string | null>(null);
 
 
   useEffect(() => {
     if (data) {
+      console.log("data", data)
       const counts: { [city: string]: number } = {};
       const yearCounts: { [year: string]: number } = {};
 
-      // // Contar ocurrencias por ciudad y año
-      // Object.entries(data).forEach(([propertyKey, items]) =>
-      //   Object.entries(items).forEach(([itemKey, item]) => {
-      //     const city = item.lugar.toLowerCase();
-      //     const year = item.fecha.split('-')[0];
-      //     counts[city] = (counts[city] || 0) + 1;
-      //     yearCounts[year] = (yearCounts[year] || 0) + 1;
-      //   })
-      // );
+      // Contar ocurrencias por ciudad y año
+      Object.entries(data).forEach(([propertyKey, items]) =>
+        Object.entries(items).forEach(([itemKey, item]) => {
+          const city = (item.provincia || "Provincia Desconocida").toLowerCase();
+          counts[city] = (counts[city] || 0) + 1;
+        })
+      );
 
-      // setCityCounts(counts);
-      // setYearCounts(yearCounts);
+
+      setCityCounts(counts);
+      setYearCounts(yearCounts);
 
 
       // Filtrar datos por ciudades seleccionadas
-      // const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
-      //   Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
-      // ).filter(item => (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.lugar.toLowerCase())) ||
-      //   (selectedYears.includes(item.fecha.split('-')[0])));
+      const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
+        Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
+      ).filter(item => (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.provincia.toLowerCase())) ||
+        (selectedYears.includes(item.provincia.split('-')[0])));
 
 
       // Función para realizar búsqueda por aproximación retrocediendo letra por letra
-      // const searchApproximately = (term: string, data: any[]) => {
-      //   if (term.trim() === '') {
-      //     return data; // Si el término de búsqueda está vacío, mostrar todos los datos
-      //   }
+      const searchApproximately = (term: string, data: any[]) => {
+        if (term.trim() === '') {
+          return data; // Si el término de búsqueda está vacío, mostrar todos los datos
+        }
 
-      //   for (let i = term.length; i >= 1; i--) {
-      //     const truncatedSearchTerm = term.toLowerCase().substring(0, i);
-      //     const approximateFilteredData = data.filter(item =>
-      //       [
-      //         item.lugar.toLowerCase(),
-      //         item.estado.toLowerCase(),
-      //         item.delito.toLowerCase(),
-      //         item.unidad.toLowerCase(),
-      //         item.fecha.toLowerCase()
-      //       ].some(field => field.includes(truncatedSearchTerm))
-      //     );
-      //     if (approximateFilteredData.length > 0) {
-      //       return approximateFilteredData;
-      //     }
-      //   }
-      //   return [];
-      // };
+        for (let i = term.length; i >= 1; i--) {
+          const truncatedSearchTerm = term.toLowerCase().substring(0, i);
+          const approximateFilteredData = data.filter(item =>
+            [
+              (item.provincia || "Provincia Desconocida").toLowerCase(),
+              item.id_juicio.toLowerCase(),
+              (item.nombre || "Nombre Desconocida").toLowerCase(),
+              (item.cedula || "Cedula Desconocida").toLowerCase(),
 
-      // // Filtrar los datos según el término de búsqueda
-      // let filteredData = searchApproximately(searchTerm, filteredByCities);
+            ].some(field => field.includes(truncatedSearchTerm))
+          );
+          if (approximateFilteredData.length > 0) {
+            return approximateFilteredData;
+          }
+        }
+        return [];
+      };
 
-      // let filteredData = data
-      // // Sort filtered data based on sortColumn and sortOrder
-      // filteredData.sort((a, b) => {
-      //   const aValue = a[sortColumn];
-      //   const bValue = b[sortColumn];
-      //   if (aValue < bValue) {
-      //     return sortOrder === "asc" ? -1 : 1;
-      //   } else if (aValue > bValue) {
-      //     return sortOrder === "asc" ? 1 : -1;
-      //   }
-      //   return 0;
-      // });
+      // Filtrar los datos según el término de búsqueda
+      let filteredData = searchApproximately(searchTerm, filteredByCities);
+
+      // Sort filtered data based on sortColumn and sortOrder
+      filteredData.sort((a, b) => {
+        const aValue = a[sortColumn];
+        const bValue = b[sortColumn];
+        if (aValue < bValue) {
+          return sortOrder === "asc" ? -1 : 1;
+        } else if (aValue > bValue) {
+          return sortOrder === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
 
       // Calcular el número total de páginas basado en los datos filtrados
-      // const totalFilteredItems = filteredData.length;
-      // const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
-      // setTotalPages(totalPages);
+      const totalFilteredItems = filteredData.length;
+      const totalPages = Math.ceil(totalFilteredItems / ITEMS_PER_PAGE);
+      setTotalPages(totalPages);
 
-      // // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
-      // setCurrentPage(prevPage => Math.max(1, Math.min(prevPage, totalPages)));
+      // Actualizar el estado de currentPage si excede el nuevo totalPages después del cambio de datos
+      setCurrentPage(prevPage => Math.max(1, Math.min(prevPage, totalPages)));
 
-      // // Realizar la paginación en los datos filtrados
-      // const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-      // const endIndex = startIndex + ITEMS_PER_PAGE;
-      // const paginatedFilteredData = filteredData.slice(startIndex, endIndex);
-      // setPaginatedData(paginatedFilteredData);
-      console.log("data", data)
+      // Realizar la paginación en los datos filtrados
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const paginatedFilteredData = filteredData.slice(startIndex, endIndex);
+      setPaginatedData(paginatedFilteredData);
+
     }
 
-  }, [data, currentPage, sortColumn, sortOrder, searchTerm]);
+  }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities, selectedYears]);
 
 
   useEffect(() => {
@@ -164,8 +161,8 @@ const TablaBusquedaJudiciales: React.FC<TablaBusquedaProps> = ({ data, onSelecte
 
   const handleClearFilters = () => {
     setSearchTerm('');
-    // setSelectedCities([]);
-    // setSelectedYears([]);
+    setSelectedCities([]);
+    setSelectedYears([]);
   };
 
   const renderTableHeader = () => {
@@ -175,8 +172,17 @@ const TablaBusquedaJudiciales: React.FC<TablaBusquedaProps> = ({ data, onSelecte
     return (
       <tr>
         <th className='tablabusqueda-esquinaizquierda' onClick={handleSelectAll}>Seleccionar todo</th>
-        <th onClick={() => handleSort("lugar")}>
-          JUICIO {isSortingColumn("lugar") && (isAscending ? "▲" : "▼")}
+        <th onClick={() => handleSort("cedula")}>
+          cedula {isSortingColumn("cedula") && (isAscending ? "▲" : "▼")}
+        </th>
+        <th className='tablabusqueda-esquinaderecha' onClick={() => handleSort("id_juicio")}>
+          id_juicio {isSortingColumn("id_juicio") && (isAscending ? "▲" : "▼")}
+        </th>
+        <th onClick={() => handleSort("nombre")}>
+          nombre {isSortingColumn("nombre") && (isAscending ? "▲" : "▼")}
+        </th>
+        <th onClick={() => handleSort("provincia")}>
+          provincia {isSortingColumn("provincia") && (isAscending ? "▲" : "▼")}
         </th>
 
       </tr>
@@ -190,192 +196,146 @@ const TablaBusquedaJudiciales: React.FC<TablaBusquedaProps> = ({ data, onSelecte
 
     const searchTerms = searchTerm.toLowerCase().split(' ');
 
-    // let filteredData = paginatedData.filter(item => {
-    //   return (
-    //     (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.lugar.toLowerCase())) ||
-    //     (selectedYears.includes(item.fecha.split('-')[0])) &&
-    //     searchTerms.every(term =>
-    //       [
-    //         item.lugar.toLowerCase(),
-    //         item.estado.toLowerCase(),
-    //         item.delito.toLowerCase(),
-    //         item.unidad.toLowerCase(),
-    //         item.fecha.toLowerCase()
-    //       ].some(field => field.includes(term))
-    //     )
-    //   );
-    // });
+    let filteredData = paginatedData.filter(item => {
+      return (
+        (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.provincia.toLowerCase()))
+        &&
+        searchTerms.every(term =>
+          [
+            (item.provincia || "Provincia Desconocida").toLowerCase(),
+            item.id_juicio.toLowerCase(),
+            (item.nombre || "Nombre Desconocida").toLowerCase(),
+            (item.cedula || "Cedula Desconocida").toLowerCase(),
+          ].some(field => field.includes(term))
+        )
+      );
+    });
 
     // Si no hay coincidencias exactas, realizar búsqueda por aproximación retrocediendo letra por letra
-  //   if (filteredData.length === 0) {
-  //     const newFilteredData = [];
-  //     for (let i = searchTerm.length - 1; i >= 1; i--) {
-  //       const truncatedSearchTerm = searchTerm.toLowerCase().substring(0, i);
-  //       const approximateFilteredData = paginatedData.filter(item =>
-  //         [
-  //           item.lugar.toLowerCase(),
-  //           item.estado.toLowerCase(),
-  //           item.delito.toLowerCase(),
-  //           item.unidad.toLowerCase(),
-  //           item.fecha.toLowerCase()
-  //         ].some(field => field.includes(truncatedSearchTerm))
-  //       );
-  //       if (approximateFilteredData.length > 0) {
-  //         newFilteredData.push(...approximateFilteredData);
-  //         break;
-  //       }
-  //     }
-  //     filteredData = newFilteredData;
-  //   }
+    if (filteredData.length === 0) {
+      const newFilteredData = [];
+      for (let i = searchTerm.length - 1; i >= 1; i--) {
+        const truncatedSearchTerm = searchTerm.toLowerCase().substring(0, i);
+        const approximateFilteredData = paginatedData.filter(item =>
+          [
+            (item.provincia || "Provincia Desconocida").toLowerCase(),
+            item.id_juicio.toLowerCase(),
+            (item.nombre || "Nombre Desconocida").toLowerCase(),
+            (item.cedula || "Cedula Desconocida").toLowerCase(),
+          ].some(field => field.includes(truncatedSearchTerm))
+        );
+        if (approximateFilteredData.length > 0) {
+          newFilteredData.push(...approximateFilteredData);
+          break;
+        }
+      }
+      filteredData = newFilteredData;
+    }
 
-  //   return filteredData.map(item => {
-  //     const isSelected = selectedItems.includes(item.key);
+    return filteredData.map(item => {
+      const isSelected = selectedItems.includes(item.key);
 
-  //     const rowStyle = isSelected ? { boxShadow: 'inset 0px 0px 10px rgba(0 0 0 / 38%)' } : {};
+      const rowStyle = isSelected ? { boxShadow: 'inset 0px 0px 10px rgba(0 0 0 / 38%)' } : {};
 
-  //     return (
-  //       <tr
-  //         key={item.key}
-  //         className={`table-row${isSelected ? ' selected' : ''}`}
-  //         onClick={() => toggleSelectItem(item.key)}
-  //         style={rowStyle}
-  //       >
-  //         <td>
-  //           <input
-  //             type="checkbox"
-  //             checked={isSelected}
-  //             onChange={() => toggleSelectItem(item.key)}
-  //             onClick={e => e.stopPropagation()}
-  //             className="styled-checkbox"
-  //           />
-  //         </td>
-  //         <td>{item.lugar}</td>
-  //         <td>{item.delito}</td>
-  //         <td>{item.unidad}</td>
-  //         <td>{item.fecha}</td>
-  //       </tr>
-  //     );
-  //   });
-  // };
+      return (
+        <tr
+          key={item.key}
+          className={`table-row${isSelected ? ' selected' : ''}`}
+          onClick={() => toggleSelectItem(item.key)}
+          style={rowStyle}
+        >
+          <td>
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={() => toggleSelectItem(item.key)}
+              onClick={e => e.stopPropagation()}
+              className="styled-checkbox"
+            />
+          </td>
+          <td>{item.provincia}</td>
+          <td>{item.id_juicio}</td>
+          <td>{item.nombre}</td>
+          <td>{item.cedula}</td>
+        </tr>
+      );
+    });
+  };
 
-  // const handleCityToggle = (city: string) => {
-  //   if (selectedCities.includes(city)) {
-  //     setSelectedCities(prevSelectedCities =>
-  //       prevSelectedCities.filter(c => c !== city)
-  //     );
-  //   } else {
-  //     setSelectedCities(prevSelectedCities => [...prevSelectedCities, city]);
-  //   }
-  // };
-
-  // const generateYearList = () => {
-  //   const yearsSet = new Set<string>();
-  //   if (data) {
-  //     Object.entries(data).forEach(([propertyKey, items]) =>
-  //       Object.entries(items).forEach(([itemKey, item]) => {
-  //         const year = item.fecha.split('-')[0];
-  //         yearsSet.add(year);
-  //       })
-  //     );
-  //   }
-  //   return Array.from(yearsSet);
-  // };
-
-  // const handleYearToggle = (year: string) => {
-  //   if (selectedYears.includes(year)) {
-  //     setSelectedYears(prevSelectedYears =>
-  //       prevSelectedYears.filter(y => y !== year)
-  //     );
-  //   } else {
-  //     setSelectedYears(prevSelectedYears => [...prevSelectedYears, year]);
-  //   }
-  // };
-
-  // const renderYearList = () => {
-  //   return (
-  //     <div >
-  //       <h4 className='buscador-filtros-h4 '>Filtrar por años</h4>
-  //       <ul className="year-list">
-  //         {Object.entries(yearCounts).map(([year, count]) => (
-  //           <li key={year} className="year">
-  //             <label className="year-list-label">
-  //               <input
-  //                 type="checkbox"
-  //                 checked={selectedYears.includes(year)}
-  //                 onChange={() => handleYearToggle(year)}
-  //                 className="year-list-input"
-  //               />
-  //               {year} <span className="count">({count})</span>
-  //             </label>
-  //           </li>
-  //         ))}
-  //       </ul>
-  //     </div>
-  //   );
-  // };
+  const handleCityToggle = (city: string) => {
+    if (selectedCities.includes(city)) {
+      setSelectedCities(prevSelectedCities =>
+        prevSelectedCities.filter(c => c !== city)
+      );
+    } else {
+      setSelectedCities(prevSelectedCities => [...prevSelectedCities, city]);
+    }
+  };
 
 
-  // const renderCityList = () => {
 
 
-  //   const toggleRegionDropdown = (region: string) => {
-  //     setOpenRegion(prevOpenRegion =>
-  //       prevOpenRegion === region ? null : region
-  //     );
-  //   };
+  const renderCityList = () => {
 
-  //   const regionCityCounts: { [region: string]: number } = {};
 
-  //   Object.keys(cityCounts).forEach(city => {
-  //     const [region] = city.split(" - ");
-  //     if (region) {
-  //       regionCityCounts[region] = (regionCityCounts[region] || 0) + cityCounts[city];
-  //     }
-  //   });
+    const toggleRegionDropdown = (region: string) => {
+      setOpenRegion(prevOpenRegion =>
+        prevOpenRegion === region ? null : region
+      );
+    };
 
-  //   return (
-  //     <div className="city-list">
-  //       <h4 className="buscador-filtros-h4">Filtrar por ciudades</h4>
-  //       <ul>
-  //         {Object.entries(regionCityCounts).map(([region, count]) => (
-  //           <li key={region}>
-  //             <button
-  //               className={`region-toggle-button ${openRegion === region ? "open" : ""
-  //                 }`}
-  //               onClick={() => toggleRegionDropdown(region)}
-  //             >
-  //               {region.charAt(0).toUpperCase() + region.slice(1)} <span className="count">({count})</span>
-  //             </button>
-  //             {openRegion === region && (
-  //               <ul className="city-dropdown-content">
-  //                 {Object.keys(cityCounts).map(city => {
-  //                   const [cityRegion, cityName] = city.split(" - ");
-  //                   if (cityRegion === region) {
-  //                     return (
-  //                       <li key={city}>
-  //                         <label className="city-list-label">
-  //                           <input
-  //                             type="checkbox"
-  //                             checked={selectedCities.includes(city)}
-  //                             onChange={() => handleCityToggle(city)}
-  //                             className="city-list-input"
-  //                           />
-  //                           {cityName.charAt(0).toUpperCase() + cityName.slice(1)}  <span className="count">({cityCounts[city]}) </span>
-  //                         </label>
-  //                       </li>
-  //                     );
-  //                   }
-  //                   return null;
-  //                 })}
-  //               </ul>
-  //             )}
-  //           </li>
-  //         ))}
-  //       </ul>
-  //     </div>
-  //   );
-  // };
-  }
+    const regionCityCounts: { [region: string]: number } = {};
+
+    Object.keys(cityCounts).forEach(city => {
+      const [region] = city.split(" - ");
+      if (region) {
+        regionCityCounts[region] = (regionCityCounts[region] || 0) + cityCounts[city];
+      }
+    });
+
+    return (
+      <div className="city-list">
+        <h4 className="buscador-filtros-h4">Filtrar por ciudades</h4>
+        <ul>
+          {Object.entries(regionCityCounts).map(([region, count]) => (
+            <li key={region}>
+              <button
+                className={`region-toggle-button ${openRegion === region ? "open" : ""
+                  }`}
+                onClick={() => toggleRegionDropdown(region)}
+              >
+                {region.charAt(0).toUpperCase() + region.slice(1)} <span className="count">({count})</span>
+              </button>
+              {openRegion === region && (
+                <ul className="city-dropdown-content">
+                  {Object.keys(cityCounts).map(city => {
+                    const [cityRegion, cityName] = city.split(" - ");
+                    if (cityRegion === region) {
+                      return (
+                        <li key={city}>
+                          <label className="city-list-label">
+                            <input
+                              type="checkbox"
+                              checked={selectedCities.includes(city)}
+                              onChange={() => handleCityToggle(city)}
+                              className="city-list-input"
+                            />
+                            {cityName.charAt(0).toUpperCase() + cityName.slice(1)}  <span className="count">({cityCounts[city]}) </span>
+                          </label>
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div >
       {data != null && Object.keys(data[Object.keys(data)[0]]).length === 0 && (
@@ -396,8 +356,7 @@ const TablaBusquedaJudiciales: React.FC<TablaBusquedaProps> = ({ data, onSelecte
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="ej: Robo"
               />
-              {/* {renderCityList()}
-              {renderYearList()} */}
+              {renderCityList()}
               <button className="clear-filters-button" onClick={handleClearFilters}>
                 Limpiar filtros
               </button>
@@ -422,4 +381,4 @@ const TablaBusquedaJudiciales: React.FC<TablaBusquedaProps> = ({ data, onSelecte
   );
 };
 
-export default TablaBusquedaJudiciales;
+export default TablaBusqueda;
