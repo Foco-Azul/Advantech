@@ -1,6 +1,4 @@
-"use client"
 
-import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
 import SubscriptionComponent from '@/components/Suscription/SuscriptionComponent';
@@ -11,6 +9,15 @@ import "../globals.css"
 import './busqueda.css';
 import SearchComponent from '@/components/SearchComponent/SearchComponent';
 import SelectionSearch from '@/components/SearchComponent/SelectionSearch';
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Busqueda",
+  description: "esta es una descripcion de prueba",
+  openGraph: {
+    images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
+  }
+}
 
 
 export default function Busqueda() {

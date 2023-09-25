@@ -44,8 +44,7 @@ const SearchComponent: React.FC = () => {
 
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
-
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -524,7 +523,7 @@ const SearchComponent: React.FC = () => {
                         }
                         {
                             //Caso usuario vencido 
-                            user && isPlanVencido &&
+                            user && isPlanVencido && planId &&
                             <>
                                 <br></br>
                                 <p className='search-error'>Tu plan esta vencido</p>
@@ -536,11 +535,24 @@ const SearchComponent: React.FC = () => {
                             </>
                         }
                         {
+                            //Caso usuario vencido 
+                            user && (planId==null || planId == undefined) &&
+                            <>
+                                <br></br>
+                                <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor suscribete a un plan.</p>
+                                <Link href="/planes" legacyBehavior passHref>
+                                    <button className='search-menu-button' >
+                                        Suscribete para continuar
+                                    </button>
+                                </Link>
+                            </>
+                        }
+                        {
                             //Caso sin usuario
                             !user &&
                             <>
                                 <br></br>
-                                <p className='search-error'>No tienes una cuenta</p>
+                                <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor crea una cuenta, y suscribete a un plan.</p>
                                 <Link href={"/api/auth/login"}>
                                     <button className='search-menu-button' >
                                         Crea tu cuenta para continuar
