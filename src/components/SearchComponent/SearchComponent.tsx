@@ -44,8 +44,7 @@ const SearchComponent: React.FC = () => {
 
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
-
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=*`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -421,7 +420,6 @@ const SearchComponent: React.FC = () => {
     const handleReloadPage = () => {
         window.location.reload(); // This will reload the page
     };
-
     return (
         <UserProvider>
 
@@ -540,7 +538,7 @@ const SearchComponent: React.FC = () => {
                         </div>
                         {    //Caso con créditos y usuario
                             user && userCredits != null && selectedFuenteCredito && userCredits >= selectedFuenteCredito &&
-                            seleccionUsuarioCount > 0 && mostrartabla &&
+                            seleccionUsuarioCount > 0 && mostrartabla && !isPlanVencido &&
                             <>
                                 <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
                                     Obtener en detalle los datos seleccionados
@@ -563,7 +561,7 @@ const SearchComponent: React.FC = () => {
                         }
                         {
                             //Caso usuario vencido 
-                            user && isPlanVencido &&
+                            user && isPlanVencido && planId &&
                             <>
                                 <br></br>
                                 <p className='search-error'>Tu plan esta vencido</p>
@@ -575,14 +573,27 @@ const SearchComponent: React.FC = () => {
                             </>
                         }
                         {
+                            //Caso usuario vencido 
+                            user && (planId==null || planId == undefined) &&
+                            <>
+                                <br></br>
+                                <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor suscribete a un plan.</p>
+                                <Link href="/planes" legacyBehavior passHref>
+                                    <button className='search-menu-button' >
+                                        Suscribete para continuar
+                                    </button>
+                                </Link>
+                            </>
+                        }
+                        {
                             //Caso sin usuario
                             !user &&
                             <>
                                 <br></br>
-                                <p className='search-error'>No tienes una cuenta</p>
+                                <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor crea una cuenta, y suscribete a un plan.</p>
                                 <Link href={"/api/auth/login"}>
                                     <button className='search-menu-button' >
-                                        Crea tu cuenta para continuar
+                                        Ingresa con tu cuenta para continuar
                                     </button>
                                 </Link>
                             </>

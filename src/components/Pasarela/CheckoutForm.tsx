@@ -162,7 +162,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                     nombre: userCorreo,
                     asunto: "Nueva suscripción",
                     para: userCorreo,
-                    contenido: plan,
+                    contenido: `${plan};${creditos};${fechaVencimiento}`,
                   },
                 }),
                 cache: "no-store",

@@ -5,6 +5,7 @@ import "./script.js";
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import Link from "next/link";
 import { useUrl } from 'nextjs-current-url';
+import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta";
 
 const Micuenta: React.FC = () => {
     const { user, error, isLoading } = useUser();
@@ -104,6 +105,9 @@ const Micuenta: React.FC = () => {
     };
     return (
         <UserProvider>
+            <>
+            <br />
+            {user !== undefined && (
             <div className="micuenta-div-container">
                 <br></br>
                 <br></br>
@@ -320,6 +324,11 @@ const Micuenta: React.FC = () => {
                     </div>
                 </div>
             </div >
+             )}
+             {user === undefined && (
+            <SeccionCreaTuCuenta />
+            )}
+            </>
         </UserProvider >
     );
 };

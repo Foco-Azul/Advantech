@@ -6,7 +6,7 @@ import Footer from '@/components/Footer/Footer';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata: Metadata = {
-    title: "Creditos",
+    title: "Mi cuenta",
     description: "esta es una descripcion de prueba",
     openGraph: {
         images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
