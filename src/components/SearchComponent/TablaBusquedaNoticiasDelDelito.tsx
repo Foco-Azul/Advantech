@@ -388,8 +388,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       )}
       {data && Object.keys(data[Object.keys(data)[0]]).length > 0 && (
         <>
-          <p>Selecciona los datos que quieres traer en detalle</p>
-
+          {/* <p>Selecciona los datos que quieres traer en detalle</p> */}
           <div className='container-tablabusqueda'>
             <div className='buscador-filtros'>
               <h3 className='buscador-filtros-h3'>FILTROS</h3>
