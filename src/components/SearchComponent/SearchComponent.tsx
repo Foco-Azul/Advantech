@@ -44,7 +44,7 @@ const SearchComponent: React.FC = () => {
 
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=*`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -393,7 +393,6 @@ const SearchComponent: React.FC = () => {
     const handleReloadPage = () => {
         window.location.reload(); // This will reload the page
     };
-
     return (
         <UserProvider>
 
@@ -500,7 +499,7 @@ const SearchComponent: React.FC = () => {
                         </div>
                         {    //Caso con créditos y usuario
                             user && userCredits != null && selectedFuenteCredito && userCredits >= selectedFuenteCredito &&
-                            seleccionUsuarioCount > 0 && mostrartabla &&
+                            seleccionUsuarioCount > 0 && mostrartabla && !isPlanVencido &&
                             <>
                                 <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
                                     Obtener en detalle los datos seleccionados
@@ -555,7 +554,7 @@ const SearchComponent: React.FC = () => {
                                 <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor crea una cuenta, y suscribete a un plan.</p>
                                 <Link href={"/api/auth/login"}>
                                     <button className='search-menu-button' >
-                                        Crea tu cuenta para continuar
+                                        Ingresa con tu cuenta para continuar
                                     </button>
                                 </Link>
                             </>
