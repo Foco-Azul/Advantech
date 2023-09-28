@@ -16,8 +16,8 @@
   margin: 14px;
   box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
   min-width: 99px;
-  color: #ffffff;
-  background-color: #0099CC;
+  color: #0099CC;
+  background-color: #ffffff;
   text-align: center;
   font-size: 14px;
   font-family: Manrope, sans-serif;
@@ -36,8 +36,8 @@
   margin: 14px;
   margin-bottom: 14px;
   box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0.384);
-  background-color: #ffffff;
-  color: #0099CC;
+  background-color: #0099CC;;
+  color: #ffffff;
   text-align: center;
   font-size: 14px;
   font-family: Manrope, sans-serif;
@@ -51,8 +51,8 @@
 .search-button:hover {
   border-radius: 6px;
   box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
-  background-color: #ffffff;
-  color: #0099CC;
+  background-color: #0099CC;
+  color: #ffffff;
   text-align: center;
   font-size: 14px;
   font-family: Manrope, sans-serif;

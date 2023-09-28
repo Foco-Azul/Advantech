@@ -66,6 +66,9 @@ const SearchComponent: React.FC = () => {
     }
 
 
+
+
+
     async function creditosfuentes() {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/creditos-fuentes`, {
@@ -116,6 +119,19 @@ const SearchComponent: React.FC = () => {
                 console.error('Failed to fetch user data:', error);
             });
         creditosfuentes()
+        const savedSearchInputValue = localStorage.getItem('searchInputValue');
+        const savedSelectedSource = localStorage.getItem('selectedSource');
+
+        if (savedSearchInputValue && user) {
+            // Si hay un valor en el localStorage, autorellenar el campo de búsqueda
+            setSearchInputValue(savedSearchInputValue);
+        }
+
+        if (savedSelectedSource && user) {
+            // Si hay un valor en el localStorage, autorellenar el campo de búsqueda
+            setSelectedSource(savedSelectedSource);
+        }
+
 
     }, [user]);
 
@@ -183,7 +199,14 @@ const SearchComponent: React.FC = () => {
                             handleSelectedItems(allItems);
                         }
                         console.log("data", data)
-
+                        if (!user) {
+                            // Guardar searchInputValue en el localStorage si el usuario no está registrado
+                            localStorage.setItem('searchInputValue', searchInputValue);
+                        }
+                        if (user) {
+                            localStorage.removeItem('searchInputValue');
+                            localStorage.removeItem('selectedSource');
+                        }
                     } else {
                         console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
                     }
@@ -388,6 +411,10 @@ const SearchComponent: React.FC = () => {
 
         // Update the selectedFuenteCredito state with the corresponding credito value
         setSelectedFuenteCredito(selectedFuenteObj ? selectedFuenteObj.attributes.credito : null);
+
+        if (!user) {
+            localStorage.setItem('selectedSource', selectedValue);
+        }
     };
 
     const handleReloadPage = () => {
@@ -400,6 +427,8 @@ const SearchComponent: React.FC = () => {
                 {!DatosTabla && (
                     <div>
                         <div className='buscador-container'>
+                            <label className='buscador-label aviso'>En los siguientes campos tienes que completar con el nombre o RUC de la persona o entidad que deseas buscar, además selecciona la fuente de donde quieres los datos.</label>
+                            <br></br>
                             <label className='buscador-label'>Ingresa un nombre completo o RUC</label>
                             <input
                                 type="text"
@@ -428,7 +457,7 @@ const SearchComponent: React.FC = () => {
                                     </option>
                                 ))}
                             </select>
-                            {selectedSource !== '' &&   searchInputValue != "" && (
+                            {selectedSource !== '' && searchInputValue != "" && (
                                 <>
                                     {!isLoadingData ? (
                                         <>
@@ -439,9 +468,12 @@ const SearchComponent: React.FC = () => {
                                         </>
 
                                     ) : (
-                                        <>
+                                        <>  <div className='loading-overlay'>
+                                            <p>Estamos procesando tus datos</p>
                                             <br></br>
+                                            {/* <p>En breve comenzará la descarga</p> */}
                                             <CircularProgress></CircularProgress>
+                                        </div>
                                         </>
                                     )}
                                 </>
@@ -458,7 +490,14 @@ const SearchComponent: React.FC = () => {
                             mostrartabla &&
                             <>
                                 <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
-                                {fuenteseleccionada == "noticias" &&
+                                <p>
+                                    {DatosTabla && Object.keys(DatosTabla).length > 0 && (
+                                        `Obtuvimos ${Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length} registros para ${searchInputValue}, selecciona los registros que desees, y descargarlos. `
+                                    )}
+
+                                    <br></br>
+                                    Tenemos un filtro a la izquierda donde puedes precisar más los datos de tu búsqueda. Recuerda que la descarga tiene un valor de {selectedFuenteCredito} créditos.
+                                </p>                                {fuenteseleccionada == "noticias" &&
                                     <>
                                         <TablaBusquedaNoticiasDelDelito data={DatosTabla} onSelectedItems={handleSelectedItems} />
                                     </>
