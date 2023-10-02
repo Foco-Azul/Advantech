@@ -202,3 +202,83 @@ tr:nth-child(even) {
     flex-direction: column;
     max-width: 550px;
 }
+
+.eliminar-cuenta > ul,
+.eliminar-cuenta > p,
+.eliminar-cuenta > button{
+    margin-left: 50px;
+}
+.eliminar-cuenta > h2{
+    
+}
+.hero-icon-container {
+    color: var(--brand-primary, #009FDE);
+    text-align: center;
+    font-size: 14px;
+    font-family: Manrope, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%;
+    display: flex;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.hero-icon-container svg {
+    height: 20px;
+}
+.hero-icon-container:hover{
+    transform: scale(1.05);
+    margin-left: 20px;
+}
+.darse-de-baja{
+    display: flex;
+    justify-content: flex-end;
+    padding: 50px;
+    width: 50%;
+    margin: auto;
+}
+
+/* Estilo para el div de eliminación de cuenta (popup) */
+.eliminar-cuenta {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 700px;
+    text-align: center;
+  }
+.eliminar-cuenta > ul{
+    text-align: initial;
+}
+.eliminar-cuenta > h3{
+    font-size: 32px;
+    font-weight: 800;
+    color: #009fde;
+    margin-bottom: 20px;
+}
+.eliminar-cuenta > button{
+    margin: 20px;
+}
+  /* Estilo para el fondo semitransparente detrás del popup */
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+  
+.cerrar-popup{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -30px;
+}
+.cerrar-popup > svg{
+    color: #009fde;
+    cursor: pointer;
+}

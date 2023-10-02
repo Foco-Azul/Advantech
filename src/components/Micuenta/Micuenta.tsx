@@ -6,6 +6,9 @@ import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import Link from "next/link";
 import { useUrl } from 'nextjs-current-url';
 import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta";
+import { ArrowRight } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 
 const Micuenta: React.FC = () => {
     const { user, error, isLoading } = useUser();
@@ -15,6 +18,7 @@ const Micuenta: React.FC = () => {
     const [userCredits, setUserCredits] = useState<number | null>(null);
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
+    const [userActivo, setUserActivo] = useState<boolean | null>(null);
     const [planId, setPlanId] = useState<number | null>(null);
     const currentDate = new Date();
     const vencimientoDate = userVencimiento ? new Date(userVencimiento) : null;
@@ -30,7 +34,62 @@ const Micuenta: React.FC = () => {
     const [apiset, setApiset] = useState(false);
     const { href: currentUrl, pathname } = useUrl() ?? {};
     
+    const [mostrarEliminarCuenta, setMostrarEliminarCuenta] = useState(false);
 
+    function handleOnClick() {
+      // Cuando haces clic en el enlace, cambia el estado para mostrar el div "Eliminar cuenta"
+      setMostrarEliminarCuenta(true);
+    }
+    function handleClosePopup() {
+        setMostrarEliminarCuenta(false);
+      }
+    const handleDarseDeBaja = async () => {
+        if (user) {
+            // Realizar el POST con los datos requeridos
+           const postResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
+             {
+               method: "PUT",
+               headers: {
+                 "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                 data: {
+                    estaactivo: false
+                 },
+               }),
+               cache: "no-store",
+             }
+           );
+            if (postResponse.status === 200) {
+                console.log("la cuenta fue dado de baja");
+                const postResponse2 = await fetch(
+                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+                      },
+                      body: JSON.stringify({
+                        data: {
+                          nombre: userEmail,
+                          asunto: "Cuenta inactiva",
+                          para: userEmail,
+                          contenido: "30"
+                        },
+                      }),
+                      cache: "no-store",
+                    }
+                  );
+                // Recargar la página después de completar ambos POST
+                window.location.reload();
+            } else {
+                console.log(postResponse.status);
+                throw new Error(`Failed to create user, ${postResponse.status}`);
+            }
+        }
+    };
     // Función para mostrar u ocultar la sección API
     const toggleApiSection = () => {
         // Si no se ha hecho clic en la sección API, entonces realiza la llamada para obtener el valor real de la API
@@ -51,7 +110,7 @@ const Micuenta: React.FC = () => {
     // ... your existing getuser function ...
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=*`, {
 
                 method: "GET",
                 headers: {
@@ -84,6 +143,7 @@ const Micuenta: React.FC = () => {
                     setUserId(foundUser.id)
                     setPlanId(foundUser.attributes.plan?.data.id)
                     setPurchaseHistory(foundUser.attributes.historials.data);
+                    setUserActivo(foundUser.attributes.estaactivo)
                 }
             })
             .catch((error) => {
@@ -103,6 +163,7 @@ const Micuenta: React.FC = () => {
             });
         }
     };
+
     return (
         <UserProvider>
             <>
@@ -142,6 +203,10 @@ const Micuenta: React.FC = () => {
                         >
                             Soporte
                         </button>
+
+                        <a href="/api/auth/logout" className={"tab-button"}>
+                            Salir
+                        </a>
 
                         {apiset && <button id='api'
                             className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}
@@ -187,9 +252,48 @@ const Micuenta: React.FC = () => {
                                             </>
                                         )}
                                     </div>
+                                    
                                     {/* Verificar si los créditos son 0 o el plan está vencido */}
 
                                 </div>
+                                <div className='darse-de-baja'>
+                                    <a className="hero-icon-container" onClick={handleOnClick}>
+                                    Darse de baja <ArrowRight className="hero-icon" />
+                                    </a>
+                                </div>
+                                
+                                {mostrarEliminarCuenta && ( // Mostrar el div "Eliminar cuenta" si mostrarEliminarCuenta es true
+                                        <div className="overlay">
+                                            <div className='eliminar-cuenta'>
+                                            <div className="cerrar-popup">
+                                                <FontAwesomeIcon  icon={faCircleXmark} size="2xl" onClick={handleClosePopup} />
+                                            </div>
+                                            <h3 className='micuenta-h2'>Darse de baja</h3>
+                                            <ul>
+                                                <li>Tu acceso al sitio se eliminará por completo.</li>
+                                                <li>Ya no recibirás correos electrónicos por parte de Advantech Datos.</li>
+                                                <li>Sin embargo, tus registros de pagos y búsquedas seguirán almacenados en nuestra base de datos.</li>
+                                            </ul>
+                                            <br />
+                                            {userActivo ? (
+                                                <p><strong>Tu cuenta se dará de baja en las próximas 24 horas.</strong></p>
+                                            ) : (
+                                                <p><strong>Esta cuenta se la dará de baja en las próximas 24 horas.</strong></p>
+                                            )}
+                                            {userActivo ? (
+                                                <button 
+                                                className={`navigation-menu-button`}
+                                                onClick={handleDarseDeBaja}
+                                                >
+                                                Darse de baja
+                                                </button>
+                                            ) : (
+                                                <br />
+                                            )}
+                                            </div>
+                                        </div>
+                                )}
+
                             </div>
                         )}
 

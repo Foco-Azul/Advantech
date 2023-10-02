@@ -99,7 +99,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
               data: {
                 plan: planid,
                 creditos: creditos + userCredits,
-                vencimiento: fechaVencimiento
+                vencimiento: fechaVencimiento,
+                estaactivo: true
               },
             }
             ),
@@ -142,7 +143,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                     nombre: userCorreo,
                     asunto: "Compra de creditos",
                     para: userCorreo,
-                    contenido: "creditos:"+creditos,
+                    contenido: `${plan};${creditos};${fechaVencimiento}`,
                   },
                 }),
                 cache: "no-store",

@@ -79,8 +79,7 @@ function Login({ loginname }: LoginProps) {
              body: JSON.stringify({
                data: {
                  codigo_de_verificacion: codigoUnico,
-                 auth0: false,
-                 estaactivo: true
+                 auth0: false
                },
              }),
              cache: "no-store",
@@ -96,31 +95,30 @@ function Login({ loginname }: LoginProps) {
        }
        if (user && user.sub && user.sub.includes("google")) {
         // Realizar el POST con los datos requeridos
-       const postResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
-         {
-           method: "PUT",
-           headers: {
-             "Content-Type": "application/json",
-           },
-           body: JSON.stringify({
-             data: {
-               codigo_de_verificacion: codigoUnico,
-               google: true,
-               estaactivo: true
-             },
-           }),
-           cache: "no-store",
-         }
-       );
-       
-       if (postResponse.status === 200) {
-         console.log("Usuario creado con éxito.");
-       } else {
-         console.log(postResponse.status);
-         throw new Error(`Failed to create user, ${postResponse.status}`);
-       }
-     }
+        const postResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: {
+                codigo_de_verificacion: codigoUnico,
+                google: true
+              },
+            }),
+            cache: "no-store",
+          }
+        );
+        
+        if (postResponse.status === 200) {
+          console.log("Usuario creado con éxito.");
+        } else {
+          console.log(postResponse.status);
+          throw new Error(`Failed to create user, ${postResponse.status}`);
+        }
+      }
       } else {
         console.log("El correo electrónico no existe en el array de objetos.");
         if (foundUser && typeof user.email === 'string') {
