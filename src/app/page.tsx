@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Advantech datos",
-  description: "Encuentra datos públicos actualizados de personas en Ecuador con nuestro buscador en línea. ¡Consulta múltiples fuentes de manera sencilla!",
+  description: "Descubre Advantech Datos, la plataforma que te permite desbloquear el potencial de los datos en Ecuador. Encuentra datos públicos actualizados de personas y empresas de fuentes confiables. Impulsa tu organización al siguiente nivel con nuestros servicios de consulta, suscripciones y APIs. ¡Regístrate ahora y accede a información valiosa de manera rápida y sencilla!",
   openGraph: {
     images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   }

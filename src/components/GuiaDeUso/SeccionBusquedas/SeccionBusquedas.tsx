@@ -25,7 +25,7 @@ function SeccionBusquedas() {
         <div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'FINANZAS' ? 'contenido-activo' : '')}>
             <div className="seccion-titulo">
-              <h4>Uso de datos en Finanzas</h4>
+              <h4></h4>
               <h2>Evaluación crediticia</h2>
               <p>
                 El uso de datos públicos en el sector de las finanzas es una práctica cada vez más común y valiosa para diversas empresas e instituciones financieras. Estos datos pueden ser utilizados para una variedad de propósitos en el sector financiero, tales como análisis de mercado, toma de decisiones de inversión, gestión de riesgos y creación de productos y servicios financieros.
