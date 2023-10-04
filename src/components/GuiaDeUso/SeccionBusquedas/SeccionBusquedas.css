@@ -137,6 +137,24 @@
 .uso_de_datos-pestaña-contenido.contenido-activo{
   display: flex;
 }
+
+.sobrenosotros-icon-container {
+  color: var(--brand-primary, #009FDE);
+  font-family: Manrope, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  transition: 0.5s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sobrenosotros-icon-container:hover{
+  transform: scale(1.05);
+  margin-left: 20px;
+}
 @media only screen and (max-width: 525px) {
   .uso_de_datos-pestaña-contenido .seccion-titulo,
   .uso_de_datos-pestaña-contenido .imagen{

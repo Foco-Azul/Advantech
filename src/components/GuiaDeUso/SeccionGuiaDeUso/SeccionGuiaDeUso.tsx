@@ -10,7 +10,7 @@ function SeccionGuiaDeUso() {
         <div className="seccion-titulo">
           <h4>Guia de busquedas</h4>
           <h2>Aprende cómo realizar busquedas</h2>
-          <p>Mediante nuestra Guía de busquedas, te enseñaremos cómo realizar una busqueda simple o por lotes para encontrar datos públicos actualizados de personas en Ecuador con nuestro buscador en línea.</p>
+          <p>Mediante nuestra guía de busquedas, te enseñaremos desde cómo realizar una busqueda simple o por lotes hasta como acceder a los datos públicos de las personas que desees.</p>
         </div>
         <div className='seccion-imagen'>
           <Image src={ImageEquipo} alt='Advantech Datos'></Image>

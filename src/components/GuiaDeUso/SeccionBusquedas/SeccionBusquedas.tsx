@@ -6,6 +6,8 @@ import Image from 'next/image';
 import Imagen1 from './images/Finanzas.png';
 import Imagen2 from './images/RRHH.png';
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import Link from 'next/link';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function SeccionBusquedas() {
   const [activeTab, setActiveTab] = useState('FINANZAS');
@@ -75,6 +77,7 @@ function SeccionBusquedas() {
                 <span className="guia-subtitulo">Obteniendo los resultados: </span>
                 Para acceder a los resultados de la búsqueda, es necesario que inicies sesión, te suscribas a un plan y contar con los créditos requeridos para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formatos como <strong>PDF</strong>, <strong>XLSX</strong>, <strong>CSV</strong> o <strong>JSON</strong>.
               </p>
+              <Link href="https://admin.advantech.com.ec/uploads/datos_2c3228839d.xlsx" legacyBehavior passHref><a className="sobrenosotros-icon-container">Descarga nuestro Excel de ejemplo<FontAwesomeIcon icon={faArrowRight} className="hero-icon"/></a></Link>
             </div>
             <div className='imagen'>
               <video src="https://admin.advantech.com.ec/uploads/video.mp4" controls></video>
