@@ -33,11 +33,11 @@ function SeccionBusquedas() {
                 En la pestaña "Búsqueda Simple", puedes llevar a cabo búsquedas sin necesidad de iniciar sesión. Tienes la opción de buscar por <strong>nombre</strong> (preferiblemente el nombre completo) o por el número de <strong>RUC</strong> (identificación de la persona).
                 <br />
                 Además, tendrás la opción de seleccionar las fuentes de resultados que deseas obtener, las cuales incluyen:
+              </p>
                 <ul>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
                 </ul>
-              </p>
               <p>
                 <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
                 Los resultados de la búsqueda por nombre pueden coincidir con más de una persona, mientras que la búsqueda por RUC te dará resultados precisos de una sola persona.
@@ -64,11 +64,11 @@ function SeccionBusquedas() {
                 En la pestaña "Búsqueda por Lote", primero, debes iniciar sesión y contar con un plan para poder realizar una búsqueda. En este caso, deberás cargar un archivo Excel (XLSX) que contenga únicamente <strong>nombres</strong> o números de <strong>RUC</strong> de las personas que deseas buscar.
                 <br />
                 Además, tendrás la opción de seleccionar las fuentes de resultados que deseas obtener, las cuales incluyen:
+              </p>
                 <ul>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
                 </ul>
-              </p>
               <p>
                 <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
                 Los resultados de la búsqueda por nombre pueden coincidir con más de una persona, mientras que la búsqueda por RUC te dará resultados precisos de una sola persona.
