@@ -75,7 +75,7 @@
   margin: 30px 0 10px;
 }
 .seccion-uso_de_datos .seccion-titulo > p{
-  max-width: 80%;
+  max-width: 85%;
   margin: 30px 0;
 }
 
@@ -144,5 +144,8 @@
   }
   .uso_de_datos-pestaña-contenido.contenido-activo{
     padding: 20px 10px;
+  }
+  .seccion-uso_de_datos .seccion-titulo > p{
+    max-width: 100%;
   }
 }
