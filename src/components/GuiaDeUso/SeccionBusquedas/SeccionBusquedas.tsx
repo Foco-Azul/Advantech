@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import './SeccionBusquedas.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
-import Imagen1 from './images/Finanzas.png'
-import Imagen2 from './images/RRHH.png'
-import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";
-
+import Imagen1 from './images/Finanzas.png';
+import Imagen2 from './images/RRHH.png';
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 
 function SeccionBusquedas() {
   const [activeTab, setActiveTab] = useState('FINANZAS');
@@ -25,44 +24,54 @@ function SeccionBusquedas() {
         <div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'FINANZAS' ? 'contenido-activo' : '')}>
             <div className="seccion-titulo">
-              <h4></h4>
-              <h2>Evaluación crediticia</h2>
+              <h4>Guia para realizar una busqueda simple</h4>
+              <h2>Obteniendo datos de una persona</h2>
               <p>
-                El uso de datos públicos en el sector de las finanzas es una práctica cada vez más común y valiosa para diversas empresas e instituciones financieras. Estos datos pueden ser utilizados para una variedad de propósitos en el sector financiero, tales como análisis de mercado, toma de decisiones de inversión, gestión de riesgos y creación de productos y servicios financieros.
+                <span className="guia-subtitulo">Realizando una busqueda: </span>
+                En la pestaña de Búsqueda Simple, puedes realizar búsquedas sin necesidad de estar logueado. Puedes buscar por <strong>nombre</strong> (preferiblemente nombre completo) o por <strong>RUC</strong> (identificación de la persona).
+                <br />
+                Ademas puedes elegir las fuentes de los resultados que desees obtener, entre ellas estan:
+                <ul>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
+                </ul>
               </p>
-              <p>Aquí te presento algunas formas en las que se utilizan los datos públicos en el sector de las finanzas:</p>
-              <ul>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Análisis de mercado</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Información de empresas</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Evaluación de riesgos</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Cumplimiento regulatorio</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Investigación financiera y predicción</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Desarrollo de productos y servicios financieros</span></li>
-              </ul>
+              <p>
+                <span className="guia-subtitulo">Resultados de mi busqueda: </span>
+                Los resultados de la búsqueda por nombre pueden coincidir con más de una persona, mientras que la búsqueda por RUC te dará resultados precisos de una sola persona.
+              </p>
+              <p>
+                <span className="guia-subtitulo">Filtrando los resultados: </span>
+                Independientemente de si realizas la búsqueda por <strong>nombre</strong> o <strong>RUC</strong>, podras filtrar los resultados por <strong>lugar</strong> o <strong>año</strong>. Además, podras realizar búsquedas específicas dentro de los resultados obtenidos 
+              </p>
+              <p>
+                <span className="guia-subtitulo">Obteniendo los resultados: </span>
+                Para acceder a los resultados de la búsqueda, es necesario iniciar sesión y suscribirse a un plan que incluya los <strong>créditos</strong> necesarios para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formato <strong>PDF</strong>, <strong>XLSX</strong> o <strong>CSV</strong>.
+              </p>
             </div>
             <div className='imagen'>
-              <Image src={Imagen1} alt='Advantech Datos'></Image>
+              <video src="https://admin.advantech.com.ec/uploads/video.mp4" controls></video>
             </div>
           </div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'RECURSOS HUMANOS' ? 'contenido-activo' : '')}>
             <div className="seccion-titulo">
-              <h4>Uso de datos en RRHH</h4>
+              <h4>Tutorial de Búsqueda por Lote</h4>
               <h2>Evaluación de personal</h2>
               <p>
-                En el sector de Recursos Humanos (RRHH), el uso de datos públicos puede ser valioso para diversas actividades relacionadas con la gestión de talento y el desarrollo de estrategias para la fuerza laboral de una empresa. <br /><br />
-                A continuación, te muestro algunas formas en las que se utilizan los datos públicos en el sector de RRHH:
+                En la pestaña de Búsqueda por Lote, puedes realizar búsquedas más extensas relacionadas con la gestión de talento y estrategias de recursos humanos.
               </p>
-              <ul>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Búsqueda y reclutamiento de talento</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Validación de información del candidato</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Evaluación de cultura y fit cultural</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Análisis de mercado laboral</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Planificación de la sucesión y desarrollo profesional</span></li>
-                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Investigación de antecedentes: laboral y educativo, y obtener información adicional que pueda ser relevante para la toma de decisiones de contratación</span></li>
-              </ul>
+              <p>Aquí tienes algunos pasos para realizar una búsqueda por lote:</p>
+              <ol>
+                <li>Selecciona la pestaña "Búsqueda por Lote".</li>
+                <li>Inicia sesión en tu cuenta (si es necesario).</li>
+                <li>Sube un archivo CSV con los datos de las personas que deseas buscar.</li>
+                <li>Especifica los criterios de búsqueda si es necesario.</li>
+                <li>Procesa la búsqueda por lote.</li>
+                <li>Obtén y revisa los resultados para tomar decisiones informadas en la gestión de talento.</li>
+              </ol>
             </div>
             <div className='imagen'>
-              <Image src={Imagen2} alt='Advantech Datos'></Image>
+              <video src="https://admin.advantech.com.ec/uploads/video.mp4" controls></video>
             </div>
           </div>
         </div>

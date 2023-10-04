@@ -68,12 +68,18 @@
   color: #20ABE2;
 }
 .seccion-uso_de_datos .seccion-titulo > h2{
-  font-size: 42px;
+  font-size: 32px;
   font-weight: 800;
   color: #131022;
 }
+.seccion-uso_de_datos .seccion-titulo > p > span.guia-subtitulo{
+  font-size: 16px;
+  font-weight: 600;
+  color: #131022;
+  margin: 30px 0 10px;
+}
 .seccion-uso_de_datos .seccion-titulo > p{
-  max-width: 420px;
+  max-width: 80%;
   margin: 30px 0;
 }
 
