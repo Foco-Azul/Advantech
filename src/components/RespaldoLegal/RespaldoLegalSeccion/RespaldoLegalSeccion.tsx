@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function RespaldoLegalSeccion() {
-  const [activeTab, setActiveTab] = useState('AVISO-DE-PRIVACIDAD');
+  const [activeTab, setActiveTab] = useState('TERMINOS-Y-CONDICIONES');
 
   const handleTabClick = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
