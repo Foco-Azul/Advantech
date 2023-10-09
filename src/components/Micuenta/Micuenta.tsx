@@ -6,9 +6,11 @@ import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import Link from "next/link";
 import { useUrl } from 'nextjs-current-url';
 import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/SeccionCreaTuCuenta";
+import SeccionFormulario from "@/components/Micuenta/SeccionFormulario/SeccionFormulario";
 import { ArrowRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+
 
 const Micuenta: React.FC = () => {
     const { user, error, isLoading } = useUser();
@@ -33,8 +35,31 @@ const Micuenta: React.FC = () => {
     const [isCopied, setIsCopied] = useState(false);
     const [apiset, setApiset] = useState(false);
     const { href: currentUrl, pathname } = useUrl() ?? {};
-    
     const [mostrarEliminarCuenta, setMostrarEliminarCuenta] = useState(false);
+    // Agregar la función para verificar y mostrar el valor de 'ver' en la consola
+    const checkAndLogVerParam = () => {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const codigo = urlSearchParams.get('ver');
+        if (codigo) {
+            switch (codigo) {
+                case 'datos':
+                    setActiveTab('datos');
+                    break;
+                case 'compras':
+                    setActiveTab('compras');
+                    break;
+                case 'busquedas':
+                    setActiveTab('busquedas');
+                    break;
+                case 'soporte':
+                    setActiveTab('soporte');
+                    break;
+                // Agrega más casos según tus necesidades
+                default:
+                    break;
+            }
+        }
+    };
 
     function handleOnClick() {
       // Cuando haces clic en el enlace, cambia el estado para mostrar el div "Eliminar cuenta"
@@ -133,6 +158,8 @@ const Micuenta: React.FC = () => {
     }
 
     useEffect(() => {
+        // Llamar a la función cuando se carga el componente
+        checkAndLogVerParam();
         getuser()
             .then((foundUser) => {
                 if (foundUser) {
@@ -364,31 +391,32 @@ const Micuenta: React.FC = () => {
                         )}
 
                         {activeTab === 'soporte' && (
-                            <div>
+                            <div className='mi-cuenta-soporte'>
                                 <h2 className='micuenta-h2-datos'>Soporte</h2>
-                                <div className='micuenta-datos'>
+                                <div>
+                                    <div className='micuenta-datos'>
+                                        <div className='micuenta-datos-card'>
+                                            <span className='micuenta-datos-title'> Tipo de soporte</span>
+                                            <span className='micuenta-datos-subtitle'>{userPlan}</span>
+                                        </div>
+                                        <div>
+                                            <br></br>
+                                            <p>Si necesitas ayuda envianos un mail a </p>
+                                            <a href="mailto:contacto@advantech.com">contacto@advantech.com</a>
+                                            {userPlan == "Enterprise" &&
+                                                <>
+                                                    <br></br>
+                                                    <br></br>
+                                                    <a className="tab-button" href="https://api.whatsapp.com/send?phone=17049707717">Solicitar soporte por WhatsApp</a>
+                                                </>
 
-                                    <div className='micuenta-datos-card'>
-                                        <span className='micuenta-datos-title'> Tipo de soporte</span>
-                                        <span className='micuenta-datos-subtitle'>{userPlan}</span>
+                                            }
+                                        </div>
                                     </div>
-                                    <div>
-                                        <br></br>
-                                        <p>Si necesitas ayuda envianos un mail a </p>
-                                        <a href="mailto:contacto@advantech.com">contacto@advantech.com</a>
-                                        {userPlan == "Enterprise" &&
-                                            <>
-                                                <br></br>
-                                                <br></br>
-                                                <a className="tab-button" href="https://api.whatsapp.com/send?phone=17049707717">Solicitar soporte por WhatsApp</a>
-                                            </>
-
-                                        }
-                                    </div>
-                                    {/* Verificar si los créditos son 0 o el plan está vencido */}
-
-                                </div>
+                                    <SeccionFormulario/>
+                                </div> 
                             </div>
+                           
                         )}
 
                         {/* Resto de tu código ... */}

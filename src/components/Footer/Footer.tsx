@@ -48,9 +48,9 @@ function Footer() {
                 <h2 className="column-title">MI CUENTA</h2>
                 <ul>
                     <li className="list-row"><a href='/micuenta' className="link">Mis datos</a></li>
-                    <li className="list-row"><a href='/micuenta/#compras' className="link">Historial de pagos</a></li>
-                    <li className="list-row"><a href='/micuenta/#soporte' className="link">Soporte</a></li>
-                    <li className="list-row"><a href='/micuenta/#busquedas' className="link">Historial de busquedas</a></li>
+                    <li className="list-row"><a href='/micuenta/?ver=compras' className="link">Historial de pagos</a></li>
+                    <li className="list-row"><a href='/micuenta/?ver=soporte' className="link">Soporte</a></li>
+                    <li className="list-row"><a href='/micuenta/?ver=busquedas' className="link">Historial de busquedas</a></li>
                 </ul>
               </div>
           </div>

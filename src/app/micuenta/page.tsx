@@ -19,7 +19,7 @@ export default function Micuentaview() {
         <div className="micuenta">
             <NavMenu></NavMenu>
             <UserProvider>
-                <Micuenta></Micuenta>
+                <Micuenta/>
             </UserProvider>
             <Footer></Footer>
         </div>

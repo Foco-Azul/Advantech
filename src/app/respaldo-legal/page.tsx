@@ -4,7 +4,7 @@ import NavMenu from '@/components/NavMenu/index';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "../globals.css"
 import './respaldo-legal.css';
-import VerificarCorreo from '@/components/VerificarCorreo/VerificarCorreo';
+import RespaldoLegalSeccion from '@/components/RespaldoLegal/RespaldoLegalSeccion/RespaldoLegalSeccion';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,13 +23,7 @@ export default function confirmarCorreo() {
           <NavMenu />
         </UserProvider>
       </header>
-      <br />
-      <br />
-      <br />
-      <h1 className="hero-short-title">Respaldo legal</h1>
-      <br />
-      <br />
-      <br />
+      <RespaldoLegalSeccion/>
       <UserProvider>
       </UserProvider>
       <Footer />

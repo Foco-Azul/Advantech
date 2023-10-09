@@ -51,7 +51,7 @@ const SeccionFormulario: React.FC = () => {
     try {
       // Realizar el POST con los datos requeridos
       const postResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/formulario-contactos`,
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/formulario-soportes`,
         {
           method: "POST",
           headers: {
@@ -87,7 +87,7 @@ const SeccionFormulario: React.FC = () => {
   };
 
   return (
-    <section className="formulario-contactanos">
+    <section className="formulario-soporte">
       <div className="formulario-contenedor">
         {formSubmitted ? (
             // Mostrar mensaje de envío correcto si el formulario se ha enviado
@@ -95,7 +95,7 @@ const SeccionFormulario: React.FC = () => {
               <p>¡Tu formulario ha sido enviado exitosamente!</p>
             </div>
           ) : (
-        <form className="contactanos" onSubmit={handleSubmit}>
+        <form className="soporte" onSubmit={handleSubmit}>
           <div className='campos'>
             <label htmlFor="plan">Plan*</label>
             <select
@@ -105,8 +105,8 @@ const SeccionFormulario: React.FC = () => {
               onChange={handleChange}
               required
             >
-               <option value="">Selecciona el plan de tu interés</option>
-              <option value="Personalizado">Personalizado</option>
+               <option value="">Selecciona tu plan actual</option>
+              <option value="A la carta">Personalizado</option>
               <option value="Estántar">Estántar</option>
               <option value="Premium">Premium</option>
               <option value="Enteprise">Enteprise</option>
