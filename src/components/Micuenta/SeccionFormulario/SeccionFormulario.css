@@ -1,0 +1,109 @@
+.formulario-soporte {
+  padding: 20px;
+  max-width: fit-content;
+}
+.formulario-soporte .formulario-contenedor{
+  background-color: #ffffff;
+  padding: 40px;
+  box-shadow: 0px -2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px -4.6px 12px -1px rgba(19, 16, 34, 0.06);
+  border-radius: 8px;
+}
+.formulario-soporte .formulario-contenedor .campos{
+  display: flex;
+  flex-direction: column;
+}
+.formulario-soporte .campos label{
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  line-height: 26px;
+  color: #131022;
+}
+.formulario-soporte .campos input,
+.formulario-soporte .campos select{
+  width: 462px;
+  padding: 13px 10px;
+  border: 1px solid #D4D7E5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.formulario-soporte .campos input:focus,
+.formulario-soporte .campos select:focus,
+.formulario-soporte .campos textarea:focus {
+  border-color: #9E9E9E; /* Cambia el color a tu preferencia */
+  outline: none; /* Esto quita el contorno predeterminado en algunos navegadores */
+}
+.formulario-soporte .campos textarea{
+  resize: none;
+  width: 462px;
+  padding: 13px 10px;
+  border: 1px solid #D4D7E5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: 100px;
+}
+.formulario-soporte .acuerdo label{
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+.formulario-soporte .acuerdo label input{
+  margin: 0 10px;
+  width: 24px;
+  height: 24px;
+}
+.formulario-soporte .acuerdo label p{
+  font-size: 16px;
+  font-weight: 400;
+  color: #585C7B;
+}
+.formulario-soporte .acuerdo label a{
+  color: #009FDE;
+}
+.hero-button {
+  height: 52px;
+  border-radius: 6px;
+  background: var(--brand-primary, #009FDE);
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+  min-width: 225px;
+  color: var(--white, #FFF);
+  text-align: center;
+  font-size: 16px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  margin-top: 15px;
+  transition: 0.5s;
+}
+
+
+.hero-button:hover {
+  box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+  transform: scale(0.95);
+}
+div.micuenta-datos-container > div.mi-cuenta-soporte > div > div.micuenta-datos{
+  display: flex;
+  flex-direction: column;
+}
+
+div.micuenta-datos-container > div > div > div.micuenta-datos > div:nth-child(2){
+  margin-left: 20px;
+}
+div.micuenta-datos-container > div.mi-cuenta-soporte > div{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 525px) {
+  .formulario-soporte .campos textarea,
+  .formulario-soporte .campos input,
+  .formulario-soporte .campos select{
+      max-width: 80vw;
+  }
+  .formulario-soporte .formulario-contenedor{
+    padding: 40px 10px;
+  }
+}

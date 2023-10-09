@@ -12,7 +12,7 @@ import Tabla from "@/components/Tabla/Tabla";
 
 export const metadata: Metadata = {
     title: "Creditos",
-    description: "esta es una descripcion de prueba",
+    description: "Advantech Datos: Compra créditos según tus necesidades. Explora nuestro plan personalizado y elige entre varios rangos de precio. Obtén acceso a datos relevantes para tu industria. ¡Únete a nosotros hoy mismo!",
     openGraph: {
         images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
     }

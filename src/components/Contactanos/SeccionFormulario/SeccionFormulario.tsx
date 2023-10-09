@@ -106,7 +106,7 @@ const SeccionFormulario: React.FC = () => {
               required
             >
                <option value="">Selecciona el plan de tu interés</option>
-              <option value="A la carta">A la carta</option>
+              <option value="Personalizado">Personalizado</option>
               <option value="Estántar">Estántar</option>
               <option value="Premium">Premium</option>
               <option value="Enteprise">Enteprise</option>

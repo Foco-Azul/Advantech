@@ -82,8 +82,9 @@
 .suscripcion-imagen > img{
     position: absolute;
     z-index: -1;
-    margin-top: -50px;
-    margin-left: -90px;
+    margin-top: 90px;
+    margin-left: 0px;
+    max-width: 850px;
 }
 @media only screen and (max-width: 525px) {
 

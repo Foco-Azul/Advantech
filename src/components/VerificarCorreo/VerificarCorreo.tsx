@@ -18,8 +18,10 @@ const VerificarCorreo: React.FC = () => {
   const [creditosFuente, setCreditosFuente] = useState<any[]>([]);
   const [severifico, setSeverifico] = useState(false); // Agrega la variable severifico
   const [estado, setEstado] = useState(-2); // Agrega la variable severifico
+  
 
   async function searchUser() {
+    
     try {
       if(user){
         const response = await fetch(
@@ -38,6 +40,7 @@ const VerificarCorreo: React.FC = () => {
         }
         const data = await response.json();
         const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
+        console.log("urlSearchParams")
         if (user && user.sub && user.sub.includes("auth0")) {
           // Realiza la acción cuando user.sub contiene "auth0"
           if (foundUser ) {

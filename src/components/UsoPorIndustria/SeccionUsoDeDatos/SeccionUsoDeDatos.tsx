@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import './SeccionUsoDeDatos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
-import Imagen from './imagen.svg'
+import Imagen1 from './images/Finanzas.png'
+import Imagen2 from './images/RRHH.png'
 import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";
 
 
@@ -40,7 +41,7 @@ function SeccionUsoDeDatos() {
               </ul>
             </div>
             <div className='imagen'>
-              <Image src={Imagen} alt='Advantech Datos'></Image>
+              <Image src={Imagen1} alt='Advantech Datos'></Image>
             </div>
           </div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'RECURSOS HUMANOS' ? 'contenido-activo' : '')}>
@@ -61,7 +62,7 @@ function SeccionUsoDeDatos() {
               </ul>
             </div>
             <div className='imagen'>
-              <Image src={Imagen} alt='Advantech Datos'></Image>
+              <Image src={Imagen2} alt='Advantech Datos'></Image>
             </div>
           </div>
         </div>
