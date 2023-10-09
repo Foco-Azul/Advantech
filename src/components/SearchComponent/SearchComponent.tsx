@@ -13,6 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { validateInput } from './InputValidationUtil'; // Import the validation function
 import Link from "next/link";
 import Multisearch from "./Multisearch"
+import TablaBusquedaTitulos from './TablaBusquedaTitulos';
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -41,6 +42,8 @@ const SearchComponent: React.FC = () => {
     const [isLoadingData, setIsLoadingData] = useState(false);
     const [inputErrors, setInputErrors] = useState<{ specialCharacters?: string; emptyInput?: string }>({});
     const [fuenteseleccionada, setFuenteseleccionada] = useState("");
+    const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
+
 
     async function getuser() {
         try {
@@ -150,6 +153,7 @@ const SearchComponent: React.FC = () => {
                     },
                     body: JSON.stringify({
                         list: [searchInputValue],
+                        item_type: selectedType,
                         source: getSourceValue(),
                         key: 'valid_api_key'
                     }),
@@ -175,7 +179,6 @@ const SearchComponent: React.FC = () => {
                         const secondJsonData = await secondResponse.json();
                         const noticias = secondJsonData.data;
                         setDatosTabla(noticias);
-
                         let primeraPropiedad;
                         for (let propiedad in noticias) {
                             if (noticias.hasOwnProperty(propiedad)) {
@@ -400,6 +403,11 @@ const SearchComponent: React.FC = () => {
         setSeleccionUsuario(selectedItems)
     };
 
+    const handleTypeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedType(e.target.value); // Actualiza el estado del tipo de búsqueda
+    };
+
+
     const handleSourceSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value;
         setSelectedSource(selectedValue); // Update the selected source state when the user selects an option
@@ -427,20 +435,34 @@ const SearchComponent: React.FC = () => {
                 {!DatosTabla && (
                     <div>
                         <div className='buscador-container'>
+
                             <label className='buscador-label aviso'>En los siguientes campos tienes que completar con el nombre o RUC de la persona o entidad que deseas buscar, además selecciona la fuente de donde quieres los datos.</label>
                             <br></br>
-                            <label className='buscador-label'>Ingresa un nombre completo o RUC</label>
+                            <br></br>
+                            <label className='buscador-label'>Selecciona el tipo de búsqueda</label>
+                            <select
+                                id="typeSelector"
+                                value={selectedType}
+                                onChange={handleTypeSelect}
+                                className='search-inputs'
+                            >
+                                <option value="nombres" >Nombre</option>
+                                <option value="cedulas">Cédula</option>
+                            </select>
+                            <br></br>
+                            <label className='buscador-label'>Ingresa un {selectedType.slice(0, -1)}</label>
                             <input
                                 type="text"
                                 value={searchInputValue}
                                 onChange={(e) => setSearchInputValue(e.target.value.toUpperCase())}
                                 className='search-inputs'
-                                placeholder='Nombre completo o RUC'
+                                placeholder={selectedType.slice(0, -1).charAt(0).toUpperCase() + selectedType.slice(0, -1).slice(1)}
                             />
                             {inputErrors.specialCharacters && <p className="error-message">{inputErrors.specialCharacters}</p>}
                             {inputErrors.emptyInput && <p className="error-message">{inputErrors.emptyInput}</p>}
                         </div>
                         <div className='buscador-container'>
+
                             <label className='buscador-label'>Selecciona la fuente de datos</label>
                             <select
                                 id="sourceSelector"
@@ -497,7 +519,8 @@ const SearchComponent: React.FC = () => {
 
                                     <br></br>
                                     Tenemos un filtro a la izquierda donde puedes precisar más los datos de tu búsqueda. Recuerda que la descarga tiene un valor de {selectedFuenteCredito} créditos.
-                                </p>                                {fuenteseleccionada == "noticias" &&
+                                </p>
+                                {fuenteseleccionada == "noticias" &&
                                     <>
                                         <TablaBusquedaNoticiasDelDelito data={DatosTabla} onSelectedItems={handleSelectedItems} />
                                     </>
@@ -506,6 +529,12 @@ const SearchComponent: React.FC = () => {
                                 {fuenteseleccionada == "judicial" &&
                                     <>
                                         <TablaBusquedaJudiciales data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    </>
+                                }
+
+                                {fuenteseleccionada == "titulos" &&
+                                    <>
+                                        <TablaBusquedaTitulos data={DatosTabla} onSelectedItems={handleSelectedItems} />
                                     </>
                                 }
 
@@ -574,7 +603,7 @@ const SearchComponent: React.FC = () => {
                         }
                         {
                             //Caso usuario vencido 
-                            user && (planId==null || planId == undefined) &&
+                            user && (planId == null || planId == undefined) &&
                             <>
                                 <br></br>
                                 <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor suscribete a un plan.</p>

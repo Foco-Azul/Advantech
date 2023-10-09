@@ -8,6 +8,8 @@ import Noticiastable from './Noticiastable';
 import { NoticiasExcel } from './NoticiasExcel';
 import { JudicialesExcel } from './JudicialesExcel';
 import Judicialestable from './Judicialestable';
+import Titulostable from './Titulostable';
+import { TitulosExcel } from './TitulosExcel';
 
 const Multisearch: React.FC = () => {
   const [fileData, setFileData] = useState<string | null>(null);
@@ -25,6 +27,7 @@ const Multisearch: React.FC = () => {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [data, setData] = useState<any>(null);
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
   useEffect(() => {
     getuser()
@@ -169,36 +172,49 @@ const Multisearch: React.FC = () => {
         const worksheet = workbook.Sheets[firstSheetName];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-        // Filtrar y mapear las celdas que contienen números
-        const numbers = sheetData
+        // Filtrar y mapear las celdas que no están vacías ni contienen caracteres especiales
+        const filteredData = sheetData
           .flat()
-          .filter((cell) => typeof cell === 'number' && !isNaN(cell));
+          .filter((cell) => {
+            if (typeof cell === 'string') {
+              // Verificar si la celda no está vacía y no contiene caracteres especiales
+              return cell.trim() !== '' && /^[A-Za-z0-9\s]+$/.test(cell);
+            } else if (typeof cell === 'number') {
+              // Conservar los números sin filtrar
+              return true;
+            }
+            return false;
+          });
 
-        // Eliminar números duplicados usando una matriz y un conjunto auxiliar
-        const uniqueNumbers = [];
+        // Eliminar valores duplicados usando una matriz y un conjunto auxiliar
+        const uniqueData = [];
         const seen = new Set();
 
-        for (const num of numbers) {
-          if (!seen.has(num)) {
-            seen.add(num);
-            uniqueNumbers.push(num);
+        for (const item of filteredData) {
+          if (!seen.has(item)) {
+            seen.add(item);
+            uniqueData.push(item);
           }
         }
 
-        // Mostrar los números únicos en la consola
-        console.log('Números únicos encontrados:', uniqueNumbers);
+        // Mostrar los valores únicos en la consola
+        console.log('Valores únicos encontrados:', uniqueData);
 
-        // Convierte los números únicos en una cadena separada por comas y consoléala.
-        const numbersAsString = uniqueNumbers.join(', ');
-        console.log('Números únicos como cadena:', numbersAsString);
+        // Convierte los valores únicos en una cadena separada por comas y consoléala.
+        const dataAsString = uniqueData.join(', ');
+        console.log('Valores únicos como cadena:', dataAsString);
 
         // Guardar los datos del archivo Excel en el estado
-        setFileData(numbersAsString);
+        setFileData(dataAsString);
       };
 
       reader.readAsBinaryString(file);
     }
   };
+
+
+
+
 
   const getSourceValue = () => {
     const selector = document.getElementById('sourceSelector') as HTMLSelectElement;
@@ -208,17 +224,22 @@ const Multisearch: React.FC = () => {
 
   const handleSourceSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
-    setSelectedSource(selectedValue); // Update the selected source state when the user selects an option
 
-    // Find the selected fuente object from the CreditosFuentes array
+    // Encuentra el objeto de fuente seleccionada desde el array CreditosFuentes
     const selectedFuenteObj = CreditosFuentes.find(
       (fuenteObj) => fuenteObj.attributes.fuente === selectedValue
     );
 
-    // Update the selectedFuenteCredito state with the corresponding credito value
+    // Actualiza el estado de la fuente de datos seleccionada y la fuente de consulta
+    setSelectedSource(selectedFuenteObj ? selectedFuenteObj.attributes.fuente : "");
     setSelectedFuenteCredito(selectedFuenteObj ? selectedFuenteObj.attributes.credito : null);
     setSelectedFuenteConsulta(selectedFuenteObj ? selectedFuenteObj.attributes.consulta : null);
   };
+
+  const handleTypeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedType(e.target.value); // Actualiza el estado del tipo de búsqueda
+  };
+
 
   const handleButtonClick = async () => {
 
@@ -232,6 +253,7 @@ const Multisearch: React.FC = () => {
         },
         body: JSON.stringify({
           list: fileData?.split(', '),
+          item_type: selectedType,
           source: getSourceValue(),
           key: 'valid_api_key'
         }),
@@ -305,150 +327,26 @@ const Multisearch: React.FC = () => {
     }
   };
 
-  const handleDownloadExcel = async (dataToDownload: any) => {
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Datos');
-
-    // Definir estilos para el encabezado
-    const headerStyle = {
-      font: { size: 15, bold: true }, // Cambiamos el tamaño de fuente a 15
-      alignment: { horizontal: 'center' },
-      fill: {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'FFD9D9D9' }, // Color de relleno gris
-      },
-    };
-
-    // Agregar fila de encabezado
-    const headerRow = worksheet.addRow([
-      "Ruc",
-      "Type",
-      "Lugar",
-      "Noticia del delito",
-      "Estado",
-      "Delito",
-      "Unidad",
-      "Fecha",
-      "Digitador",
-      "Numero informe",
-      "Resumen unidad",
-      "Sujetos",
-      "Cedula",
-      "Nombre",
-      "Estado"
-    ]);
-
-    // Aplicar estilo al encabezado
-    headerRow.eachCell((cell) => {
-      cell.fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: '0099CC' },
-      };
-      cell.font = {
-        color: { argb: 'FFFFFF' }, // Color de fuente blanco
-        bold: true,
-        size: 13,
-      };
-      cell.alignment = { horizontal: 'center' }; // Alineación horizontal centrada
-    });
-
-    // Recorrer el JSON y agregar los datos a la hoja de trabajo
-    for (const key in dataToDownload) {
-      if (Object.prototype.hasOwnProperty.call(dataToDownload, key)) {
-        const entryData = dataToDownload[key];
-        const ruc = key;
-
-        // Verificar si hay datos para este "ruc"
-        if (Object.keys(entryData).length > 0) {
-          for (const entryKey in entryData) {
-            if (Object.prototype.hasOwnProperty.call(entryData, entryKey)) {
-              const sujetos = entryData[entryKey]["sujetos"];
-              if (sujetos) {
-                for (const sujetoKey in sujetos) {
-                  if (Object.prototype.hasOwnProperty.call(sujetos, sujetoKey)) {
-                    const sujetoData = sujetos[sujetoKey];
-                    const rowData = [
-                      ruc, // Columna "Ruc"
-                      entryData[entryKey].type || "",
-                      entryData[entryKey]["lugar"] || "",
-                      entryData[entryKey]["Noticia del delito"] || "",
-                      entryData[entryKey]["estado"] || "",
-                      entryData[entryKey]["delito"] || "",
-                      entryData[entryKey]["unidad"] || "",
-                      entryData[entryKey]["fecha"] || "",
-                      entryData[entryKey]["digitador"] || "",
-                      entryData[entryKey]["numero informe"] || "",
-                      entryData[entryKey]["resumen unidad"] || "",
-                      sujetoKey, // Columna "sujetos"
-                      sujetoData["cedula"] || "", // Columna "cedula"
-                      sujetoData["nombre"] || "", // Columna "nombre"
-                      sujetoData["estado"] || "" // Columna "estado"
-                    ];
-
-                    worksheet.addRow(rowData);
-                  }
-                }
-              }
-            }
-          }
-        } else {
-          // Agregar una fila solo si el "ruc" está vacío
-          const rucRowData = [ruc, "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos", "sin datos"];
-          worksheet.addRow(rucRowData);
-        }
-      }
-    }
-
-    // Ajustar automáticamente el ancho de las columnas al contenido
-
-    worksheet.columns.forEach((column) => {
-      let maxLength = 0;
-      if (column.eachCell) {
-        column.eachCell({ includeEmpty: true }, (cell) => {
-          const columnLength = cell.value ? cell.value.toString().length + 10 : 0;
-          if (columnLength > maxLength) {
-            maxLength = columnLength;
-          }
-        });
-      }
-      column.width = maxLength < 10 ? 10 : maxLength + 2; // Establecer un ancho mínimo
-    });
-
-    worksheet.autoFilter = {
-      from: {
-        row: 1, // Fila de encabezado
-        column: 1, // Columna de inicio (1 para la primera columna)
-      },
-      to: {
-        row: worksheet.rowCount + 1, // +1 para incluir la fila de encabezado
-        column: worksheet.columns.length, // Última columna
-      },
-    };
-
-    // Generar archivo Excel
-    const buffer = await workbook.xlsx.writeBuffer();
-
-    // Crear un Blob y enlace de descarga
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "datos.xlsx";
-
-    // Simular un clic en el enlace para iniciar la descarga
-    a.click();
-    // Liberar recursos
-    URL.revokeObjectURL(url);
-
-  };
+  
 
   return (
     <div>
 
       {!data &&
         <div className='buscador-container'>
+          <label className='buscador-label aviso'>En los siguientes campos tienes que seleccionar la fuente de datos, y consecuentemente subir el archivo en formato xlsx (Excel).</label>
+          <br></br>
+          <label className='buscador-label'>Selecciona el tipo de búsqueda</label>
+          <select
+            id="typeSelector"
+            value={selectedType}
+            onChange={handleTypeSelect}
+            className='search-inputs'
+          >
+            <option value="nombres">Nombres</option>
+            <option value="cedulas">Cédulas</option>
+          </select>
+          <br></br>
           <label className='buscador-label'>Selecciona la fuente de datos</label>
           <select
             id="sourceSelector"
@@ -478,7 +376,7 @@ const Multisearch: React.FC = () => {
           onChange={handleFileChange}
           className='input-file'
         />
-         <br></br></>
+        <br></br></>
       }
 
 
@@ -493,7 +391,15 @@ const Multisearch: React.FC = () => {
       {!data && fileData && fileData.split(', ').length >= 1 &&
         <>
           <br></br>
-          <p>Créditos a consumir: {fileData && selectedFuenteCredito && fileData.split(', ').length * selectedFuenteCredito}</p>
+          <p>Créditos a consumir: {fileData && selectedFuenteCredito !== null && (
+            (selectedType === "nombres"
+              ? (fileData.split(', ').filter(item => /[a-zA-Z]/.test(item)).length * selectedFuenteCredito) 
+              : (selectedType === "cedulas"
+                ? (fileData.split(', ').filter(item => /^\d+$/.test(item)).length * selectedFuenteCredito)
+                : 0)
+            )
+          )}</p>
+
           <button onClick={handleButtonClick} className='download-button mostrar-datos'  >Obtener Datos</button>
         </>}
 
@@ -506,6 +412,7 @@ const Multisearch: React.FC = () => {
 
             {fuenteseleccionada == "noticias" && <Noticiastable dataToDownload={data} />}
             {fuenteseleccionada == "judicial" && <Judicialestable dataToDownload={data} />}
+            {fuenteseleccionada == "titulos" && <Titulostable dataToDownload={data} />}
 
           </div>
 
@@ -513,6 +420,7 @@ const Multisearch: React.FC = () => {
 
             {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data)}>Descargar Excel</button>}
             {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data)}>Descargar Excel</button>}
+            {fuenteseleccionada == "titulos" && <button className='download-button excel' onClick={() => TitulosExcel(data)}>Descargar Excel</button>}
 
             <button className='download-button json' onClick={handleDownloadJSON}>Descargar Json</button>
 
