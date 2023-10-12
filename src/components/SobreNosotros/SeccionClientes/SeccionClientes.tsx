@@ -1,5 +1,5 @@
 import './SeccionClientes.css';
-import Marca_1 from "./image/Datafast-final.png"
+import Marca_1 from "./image/datafast.png"
 import Marca_2 from "./image/diners.png"
 import Marca_3 from "./image/pichincha.png"
 import Image from 'next/image';
