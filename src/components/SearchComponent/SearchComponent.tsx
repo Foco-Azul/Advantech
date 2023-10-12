@@ -13,6 +13,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { validateInput } from './InputValidationUtil'; // Import the validation function
 import Link from "next/link";
 import Multisearch from "./Multisearch"
+import TablaBusquedaTitulos from './TablaBusquedaTitulos';
+import { NoticiasExcel } from './NoticiasExcel';
+import { JudicialesExcel } from './JudicialesExcel';
+import { TitulosExcel } from './TitulosExcel';
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -41,6 +45,8 @@ const SearchComponent: React.FC = () => {
     const [isLoadingData, setIsLoadingData] = useState(false);
     const [inputErrors, setInputErrors] = useState<{ specialCharacters?: string; emptyInput?: string }>({});
     const [fuenteseleccionada, setFuenteseleccionada] = useState("");
+    const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
+
 
     async function getuser() {
         try {
@@ -150,6 +156,7 @@ const SearchComponent: React.FC = () => {
                     },
                     body: JSON.stringify({
                         list: [searchInputValue],
+                        item_type: selectedType,
                         source: getSourceValue(),
                         key: 'valid_api_key'
                     }),
@@ -175,7 +182,6 @@ const SearchComponent: React.FC = () => {
                         const secondJsonData = await secondResponse.json();
                         const noticias = secondJsonData.data;
                         setDatosTabla(noticias);
-
                         let primeraPropiedad;
                         for (let propiedad in noticias) {
                             if (noticias.hasOwnProperty(propiedad)) {
@@ -207,6 +213,9 @@ const SearchComponent: React.FC = () => {
                             localStorage.removeItem('searchInputValue');
                             localStorage.removeItem('selectedSource');
                         }
+
+
+
                     } else {
                         console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
                     }
@@ -276,34 +285,131 @@ const SearchComponent: React.FC = () => {
                     );
                 }
                 setMostrartabla(false)
-                if (selectedFuenteCredito !== null) {
-                    const posthistorial = await fetch(
-                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                data: {
-                                    auth_0_user: userId,
-                                    creditos: selectedFuenteCredito * -1,
-                                    fecha: currentDate,
-                                    precio: 0,
-                                    consulta: searchInputValue,
-                                    plane: planId
+
+                //////////////////////////////////////////// HISTORIAL JUDICIALES  //////////////////////////////////////////// 
+
+                if (selectedSource === "judicial") {
+                    if (selectedFuenteCredito !== null) {
+                        const newformdata = new FormData();
+
+                        // Create an object with your data
+                        const postData = {
+                            auth_0_user: userId,
+                            creditos: selectedFuenteCredito * -1,
+                            precio: 0,
+                            consulta: "Judiciales " + searchInputValue ,
+                            plane: planId,
+                        };
+
+                        // Append the JSON data as a string
+                        newformdata.append('data', JSON.stringify(postData));
+
+                        // Generate the Excel file as a Blob using the generateExcelBlob function
+                        const excelBlob = await JudicialesExcel(jsonData.data);
+
+                        // Append the Excel Blob to FormData
+                        newformdata.append('files.archivo', excelBlob, `Judicial_${searchInputValue}.xlsx`);
+
+                        // Now, you can make your fetch request
+                        const posthistorial = await fetch(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
                                 },
-                            }),
-                            cache: "no-store",
-                        }
-                    );
+                                body: newformdata, // Use the FormData object as the body
+                                cache: "no-store",
+                            }
+                        );
+                    }
                 }
+
+
+                ////////////////////////////////////////////  HISTORIAL NOTICIAS //////////////////////////////////////////// 
+
+                if (selectedSource === "noticias") {
+                    if (selectedFuenteCredito !== null) {
+                        const newformdata = new FormData();
+
+                        // Create an object with your data
+                        const postData = {
+                            auth_0_user: userId,
+                            creditos: selectedFuenteCredito * -1,
+                            fecha: currentDate,
+                            precio: 0,
+                            consulta: "Noticias " + searchInputValue ,
+                            plane: planId,
+                        };
+
+                        // Append the JSON data as a string
+                        newformdata.append('data', JSON.stringify(postData));
+
+                        // Generate the Excel file as a Blob using the generateExcelBlob function
+                        const excelBlob = await NoticiasExcel(jsonData.data);
+
+                        // Append the Excel Blob to FormData
+                        newformdata.append('files.archivo', excelBlob, `Noticias_${searchInputValue}.xlsx`);
+
+                        // Now, you can make your fetch request
+                        const posthistorial = await fetch(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                                },
+                                body: newformdata, // Use the FormData object as the body
+                                cache: "no-store",
+                            }
+                        );
+                    }
+                }
+
+                ////////////////////////////////////////////  HISTORIAL TITULOS //////////////////////////////////////////// 
+
+                if (selectedSource === "titulos") {
+                    if (selectedFuenteCredito !== null) {
+                        const newformdata = new FormData();
+
+                        // Create an object with your data
+                        const postData = {
+                            auth_0_user: userId,
+                            creditos: selectedFuenteCredito * -1,
+                            fecha: currentDate,
+                            precio: 0,
+                            consulta: "Titulos " + searchInputValue ,
+                            plane: planId,
+                        };
+
+                        // Append the JSON data as a string
+                        newformdata.append('data', JSON.stringify(postData));
+
+                        // Generate the Excel file as a Blob using the generateExcelBlob function
+                        const excelBlob = await TitulosExcel(jsonData.data);
+
+                        // Append the Excel Blob to FormData
+                        newformdata.append('files.archivo', excelBlob, `Titulos_${searchInputValue}.xlsx`);
+
+                        // Now, you can make your fetch request
+                        const posthistorial = await fetch(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                                },
+                                body: newformdata, // Use the FormData object as the body
+                                cache: "no-store",
+                            }
+                        );
+                    }
+                }
+
             }
         } catch (error) {
             console.error('Error al ejecutar la tercera API:', error);
         }
-
-
     };
 
 
@@ -400,6 +506,11 @@ const SearchComponent: React.FC = () => {
         setSeleccionUsuario(selectedItems)
     };
 
+    const handleTypeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedType(e.target.value); // Actualiza el estado del tipo de búsqueda
+    };
+
+
     const handleSourceSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value;
         setSelectedSource(selectedValue); // Update the selected source state when the user selects an option
@@ -427,20 +538,34 @@ const SearchComponent: React.FC = () => {
                 {!DatosTabla && (
                     <div>
                         <div className='buscador-container'>
+
                             <label className='buscador-label aviso'>En los siguientes campos tienes que completar con el nombre o RUC de la persona o entidad que deseas buscar, además selecciona la fuente de donde quieres los datos.</label>
                             <br></br>
-                            <label className='buscador-label'>Ingresa un nombre completo o RUC</label>
+                            <br></br>
+                            <label className='buscador-label'>Selecciona el tipo de búsqueda</label>
+                            <select
+                                id="typeSelector"
+                                value={selectedType}
+                                onChange={handleTypeSelect}
+                                className='search-inputs'
+                            >
+                                <option value="nombres" >Nombre</option>
+                                <option value="cedulas">Cédula</option>
+                            </select>
+                            <br></br>
+                            <label className='buscador-label'>Ingresa un {selectedType.slice(0, -1)}</label>
                             <input
                                 type="text"
                                 value={searchInputValue}
                                 onChange={(e) => setSearchInputValue(e.target.value.toUpperCase())}
                                 className='search-inputs'
-                                placeholder='Nombre completo o RUC'
+                                placeholder={selectedType.slice(0, -1).charAt(0).toUpperCase() + selectedType.slice(0, -1).slice(1)}
                             />
                             {inputErrors.specialCharacters && <p className="error-message">{inputErrors.specialCharacters}</p>}
                             {inputErrors.emptyInput && <p className="error-message">{inputErrors.emptyInput}</p>}
                         </div>
                         <div className='buscador-container'>
+
                             <label className='buscador-label'>Selecciona la fuente de datos</label>
                             <select
                                 id="sourceSelector"
@@ -497,7 +622,8 @@ const SearchComponent: React.FC = () => {
 
                                     <br></br>
                                     Tenemos un filtro a la izquierda donde puedes precisar más los datos de tu búsqueda. Recuerda que la descarga tiene un valor de {selectedFuenteCredito} créditos.
-                                </p>                                {fuenteseleccionada == "noticias" &&
+                                </p>
+                                {fuenteseleccionada == "noticias" &&
                                     <>
                                         <TablaBusquedaNoticiasDelDelito data={DatosTabla} onSelectedItems={handleSelectedItems} />
                                     </>
@@ -506,6 +632,12 @@ const SearchComponent: React.FC = () => {
                                 {fuenteseleccionada == "judicial" &&
                                     <>
                                         <TablaBusquedaJudiciales data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    </>
+                                }
+
+                                {fuenteseleccionada == "titulos" &&
+                                    <>
+                                        <TablaBusquedaTitulos data={DatosTabla} onSelectedItems={handleSelectedItems} />
                                     </>
                                 }
 
@@ -574,7 +706,7 @@ const SearchComponent: React.FC = () => {
                         }
                         {
                             //Caso usuario vencido 
-                            user && (planId==null || planId == undefined) &&
+                            user && (planId == null || planId == undefined) &&
                             <>
                                 <br></br>
                                 <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor suscribete a un plan.</p>
@@ -611,6 +743,9 @@ const SearchComponent: React.FC = () => {
                                 <button className='busqueda-menu-button' onClick={handleConvertToXls}>
                                     Convertir a XLS
                                 </button>
+                                {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data.data)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data.data)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "titulos" && <button className='download-button excel' onClick={() => TitulosExcel(data.data)}>Descargar Excel</button>}
                             </div>
                             <button className='busqueda-menu-button' onClick={handleReloadPage}>
                                 Iniciar una nueva búsqueda
