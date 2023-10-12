@@ -9,7 +9,7 @@ import SeccionCreaTuCuenta from "@/components/Inicio/SeccionCreaTuCuenta/Seccion
 import SeccionFormulario from "@/components/Micuenta/SeccionFormulario/SeccionFormulario";
 import { ArrowRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 
 const Micuenta: React.FC = () => {
@@ -62,51 +62,51 @@ const Micuenta: React.FC = () => {
     };
 
     function handleOnClick() {
-      // Cuando haces clic en el enlace, cambia el estado para mostrar el div "Eliminar cuenta"
-      setMostrarEliminarCuenta(true);
+        // Cuando haces clic en el enlace, cambia el estado para mostrar el div "Eliminar cuenta"
+        setMostrarEliminarCuenta(true);
     }
     function handleClosePopup() {
         setMostrarEliminarCuenta(false);
-      }
+    }
     const handleDarseDeBaja = async () => {
         if (user) {
             // Realizar el POST con los datos requeridos
-           const postResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
-             {
-               method: "PUT",
-               headers: {
-                 "Content-Type": "application/json",
-               },
-               body: JSON.stringify({
-                 data: {
-                    estaactivo: false
-                 },
-               }),
-               cache: "no-store",
-             }
-           );
+            const postResponse = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        data: {
+                            estaactivo: false
+                        },
+                    }),
+                    cache: "no-store",
+                }
+            );
             if (postResponse.status === 200) {
                 console.log("la cuenta fue dado de baja");
                 const postResponse2 = await fetch(
                     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
                     {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
-                      },
-                      body: JSON.stringify({
-                        data: {
-                          nombre: userEmail,
-                          asunto: "Cuenta inactiva",
-                          para: userEmail,
-                          contenido: "30"
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
                         },
-                      }),
-                      cache: "no-store",
+                        body: JSON.stringify({
+                            data: {
+                                nombre: userEmail,
+                                asunto: "Cuenta inactiva",
+                                para: userEmail,
+                                contenido: "30"
+                            },
+                        }),
+                        cache: "no-store",
                     }
-                  );
+                );
                 // Recargar la página después de completar ambos POST
                 window.location.reload();
             } else {
@@ -135,7 +135,7 @@ const Micuenta: React.FC = () => {
     // ... your existing getuser function ...
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=*`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=historials.archivo,*`, {
 
                 method: "GET",
                 headers: {
@@ -194,272 +194,286 @@ const Micuenta: React.FC = () => {
     return (
         <UserProvider>
             <>
-            <br />
-            {user !== undefined && (
-            <div className="micuenta-div-container">
-                <br></br>
-                <br></br>
-                <br></br>
-                <h2 className="micuenta-h2">{userEmail}</h2>
-                <h1 className="micuenta-h1">MI CUENTA</h1>
-                <br></br>
-                <br></br>
-                <div className="micuenta-container">
-                    <div className="tab-buttons">
-                        <button id='datos'
-                            className={`tab-button ${activeTab === 'datos' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('datos')}
-                        >
-                            Mis Datos
-                        </button>
-                        <button id='compras'
-                            className={`tab-button ${activeTab === 'compras' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('compras')}
-                        >
-                            Historial de Compras
-                        </button>
-                        <button id='busquedas'
-                            className={`tab-button ${activeTab === 'busquedas' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('busquedas')}
-                        >
-                            Historial de Búsquedas
-                        </button>
-                        <button id='soporte'
-                            className={`tab-button ${activeTab === 'soporte' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('soporte')}
-                        >
-                            Soporte
-                        </button>
+                <br />
+                {user !== undefined && (
+                    <div className="micuenta-div-container">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <h2 className="micuenta-h2">{userEmail}</h2>
+                        <h1 className="micuenta-h1">MI CUENTA</h1>
+                        <br></br>
+                        <br></br>
+                        <div className="micuenta-container">
+                            <div className="tab-buttons">
+                                <button id='datos'
+                                    className={`tab-button ${activeTab === 'datos' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('datos')}
+                                >
+                                    Mis Datos
+                                </button>
+                                <button id='compras'
+                                    className={`tab-button ${activeTab === 'compras' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('compras')}
+                                >
+                                    Historial de Compras
+                                </button>
+                                <button id='busquedas'
+                                    className={`tab-button ${activeTab === 'busquedas' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('busquedas')}
+                                >
+                                    Historial de Búsquedas
+                                </button>
+                                <button id='soporte'
+                                    className={`tab-button ${activeTab === 'soporte' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('soporte')}
+                                >
+                                    Soporte
+                                </button>
 
-                        <a href="/api/auth/logout" className={"tab-button"}>
-                            Salir
-                        </a>
+                                <a href="/api/auth/logout" className={"tab-button"}>
+                                    Salir
+                                </a>
 
-                        {apiset && <button id='api'
-                            className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('api')}
-                        >
-                            API
-                        </button>}
+                                {apiset && <button id='api'
+                                    className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('api')}
+                                >
+                                    API
+                                </button>}
 
-                    </div>
+                            </div>
 
-                    <div className='micuenta-datos-container'>
-                        {activeTab === 'datos' && (
-                            <div>
-                                <h2 className='micuenta-h2-datos'>Mis datos</h2>
-                                <div className='micuenta-datos'>
-                                    <div className='micuenta-datos-card'>
-                                        <span className='micuenta-datos-title'>Mis créditos actuales </span>
-                                        <span className='micuenta-datos-subtitle'>{userCredits}</span>
-                                        {(userCredits != null && userCredits < 5) && (
-                                            <>
-                                                <Link href={"/planes"}>
-                                                    <button className='tab-button renovar' >
-                                                        Recargar Créditos
-                                                    </button>
-                                                </Link>
-                                            </>
-                                        )}
-                                    </div>
-                                    <div className='micuenta-datos-card'>
-                                        <span className='micuenta-datos-title'>Mi plan activo </span>
-                                        <span className='micuenta-datos-subtitle'>{userPlan}</span>
-                                    </div>
-                                    <div className='micuenta-datos-card'>
-                                        <span className='micuenta-datos-title'>Fecha de vencimiento</span>
-                                        <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
-                                        {(isPlanVencido) && (
-                                            <>
-                                                <Link href={"/planes"}>
-                                                    <button className='tab-button renovar' >
-                                                        Renovar Plan
-                                                    </button>
-                                                </Link>
-                                            </>
-                                        )}
-                                    </div>
-                                    
-                                    {/* Verificar si los créditos son 0 o el plan está vencido */}
-
-                                </div>
-                                <div className='darse-de-baja'>
-                                    <a className="hero-icon-container" onClick={handleOnClick}>
-                                    Darse de baja <ArrowRight className="hero-icon" />
-                                    </a>
-                                </div>
-                                
-                                {mostrarEliminarCuenta && ( // Mostrar el div "Eliminar cuenta" si mostrarEliminarCuenta es true
-                                        <div className="overlay">
-                                            <div className='eliminar-cuenta'>
-                                            <div className="cerrar-popup">
-                                                <FontAwesomeIcon  icon={faCircleXmark} size="2xl" onClick={handleClosePopup} />
+                            <div className='micuenta-datos-container'>
+                                {activeTab === 'datos' && (
+                                    <div>
+                                        <h2 className='micuenta-h2-datos'>Mis datos</h2>
+                                        <div className='micuenta-datos'>
+                                            <div className='micuenta-datos-card'>
+                                                <span className='micuenta-datos-title'>Mis créditos actuales </span>
+                                                <span className='micuenta-datos-subtitle'>{userCredits}</span>
+                                                {(userCredits != null && userCredits < 5) && (
+                                                    <>
+                                                        <Link href={"/planes"}>
+                                                            <button className='tab-button renovar' >
+                                                                Recargar Créditos
+                                                            </button>
+                                                        </Link>
+                                                    </>
+                                                )}
                                             </div>
-                                            <h3 className='micuenta-h2'>Darse de baja</h3>
-                                            <ul>
-                                                <li>Tu acceso al sitio se eliminará por completo.</li>
-                                                <li>Ya no recibirás correos electrónicos por parte de Advantech Datos.</li>
-                                                <li>Sin embargo, tus registros de pagos y búsquedas seguirán almacenados en nuestra base de datos.</li>
-                                            </ul>
-                                            <br />
-                                            {userActivo ? (
-                                                <p><strong>Tu cuenta se dará de baja en las próximas 24 horas.</strong></p>
-                                            ) : (
-                                                <p><strong>Esta cuenta se la dará de baja en las próximas 24 horas.</strong></p>
-                                            )}
-                                            {userActivo ? (
-                                                <button 
-                                                className={`navigation-menu-button`}
-                                                onClick={handleDarseDeBaja}
-                                                >
-                                                Darse de baja
-                                                </button>
-                                            ) : (
-                                                <br />
-                                            )}
+                                            <div className='micuenta-datos-card'>
+                                                <span className='micuenta-datos-title'>Mi plan activo </span>
+                                                <span className='micuenta-datos-subtitle'>{userPlan}</span>
                                             </div>
+                                            <div className='micuenta-datos-card'>
+                                                <span className='micuenta-datos-title'>Fecha de vencimiento</span>
+                                                <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                {(isPlanVencido) && (
+                                                    <>
+                                                        <Link href={"/planes"}>
+                                                            <button className='tab-button renovar' >
+                                                                Renovar Plan
+                                                            </button>
+                                                        </Link>
+                                                    </>
+                                                )}
+                                            </div>
+
+                                            {/* Verificar si los créditos son 0 o el plan está vencido */}
+
                                         </div>
+                                        <div className='darse-de-baja'>
+                                            <a className="hero-icon-container" onClick={handleOnClick}>
+                                                Darse de baja <ArrowRight className="hero-icon" />
+                                            </a>
+                                        </div>
+
+                                        {mostrarEliminarCuenta && ( // Mostrar el div "Eliminar cuenta" si mostrarEliminarCuenta es true
+                                            <div className="overlay">
+                                                <div className='eliminar-cuenta'>
+                                                    <div className="cerrar-popup">
+                                                        <FontAwesomeIcon icon={faCircleXmark} size="2xl" onClick={handleClosePopup} />
+                                                    </div>
+                                                    <h3 className='micuenta-h2'>Darse de baja</h3>
+                                                    <ul>
+                                                        <li>Tu acceso al sitio se eliminará por completo.</li>
+                                                        <li>Ya no recibirás correos electrónicos por parte de Advantech Datos.</li>
+                                                        <li>Sin embargo, tus registros de pagos y búsquedas seguirán almacenados en nuestra base de datos.</li>
+                                                    </ul>
+                                                    <br />
+                                                    {userActivo ? (
+                                                        <p><strong>Tu cuenta se dará de baja en las próximas 24 horas.</strong></p>
+                                                    ) : (
+                                                        <p><strong>Esta cuenta se la dará de baja en las próximas 24 horas.</strong></p>
+                                                    )}
+                                                    {userActivo ? (
+                                                        <button
+                                                            className={`navigation-menu-button`}
+                                                            onClick={handleDarseDeBaja}
+                                                        >
+                                                            Darse de baja
+                                                        </button>
+                                                    ) : (
+                                                        <br />
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                    </div>
                                 )}
 
-                            </div>
-                        )}
-
-                        {activeTab === 'compras' && (
-                            <>
-                                <h2 className='micuenta-h2-datos'>Mi historial de compras</h2>
-                                <div className="purchase-history-container">
-                                    <div className="purchase-history-scroll">
-                                        <table className="micuenta-history-table">
-                                            <thead className="micuenta-history-table-head">
-                                                <tr>
-                                                    <th>Fecha</th>
-                                                    <th>Precio</th>
-                                                    <th>Créditos</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {purchaseHistoryFiltered.map((purchase: any) => (
-                                                    <tr key={purchase.id}>
-                                                        <td>{purchase.attributes.fecha}</td>
-                                                        <td>${purchase.attributes.precio}</td>
-                                                        <td>{purchase.attributes.creditos}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div></>
-
-
-                        )}
-                        {activeTab === 'busquedas' && (
-                            <>
-                                <h2 className='micuenta-h2-datos'>Mi historial de búsquedas</h2>
-                                <div className="purchase-history-container">
-                                    <div className="purchase-history-scroll">
-                                        <table className="micuenta-history-table">
-                                            <thead className="micuenta-history-table-head" >
-                                                <tr>
-                                                    <th>Fecha</th>
-                                                    <th>Consumo créditos</th>
-                                                    <th>Consulta</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                {searchHistory.slice() // Copia el array para no modificar el original
-                                                    .sort((a, b) => {
-                                                        const dateA = new Date(a.attributes.fecha);
-                                                        const dateB = new Date(b.attributes.fecha);
-                                                        if (dateA > dateB) return -1; // Ordena por fecha en orden descendente (más reciente primero)
-                                                        if (dateA < dateB) return 1;
-                                                        return 0;
-                                                    })
-                                                    .map((search: any) => (
-                                                        <tr key={search.id}>
-                                                            <td>{search.attributes.fecha}</td>
-                                                            <td>{search.attributes.creditos}</td>
-                                                            <td>{search.attributes.consulta}</td>
+                                {activeTab === 'compras' && (
+                                    <>
+                                        <h2 className='micuenta-h2-datos'>Mi historial de compras</h2>
+                                        <div className="purchase-history-container">
+                                            <div className="purchase-history-scroll">
+                                                <table className="micuenta-history-table">
+                                                    <thead className="micuenta-history-table-head">
+                                                        <tr>
+                                                            <th>Fecha</th>
+                                                            <th>Precio</th>
+                                                            <th>Créditos</th>
                                                         </tr>
-                                                    ))}
+                                                    </thead>
+                                                    <tbody>
+                                                        {purchaseHistoryFiltered.map((purchase: any) => (
+                                                            <tr key={purchase.id}>
+                                                                <td>{purchase.attributes.fecha}</td>
+                                                                <td>${purchase.attributes.precio}</td>
+                                                                <td>{purchase.attributes.creditos}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div></>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </>
-                        )}
 
-                        {activeTab === 'soporte' && (
-                            <div className='mi-cuenta-soporte'>
-                                <h2 className='micuenta-h2-datos'>Soporte</h2>
-                                <div>
-                                    <div className='micuenta-datos'>
-                                        <div className='micuenta-datos-card'>
-                                            <span className='micuenta-datos-title'> Tipo de soporte</span>
-                                            <span className='micuenta-datos-subtitle'>{userPlan}</span>
+                                )}
+                                {activeTab === 'busquedas' && (
+                                    <>
+                                        <h2 className='micuenta-h2-datos'>Mi historial de búsquedas</h2>
+                                        <div className="purchase-history-container">
+                                            <div className="purchase-history-scroll">
+                                                <table className="micuenta-history-table">
+                                                    <thead className="micuenta-history-table-head" >
+                                                        <tr>
+                                                            <th>Fecha</th>
+                                                            <th>Consumo créditos</th>
+                                                            <th>Consulta</th>
+                                                            <th>Archivo</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        {searchHistory.slice() // Copia el array para no modificar el original
+                                                            .sort((a, b) => {
+                                                                const dateA = new Date(a.attributes.fecha);
+                                                                const dateB = new Date(b.attributes.fecha);
+                                                                if (dateA > dateB) return -1; // Ordena por fecha en orden descendente (más reciente primero)
+                                                                if (dateA < dateB) return 1;
+                                                                return 0;
+                                                            })
+                                                            .map((search: any) => (
+                                                                <tr key={search.id}>
+                                                                    <td>{search.attributes.fecha}</td>
+                                                                    <td>{search.attributes.creditos}</td>
+                                                                    <td>{search.attributes.consulta}</td>
+                                                                    <td>
+                                                                        {search.attributes.archivo.data?.attributes.url ? (
+                                                                            <a
+                                                                                href={`${process.env.NEXT_PUBLIC_STRAPI_URL}${search.attributes.archivo.data?.attributes.url}`}
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                            >
+                                                                                ⤵️
+                                                                            </a>
+                                                                        ) : (
+                                                                            <span>No disponible</span>
+                                                                        )}
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
+                                    </>
+                                )}
+
+                                {activeTab === 'soporte' && (
+                                    <div className='mi-cuenta-soporte'>
+                                        <h2 className='micuenta-h2-datos'>Soporte</h2>
                                         <div>
-                                            <br></br>
-                                            <p>Si necesitas ayuda envianos un mail a </p>
-                                            <a href="mailto:contacto@advantech.com">contacto@advantech.com</a>
-                                            {userPlan == "Enterprise" &&
-                                                <>
+                                            <div className='micuenta-datos'>
+                                                <div className='micuenta-datos-card'>
+                                                    <span className='micuenta-datos-title'> Tipo de soporte</span>
+                                                    <span className='micuenta-datos-subtitle'>{userPlan}</span>
+                                                </div>
+                                                <div>
                                                     <br></br>
-                                                    <br></br>
-                                                    <a className="tab-button" href="https://api.whatsapp.com/send?phone=17049707717">Solicitar soporte por WhatsApp</a>
-                                                </>
+                                                    <p>Si necesitas ayuda envianos un mail a </p>
+                                                    <a href="mailto:contacto@advantech.com">contacto@advantech.com</a>
+                                                    {userPlan == "Enterprise" &&
+                                                        <>
+                                                            <br></br>
+                                                            <br></br>
+                                                            <a className="tab-button" href="https://api.whatsapp.com/send?phone=17049707717">Solicitar soporte por WhatsApp</a>
+                                                        </>
 
-                                            }
+                                                    }
+                                                </div>
+                                            </div>
+                                            <SeccionFormulario />
                                         </div>
                                     </div>
-                                    <SeccionFormulario/>
-                                </div> 
-                            </div>
-                           
-                        )}
 
-                        {/* Resto de tu código ... */}
-                        {activeTab === 'api' && (
-                            <div>
-                                <h2 className="micuenta-h2-datos">API</h2>
-                                <div className="micuenta-datos api">
-                                    {/* No se muestra el botón "Mostrar API" cuando se ha hecho clic */}
+                                )}
 
-                                    <br></br>
-                                    <br></br>
-                                    {/* Sección API condicionalmente visible */}
+                                {/* Resto de tu código ... */}
+                                {activeTab === 'api' && (
                                     <div>
-                                        <div className="micuenta-api-box" onClick={copyApiKeyToClipboard}>
-                                            <div ref={apiKeyRef}>{userapi}</div>
+                                        <h2 className="micuenta-h2-datos">API</h2>
+                                        <div className="micuenta-datos api">
+                                            {/* No se muestra el botón "Mostrar API" cuando se ha hecho clic */}
+
+                                            <br></br>
+                                            <br></br>
+                                            {/* Sección API condicionalmente visible */}
+                                            <div>
+                                                <div className="micuenta-api-box" onClick={copyApiKeyToClipboard}>
+                                                    <div ref={apiKeyRef}>{userapi}</div>
+                                                </div>
+                                                {isCopied && <div className="copied-text">Copiado</div>}
+                                            </div>
+                                            <br></br>
+                                            {!apiSectionClicked && (
+                                                <div
+                                                    className="tab-button"
+                                                    onClick={() => {
+                                                        toggleApiSection();
+                                                        setApiSectionClicked(true);
+                                                    }}
+                                                >
+                                                    Mostrar API
+                                                </div>
+                                            )}
+
                                         </div>
-                                        {isCopied && <div className="copied-text">Copiado</div>}
                                     </div>
-                                    <br></br>
-                                    {!apiSectionClicked && (
-                                        <div
-                                            className="tab-button"
-                                            onClick={() => {
-                                                toggleApiSection();
-                                                setApiSectionClicked(true);
-                                            }}
-                                        >
-                                            Mostrar API
-                                        </div>
-                                    )}
+                                )}
 
-                                </div>
+
                             </div>
-                        )}
-
-
-                    </div>
-                </div>
-            </div >
-             )}
-             {user === undefined && (
-            <SeccionCreaTuCuenta />
-            )}
+                        </div>
+                    </div >
+                )}
+                {user === undefined && (
+                    <SeccionCreaTuCuenta />
+                )}
             </>
         </UserProvider >
     );
