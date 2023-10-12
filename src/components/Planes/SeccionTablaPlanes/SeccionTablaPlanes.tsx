@@ -23,9 +23,9 @@ function SeccionTablaPlanes() {
                     </tr>
                     <tr>
                         <th>Soporte</th>
-                        <td>Formulario de contacto</td>
-                        <td>Formulario de contacto</td>
-                        <td>Formulario de contacto</td>
+                        <td>Por formulario</td>
+                        <td>Por formulario</td>
+                        <td>Por formulario</td>
                         <td>Mail | Teléfono</td>
                     </tr>
                     <tr>

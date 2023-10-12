@@ -87,8 +87,13 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                 <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
                     {buscador ? "Acceso al buscador" : "Sin acceso al buscador"}
                 </h3>
-                <h3><FontAwesomeIcon icon={faHeadset} style={{ color: "#009fde", }} />
-                    {soporte ? `Soporte ${plan}` : "Soporte personalizado"}
+                <h3>
+                    <FontAwesomeIcon icon={faHeadset} style={{ color: "#009fde" }} />
+                    {soporte && (plan === "Personalizado" || plan === "Estándar" || plan === "Premium")
+                        ? "Soporte por formulario"
+                        : plan === "Enterprise"
+                        ? "Soporte por Mail | Teléfono"
+                        : "Soporte personalizado"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faDownload} style={{ color: "#009fde", }} />
                     {soporte ? `Entrega de datos (API | Lotes | Email)` : "Entrega de datos (API | Lotes | Email)"}

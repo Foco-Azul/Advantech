@@ -47,7 +47,7 @@ const SearchComponent: React.FC = () => {
     const [fuenteseleccionada, setFuenteseleccionada] = useState("");
     const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
-    async function enviarCorreo(jsonResponse: { data: { id: any; }; }){
+    async function enviarCorreo(jsonResponse: { data: {attributes: any; id: any; }; }){
         const nuevoHistorial = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
             {
@@ -74,7 +74,11 @@ const SearchComponent: React.FC = () => {
                   nombre: userEmail,
                   asunto: "Busqueda completada",
                   para: userEmail,
-                  contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
+                  json: JSON.stringify({
+                    url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
+                    consulta: jsonResponse.data.attributes.consulta,
+                    fecha: jsonResponse.data.attributes.fecha,
+                  }),
                 },
               }),
               cache: "no-store",

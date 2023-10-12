@@ -39,6 +39,10 @@
   align-items: center;
   gap: 20px;
 }
-.seccion-contactanos .seccion-titulo > .contacto > svg{
+.seccion-contactanos .seccion-titulo > .contacto  svg{
+  color: #0092FF;
+}
+.seccion-contactanos .seccion-titulo > .contacto > p > a{
+  border-bottom: 1px solid #0092FF;
   color: #0092FF;
 }

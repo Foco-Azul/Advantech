@@ -427,7 +427,7 @@ const Micuenta: React.FC = () => {
                                                     }
                                                 </div>
                                             </div>
-                                            <SeccionFormulario />
+                                            {userPlan !== "Enterprise" && <SeccionFormulario />}
                                         </div>
                                     </div>
 

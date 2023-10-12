@@ -93,7 +93,7 @@ div.micuenta-datos-container > div > div > div.micuenta-datos > div:nth-child(2)
 div.micuenta-datos-container > div.mi-cuenta-soporte > div{
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 

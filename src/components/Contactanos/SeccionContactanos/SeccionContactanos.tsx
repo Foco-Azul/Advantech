@@ -2,6 +2,7 @@ import './SeccionContactanos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";
 import { faEnvelopesBulk, faPhone} from "@fortawesome/free-solid-svg-icons";
+import Link from 'next/link';
 
 function SeccionContactanos() {
   return (
@@ -18,13 +19,13 @@ function SeccionContactanos() {
           </ul>
           <p>En nuestra página de Documentación encontrarás tutoriales sobre el uso de nuestros productos y contacto directo de soporte técnico.</p>
           <div className='contacto'>
-            <FontAwesomeIcon icon={faEnvelopesBulk} size="2xl" />
-            <p>Envíanos un correo electrónico haciendo clic en el ícono de la izquierda o al correo contacto@advantech.com</p>
+            <Link href="mailto:contacto@advantech.com" target='_blank'><FontAwesomeIcon icon={faEnvelopesBulk} size="2xl" /></Link>
+            <p>Envíanos un correo electrónico haciendo clic en el ícono de la izquierda o al correo <Link href="mailto:contacto@advantech.com" target='_blank'>contacto@advantech.com</Link></p>
           </div>
           <br />
           <div className='contacto'>
-            <FontAwesomeIcon icon={faPhone} size="2xl" />
-            <p>Envíanos un mensaje o realiza una llamada haciendo clic en el ícono de la izquierda o al número +593(984-765-158)</p>
+            <Link href="tel:+593984765158" target='_blank'><FontAwesomeIcon icon={faPhone} size="2xl" /></Link>
+            <p>Envíanos un mensaje o realiza una llamada haciendo clic en el ícono de la izquierda o al número <Link href="tel:+593984765158" target='_blank'>+593 984 765 158</Link></p>
           </div>
         </div>
       </div>
