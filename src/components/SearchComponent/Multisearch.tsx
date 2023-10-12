@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import CircularProgress from '@mui/material/CircularProgress';
-import ExcelJS from 'exceljs';
 import "./Multisearch.css"
 import Noticiastable from './Noticiastable';
 import { NoticiasExcel } from './NoticiasExcel';
@@ -26,6 +25,7 @@ const Multisearch: React.FC = () => {
   const [fuenteseleccionada, setFuenteseleccionada] = useState("");
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [data, setData] = useState<any>(null);
+  const currentDate = new Date();
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
@@ -59,7 +59,6 @@ const Multisearch: React.FC = () => {
 
   }, [user]);
 
-
   useEffect(() => {
     // Agrega un event listener para el evento 'beforeunload'
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -81,7 +80,6 @@ const Multisearch: React.FC = () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [isLoadingData]);
-
 
   const handleDownloadJSON = () => {
     if (data) {
@@ -106,11 +104,6 @@ const Multisearch: React.FC = () => {
       URL.revokeObjectURL(url);
     }
   };
-
-
-
-
-
 
   async function getuser() {
     try {
@@ -202,7 +195,7 @@ const Multisearch: React.FC = () => {
 
         // Convierte los valores únicos en una cadena separada por comas y consoléala.
         const dataAsString = uniqueData.join(', ');
-        console.log('Valores únicos como cadena:', dataAsString);
+        console.log('FileData', dataAsString);
 
         // Guardar los datos del archivo Excel en el estado
         setFileData(dataAsString);
@@ -211,10 +204,6 @@ const Multisearch: React.FC = () => {
       reader.readAsBinaryString(file);
     }
   };
-
-
-
-
 
   const getSourceValue = () => {
     const selector = document.getElementById('sourceSelector') as HTMLSelectElement;
@@ -294,6 +283,151 @@ const Multisearch: React.FC = () => {
             NoticiasExcel(noticias);
           }
 
+          if (selectedSource === "titulos") {
+            TitulosExcel(noticias);
+          }
+
+
+          //////////////////////////////////////////// RESTA DE CRÉDITOS /////////////////////////////////////////////
+
+
+          if (userCredits) {
+            var restacreditos = fileData && selectedFuenteCredito && userCredits - selectedFuenteCredito * fileData.length
+            const postResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  data: {
+                    plan: planId,
+                    creditos: restacreditos,
+                  },
+                }
+                ),
+                cache: "no-store",
+              }
+            );
+          }
+
+          //////////////////////////////////////////// HISTORIAL /////////////////////////////////////////////
+
+          if (selectedSource === "judicial") {
+            if (selectedFuenteCredito !== null) {
+              const newformdata = new FormData();
+
+              // Create an object with your data
+              const postData = {
+                auth_0_user: userId,
+                creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
+                fecha: currentDate,
+                precio: 0,
+                consulta: "Búsqueda por lote",
+                plane: planId,
+              };
+
+              // Append the JSON data as a string
+              newformdata.append('data', JSON.stringify(postData));
+
+              // Generate the Excel file as a Blob using the generateExcelBlob function
+              const excelBlob = await JudicialesExcel(noticias);
+
+              // Append the Excel Blob to FormData
+              newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
+
+              // Now, you can make your fetch request
+              const posthistorial = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                  },
+                  body: newformdata, // Use the FormData object as the body
+                  cache: "no-store",
+                }
+              );
+            }
+          }
+
+          if (selectedSource === "noticias") {
+            if (selectedFuenteCredito !== null) {
+              const newformdata = new FormData();
+
+              // Create an object with your data
+              const postData = {
+                auth_0_user: userId,
+                creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
+                fecha: currentDate,
+                precio: 0,
+                consulta: "Búsqueda por lote",
+                plane: planId,
+              };
+
+              // Append the JSON data as a string
+              newformdata.append('data', JSON.stringify(postData));
+
+              // Generate the Excel file as a Blob using the generateExcelBlob function
+              const excelBlob = await NoticiasExcel(noticias);
+
+              // Append the Excel Blob to FormData
+              newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
+
+              // Now, you can make your fetch request
+              const posthistorial = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                  },
+                  body: newformdata, // Use the FormData object as the body
+                  cache: "no-store",
+                }
+              );
+            }
+          }
+
+          if (selectedSource === "titulos") {
+            if (selectedFuenteCredito !== null) {
+              const newformdata = new FormData();
+
+              // Create an object with your data
+              const postData = {
+                auth_0_user: userId,
+                creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
+                fecha: currentDate,
+                precio: 0,
+                consulta: "Búsqueda por lote",
+                plane: planId,
+              };
+
+              // Append the JSON data as a string
+              newformdata.append('data', JSON.stringify(postData));
+
+              // Generate the Excel file as a Blob using the generateExcelBlob function
+              const excelBlob = await TitulosExcel(noticias);
+
+              // Append the Excel Blob to FormData
+              newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
+
+              // Now, you can make your fetch request
+              const posthistorial = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                  },
+                  body: newformdata, // Use the FormData object as the body
+                  cache: "no-store",
+                }
+              );
+            }
+          }
+
 
         } else {
           console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
@@ -326,8 +460,6 @@ const Multisearch: React.FC = () => {
         });
     }
   };
-
-  
 
   return (
     <div>
@@ -366,7 +498,6 @@ const Multisearch: React.FC = () => {
         </div>
       }
 
-
       {!data && <>
         <br></br>
         <label className='buscador-label-excel'>Sube tu archivo en formato Excel (*.xlsx)</label>
@@ -379,7 +510,6 @@ const Multisearch: React.FC = () => {
         <br></br></>
       }
 
-
       {isLoadingData &&
         <div className='loading-overlay'>
           <p>Estamos procesando tus datos</p>
@@ -391,14 +521,7 @@ const Multisearch: React.FC = () => {
       {!data && fileData && fileData.split(', ').length >= 1 &&
         <>
           <br></br>
-          <p>Créditos a consumir: {fileData && selectedFuenteCredito !== null && (
-            (selectedType === "nombres"
-              ? (fileData.split(', ').filter(item => /[a-zA-Z]/.test(item)).length * selectedFuenteCredito) 
-              : (selectedType === "cedulas"
-                ? (fileData.split(', ').filter(item => /^\d+$/.test(item)).length * selectedFuenteCredito)
-                : 0)
-            )
-          )}</p>
+          <p>Créditos a consumir: {selectedFuenteCredito && fileData && fileData?.split(', ').length * selectedFuenteCredito}</p>
 
           <button onClick={handleButtonClick} className='download-button mostrar-datos'  >Obtener Datos</button>
         </>}

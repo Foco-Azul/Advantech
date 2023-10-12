@@ -118,4 +118,6 @@ export const TitulosExcel = async (dataToDownload: any) => {
   a.click();
   // Liberar recursos
   URL.revokeObjectURL(url);
+  return new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
 };

@@ -14,6 +14,9 @@ import { validateInput } from './InputValidationUtil'; // Import the validation 
 import Link from "next/link";
 import Multisearch from "./Multisearch"
 import TablaBusquedaTitulos from './TablaBusquedaTitulos';
+import { NoticiasExcel } from './NoticiasExcel';
+import { JudicialesExcel } from './JudicialesExcel';
+import { TitulosExcel } from './TitulosExcel';
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -210,6 +213,9 @@ const SearchComponent: React.FC = () => {
                             localStorage.removeItem('searchInputValue');
                             localStorage.removeItem('selectedSource');
                         }
+
+
+
                     } else {
                         console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
                     }
@@ -279,34 +285,131 @@ const SearchComponent: React.FC = () => {
                     );
                 }
                 setMostrartabla(false)
-                if (selectedFuenteCredito !== null) {
-                    const posthistorial = await fetch(
-                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                data: {
-                                    auth_0_user: userId,
-                                    creditos: selectedFuenteCredito * -1,
-                                    fecha: currentDate,
-                                    precio: 0,
-                                    consulta: searchInputValue,
-                                    plane: planId
+
+                //////////////////////////////////////////// HISTORIAL JUDICIALES  //////////////////////////////////////////// 
+
+                if (selectedSource === "judicial") {
+                    if (selectedFuenteCredito !== null) {
+                        const newformdata = new FormData();
+
+                        // Create an object with your data
+                        const postData = {
+                            auth_0_user: userId,
+                            creditos: selectedFuenteCredito * -1,
+                            precio: 0,
+                            consulta: "Judiciales " + searchInputValue ,
+                            plane: planId,
+                        };
+
+                        // Append the JSON data as a string
+                        newformdata.append('data', JSON.stringify(postData));
+
+                        // Generate the Excel file as a Blob using the generateExcelBlob function
+                        const excelBlob = await JudicialesExcel(jsonData.data);
+
+                        // Append the Excel Blob to FormData
+                        newformdata.append('files.archivo', excelBlob, `Judicial_${searchInputValue}.xlsx`);
+
+                        // Now, you can make your fetch request
+                        const posthistorial = await fetch(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
                                 },
-                            }),
-                            cache: "no-store",
-                        }
-                    );
+                                body: newformdata, // Use the FormData object as the body
+                                cache: "no-store",
+                            }
+                        );
+                    }
                 }
+
+
+                ////////////////////////////////////////////  HISTORIAL NOTICIAS //////////////////////////////////////////// 
+
+                if (selectedSource === "noticias") {
+                    if (selectedFuenteCredito !== null) {
+                        const newformdata = new FormData();
+
+                        // Create an object with your data
+                        const postData = {
+                            auth_0_user: userId,
+                            creditos: selectedFuenteCredito * -1,
+                            fecha: currentDate,
+                            precio: 0,
+                            consulta: "Noticias " + searchInputValue ,
+                            plane: planId,
+                        };
+
+                        // Append the JSON data as a string
+                        newformdata.append('data', JSON.stringify(postData));
+
+                        // Generate the Excel file as a Blob using the generateExcelBlob function
+                        const excelBlob = await NoticiasExcel(jsonData.data);
+
+                        // Append the Excel Blob to FormData
+                        newformdata.append('files.archivo', excelBlob, `Noticias_${searchInputValue}.xlsx`);
+
+                        // Now, you can make your fetch request
+                        const posthistorial = await fetch(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                                },
+                                body: newformdata, // Use the FormData object as the body
+                                cache: "no-store",
+                            }
+                        );
+                    }
+                }
+
+                ////////////////////////////////////////////  HISTORIAL TITULOS //////////////////////////////////////////// 
+
+                if (selectedSource === "titulos") {
+                    if (selectedFuenteCredito !== null) {
+                        const newformdata = new FormData();
+
+                        // Create an object with your data
+                        const postData = {
+                            auth_0_user: userId,
+                            creditos: selectedFuenteCredito * -1,
+                            fecha: currentDate,
+                            precio: 0,
+                            consulta: "Titulos " + searchInputValue ,
+                            plane: planId,
+                        };
+
+                        // Append the JSON data as a string
+                        newformdata.append('data', JSON.stringify(postData));
+
+                        // Generate the Excel file as a Blob using the generateExcelBlob function
+                        const excelBlob = await TitulosExcel(jsonData.data);
+
+                        // Append the Excel Blob to FormData
+                        newformdata.append('files.archivo', excelBlob, `Titulos_${searchInputValue}.xlsx`);
+
+                        // Now, you can make your fetch request
+                        const posthistorial = await fetch(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                                },
+                                body: newformdata, // Use the FormData object as the body
+                                cache: "no-store",
+                            }
+                        );
+                    }
+                }
+
             }
         } catch (error) {
             console.error('Error al ejecutar la tercera API:', error);
         }
-
-
     };
 
 
@@ -640,6 +743,9 @@ const SearchComponent: React.FC = () => {
                                 <button className='busqueda-menu-button' onClick={handleConvertToXls}>
                                     Convertir a XLS
                                 </button>
+                                {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data.data)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data.data)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "titulos" && <button className='download-button excel' onClick={() => TitulosExcel(data.data)}>Descargar Excel</button>}
                             </div>
                             <button className='busqueda-menu-button' onClick={handleReloadPage}>
                                 Iniciar una nueva búsqueda
