@@ -1,7 +1,7 @@
 import Image from "next/image";
 import './SeccionRecursos.css'
 import Link from "next/link";
-import ImageRecursos from "./image/imagen-advantech-laptop.svg"
+import ImageRecursos from "./image/Recursos-laptop.png"
 import IconIndustria from "./image/icon-industria.svg"
 import IconCheck from "./image/icon-check.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -7,7 +7,7 @@ import Carousel from "@/components/Carrusel";
 import MarcasClientes from '@/components/MarcasClientes/MarcasClientes';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-import Marca_1 from "./image/datafast.png"
+import Marca_1 from "./image/Datafast-final.png"
 import Marca_2 from "./image/diners.png"
 import Marca_3 from "./image/pichincha.png"
 import Link from "next/link";
@@ -41,7 +41,6 @@ function Hero() {
             ¿Cómo funciona? <ArrowRight className="hero-icon" />
           </a>
           <br></br>
-          <Carousel />
           <div className='aliados-contenido'>
             <div className="tipos-consultas-head-container">
                 <h2 className="tipos-consultas-head-title">Ellos confían en nuestros servicios</h2>

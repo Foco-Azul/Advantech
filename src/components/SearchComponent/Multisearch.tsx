@@ -111,7 +111,7 @@ const Multisearch: React.FC = () => {
 
   async function getuser() {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*&filters[email][$eq]=${userEmail}`, {
 
         method: "GET",
         headers: {

@@ -1,42 +1,39 @@
-.carousel-marcas-clientes {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  margin: auto;
-  padding: 20px 0;
-}
-
-.carousel-marcas-clientes .carousel-item {
-  flex: 0 0 calc(33.33% - 10px); /* Ajusta el ancho de cada elemento según tus necesidades */
-  margin: auto; /* Ajusta el margen entre los elementos según tus necesidades */
-}
-
-.carousel-marcas-clientes .carousel-image {
-  width: 200px;
-  margin: 0 50px;
-}
-
-.carousel-marcas-clientes .carousel-images{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 100px;
-}
-
-@media only screen and (max-width: 768px) {
-  .carousel-marcas-clientes {
-    width: 90%;
-  }
-  .carousel-marcas-clientes .carousel-item {
-    flex: unset;
-  }
+.seccion-aliados{
 
 }
-.hero-marcas > div{
-    padding: 0 20px;
+.aliados-contenido{
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+.aliados-contenido > div > h4{
+    font-size: 24px;
+    font-weight: 800;
+    margin: 10px auto;
+    color: #585C7B;
+}
+
+.empresas-marcas{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.empresas-marcas > div{
+    max-width: 17%;
+}
+.empresas-marcas > div > img{
+    min-width: 120px;
+}
+.aliados-contenido{
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+@media only screen and (max-width: 525px) {
+    .empresas-marcas > div{
+        max-width: 70%;
+        padding: 20px;
+        margin: auto;
+    }
 }
