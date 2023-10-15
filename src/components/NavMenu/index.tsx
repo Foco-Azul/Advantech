@@ -80,9 +80,9 @@ function NavMenu() {
               <a className="navigation-menu-trigger">RECURSOS <FontAwesomeIcon icon={showSubRecursos ? faChevronUp : faChevronDown}/></a>
                 <div className={`navigation-sub_menu-trigger  ${showSubRecursos ? "visible" : ""} `}>
                   <ul>
-                    <li><Link href="/busqueda" legacyBehavior passHref>Buscar datos</Link></li>
-                    <li><Link href="/documentacion" legacyBehavior passHref>Guía de uso</Link></li>
-                    <li><Link href="/uso-por-industria" legacyBehavior passHref>Uso por industria</Link></li>
+                    <li><a href="/busqueda" >Buscar datos</a></li>
+                    <li><a href="/documentacion">Guía de uso</a></li>
+                    <li><a href="/uso-por-industria">Uso por industria</a></li>
                   </ul>
                 </div>
             </li>
@@ -94,9 +94,9 @@ function NavMenu() {
               <a className="navigation-menu-trigger">¿POR QUÉ ADVANTECH? <FontAwesomeIcon icon={showSubAdvantech ? faChevronUp : faChevronDown}/></a>
                 <div className={`navigation-sub_menu-trigger  ${showSubAdvantech ? "visible" : ""} `}>
                   <ul>
-                    <li><Link href="/sobre-nosotros" legacyBehavior passHref>¿Quienes somos?</Link></li>
-                    <li><Link href="/contactanos" legacyBehavior passHref>Contáctanos</Link></li>
-                    <li><Link href="/unete-al-equipo" legacyBehavior passHref>Únete al equipo</Link></li>
+                    <li><a href="/sobre-nosotros" >¿Quienes somos?</a></li>
+                    <li><a href="/contactanos" >Contáctanos</a></li>
+                    <li><a href="/unete-al-equipo" >Únete al equipo</a></li>
                   </ul>
                 </div>
             </li>
