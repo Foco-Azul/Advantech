@@ -37,6 +37,7 @@
 }
 .seccion-funcionalidades .tarjeta-informativa > p{   
     margin-bottom: 20px;
+    text-align: start;
 }
 .seccion-funcionalidades .tarjeta-informativa > ul > li{
     display: flex;

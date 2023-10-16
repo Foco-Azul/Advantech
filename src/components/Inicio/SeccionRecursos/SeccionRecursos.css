@@ -29,6 +29,7 @@
     max-width: 420px;
     margin: 30px 0;
     color: #585C7B;
+    text-align: start;
 }
 
 .seccion-recursos > div > .seccion-recursos-inferior{
@@ -54,6 +55,7 @@
     margin-bottom: 20px;
     margin-left: 10px;
     color: #585C7B;
+    text-align: start;
 }
 
 .seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont > a{  
