@@ -16,7 +16,6 @@ import React, { useEffect, useState } from 'react';
 
 function Hero() {
   const { user } = useUser();
-  console.log("estoy en el hero: ", user)
   return (
     <section >
       <div className="hero-grid">
@@ -33,7 +32,7 @@ function Hero() {
           Encuentra datos públicos actualizados de personas en Ecuador con nuestro buscador en línea. <br />¡Consulta múltiples fuentes de manera sencilla!
             </h2>
           <br></br>
-          <a href="/api/auth/login" className={`hero-button ${user != undefined ? 'ocultar' : ''}`}>
+          <a href="/api/auth/login" className={`hero-button ${user !== undefined ? 'ocultar' : ''}`}>
             Crear cuenta
           </a>
           <br></br>
