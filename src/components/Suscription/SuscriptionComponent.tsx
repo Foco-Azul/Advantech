@@ -96,7 +96,11 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                         : "Soporte personalizado"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faDownload} style={{ color: "#009fde", }} />
-                    {soporte ? `Entrega de datos (API | Lotes | Email)` : "Entrega de datos (API | Lotes | Email)"}
+                    {soporte && (plan === "Personalizado" || plan === "Estándar" || plan === "Premium")
+                        ? "Entrega de datos (Lotes | Email)"
+                        : plan === "Enterprise"
+                        ? "Entrega de datos (API | Lotes | Email)"
+                        : "Entrega de datos"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faFile} style={{ color: "#009fde", }} />        
                         Formato de entrega de datos&nbsp;  

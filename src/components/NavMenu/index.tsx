@@ -81,7 +81,7 @@ function NavMenu() {
                 <div className={`navigation-sub_menu-trigger  ${showSubRecursos ? "visible" : ""} `}>
                   <ul>
                     <li><a href="/busqueda" >Buscar datos</a></li>
-                    <li><a href="/documentacion">Guía de uso</a></li>
+                    <li><a href="/guia-de-busqeuda">Guía de busqueda</a></li>
                     <li><a href="/uso-por-industria">Uso por industria</a></li>
                   </ul>
                 </div>

@@ -3,7 +3,7 @@ import Footer from '@/components/Footer/Footer';
 import NavMenu from '@/components/NavMenu/index';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "../globals.css"
-import './documentacion.css'
+import './guia-de-busqeuda.css'
 import { Metadata } from "next";
 import SeccionGuiaDeUso from '@/components/GuiaDeUso/SeccionGuiaDeUso/SeccionGuiaDeUso';
 import SeccionBusquedas from '@/components/GuiaDeUso/SeccionBusquedas/SeccionBusquedas';
@@ -11,8 +11,8 @@ import SeccionCreaTuCuenta from '@/components/Ventajas/SeccionCreaTuCuenta/Secci
 
 
 export const metadata:Metadata ={
-    title:"Guia de uso",
-    description:"esta es una descripcion de prueba",
+    title:"Guia de busqueda",
+    description:"¡Descubre el poder de Advantech Datos! Nuestra guía te enseñará cómo realizar búsquedas simples y por lote.",
     openGraph: {
       images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
     }
