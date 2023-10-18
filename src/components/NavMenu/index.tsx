@@ -1,5 +1,5 @@
 "use client";
-
+import Head from "next/head";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -67,58 +67,74 @@ function NavMenu() {
 
 
   return (
-    
+    <>
+    <head>
+    <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-H77JWD9QJ9"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-H77JWD9QJ9');
+          `,
+        }}
+      />
+    </head>
     <div className={`nav-container ${hasScrolled ? "scrolled" : ""}`}>
-      <nav className={`nav ${hasScrolled ? "scrolled" : ""}`}>
-        <div className="navigation-menu-container">
-          <ul className="navigation-menu-list">
-          <li
-              className="navigation-menu-item"
-              onMouseEnter={() => setShowSubRecursos(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
-              onMouseLeave={() => setShowSubRecursos(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
-            >
-              <a className="navigation-menu-trigger">RECURSOS <FontAwesomeIcon icon={showSubRecursos ? faChevronUp : faChevronDown}/></a>
+        <nav className={`nav ${hasScrolled ? "scrolled" : ""}`}>
+          <div className="navigation-menu-container">
+            <ul className="navigation-menu-list">
+              <li
+                className="navigation-menu-item"
+                onMouseEnter={() => setShowSubRecursos(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
+                onMouseLeave={() => setShowSubRecursos(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
+              >
+                <a className="navigation-menu-trigger">RECURSOS <FontAwesomeIcon icon={showSubRecursos ? faChevronUp : faChevronDown} /></a>
                 <div className={`navigation-sub_menu-trigger  ${showSubRecursos ? "visible" : ""} `}>
                   <ul>
-                    <li><a href="/busqueda" >Buscar datos</a></li>
+                    <li><a href="/busqueda">Buscar datos</a></li>
                     <li><a href="/guia-de-busqeuda">Guía de busqueda</a></li>
                     <li><a href="/uso-por-industria">Uso por industria</a></li>
                   </ul>
                 </div>
-            </li>
-            <li
-              className="navigation-menu-item"
-              onMouseEnter={() => setShowSubAdvantech(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
-              onMouseLeave={() => setShowSubAdvantech(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
-            >
-              <a className="navigation-menu-trigger">¿POR QUÉ ADVANTECH? <FontAwesomeIcon icon={showSubAdvantech ? faChevronUp : faChevronDown}/></a>
+              </li>
+              <li
+                className="navigation-menu-item"
+                onMouseEnter={() => setShowSubAdvantech(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
+                onMouseLeave={() => setShowSubAdvantech(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
+              >
+                <a className="navigation-menu-trigger">¿POR QUÉ ADVANTECH? <FontAwesomeIcon icon={showSubAdvantech ? faChevronUp : faChevronDown} /></a>
                 <div className={`navigation-sub_menu-trigger  ${showSubAdvantech ? "visible" : ""} `}>
                   <ul>
-                    <li><a href="/sobre-nosotros" >¿Quienes somos?</a></li>
-                    <li><a href="/contactanos" >Contáctanos</a></li>
-                    <li><a href="/unete-al-equipo" >Únete al equipo</a></li>
+                    <li><a href="/sobre-nosotros">¿Quienes somos?</a></li>
+                    <li><a href="/contactanos">Contáctanos</a></li>
+                    <li><a href="/unete-al-equipo">Únete al equipo</a></li>
                   </ul>
                 </div>
-            </li>
-          </ul>
-        </div>
-        <div className="nav-image">
+              </li>
+            </ul>
+          </div>
+          <div className="nav-image">
             <Link href="/" legacyBehavior passHref>
               <Image src={Brand} alt={"Company-Logo"} />
             </Link>
           </div>
-        <div className="nav-conteiner-buttons">
-        {pathname!="/" && (
-          <Link href="/busqueda" passHref className="btn-buscar"><button><FontAwesomeIcon icon={faMagnifyingGlass} /> &nbsp; <span>BUSCAR</span></button></Link>
-          )}
-          <div className="login-escritorio"><Login loginname={"INGRESAR"} /></div>
-          <Link href="/planes" legacyBehavior passHref>
-            <button className="navigation-menu-button" >NUESTROS PLANES</button>
-          </Link>
-          <BurguerMenu />
-        </div>
-      </nav>
-    </div>
+          <div className="nav-conteiner-buttons">
+            {pathname != "/" && (
+              <Link href="/busqueda" passHref className="btn-buscar"><button><FontAwesomeIcon icon={faMagnifyingGlass} /> &nbsp; <span>BUSCAR</span></button></Link>
+            )}
+            <div className="login-escritorio"><Login loginname={"INGRESAR"} /></div>
+            <Link href="/planes" legacyBehavior passHref>
+              <button className="navigation-menu-button">NUESTROS PLANES</button>
+            </Link>
+            <BurguerMenu />
+          </div>
+        </nav>
+      </div></>
   );
 }
 
