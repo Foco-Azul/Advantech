@@ -1,5 +1,4 @@
 "use client";
-import Head from "next/head";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -68,22 +67,6 @@ function NavMenu() {
 
   return (
     <>
-    <head>
-    <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-H77JWD9QJ9"
-      />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-H77JWD9QJ9');
-          `,
-        }}
-      />
-    </head>
     <div className={`nav-container ${hasScrolled ? "scrolled" : ""}`}>
         <nav className={`nav ${hasScrolled ? "scrolled" : ""}`}>
           <div className="navigation-menu-container">
