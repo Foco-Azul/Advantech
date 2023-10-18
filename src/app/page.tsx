@@ -9,7 +9,7 @@ import NavMenu from "@/components/NavMenu";
 import { Providers } from "./providers";
 import { Metadata } from "next";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
-import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
+
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <><GoogleAnalytics GA_MEASUREMENT_ID='G-H77JWD9QJ9' />
     <UserProvider>
       <Providers>
         <div className="hero-back">
@@ -42,6 +41,6 @@ export default function Page() {
           </>
         </div>
       </Providers>
-    </UserProvider></>
+    </UserProvider>
   );
 }
