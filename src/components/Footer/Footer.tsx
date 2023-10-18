@@ -33,7 +33,7 @@ function Footer() {
               <h2 className="column-title">RECURSOS</h2>
               <ul>
                 <li className="list-row"><a href='/busqueda' className="link">Buscar datos</a></li>
-                <li className="list-row"><a href='/documentacion' className="link">Guía de busqueda</a></li>
+                <li className="list-row"><a href='/guia-de-busqueda' className="link">Guía de busqueda</a></li>
                 <li className="list-row"><Link href='https://stats.uptimerobot.com/MqqMLIxxZQ' legacyBehavior passHref><a className="link" target="_blank">Monitorio uptime</a></Link></li>
                 <li className="list-row"><a href='/uso-por-industria' className="link">Uso por industria</a></li>
                 <li className="list-row"><a href='/ventajas' className="link">Ventajas</a></li>
