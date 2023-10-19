@@ -9,11 +9,13 @@ import Loading from "./Loading";
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import { use } from "react";
 
+
 function Footer() {
 
   const { user, error, isLoading } = useUser();
 
   return (
+    <>
     <footer className="footer-home">
       <div>
 
@@ -23,9 +25,9 @@ function Footer() {
               <Image src={Logo} alt="Company Logo" width={164} height={133} />
             </Link>
             <div className="footer-rrss">
-              <Link href="https://www.linkedin.com/company/advantechint/" legacyBehavior passHref ><a target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></a></Link>
-              <Link href="https://twitter.com/AdvantechDatos?s=20" legacyBehavior passHref ><a target="_blank"><FontAwesomeIcon icon={faTwitter} size="xl" /></a></Link>
-              <Link href="https://www.facebook.com/profile.php?id=61550513552222&mibextid=2JQ9oc" legacyBehavior passHref ><a target="_blank"><FontAwesomeIcon icon={faSquareFacebook} size="xl" /></a></Link>
+              <Link href="https://www.linkedin.com/company/advantechint/" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></a></Link>
+              <Link href="https://twitter.com/AdvantechDatos?s=20" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faTwitter} size="xl" /></a></Link>
+              <Link href="https://www.facebook.com/profile.php?id=61550513552222&mibextid=2JQ9oc" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faSquareFacebook} size="xl" /></a></Link>
             </div>
           </div>
           <div className="footer-home-links">
@@ -42,7 +44,7 @@ function Footer() {
             <div>
               <h2 className="column-title">ADVANTECH</h2>
               <ul>
-              <li className="list-row"><a href='/contactanos' className="link">Contáctanos</a></li>
+                <li className="list-row"><a href='/contactanos' className="link">Contáctanos</a></li>
                 <li className="list-row"><a href='/sobre-nosotros' className="link">¿Quienes somos?</a></li>
                 <li className="list-row"><a href='/planes' className="link">Precios</a></li>
                 <li className="list-row"><a href='/respaldo-legal' className="link">Respaldo legal</a></li>
@@ -52,7 +54,7 @@ function Footer() {
             <div>
               <h2 className="column-title">MI CUENTA</h2>
               <ul>
-                {user && <li className="list-row"><a href='/micuenta/?ver=api' className="link">API</a></li>}   
+                {user && <li className="list-row"><a href='/micuenta/?ver=api' className="link">API</a></li>}
                 <li className="list-row"><a href='/micuenta/?ver=busquedas' className="link">Historial de busquedas</a></li>
                 <li className="list-row"><a href='/micuenta/?ver=compras' className="link">Historial de pagos</a></li>
                 <li className="list-row"><a href='/micuenta' className="link">Mis datos</a></li>
@@ -67,8 +69,8 @@ function Footer() {
           <p>© 2023 Derechos reservados Advantech</p>
         </div>
       </div>
-
     </footer>
+    </>
   );
 }
 
