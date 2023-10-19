@@ -82,6 +82,10 @@
 .pestaña-contenido{
   display: none;
 }
+
+.pestaña-contenido > video{
+  margin: 50px auto 0;
+}
 .pestaña-contenido > img{
   margin: auto;
 }
