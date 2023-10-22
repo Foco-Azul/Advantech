@@ -36,7 +36,7 @@ function Hero() {
             Crear cuenta
           </a>
           <br></br>
-          <a href="/documentacion" className="hero-icon-container">
+          <a href="/guia-de-busqueda" className="hero-icon-container">
             ¿Cómo funciona? <ArrowRight className="hero-icon" />
           </a>
           <br></br>
