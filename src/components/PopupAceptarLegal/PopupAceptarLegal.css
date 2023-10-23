@@ -1,0 +1,9 @@
+.aceptar-legal{
+    background-color: #d3e6f7;
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+    border-radius: 6px;
+}
+.aceptar-legal > .text-center > a > p > span{
+    color: #009fde;
+    font-size: 16px;
+}

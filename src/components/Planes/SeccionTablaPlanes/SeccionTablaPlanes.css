@@ -22,6 +22,8 @@
     width: 310px;
     min-width: 310px;
     font-weight: 700;
+    background-color: #E2EEF9;
+    padding: 10px 20px;
 }
 .seccion-tabla-planes > div > table tr.header td{
     font-size: 14px;
@@ -33,7 +35,7 @@
     border-left: 20px solid #fff;
     width: 310px;
     min-width: 310px;
-    padding: 10px 20px;
+    padding: 10px 10px;
 }
 
 @media only screen and (max-width: 525px) {

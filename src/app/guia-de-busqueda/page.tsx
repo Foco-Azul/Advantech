@@ -3,7 +3,7 @@ import Footer from '@/components/Footer/Footer';
 import NavMenu from '@/components/NavMenu/index';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "../globals.css"
-import './guia-de-busqeuda.css'
+import './guia-de-busqueda.css'
 import { Metadata } from "next";
 import SeccionGuiaDeUso from '@/components/GuiaDeUso/SeccionGuiaDeUso/SeccionGuiaDeUso';
 import SeccionBusquedas from '@/components/GuiaDeUso/SeccionBusquedas/SeccionBusquedas';
