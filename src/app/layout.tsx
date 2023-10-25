@@ -1,7 +1,8 @@
 import "./globals.css";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
-
+import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
 import { Providers } from './providers';
+import PopupAceptarLegal from "@/components/PopupAceptarLegal/PopupAceptarLegal";
 
 export default function RootLayout({
   children,
@@ -11,10 +12,12 @@ export default function RootLayout({
   return (
 
     <html lang="en">
+      <GoogleAnalytics GA_MEASUREMENT_ID='G-H77JWD9QJ9' />
       <body>
         <UserProvider>
           <Providers>{children}</Providers>
         </UserProvider>
+        <PopupAceptarLegal />
       </body>
     </html>
 

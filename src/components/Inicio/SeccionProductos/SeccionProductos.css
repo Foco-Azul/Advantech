@@ -29,6 +29,7 @@
     max-width: 420px;
     margin: 30px 0;
     color: #585C7B;
+    text-align: start;
 }
 
 
@@ -80,6 +81,10 @@
 }
 .pestaña-contenido{
   display: none;
+}
+
+.pestaña-contenido > video{
+  margin: 50px auto 0;
 }
 .pestaña-contenido > img{
   margin: auto;

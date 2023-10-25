@@ -1,7 +1,7 @@
 import Image from "next/image";
 import './SeccionRecursos.css'
 import Link from "next/link";
-import ImageRecursos from "./image/imagen-advantech-laptop.svg"
+import ImageRecursos from "./image/Recursos-laptop.png"
 import IconIndustria from "./image/icon-industria.svg"
 import IconCheck from "./image/icon-check.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,7 @@ async function SeccionRecursos() {
                         <h2>Intuitivo para un uso diario,</h2>
                         <h2>con documentación para guiarte</h2>
                         <p>Ya sea que seas un principiante o un experto en el análisis de datos, en nuestra documentación encontrarás tutoriales y consejos para aprovechar al máximo tu suscripción.</p>
-                        <Link href={"/documentacion"}><button className="hero-button">¿Cómo funciona?</button></Link>
+                        <Link href={"/guia-de-busqueda"}><button className="hero-button">¿Cómo funciona?</button></Link>
                     </div>
                     <div className="seccion-recursos-superior-der">
                         <Image src={ImageRecursos} width={500} height={361} alt="advantech-recursos"></Image>

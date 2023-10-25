@@ -48,7 +48,44 @@ const SearchComponent: React.FC = () => {
     const [fuenteseleccionada, setFuenteseleccionada] = useState("");
     const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
-
+    async function enviarCorreo(jsonResponse: { data: {attributes: any; id: any; }; }){
+        const nuevoHistorial = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+              },
+              cache: "no-store",
+            }
+          );
+        const data = await nuevoHistorial.json();
+        console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
+        const postCorreo = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+              },
+              body: JSON.stringify({
+                data: {
+                  nombre: userEmail,
+                  asunto: "Busqueda completada",
+                  para: userEmail,
+                  json: JSON.stringify({
+                    url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
+                    consulta: jsonResponse.data.attributes.consulta,
+                    fecha: jsonResponse.data.attributes.fecha,
+                  }),
+                },
+              }),
+              cache: "no-store",
+            }
+          );
+    }
     async function getuser() {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=*`, {
@@ -323,6 +360,11 @@ const SearchComponent: React.FC = () => {
                                 cache: "no-store",
                             }
                         );
+                        if (posthistorial.ok) {
+                            const jsonResponse = await posthistorial.json();
+                            console.log("Respuesta de la API:", jsonResponse);
+                            enviarCorreo(jsonResponse);
+                        }
                     }
                 }
 
@@ -364,6 +406,11 @@ const SearchComponent: React.FC = () => {
                                 cache: "no-store",
                             }
                         );
+                        if (posthistorial.ok) {
+                            const jsonResponse = await posthistorial.json();
+                            console.log("Respuesta de la API:", jsonResponse);
+                            enviarCorreo(jsonResponse);
+                        }
                     }
                 }
 
@@ -404,6 +451,11 @@ const SearchComponent: React.FC = () => {
                                 cache: "no-store",
                             }
                         );
+                        if (posthistorial.ok) {
+                            const jsonResponse = await posthistorial.json();
+                            console.log("Respuesta de la API:", jsonResponse);
+                            enviarCorreo(jsonResponse);
+                        }
                     }
                 }
 

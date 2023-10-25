@@ -123,7 +123,7 @@ const BurguerMenu: React.FC = () => {
               <div>
                 <ul>
                   <li className="sub-menu"><Link href="/busqueda" legacyBehavior passHref>Buscar datos</Link></li>
-                  <li className="sub-menu"><Link href="/documentacion" legacyBehavior passHref>Guía de uso</Link></li>
+                  <li className="sub-menu"><Link href="/guia-de-busqueda" legacyBehavior passHref>Guía de busqueda</Link></li>
                   <li className="sub-menu"><Link href="/uso-por-industria" legacyBehavior passHref>Uso por industria</Link></li>
                 </ul>
               </div>

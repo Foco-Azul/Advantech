@@ -1,12 +1,16 @@
+"use client"
 import Image from "next/image";
 import './SeccionSobreNosotros.css';
 import Gif from "./image/SobreNosotros.gif"
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import { useRef } from 'react'
+import '@johanaarstein/dotlottie-player'
+import type { DotLottiePlayer } from '@johanaarstein/dotlottie-player'
 
 function SobreNosotros() {
-
+  const animation = useRef<DotLottiePlayer | null>(null)
   return (
     <div className="sobrenosotros-container">
       <div className="sobrenosotros-columna1">
@@ -22,7 +26,12 @@ function SobreNosotros() {
 
       </div>
       <div className="sobrenosotros-columna2">
-        <Image src={Gif} alt="Company Logo" />
+        <dotlottie-player
+        class="your-class-name"
+        src="https://lottie.host/920e6296-8eaf-4d15-bb10-0787333ab784/wwcKRDicfi.json"
+        autoplay=""
+        loop=""
+      />
       </div>
     </div>
   );

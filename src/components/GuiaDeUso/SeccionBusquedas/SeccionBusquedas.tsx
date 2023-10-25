@@ -52,7 +52,7 @@ function SeccionBusquedas() {
               </p>
             </div>
             <div className='imagen'>
-              <video src="https://admin.advantech.com.ec/uploads/video.mp4" controls></video>
+              <video src="https://admin.advantech.com.ec/uploads/por-descarga.mkv" controls></video>
             </div>
           </div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'RECURSOS HUMANOS' ? 'contenido-activo' : '')}>
@@ -69,6 +69,7 @@ function SeccionBusquedas() {
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
                 </ul>
+                <Link href="https://admin.advantech.com.ec/uploads/Prueba_4e7858f26d.xlsx" legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Descarga nuestro Excel de ejemplo<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
               <p>
                 <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
                 Los resultados de la búsqueda por nombre pueden coincidir con más de una persona, mientras que la búsqueda por RUC te dará resultados precisos de una sola persona.
@@ -77,10 +78,9 @@ function SeccionBusquedas() {
                 <span className="guia-subtitulo">Obteniendo los resultados: </span>
                 Para acceder a los resultados de la búsqueda, es necesario que inicies sesión, te suscribas a un plan y contar con los créditos requeridos para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formatos como <strong>PDF</strong>, <strong>XLSX</strong>, <strong>CSV</strong> o <strong>JSON</strong>.
               </p>
-              <Link href="https://admin.advantech.com.ec/uploads/datos_2c3228839d.xlsx" legacyBehavior passHref><a className="sobrenosotros-icon-container">Descarga nuestro Excel de ejemplo<FontAwesomeIcon icon={faArrowRight} className="hero-icon"/></a></Link>
             </div>
             <div className='imagen'>
-              <video src="https://admin.advantech.com.ec/uploads/video.mp4" controls></video>
+              <video src="https://admin.advantech.com.ec/uploads/busqueda-por-lote.mkv" controls></video>
             </div>
           </div>
         </div>

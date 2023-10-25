@@ -119,6 +119,32 @@ function Login({ loginname }: LoginProps) {
           throw new Error(`Failed to create user, ${postResponse.status}`);
         }
       }
+      if (user && user.sub && user.sub.includes("windowslive") && foundUser.attributes.microsoft==null) {
+        // Realizar el POST con los datos requeridos
+        const postResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: {
+                codigo_de_verificacion: codigoUnico,
+                microsoft: true
+              },
+            }),
+            cache: "no-store",
+          }
+        );
+        
+        if (postResponse.status === 200) {
+          console.log("Usuario creado con éxito.");
+        } else {
+          console.log(postResponse.status);
+          throw new Error(`Failed to create user, ${postResponse.status}`);
+        }
+      }
       } else {
         console.log("El correo electrónico no existe en el array de objetos.");
         if (foundUser && typeof user.email === 'string') {
@@ -161,35 +187,69 @@ function Login({ loginname }: LoginProps) {
                 throw new Error(`Failed to create user, ${postResponse.status}`);
               }
             }else{
-              // Realizar el POST con los datos requeridos
-            const postResponse = await fetch(
-              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  data: {
-                    email: user.email,
-                    username: user.name,
-                    vencimiento: "2023-01-01",
-                    plan: 4,
-                    apikey:  generateApiKey(user.email),
-                    google: true,
-                    estaactivo: true
-                  },
-                }),
-                cache: "no-store",
-              }
-            );
+              if (user && user.sub && user.sub.includes("google")) {
+                  // Realizar el POST con los datos requeridos
+                const postResponse = await fetch(
+                  `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      data: {
+                        email: user.email,
+                        username: user.name,
+                        vencimiento: "2023-01-01",
+                        plan: 4,
+                        apikey:  generateApiKey(user.email),
+                        google: true,
+                        estaactivo: true
+                      },
+                    }),
+                    cache: "no-store",
+                  }
+                );
 
-            if (postResponse.status === 200) {
-              console.log("Usuario creado con éxito.");
-            } else {
-              console.log(postResponse.status);
-              throw new Error(`Failed to create user, ${postResponse.status}`);
-            }
+                if (postResponse.status === 200) {
+                  console.log("Usuario creado con éxito.");
+                } else {
+                  console.log(postResponse.status);
+                  throw new Error(`Failed to create user, ${postResponse.status}`);
+                }
+              }else{
+                if (user && user.sub && user.sub.includes("windowslive")) {
+                  // Realizar el POST con los datos requeridos
+                const postResponse = await fetch(
+                  `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      data: {
+                        email: user.email,
+                        username: user.name,
+                        vencimiento: "2023-01-01",
+                        plan: 4,
+                        apikey:  generateApiKey(user.email),
+                        microsoft: true,
+                        estaactivo: true
+                      },
+                    }),
+                    cache: "no-store",
+                  }
+                );
+
+                if (postResponse.status === 200) {
+                  console.log("Usuario creado con éxito.");
+                } else {
+                  console.log(postResponse.status);
+                  throw new Error(`Failed to create user, ${postResponse.status}`);
+                }
+              }
+              }
             }
           }
         }

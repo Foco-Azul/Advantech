@@ -29,7 +29,41 @@ const Multisearch: React.FC = () => {
   const currentDate = new Date();
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
-
+  
+  async function enviarCorreo(jsonResponse: { data: { id: any; }; }){
+    const nuevoHistorial = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+          },
+          cache: "no-store",
+        }
+      );
+    const data = await nuevoHistorial.json();
+    console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
+    const postCorreo = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+          },
+          body: JSON.stringify({
+            data: {
+              nombre: userEmail,
+              asunto: "Busqueda completada",
+              para: userEmail,
+              contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
+            },
+          }),
+          cache: "no-store",
+        }
+      );
+}
   useEffect(() => {
     getuser()
       .then((foundUser) => {
@@ -108,7 +142,7 @@ const Multisearch: React.FC = () => {
 
   async function getuser() {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?populate=*&filters[email][$eq]=${userEmail}`, {
 
         method: "GET",
         headers: {
@@ -350,7 +384,13 @@ const Multisearch: React.FC = () => {
                   cache: "no-store",
                 }
               );
+              if (posthistorial.ok) {
+                const jsonResponse = await posthistorial.json();
+                console.log("Respuesta de la API:", jsonResponse);
+                enviarCorreo(jsonResponse);
+              }
             }
+            
           }
 
           if (selectedSource === "noticias") {
@@ -388,6 +428,11 @@ const Multisearch: React.FC = () => {
                   cache: "no-store",
                 }
               );
+              if (posthistorial.ok) {
+                const jsonResponse = await posthistorial.json();
+                console.log("Respuesta de la API:", jsonResponse);
+                enviarCorreo(jsonResponse);
+            }
             }
           }
 
@@ -426,6 +471,11 @@ const Multisearch: React.FC = () => {
                   cache: "no-store",
                 }
               );
+              if (posthistorial.ok) {
+                const jsonResponse = await posthistorial.json();
+                console.log("Respuesta de la API:", jsonResponse);
+                enviarCorreo(jsonResponse);
+            }
             }
           }
 

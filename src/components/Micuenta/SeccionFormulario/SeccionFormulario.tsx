@@ -109,7 +109,6 @@ const SeccionFormulario: React.FC = () => {
               <option value="A la carta">Personalizado</option>
               <option value="Estántar">Estántar</option>
               <option value="Premium">Premium</option>
-              <option value="Enteprise">Enteprise</option>
             </select>
           </div>
           <div className='campos'>

@@ -85,3 +85,10 @@
     transform: scale(1.05);
     margin-left: 20px;
 }
+
+
+@media only screen and (max-width: 525px) {
+    .sobrenosotros-columna2 {
+        max-width: 100%;
+    }    
+}
