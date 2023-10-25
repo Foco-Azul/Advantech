@@ -9,6 +9,7 @@ import { JudicialesExcel } from './JudicialesExcel';
 import Judicialestable from './Judicialestable';
 import Titulostable from './Titulostable';
 import { TitulosExcel } from './TitulosExcel';
+import Accionistastable from './Accionistastable';
 
 const Multisearch: React.FC = () => {
   const [fileData, setFileData] = useState<string | null>(null);
@@ -275,17 +276,17 @@ const Multisearch: React.FC = () => {
 
           setData(noticias)
 
-          if (selectedSource === "judicial") {
-            JudicialesExcel(noticias);
-          }
+          // if (selectedSource === "judicial") {
+          //   JudicialesExcel(noticias);
+          // }
 
-          if (selectedSource === "noticias") {
-            NoticiasExcel(noticias);
-          }
+          // if (selectedSource === "noticias") {
+          //   NoticiasExcel(noticias);
+          // }
 
-          if (selectedSource === "titulos") {
-            TitulosExcel(noticias);
-          }
+          // if (selectedSource === "titulos") {
+          //   TitulosExcel(noticias);
+          // }
 
 
           //////////////////////////////////////////// RESTA DE CRÉDITOS /////////////////////////////////////////////
@@ -536,6 +537,7 @@ const Multisearch: React.FC = () => {
             {fuenteseleccionada == "noticias" && <Noticiastable dataToDownload={data} />}
             {fuenteseleccionada == "judicial" && <Judicialestable dataToDownload={data} />}
             {fuenteseleccionada == "titulos" && <Titulostable dataToDownload={data} />}
+            {fuenteseleccionada == "accionistas" && <Accionistastable dataToDownload={data} />}
 
           </div>
 

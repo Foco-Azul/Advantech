@@ -14,6 +14,7 @@ import { validateInput } from './InputValidationUtil'; // Import the validation 
 import Link from "next/link";
 import Multisearch from "./Multisearch"
 import TablaBusquedaTitulos from './TablaBusquedaTitulos';
+import TablaBusquedaAccionistas from './TablaBusquedaAccionistas';
 import { NoticiasExcel } from './NoticiasExcel';
 import { JudicialesExcel } from './JudicialesExcel';
 import { TitulosExcel } from './TitulosExcel';
@@ -297,7 +298,7 @@ const SearchComponent: React.FC = () => {
                             auth_0_user: userId,
                             creditos: selectedFuenteCredito * -1,
                             precio: 0,
-                            consulta: "Judiciales " + searchInputValue ,
+                            consulta: "Judiciales " + searchInputValue,
                             plane: planId,
                         };
 
@@ -338,7 +339,7 @@ const SearchComponent: React.FC = () => {
                             creditos: selectedFuenteCredito * -1,
                             fecha: currentDate,
                             precio: 0,
-                            consulta: "Noticias " + searchInputValue ,
+                            consulta: "Noticias " + searchInputValue,
                             plane: planId,
                         };
 
@@ -378,7 +379,7 @@ const SearchComponent: React.FC = () => {
                             creditos: selectedFuenteCredito * -1,
                             fecha: currentDate,
                             precio: 0,
-                            consulta: "Titulos " + searchInputValue ,
+                            consulta: "Titulos " + searchInputValue,
                             plane: planId,
                         };
 
@@ -638,6 +639,13 @@ const SearchComponent: React.FC = () => {
                                 {fuenteseleccionada == "titulos" &&
                                     <>
                                         <TablaBusquedaTitulos data={DatosTabla} onSelectedItems={handleSelectedItems} />
+                                    </>
+                                }
+
+
+                                {fuenteseleccionada == "accionistas" &&
+                                    <>
+                                        <TablaBusquedaAccionistas data={DatosTabla} onSelectedItems={handleSelectedItems}  />
                                     </>
                                 }
 

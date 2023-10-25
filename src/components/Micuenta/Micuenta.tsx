@@ -370,8 +370,8 @@ const Micuenta: React.FC = () => {
                                                     <tbody>
                                                         {searchHistory.slice() // Copia el array para no modificar el original
                                                             .sort((a, b) => {
-                                                                const dateA = new Date(a.attributes.fecha);
-                                                                const dateB = new Date(b.attributes.fecha);
+                                                                const dateA = new Date(a.attributes.publishedAt);
+                                                                const dateB = new Date(b.attributes.publishedAt);
                                                                 if (dateA > dateB) return -1; // Ordena por fecha en orden descendente (más reciente primero)
                                                                 if (dateA < dateB) return 1;
                                                                 return 0;
