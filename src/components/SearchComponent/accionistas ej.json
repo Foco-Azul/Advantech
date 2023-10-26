@@ -1,0 +1,66 @@
+{
+    "0992226013001": {
+        "0": {
+            "type": "Accionistas",
+            "administracion_actual_en": {
+                "0": {
+                    "expediente": "****",
+                    "nombre": "CORPORACION FAVORITA C.A.",
+                    "ruc": "1790016919001",
+                    "nacionalidad": "dsadsa",
+                    "cargo": "asdas",
+                    "fechanombramiento": "sdsad",
+                    "fechatermino": "asdsad",
+                    "periodo": "dassasads",
+                    "fecha_registromercantil": "asdsad",
+                    "articulo": "dsadsa",
+                    "n_registromercantil": "dasdadsa",
+                    "rladm": "asdsadsa"
+                }
+            },
+            "accionista_actual_en": {
+                "0": {
+                    "expediente": "****",
+                    "nombre": "CORPORACION FAVORITA C.A.",
+                    "ruc": "1790016919001",
+                    "capital_invertido": "329****",
+                    "capital_total_cia": "900****",
+                    "valor_nominal": "****",
+                    "situacionlegal": "ACT****",
+                    "posesion_efectiva": "****"
+                }
+            },
+            "administradores_anterior_en": {
+                "0": {
+                    "expediente": "****",
+                    "nombre": "CORPORACION FAVORITA C.A.",
+                    "ruc": "1790016919001",
+                    "nacionalidad": "dsadsa",
+                    "cargo": "asdas",
+                    "fechanombramiento": "sdsad",
+                    "fechatermino": "asdsad",
+                    "periodo": "dassasads",
+                    "fecha_registromercantil": "asdsad",
+                    "articulo": "dsadsa",
+                    "n_registromercantil": "dasdadsa",
+                    "rladm": "asdsadsa"
+                }
+            },
+            "accionista_anterior_en": {
+                "0": {
+                    "expediente": "****",
+                    "nombre": "CORPORACION FAVORITA C.A.",
+                    "ruc": "1790016919001",
+                    "situacionlegal": "ACT****"
+                }
+            },
+            "accionista_en_las_siguientes_sociedades_extranjeras": {
+                "0": {
+                    "expediente": "****",
+                    "nombre": "CORPORACION FAVORITA C.A.",
+                    "nacionalidad": "1790016919001"
+                }
+            }
+        }
+    }
+}
