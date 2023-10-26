@@ -419,6 +419,7 @@ function RespaldoLegalSeccion() {
                   </p>
                 </li>
               </ul>
+              <Link href="https://admin.advantech.com.ec/uploads/POLITICA_DE_COOKIES_1_259ab18fc0.docx" legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Descarga nuestro documento de Politica de Cookies<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
             </div>
           </div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'POLITICAS-DE-PRIVACIDAD' ? 'contenido-activo' : '')}>
