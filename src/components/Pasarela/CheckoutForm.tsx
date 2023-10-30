@@ -14,6 +14,12 @@ interface CheckoutFormProps {
   planvencimiento: number;
   userid: number | null;
   userCorreo: string | null;
+  nombres: string;
+  razonSocial: string;
+  rucCedula: string;
+  direccion: string;
+  telefono: string;
+  email: string;
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planvencimiento, userCorreo }) => {
@@ -25,6 +31,13 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
   const [showPaymentButton, setShowPaymentButton] = useState(true);
   const [loading, setLoading] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  const [nombres, setNombres] = useState('');
+  const [razonSocial, setRazonSocial] = useState('');
+  const [rucCedula, setRucCedula] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [email, setEmail] = useState(userCorreo || '');
 
   const handleCardSectionFocus = () => {
     setPayerror(null);
@@ -108,6 +121,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           }
         );
         if (postResponse.status === 200) {
+          console.log("nombres",nombres)
           const posthistorial = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
             {
@@ -122,7 +136,15 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   fecha: fechaActual,
                   precio: price,
                   plane: planid,
-                  consulta:""
+                  consulta:"",
+                  factura: {
+                    nombres: nombres,
+                    razonSocial: razonSocial,
+                    rucCedula: rucCedula,
+                    direccion: direccion,
+                    telefono: telefono,
+                    email: email,
+                  },  
                 },
               }
               ),
@@ -186,11 +208,94 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
 
   return (
     <div>
-      {paymentSuccess == false && <><p>Coloca los datos de tu tarjeta</p><br></br></>}
+      {paymentSuccess == false && <><p>Coloca los datos de facturación</p><br></br></>}
       <form onSubmit={handleSubmit} >
         {showForm && (
           <div onMouseEnter={handleCardSectionFocus} >
-            <CardSection />
+            <div className='facturacion'>
+              <div className='campo'>
+                <label htmlFor="nombres">Nombres:</label>
+                <input
+                  type="text"
+                  id="nombres"
+                  name="nombres"
+                  value={nombres}
+                  onChange={(e) => setNombres(e.target.value)}
+                  placeholder='Nombres'
+                  
+                />
+              </div>
+
+              <div className='campo'>
+                <label htmlFor="razonSocial">Razon Social:</label>
+                <input
+                  type="text"
+                  id="razonSocial"
+                  name="razonSocial"
+                  value={razonSocial}
+                  onChange={(e) => setRazonSocial(e.target.value)}
+                  placeholder='Razon Social'
+                  
+                />
+              </div>
+
+              <div className='campo'>
+                <label htmlFor="rucCedula">Ruc/Cédula:</label>
+                <input
+                  type="text"
+                  id="rucCedula"
+                  name="rucCedula"
+                  value={rucCedula}
+                  onChange={(e) => setRucCedula(e.target.value)}
+                  placeholder='Ruc/Cédula'
+                  
+                />
+              </div>
+
+              <div className='campo'>
+                <label htmlFor="direccion">Dirección:</label>
+                <input
+                  type="text"
+                  id="direccion"
+                  name="direccion"
+                  value={direccion}
+                  onChange={(e) => setDireccion(e.target.value)}
+                  placeholder='Dirección'
+                  
+                />
+              </div>
+
+              <div className='campo'>
+                <label htmlFor="telefono">Teléfono:</label>
+                <input
+                  type="text"
+                  id="telefono"
+                  name="telefono"
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value)}
+                  placeholder='Teléfono'
+                  
+                />
+              </div>
+
+              <div className='campo'>
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={email || ''}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder='Email'
+                  
+                />
+              </div>
+            </div>
+            <div className='tarjeta-pago'>  
+              <p>Coloca los datos de tu tarjeta</p>
+              <br />
+              <CardSection />
+            </div>
           </div>
         )}
         <br></br>

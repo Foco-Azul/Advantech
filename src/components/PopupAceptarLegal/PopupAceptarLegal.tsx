@@ -35,11 +35,11 @@ export default function VerificarCorreo(){
                             `}>
 
                 <div className='text-center'>
-                    <Link href="/respaldo-legal"><p><span className='font-bold text-sky-400'>Acepta nuestros terminos y condiciones, Aviso de privacidad, Politica de cookies y Politicas de privacidad </span></p></Link>
+                    <Link href="/respaldo-legal"><p><span className='font-bold text-sky-400'>Al navegar en nuestro sitio, aceptas nuestros términos y políticas. Ver más.</span></p></Link>
                 </div>
                 
                 <div className='flex gap-2'>
-                    <button className='navigation-menu-button' onClick={() => setCookieConsent(false)}>Aceptar</button>
+                    <button className='navigation-menu-button' onClick={() => setCookieConsent(false)}>Confirmar</button>
                 </div>   
             </div>
         </>

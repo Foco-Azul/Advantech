@@ -30,7 +30,22 @@ const Micuenta: React.FC = () => {
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
     const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "");
     const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos < 0);
-    const [activeTab, setActiveTab] = useState<'datos' | 'compras' | 'soporte' | 'api' | 'busquedas'>('datos');
+    interface PurchasePagina {
+        page: number;
+        pageSize: number;
+        pageCount: number;
+        total: number;
+      }
+    const [purchasePagosPaginas, setPurchasePagosPaginas] = useState<PurchasePagina | null>(null)
+    const purchasePaginas = purchasePagosPaginas;
+    const correos = [
+        'carlosvargasbazoalto@gmail.com', 
+        'correo2@example.com', 
+        'correo3@example.com'];
+    const [botonActivo, setBotonActivo] = useState<number | null>(null);
+    const [purchasePagosTodos, setPurchasePagos] = useState<any[]>([]);
+    const purchasePagos = purchasePagosTodos;
+    const [activeTab, setActiveTab] = useState<'datos' | 'compras' | 'soporte' | 'api' | 'pagos' | 'busquedas'>('datos');
     const apiKeyRef = useRef<HTMLDivElement | null>(null);
     const [isCopied, setIsCopied] = useState(false);
     const [apiset, setApiset] = useState(false);
@@ -156,7 +171,29 @@ const Micuenta: React.FC = () => {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
+    async function getHistorialPagos(page: number) {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials?filters[consulta][$eq]=&pagination[page]=${page}`, {
 
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                },
+                cache: "no-store",
+            });
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data, ${response.status}`);
+            }
+            const data = await response.json();
+            const foundUser = data
+
+            console.log("founduserPagos", foundUser)
+            return foundUser;
+        } catch (error) {
+            throw new Error(`Failed to fetch data, ${error}`);
+        }
+    }
     useEffect(() => {
         // Llamar a la función cuando se carga el componente
         checkAndLogVerParam();
@@ -176,8 +213,33 @@ const Micuenta: React.FC = () => {
             .catch((error) => {
                 console.error('Failed to fetch user data:', error);
             });
+        console.log("user",user)
+        if(user && user.email && correos.includes(user.email)){
+            getHistorialPagos(1)
+                .then((foundUser) => {
+                    if (foundUser) {
+                        setPurchasePagos(foundUser.data);
+                        setPurchasePagosPaginas(foundUser.meta.pagination)
+                    }
+                })
+                .catch((error) => {
+                    console.error('Failed to fetch user data:', error);
+                });
+        }
     }, [user]);
-
+    const handleButtonClick = (key: number) => {
+        setBotonActivo(key);
+        getHistorialPagos(key)
+        .then((foundUser) => {
+            if (foundUser) {
+                setPurchasePagos(foundUser.data);
+                setPurchasePagosPaginas(foundUser.meta.pagination)
+            }
+        })
+        .catch((error) => {
+            console.error('Failed to fetch user data:', error);
+        });
+    };
 
     const copyApiKeyToClipboard = () => {
         if (apiKeyRef.current) {
@@ -190,6 +252,13 @@ const Micuenta: React.FC = () => {
             });
         }
     };
+    console.log("searchHistory",purchaseHistoryFiltered)
+    console.log("purchasePagos",purchasePagos) 
+    if (purchasePagosPaginas && purchasePagosPaginas.pageCount !== undefined) {
+        console.log("purchasePaginas", purchasePagosPaginas.pageCount);
+      } else {
+        console.log("purchasePaginas is undefined or pageCount is not defined.");
+      }
 
     return (
         <UserProvider>
@@ -224,6 +293,15 @@ const Micuenta: React.FC = () => {
                                 >
                                     Historial de Búsquedas
                                 </button>
+                                {user.email && correos.includes(user.email) && (
+                                    <button
+                                        id='pagos'
+                                        className={`tab-button ${activeTab === 'pagos' ? 'active' : ''}`}
+                                        onClick={() => setActiveTab('pagos')}
+                                    >
+                                        Historial de pagos
+                                    </button>
+                                )}
                                 <button id='soporte'
                                     className={`tab-button ${activeTab === 'soporte' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('soporte')}
@@ -402,6 +480,56 @@ const Micuenta: React.FC = () => {
                                             </div>
                                         </div>
                                     </>
+                                )}
+                               {activeTab === 'pagos' && user.email && correos.includes(user.email) &&(
+                                    <>
+                                        <h2 className='micuenta-h2-datos'>Registros de pagos</h2>
+                                        <div className="purchase-history-container pagos">
+                                            <div className="purchase-history-scroll">
+                                                <table className="micuenta-history-table">
+                                                    <thead className="micuenta-history-table-head pagos">
+                                                        <tr>
+                                                            <th>Fecha</th>
+                                                            <th>Precio</th>
+                                                            <th>Créditos</th>
+                                                            <th>Correo</th>
+                                                            <th>Nombres</th>
+                                                            <th>Raazon Social</th>
+                                                            <th>Teléfono</th>
+                                                            <th>Dirección</th>
+                                                            <th>Ruc/Cedula</th>  
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {purchasePagos.map((purchase: any) => (
+                                                            <tr key={purchase.id}>
+                                                                <td>{purchase.attributes.fecha}</td>
+                                                                <td>${purchase.attributes.precio}</td>
+                                                                <td>{purchase.attributes.creditos}</td>
+                                                                <td>{purchase.attributes.factura?.email}</td>
+                                                                <td>{purchase.attributes.factura?.nombres}</td>
+                                                                <td>{purchase.attributes.factura?.razonSocial}</td>
+                                                                <td>{purchase.attributes.factura?.telefono}</td>
+                                                                <td>{purchase.attributes.factura?.direccion}</td>
+                                                                <td>{purchase.attributes.factura?.rucCedula}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div className='btn-acciones'>
+                                            {purchasePagosPaginas && Array.from({ length: purchasePagosPaginas.pageCount }, (_, index) => (
+                                             <button
+                                             className={`paginas ${botonActivo === index + 1 ? 'activo' : ''}`}
+                                             key={index + 1}
+                                             onClick={() => handleButtonClick(index + 1)}
+                                           >
+                                             {index + 1}
+                                           </button>
+                                            ))}
+                                        </div>
+                                        </>
                                 )}
 
                                 {activeTab === 'soporte' && (

@@ -30,7 +30,7 @@ const Multisearch: React.FC = () => {
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
   
-  async function enviarCorreo(jsonResponse: { data: { id: any; }; }){
+  async function enviarCorreo(jsonResponse: { data: {attributes: any; id: any; }; }){
     const nuevoHistorial = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
         {
@@ -58,6 +58,10 @@ const Multisearch: React.FC = () => {
               asunto: "Busqueda completada",
               para: userEmail,
               contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
+              json: JSON.stringify({
+                url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
+                fecha: jsonResponse.data.attributes.fecha,
+              }),
             },
           }),
           cache: "no-store",
