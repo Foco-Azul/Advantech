@@ -419,6 +419,7 @@ function RespaldoLegalSeccion() {
                   </p>
                 </li>
               </ul>
+             
             </div>
           </div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'POLITICAS-DE-PRIVACIDAD' ? 'contenido-activo' : '')}>

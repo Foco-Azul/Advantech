@@ -3,7 +3,7 @@ import Image from "next/image";
 import './SeccionSuscripcion.css'
 import Link from "next/link";
 import IconPc from "./image/icon-pc.svg"
-import ImageSuscripcion from "./image/Planes.png"
+import ImageSuscripcion from "./image/Planes2.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleRight} from "@fortawesome/free-solid-svg-icons";
 

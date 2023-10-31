@@ -43,6 +43,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .tab-buttons {
@@ -86,8 +88,8 @@
 
 .micuenta-datos-container {
     width: 100%;
-    margin: auto;
     min-height: 500px;
+    max-width: 1100px;
 }
 
 .micuenta-history-table {
@@ -234,7 +236,6 @@ tr:nth-child(even) {
     display: flex;
     justify-content: flex-end;
     padding: 50px;
-    width: 50%;
     margin: auto;
 }
 
@@ -281,4 +282,32 @@ tr:nth-child(even) {
 .cerrar-popup > svg{
     color: #009fde;
     cursor: pointer;
+}
+
+/*REGISTRO DE PAGOS*/
+.purchase-history-container.pagos{
+    overflow: scroll;
+    max-width: unset;
+}
+.purchase-history-container.pagos > div > table{
+    min-width: 1000px;
+}
+div.micuenta div.btn-acciones > button{
+    box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.9);
+    background-color: #ffffff;
+    padding: 10px 20px;
+    margin: 10px;
+    color: #0099CC;
+    font-size: 16px;
+    font-weight: 800;
+}
+div.micuenta div.btn-acciones > button:hover{
+    box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+    transform: scale(0.95);
+}
+div.micuenta div.btn-acciones > button.activo{
+    background-color: #009FDE;
+    color: white;
+    box-shadow: 0px 8px 18px -8px rgba(99, 101, 241, 0);
+    transform: scale(0.95);
 }

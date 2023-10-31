@@ -30,8 +30,13 @@ const Multisearch: React.FC = () => {
   const currentDate = new Date();
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
+<<<<<<< HEAD
 
   async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
+=======
+  
+  async function enviarCorreo(jsonResponse: { data: {attributes: any; id: any; }; }){
+>>>>>>> 67ea4b08be720fc4ac851a01b44d8a19bc410002
     const nuevoHistorial = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
       {
@@ -60,11 +65,30 @@ const Multisearch: React.FC = () => {
             para: userEmail,
             contenido: process.env.NEXT_PUBLIC_STRAPI_URL + data.data.attributes.archivo.data.attributes.url,
           },
+<<<<<<< HEAD
         }),
         cache: "no-store",
       }
     );
   }
+=======
+          body: JSON.stringify({
+            data: {
+              nombre: userEmail,
+              asunto: "Busqueda completada",
+              para: userEmail,
+              contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
+              json: JSON.stringify({
+                url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
+                fecha: jsonResponse.data.attributes.fecha,
+              }),
+            },
+          }),
+          cache: "no-store",
+        }
+      );
+}
+>>>>>>> 67ea4b08be720fc4ac851a01b44d8a19bc410002
   useEffect(() => {
     getuser()
       .then((foundUser) => {
