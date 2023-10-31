@@ -40,7 +40,7 @@ const Micuenta: React.FC = () => {
     const purchasePaginas = purchasePagosPaginas;
     const correos = [
         'carlosvargasbazoalto@gmail.com', 
-        'Santiago.Rodriguez@hctint.com', 
+        'santiago.Rodriguez@hctint.com', 
         'correo3@example.com'];
     const [botonActivo, setBotonActivo] = useState<number | null>(null);
     const [purchasePagosTodos, setPurchasePagos] = useState<any[]>([]);
