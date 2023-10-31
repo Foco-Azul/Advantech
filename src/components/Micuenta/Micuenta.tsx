@@ -39,9 +39,8 @@ const Micuenta: React.FC = () => {
     const [purchasePagosPaginas, setPurchasePagosPaginas] = useState<PurchasePagina | null>(null)
     const purchasePaginas = purchasePagosPaginas;
     const correos = [
-        'carlosvargasbazoalto@gmail.com', 
-        'santiago.Rodriguez@hctint.com', 
-        'correo3@example.com'];
+        'carlosvargasbazoalto@gmail.com',  
+        'santiago.rodriguez@hctint.com'];
     const [botonActivo, setBotonActivo] = useState<number | null>(null);
     const [purchasePagosTodos, setPurchasePagos] = useState<any[]>([]);
     const purchasePagos = purchasePagosTodos;
@@ -299,7 +298,7 @@ const Micuenta: React.FC = () => {
                                         className={`tab-button ${activeTab === 'pagos' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('pagos')}
                                     >
-                                        Historial de pagos
+                                        Facturación
                                     </button>
                                 )}
                                 <button id='soporte'
@@ -483,7 +482,7 @@ const Micuenta: React.FC = () => {
                                 )}
                                {activeTab === 'pagos' && user.email && correos.includes(user.email) &&(
                                     <>
-                                        <h2 className='micuenta-h2-datos'>Registros de pagos</h2>
+                                        <h2 className='micuenta-h2-datos'>Facturación</h2>
                                         <div className="purchase-history-container pagos">
                                             <div className="purchase-history-scroll">
                                                 <table className="micuenta-history-table">
