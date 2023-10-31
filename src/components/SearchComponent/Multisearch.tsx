@@ -10,6 +10,7 @@ import Judicialestable from './Judicialestable';
 import Titulostable from './Titulostable';
 import { TitulosExcel } from './TitulosExcel';
 import Accionistastable from './Accionistastable';
+import AccionistasExcel from './AccionistasExcel';
 
 const Multisearch: React.FC = () => {
   const [fileData, setFileData] = useState<string | null>(null);
@@ -29,41 +30,41 @@ const Multisearch: React.FC = () => {
   const currentDate = new Date();
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
-  
-  async function enviarCorreo(jsonResponse: { data: { id: any; }; }){
+
+  async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
     const nuevoHistorial = await fetch(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-          },
-          cache: "no-store",
-        }
-      );
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+        },
+        cache: "no-store",
+      }
+    );
     const data = await nuevoHistorial.json();
     console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
     const postCorreo = await fetch(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+        },
+        body: JSON.stringify({
+          data: {
+            nombre: userEmail,
+            asunto: "Busqueda completada",
+            para: userEmail,
+            contenido: process.env.NEXT_PUBLIC_STRAPI_URL + data.data.attributes.archivo.data.attributes.url,
           },
-          body: JSON.stringify({
-            data: {
-              nombre: userEmail,
-              asunto: "Busqueda completada",
-              para: userEmail,
-              contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
-            },
-          }),
-          cache: "no-store",
-        }
-      );
-}
+        }),
+        cache: "no-store",
+      }
+    );
+  }
   useEffect(() => {
     getuser()
       .then((foundUser) => {
@@ -390,7 +391,7 @@ const Multisearch: React.FC = () => {
                 enviarCorreo(jsonResponse);
               }
             }
-            
+
           }
 
           if (selectedSource === "noticias") {
@@ -432,7 +433,7 @@ const Multisearch: React.FC = () => {
                 const jsonResponse = await posthistorial.json();
                 console.log("Respuesta de la API:", jsonResponse);
                 enviarCorreo(jsonResponse);
-            }
+              }
             }
           }
 
@@ -475,7 +476,7 @@ const Multisearch: React.FC = () => {
                 const jsonResponse = await posthistorial.json();
                 console.log("Respuesta de la API:", jsonResponse);
                 enviarCorreo(jsonResponse);
-            }
+              }
             }
           }
 
@@ -596,6 +597,8 @@ const Multisearch: React.FC = () => {
             {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data)}>Descargar Excel</button>}
             {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data)}>Descargar Excel</button>}
             {fuenteseleccionada == "titulos" && <button className='download-button excel' onClick={() => TitulosExcel(data)}>Descargar Excel</button>}
+            {fuenteseleccionada == "accionistas" && <button className='download-button excel' onClick={() => AccionistasExcel(data)}>Descargar Excel</button>}
+
 
             <button className='download-button json' onClick={handleDownloadJSON}>Descargar Json</button>
 
