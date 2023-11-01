@@ -64,18 +64,19 @@ export const NoticiasExcel = async (dataToDownload: any) => {
               for (const sujetoKey in sujetos) {
                 if (Object.prototype.hasOwnProperty.call(sujetos, sujetoKey)) {
                   const sujetoData = sujetos[sujetoKey];
+                  console.log(entryData[entryKey]["noticia_del_delito"]);
                   const rowData = [
                     ruc, // Columna "Ruc"
                     entryData[entryKey].type || "",
                     entryData[entryKey]["lugar"] || "",
-                    entryData[entryKey]["Noticia del delito"] || "",
+                    entryData[entryKey]["noticia_del_delito"] || "",
                     entryData[entryKey]["estado"] || "",
                     entryData[entryKey]["delito"] || "",
                     entryData[entryKey]["unidad"] || "",
                     entryData[entryKey]["fecha"] || "",
                     entryData[entryKey]["digitador"] || "",
-                    entryData[entryKey]["numero informe"] || "",
-                    entryData[entryKey]["resumen unidad"] || "",
+                    entryData[entryKey]["numero_informe"] || "",
+                    entryData[entryKey]["resumen_unidad"] || "",
                     sujetoKey, // Columna "sujetos"
                     sujetoData["cedula"] || "", // Columna "cedula"
                     sujetoData["nombre"] || "", // Columna "nombre"

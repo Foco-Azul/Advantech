@@ -18,6 +18,7 @@ import TablaBusquedaAccionistas from './TablaBusquedaAccionistas';
 import { NoticiasExcel } from './NoticiasExcel';
 import { JudicialesExcel } from './JudicialesExcel';
 import { TitulosExcel } from './TitulosExcel';
+import AccionistasExcel from './AccionistasExcel';
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -814,12 +815,13 @@ const SearchComponent: React.FC = () => {
                                 <button className='busqueda-menu-button' onClick={handleConvertToPdf}>
                                     Convertir a PDF
                                 </button>
-                                <button className='busqueda-menu-button' onClick={handleConvertToXls}>
+                                {/* <button className='busqueda-menu-button' onClick={handleConvertToXls}>
                                     Convertir a XLS
-                                </button>
+                                </button> */}
                                 {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data.data)}>Descargar Excel</button>}
                                 {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data.data)}>Descargar Excel</button>}
                                 {fuenteseleccionada == "titulos" && <button className='download-button excel' onClick={() => TitulosExcel(data.data)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "accionistas" && <button className='download-button excel' onClick={() => AccionistasExcel(data.data)}>Descargar Excel</button>}
                             </div>
                             <button className='busqueda-menu-button' onClick={handleReloadPage}>
                                 Iniciar una nueva búsqueda
