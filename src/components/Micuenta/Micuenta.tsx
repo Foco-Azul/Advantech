@@ -30,6 +30,7 @@ const Micuenta: React.FC = () => {
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
     const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "");
     const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos < 0);
+    console.log("planActual2", planId)
     interface PurchasePagina {
         page: number;
         pageSize: number;
@@ -149,7 +150,7 @@ const Micuenta: React.FC = () => {
     // ... your existing getuser function ...
     async function getuser() {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=historials.archivo,*`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=plan.*&populate=historials.archivo`, {
 
                 method: "GET",
                 headers: {
@@ -207,6 +208,7 @@ const Micuenta: React.FC = () => {
                     setPlanId(foundUser.attributes.plan?.data.id)
                     setPurchaseHistory(foundUser.attributes.historials.data);
                     setUserActivo(foundUser.attributes.estaactivo)
+                    console.log(foundUser)
                 }
             })
             .catch((error) => {
@@ -554,7 +556,7 @@ const Micuenta: React.FC = () => {
                                                     }
                                                 </div>
                                             </div>
-                                            {userPlan !== "Enterprise" && <SeccionFormulario />}
+                                            {userPlan !== null && <SeccionFormulario planActual={userPlan} />}
                                         </div>
                                     </div>
 

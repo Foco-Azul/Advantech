@@ -28,6 +28,7 @@ transform: scaleX(0.9);
     box-shadow: 0px 2px 6.400000095367432px -1px rgba(19, 16, 34, 0.03), 0px 4.400000095367432px 12px -1px rgba(19, 16, 34, 0.12);
     margin: 5px;
     width: 400px;
+    max-width: 90vw;
 }
 
 .search{
@@ -86,7 +87,7 @@ transform: scaleX(0.9);
 }
 
 .buscador-label-datos{
-    margin-top: -50px !important;
+
     margin-bottom: 15px !important;
     display: flex;
     align-items: center;
@@ -95,7 +96,7 @@ transform: scaleX(0.9);
     flex-direction: column;
     background-color: #0099CC;
     max-width: 450px;
-    color: white;
+    color: white;   
     height: 35px;
     border-radius: 6px;
 }

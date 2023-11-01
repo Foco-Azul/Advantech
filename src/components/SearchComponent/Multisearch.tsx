@@ -30,7 +30,7 @@ const Multisearch: React.FC = () => {
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
   
-  async function enviarCorreo(jsonResponse: { data: {attributes: any; id: any; }; }){
+  async function enviarCorreo(jsonResponse: { data: { attributes: any; id: any; }; }, fuentes: string) {
     const nuevoHistorial = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
         {
@@ -59,8 +59,10 @@ const Multisearch: React.FC = () => {
               para: userEmail,
               contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
               json: JSON.stringify({
+                consulta: "Por Lote",
                 url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
                 fecha: jsonResponse.data.attributes.fecha,
+                fuente: fuentes
               }),
             },
           }),
@@ -391,7 +393,7 @@ const Multisearch: React.FC = () => {
               if (posthistorial.ok) {
                 const jsonResponse = await posthistorial.json();
                 console.log("Respuesta de la API:", jsonResponse);
-                enviarCorreo(jsonResponse);
+                enviarCorreo(jsonResponse, "Procesos Judiciales electrónicos personales");
               }
             }
             
@@ -435,7 +437,7 @@ const Multisearch: React.FC = () => {
               if (posthistorial.ok) {
                 const jsonResponse = await posthistorial.json();
                 console.log("Respuesta de la API:", jsonResponse);
-                enviarCorreo(jsonResponse);
+                enviarCorreo(jsonResponse, "Denuncias o noticias del delito personales");
             }
             }
           }
@@ -478,7 +480,7 @@ const Multisearch: React.FC = () => {
               if (posthistorial.ok) {
                 const jsonResponse = await posthistorial.json();
                 console.log("Respuesta de la API:", jsonResponse);
-                enviarCorreo(jsonResponse);
+                enviarCorreo(jsonResponse, "Titulos");
             }
             }
           }

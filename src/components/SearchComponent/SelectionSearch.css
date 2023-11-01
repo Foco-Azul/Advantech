@@ -8,7 +8,11 @@
   justify-content: center;
   flex-direction: column;
 }
-
+.switch-container > div{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 /* SelectionSearch.css */
 
 .search-button {
@@ -61,4 +65,15 @@
   transition: 0.5s;
   padding: 9px 20px;
   line-height: 18px;
+}
+a.volver-al-buscador{
+  margin-right: 10px;
+  font-weight: 600;
+  color: #009FDE;
+  margin-left: 10px;
+  transition: 0.5s;
+}
+a.volver-al-buscador:hover{
+  transform: scale(1.05);
+  margin-left: 20px;
 }

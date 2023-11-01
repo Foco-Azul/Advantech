@@ -13,8 +13,11 @@ interface FormData {
   company: string;
   agreeTerms: boolean;
 }
-
-const SeccionFormulario: React.FC = () => {
+interface SeccionFormularioProps {
+  planActual: string;
+}
+const SeccionFormulario: React.FC<SeccionFormularioProps> = ({ planActual }) => {
+  console.log("planActual", planActual)
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -105,10 +108,7 @@ const SeccionFormulario: React.FC = () => {
               onChange={handleChange}
               required
             >
-               <option value="">Selecciona tu plan actual</option>
-              <option value="A la carta">Personalizado</option>
-              <option value="Estántar">Estántar</option>
-              <option value="Premium">Premium</option>
+              <option value={planActual}>{planActual}</option>
             </select>
           </div>
           <div className='campos'>

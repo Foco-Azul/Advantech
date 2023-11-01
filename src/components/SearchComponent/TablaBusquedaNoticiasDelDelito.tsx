@@ -384,7 +384,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   return (
     <div >
       {data != null && Object.keys(data[Object.keys(data)[0]]).length === 0 && (
-        <p>No se encontraron coincidencias</p>
+        <p></p>
       )}
       {data && Object.keys(data[Object.keys(data)[0]]).length > 0 && (
         <>
