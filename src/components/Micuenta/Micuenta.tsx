@@ -495,7 +495,7 @@ const Micuenta: React.FC = () => {
                                                             <th>Créditos</th>
                                                             <th>Correo</th>
                                                             <th>Nombres</th>
-                                                            <th>Raazon Social</th>
+                                                            <th>Razón Social</th>
                                                             <th>Teléfono</th>
                                                             <th>Dirección</th>
                                                             <th>Ruc/Cedula</th>  
