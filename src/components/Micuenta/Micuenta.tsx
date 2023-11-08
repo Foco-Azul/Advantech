@@ -10,6 +10,10 @@ import SeccionFormulario from "@/components/Micuenta/SeccionFormulario/SeccionFo
 import { ArrowRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { NoticiasExcel } from '../SearchComponent/NoticiasExcel';
+import { JudicialesExcel } from '../SearchComponent/JudicialesExcel';
+import { TitulosExcel } from '../SearchComponent/TitulosExcel';
+import AccionistasExcel from '../SearchComponent/AccionistasExcel';
 
 
 const Micuenta: React.FC = () => {
@@ -23,6 +27,7 @@ const Micuenta: React.FC = () => {
     const [userActivo, setUserActivo] = useState<boolean | null>(null);
     const [planId, setPlanId] = useState<number | null>(null);
     const currentDate = new Date();
+    const [data, setData] = useState<any>(null);
     const vencimientoDate = userVencimiento ? new Date(userVencimiento) : null;
     const isPlanVencido = vencimientoDate ? vencimientoDate < currentDate : false;
     const [purchaseHistory, setPurchaseHistory] = useState<Array<any>>([]);
@@ -35,11 +40,11 @@ const Micuenta: React.FC = () => {
         pageSize: number;
         pageCount: number;
         total: number;
-      }
+    }
     const [purchasePagosPaginas, setPurchasePagosPaginas] = useState<PurchasePagina | null>(null)
     const purchasePaginas = purchasePagosPaginas;
     const correos = [
-        'carlosvargasbazoalto@gmail.com',  
+        'carlosvargasbazoalto@gmail.com',
         'santiago.rodriguez@hctint.com'];
     const [botonActivo, setBotonActivo] = useState<number | null>(null);
     const [purchasePagosTodos, setPurchasePagos] = useState<any[]>([]);
@@ -74,6 +79,113 @@ const Micuenta: React.FC = () => {
             }
         }
     };
+
+
+    const DescargarJSON = async (query_id: string) => {
+
+        const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query_id: query_id,
+                selection: {},
+                key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+            }),
+        });
+
+        if (secondResponse.ok) {
+            const secondJsonData = await secondResponse.json();
+
+            if (secondJsonData) {
+                // Convierte los datos a formato JSON
+                const jsonData = JSON.stringify(secondJsonData, null, 2);
+
+                // Crea un Blob con los datos JSON
+                const blob = new Blob([jsonData], { type: 'application/json' });
+
+                // Genera una URL para el Blob
+                const url = URL.createObjectURL(blob);
+
+                // Crea un enlace de descarga
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "datos.json";
+
+                // Simula un clic en el enlace para iniciar la descarga
+                a.click();
+
+                // Libera los recursos
+                URL.revokeObjectURL(url);
+            }
+        }
+    }
+
+
+    const DescargaExcel = async (query_id: string, fuente: string) => {
+        const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query_id: query_id,
+                selection: {},
+                key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+            }),
+        });
+
+        if (secondResponse.ok) {
+            const secondJsonData = await secondResponse.json();
+            console.log("secondJsonData:", secondJsonData)
+            const noticias = secondJsonData.data;
+
+            console.log("notocias:", noticias)
+            setData(noticias)
+
+            if (fuente.includes("noticias")) {
+                NoticiasExcel(data)
+            }
+            if (fuente.includes("judicial")) {
+                JudicialesExcel(data)
+            }
+            if (fuente.includes("titulos")) {
+                TitulosExcel(data)
+            }
+            if (fuente.includes("accionistas")) {
+                AccionistasExcel(data)
+            }
+        }
+    }
+
+
+    function getStatusColor(status: any) {
+        switch (status) {
+            case "IN PROGRESS":
+                return "#f1c816";
+            case "FAILED":
+                return "red";
+            case "COMPLETED":
+                return "green";
+            default:
+                return "black"; // Default color if status doesn't match any of the above
+        }
+    }
+
+
+    function getStatusTranslation(status: any) {
+        switch (status) {
+            case "IN PROGRESS":
+                return "En proceso";
+            case "FAILED":
+                return "Fallida";
+            case "COMPLETED":
+                return "Completada";
+            default:
+                return status; // Si no coincide con ninguno de los estados anteriores, se mantiene igual
+        }
+    }
 
     function handleOnClick() {
         // Cuando haces clic en el enlace, cambia el estado para mostrar el div "Eliminar cuenta"
@@ -212,8 +324,8 @@ const Micuenta: React.FC = () => {
             .catch((error) => {
                 console.error('Failed to fetch user data:', error);
             });
-        console.log("user",user)
-        if(user && user.email && correos.includes(user.email)){
+        console.log("user", user)
+        if (user && user.email && correos.includes(user.email)) {
             getHistorialPagos(1)
                 .then((foundUser) => {
                     if (foundUser) {
@@ -229,15 +341,15 @@ const Micuenta: React.FC = () => {
     const handleButtonClick = (key: number) => {
         setBotonActivo(key);
         getHistorialPagos(key)
-        .then((foundUser) => {
-            if (foundUser) {
-                setPurchasePagos(foundUser.data);
-                setPurchasePagosPaginas(foundUser.meta.pagination)
-            }
-        })
-        .catch((error) => {
-            console.error('Failed to fetch user data:', error);
-        });
+            .then((foundUser) => {
+                if (foundUser) {
+                    setPurchasePagos(foundUser.data);
+                    setPurchasePagosPaginas(foundUser.meta.pagination)
+                }
+            })
+            .catch((error) => {
+                console.error('Failed to fetch user data:', error);
+            });
     };
 
     const copyApiKeyToClipboard = () => {
@@ -251,13 +363,13 @@ const Micuenta: React.FC = () => {
             });
         }
     };
-    console.log("searchHistory",purchaseHistoryFiltered)
-    console.log("purchasePagos",purchasePagos) 
+    console.log("searchHistory", purchaseHistoryFiltered)
+    console.log("purchasePagos", purchasePagos)
     if (purchasePagosPaginas && purchasePagosPaginas.pageCount !== undefined) {
         console.log("purchasePaginas", purchasePagosPaginas.pageCount);
-      } else {
+    } else {
         console.log("purchasePaginas is undefined or pageCount is not defined.");
-      }
+    }
 
     return (
         <UserProvider>
@@ -440,7 +552,9 @@ const Micuenta: React.FC = () => {
                                                             <th>Fecha</th>
                                                             <th>Consumo créditos</th>
                                                             <th>Consulta</th>
-                                                            <th>Archivo</th>
+                                                            <th>Estado consulta</th>
+                                                            <th>Excel</th>
+                                                            <th>Json</th>
                                                         </tr>
                                                     </thead>
 
@@ -458,18 +572,28 @@ const Micuenta: React.FC = () => {
                                                                     <td>{search.attributes.fecha}</td>
                                                                     <td>{search.attributes.creditos}</td>
                                                                     <td>{search.attributes.consulta}</td>
-                                                                    <td>
-                                                                        {search.attributes.archivo.data?.attributes.url ? (
-                                                                            <a
-                                                                                href={`${process.env.NEXT_PUBLIC_STRAPI_URL}${search.attributes.archivo.data?.attributes.url}`}
-                                                                                target="_blank"
-                                                                                rel="noopener noreferrer"
-                                                                            >
-                                                                                ⤵️
-                                                                            </a>
+                                                                    <td style={{ color: getStatusColor(search.attributes.status) }} className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>{getStatusTranslation(search.attributes.status)}</td>
+                                                                   
+                                                                   
+                                                                    <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
+                                                                        {search.attributes.status === "IN PROGRESS" ? (
+                                                                             <button className='download-button excel proceso' >En proceso</button>
                                                                         ) : (
-                                                                            <span>No disponible</span>
+                                                                            <button className='download-button excel' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta)}>Descarga</button>
                                                                         )}
+
+                                                                    </td>
+
+
+                                                                    <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
+
+                                                                    {search.attributes.status === "IN PROGRESS" ? (
+                                                                            <button className='download-button json proceso' >En proceso</button>
+                                                                        ) : (
+                                                                            <button className='download-button json' onClick={() => DescargarJSON(search.attributes.query_id)}>Descargar</button>
+                                                                        )}
+                                                                        
+                                                                        
                                                                     </td>
                                                                 </tr>
                                                             ))}
@@ -480,7 +604,7 @@ const Micuenta: React.FC = () => {
                                         </div>
                                     </>
                                 )}
-                               {activeTab === 'pagos' && user.email && correos.includes(user.email) &&(
+                                {activeTab === 'pagos' && user.email && correos.includes(user.email) && (
                                     <>
                                         <h2 className='micuenta-h2-datos'>Facturación</h2>
                                         <div className="purchase-history-container pagos">
@@ -496,7 +620,7 @@ const Micuenta: React.FC = () => {
                                                             <th>Raazon Social</th>
                                                             <th>Teléfono</th>
                                                             <th>Dirección</th>
-                                                            <th>Ruc/Cedula</th>  
+                                                            <th>Ruc/Cedula</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -519,16 +643,16 @@ const Micuenta: React.FC = () => {
                                         </div>
                                         <div className='btn-acciones'>
                                             {purchasePagosPaginas && Array.from({ length: purchasePagosPaginas.pageCount }, (_, index) => (
-                                             <button
-                                             className={`paginas ${botonActivo === index + 1 ? 'activo' : ''}`}
-                                             key={index + 1}
-                                             onClick={() => handleButtonClick(index + 1)}
-                                           >
-                                             {index + 1}
-                                           </button>
+                                                <button
+                                                    className={`paginas ${botonActivo === index + 1 ? 'activo' : ''}`}
+                                                    key={index + 1}
+                                                    onClick={() => handleButtonClick(index + 1)}
+                                                >
+                                                    {index + 1}
+                                                </button>
                                             ))}
                                         </div>
-                                        </>
+                                    </>
                                 )}
 
                                 {activeTab === 'soporte' && (

@@ -49,43 +49,43 @@ const SearchComponent: React.FC = () => {
     const [fuenteseleccionada, setFuenteseleccionada] = useState("");
     const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
-    async function enviarCorreo(jsonResponse: { data: {attributes: any; id: any; }; }){
+    async function enviarCorreo(jsonResponse: { data: { attributes: any; id: any; }; }) {
         const nuevoHistorial = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
             {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-              },
-              cache: "no-store",
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                },
+                cache: "no-store",
             }
-          );
+        );
         const data = await nuevoHistorial.json();
         console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
         const postCorreo = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
             {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
-              },
-              body: JSON.stringify({
-                data: {
-                  nombre: userEmail,
-                  asunto: "Busqueda completada",
-                  para: userEmail,
-                  json: JSON.stringify({
-                    url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
-                    consulta: jsonResponse.data.attributes.consulta,
-                    fecha: jsonResponse.data.attributes.fecha,
-                  }),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
                 },
-              }),
-              cache: "no-store",
+                body: JSON.stringify({
+                    data: {
+                        nombre: userEmail,
+                        asunto: "Busqueda completada",
+                        para: userEmail,
+                        json: JSON.stringify({
+                            url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
+                            consulta: jsonResponse.data.attributes.consulta,
+                            fecha: jsonResponse.data.attributes.fecha,
+                        }),
+                    },
+                }),
+                cache: "no-store",
             }
-          );
+        );
     }
     async function getuser() {
         try {
@@ -197,14 +197,41 @@ const SearchComponent: React.FC = () => {
                         list: [searchInputValue],
                         item_type: selectedType,
                         source: getSourceValue(),
-                        key: 'valid_api_key'
+                        key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
                     }),
                 });
 
                 if (response.ok) {
                     const jsonData = await response.json();
-                    setData(jsonData);
+                    let status = null;
+                    while (status !== 'READY') {
+                        const response = await fetch('https://splunk.hctint.com:9876/data/status', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                query_id: jsonData.query_id,
+                                key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                            }),
+                        });
 
+                        const statusData = await response.json();
+                        status = statusData.status;
+
+                        if (status === 'READY') {
+                            // Procesa la respuesta si es necesario
+                            console.log('La API está lista.');
+                        } else {
+                            // Si la API no está lista, espera 1 segundo antes de realizar la siguiente verificación
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                            console.log("explota")
+                        }
+                    }
+
+
+                    setData(jsonData);
+                    console.log("response", jsonData)
                     const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_public_data', {
                         method: 'POST',
                         headers: {
@@ -212,8 +239,7 @@ const SearchComponent: React.FC = () => {
                         },
                         body: JSON.stringify({
                             query_id: jsonData.query_id,
-                            creator_key: 'valid_api_key',
-                            key: 'valid_api_key'
+                            key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
                         }),
                     });
 
@@ -698,7 +724,7 @@ const SearchComponent: React.FC = () => {
 
                                 {fuenteseleccionada == "accionistas" &&
                                     <>
-                                        <TablaBusquedaAccionistas data={DatosTabla} onSelectedItems={handleSelectedItems}  />
+                                        <TablaBusquedaAccionistas data={DatosTabla} onSelectedItems={handleSelectedItems} />
                                     </>
                                 }
 
