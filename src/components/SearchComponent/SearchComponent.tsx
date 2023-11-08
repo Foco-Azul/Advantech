@@ -182,7 +182,7 @@ const SearchComponent: React.FC = () => {
 
     const handleButtonClick = async () => {
         const errors = validateInput(searchInputValue);
-
+        
         if (Object.keys(errors).length === 0) {
             setInputErrors({}); // Reset input error
             // Reset empty input error
@@ -361,6 +361,7 @@ const SearchComponent: React.FC = () => {
                         const postData = {
                             auth_0_user: userId,
                             creditos: selectedFuenteCredito * -1,
+                            fecha: currentDate,
                             precio: 0,
                             consulta: "Judiciales " + searchInputValue,
                             plane: planId,
@@ -390,7 +391,6 @@ const SearchComponent: React.FC = () => {
                         if (posthistorial.ok) {
                             const jsonResponse = await posthistorial.json();
                             console.log("Respuesta de la API:", jsonResponse);
-                            enviarCorreo(jsonResponse);
                         }
                     }
                 }
@@ -436,7 +436,6 @@ const SearchComponent: React.FC = () => {
                         if (posthistorial.ok) {
                             const jsonResponse = await posthistorial.json();
                             console.log("Respuesta de la API:", jsonResponse);
-                            enviarCorreo(jsonResponse);
                         }
                     }
                 }
@@ -481,7 +480,6 @@ const SearchComponent: React.FC = () => {
                         if (posthistorial.ok) {
                             const jsonResponse = await posthistorial.json();
                             console.log("Respuesta de la API:", jsonResponse);
-                            enviarCorreo(jsonResponse);
                         }
                     }
                 }
@@ -611,6 +609,7 @@ const SearchComponent: React.FC = () => {
     const handleReloadPage = () => {
         window.location.reload(); // This will reload the page
     };
+    console.log("DatosTabla",DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0)
     return (
         <UserProvider>
 
@@ -688,7 +687,6 @@ const SearchComponent: React.FC = () => {
                     </div>
                 )}
                 <br />
-                <br />
                 {data ? (
                     <div>
                         {
@@ -696,13 +694,23 @@ const SearchComponent: React.FC = () => {
                             <>
                                 <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
                                 <p>
-                                    {DatosTabla && Object.keys(DatosTabla).length > 0 && (
-                                        `Obtuvimos ${Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length} registros para ${searchInputValue}, selecciona los registros que desees, y descargarlos. `
+                                    {DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 ? (
+                                        <div>
+                                        {"Obtuvimos " +
+                                            Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length +
+                                            " registros para " +
+                                            searchInputValue +
+                                            ", selecciona los registros que desees, y descargarlos."}
+                                        <br />
+                                        {"Tenemos un filtro a la izquierda donde puedes precisar más los datos de tu búsqueda. Recuerda que la descarga tiene un valor de " +
+                                            selectedFuenteCredito +
+                                            " créditos."}
+                                        </div>
+                                    ) : (
+                                        "Obtuvimos 0 registros para "+searchInputValue+", verifica los datos ingresados, RECUERDA que para datos más precisos puedes buscar por RUC o cédula."
                                     )}
-
-                                    <br></br>
-                                    Tenemos un filtro a la izquierda donde puedes precisar más los datos de tu búsqueda. Recuerda que la descarga tiene un valor de {selectedFuenteCredito} créditos.
                                 </p>
+
                                 {fuenteseleccionada == "noticias" &&
                                     <>
                                         <TablaBusquedaNoticiasDelDelito data={DatosTabla} onSelectedItems={handleSelectedItems} />
@@ -745,7 +753,7 @@ const SearchComponent: React.FC = () => {
                                     <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
                                 </div>
                             }
-                            {user && mostrartabla && <><p>Mis créditos:{userCredits}</p>
+                            {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 &&<><p>Mis créditos:{userCredits}</p>
                                 <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito}</p>
                             </>}
 
@@ -759,10 +767,12 @@ const SearchComponent: React.FC = () => {
                             user && userCredits != null && selectedFuenteCredito && userCredits >= selectedFuenteCredito &&
                             seleccionUsuarioCount > 0 && mostrartabla && !isPlanVencido &&
                             <>
-                                <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
+                                 <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
                                     Obtener en detalle los datos seleccionados
                                 </button>
-
+                                <a className='volver-al-buscador' href='/busqueda' >
+                                    Volver al buscador
+                                </a>    
                             </>
                         }
                         {
@@ -771,7 +781,7 @@ const SearchComponent: React.FC = () => {
                             <>
                                 <br></br>
                                 <p className='search-error'>Tus créditos no son suficientes para traer estos datos</p>
-                                <Link href="/alacarta" legacyBehavior passHref>
+                                <Link href="/personalizado" legacyBehavior passHref>
                                     <button className='search-menu-button' >
                                         Recargar créditos en tu cuenta
                                     </button>

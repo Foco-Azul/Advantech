@@ -9,7 +9,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Verificar cuenta",
-  description: "esta es una descripcion de prueba",
+  description: "Verifica tu cuenta",
   openGraph: {
     images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   }

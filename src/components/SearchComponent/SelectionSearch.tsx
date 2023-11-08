@@ -35,7 +35,6 @@ function SelectionSearch() {
                 </button>
             </div>
             <div className="content">
-                <br />
                 {isSimpleSearch ? <SearchComponent /> : null}
                 {isBatchSearch ? <Multisearch /> : null}
             </div>

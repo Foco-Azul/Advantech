@@ -31,7 +31,11 @@ const Multisearch: React.FC = () => {
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
+<<<<<<< HEAD
   async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
+=======
+  async function enviarCorreo(jsonResponse: { data: { attributes: any; id: any; }; }, fuentes: string) {
+>>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
     const nuevoHistorial = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
       {
@@ -53,6 +57,7 @@ const Multisearch: React.FC = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
         },
+<<<<<<< HEAD
         body: JSON.stringify({
           data: {
             nombre: userEmail,
@@ -65,6 +70,26 @@ const Multisearch: React.FC = () => {
       }
     );
   }
+=======
+          body: JSON.stringify({
+            data: {
+              nombre: userEmail,
+              asunto: "Busqueda completada",
+              para: userEmail,
+              contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
+              json: JSON.stringify({
+                consulta: "Por Lote",
+                url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
+                fecha: jsonResponse.data.attributes.fecha,
+                fuente: fuentes
+              }),
+            },
+          }),
+          cache: "no-store",
+        }
+      );
+}
+>>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
   useEffect(() => {
     getuser()
       .then((foundUser) => {
@@ -438,6 +463,7 @@ const Multisearch: React.FC = () => {
           //     // Append the Excel Blob to FormData
           //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
 
+<<<<<<< HEAD
           //     // Now, you can make your fetch request
           //     const posthistorial = await fetch(
           //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
@@ -456,6 +482,26 @@ const Multisearch: React.FC = () => {
           //       enviarCorreo(jsonResponse);
           //     }
           //   }
+=======
+              // Now, you can make your fetch request
+              const posthistorial = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                  },
+                  body: newformdata, // Use the FormData object as the body
+                  cache: "no-store",
+                }
+              );
+              if (posthistorial.ok) {
+                const jsonResponse = await posthistorial.json();
+                console.log("Respuesta de la API:", jsonResponse);
+                enviarCorreo(jsonResponse, "Procesos Judiciales electrónicos personales");
+              }
+            }
+>>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
 
           // }
 
@@ -482,6 +528,7 @@ const Multisearch: React.FC = () => {
           //     // Append the Excel Blob to FormData
           //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
 
+<<<<<<< HEAD
           //     // Now, you can make your fetch request
           //     const posthistorial = await fetch(
           //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
@@ -501,6 +548,27 @@ const Multisearch: React.FC = () => {
           //     }
           //   }
           // }
+=======
+              // Now, you can make your fetch request
+              const posthistorial = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                  },
+                  body: newformdata, // Use the FormData object as the body
+                  cache: "no-store",
+                }
+              );
+              if (posthistorial.ok) {
+                const jsonResponse = await posthistorial.json();
+                console.log("Respuesta de la API:", jsonResponse);
+                enviarCorreo(jsonResponse, "Denuncias o noticias del delito personales");
+            }
+            }
+          }
+>>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
 
           // if (selectedSource === "titulos") {
           //   if (selectedFuenteCredito !== null) {
@@ -525,6 +593,7 @@ const Multisearch: React.FC = () => {
           //     // Append the Excel Blob to FormData
           //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
 
+<<<<<<< HEAD
           //     // Now, you can make your fetch request
           //     const posthistorial = await fetch(
           //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
@@ -544,6 +613,27 @@ const Multisearch: React.FC = () => {
           //     }
           //   }
           // }
+=======
+              // Now, you can make your fetch request
+              const posthistorial = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                  },
+                  body: newformdata, // Use the FormData object as the body
+                  cache: "no-store",
+                }
+              );
+              if (posthistorial.ok) {
+                const jsonResponse = await posthistorial.json();
+                console.log("Respuesta de la API:", jsonResponse);
+                enviarCorreo(jsonResponse, "Titulos");
+            }
+            }
+          }
+>>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
 
 
         } else {
