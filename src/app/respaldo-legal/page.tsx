@@ -9,7 +9,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Respaldo legal",
-  description: "esta es una descripcion de prueba",
+  description: "Explora nuestros términos y condiciones, políticas de privacidad y otros documentos legales en Advantech Datos para garantizar un uso seguro y transparente de nuestros servicios. Obtén acceso a información esencial para respaldo legal y conformidad.",
   openGraph: {
     images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   }

@@ -183,7 +183,7 @@ const SearchComponent: React.FC = () => {
 
     const handleButtonClick = async () => {
         const errors = validateInput(searchInputValue);
-
+        
         if (Object.keys(errors).length === 0) {
             setInputErrors({}); // Reset input error
             // Reset empty input error
@@ -759,7 +759,7 @@ const SearchComponent: React.FC = () => {
                             <>
                                 <br></br>
                                 <p className='search-error'>Tus créditos no son suficientes para traer estos datos</p>
-                                <Link href="/alacarta" legacyBehavior passHref>
+                                <Link href="/personalizado" legacyBehavior passHref>
                                     <button className='search-menu-button' >
                                         Recargar créditos en tu cuenta
                                     </button>
