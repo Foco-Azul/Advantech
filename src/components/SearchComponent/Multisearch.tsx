@@ -31,65 +31,42 @@ const Multisearch: React.FC = () => {
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
-<<<<<<< HEAD
-  async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
-=======
-  async function enviarCorreo(jsonResponse: { data: { attributes: any; id: any; }; }, fuentes: string) {
->>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
-    const nuevoHistorial = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-        },
-        cache: "no-store",
-      }
-    );
-    const data = await nuevoHistorial.json();
-    console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
-    const postCorreo = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
-        },
-<<<<<<< HEAD
-        body: JSON.stringify({
-          data: {
-            nombre: userEmail,
-            asunto: "Busqueda completada",
-            para: userEmail,
-            contenido: process.env.NEXT_PUBLIC_STRAPI_URL + data.data.attributes.archivo.data.attributes.url,
-          },
-        }),
-        cache: "no-store",
-      }
-    );
-  }
-=======
-          body: JSON.stringify({
-            data: {
-              nombre: userEmail,
-              asunto: "Busqueda completada",
-              para: userEmail,
-              contenido: process.env.NEXT_PUBLIC_STRAPI_URL+data.data.attributes.archivo.data.attributes.url,
-              json: JSON.stringify({
-                consulta: "Por Lote",
-                url: `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.data.attributes.archivo.data.attributes.url}`,
-                fecha: jsonResponse.data.attributes.fecha,
-                fuente: fuentes
-              }),
-            },
-          }),
-          cache: "no-store",
-        }
-      );
-}
->>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
+  // async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
+  //   const nuevoHistorial = await fetch(
+  //     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+  //       },
+  //       cache: "no-store",
+  //     }
+  //   );
+  //   const data = await nuevoHistorial.json();
+  //   console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
+  //   const postCorreo = await fetch(
+  //     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+  //       },
+  //       body: JSON.stringify({
+  //         data: {
+  //           nombre: userEmail,
+  //           asunto: "Busqueda completada",
+  //           para: userEmail,
+  //           contenido: process.env.NEXT_PUBLIC_STRAPI_URL + data.data.attributes.archivo.data.attributes.url,
+  //         },
+  //       }),
+  //       cache: "no-store",
+  //     }
+  //   );
+  // }
+
+
   useEffect(() => {
     getuser()
       .then((foundUser) => {
@@ -215,57 +192,48 @@ const Multisearch: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
+  
     if (file) {
       const reader = new FileReader();
-
+  
       reader.onload = (event) => {
         const binaryString = event.target?.result as string;
         const workbook = XLSX.read(binaryString, { type: 'binary' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-        // Filtrar y mapear las celdas que no están vacías ni contienen caracteres especiales
+  
+        // Filtrar y mapear solo los números
         const filteredData = sheetData
           .flat()
-          .filter((cell) => {
-            if (typeof cell === 'string') {
-              // Verificar si la celda no está vacía y no contiene caracteres especiales
-              return cell.trim() !== '' && /^[A-Za-z0-9\s]+$/.test(cell);
-            } else if (typeof cell === 'number') {
-              // Conservar los números sin filtrar
-              return true;
-            }
-            return false;
-          });
-
+          .filter((cell) => typeof cell === 'number');
+  
         // Eliminar valores duplicados usando una matriz y un conjunto auxiliar
         const uniqueData = [];
         const seen = new Set();
-
+  
         for (const item of filteredData) {
           if (!seen.has(item)) {
             seen.add(item);
             uniqueData.push(item);
           }
         }
-
+  
         // Mostrar los valores únicos en la consola
         console.log('Valores únicos encontrados:', uniqueData);
-
+  
         // Convierte los valores únicos en una cadena separada por comas y consoléala.
         const dataAsString = uniqueData.join(', ');
         console.log('FileData', dataAsString);
-
+  
         // Guardar los datos del archivo Excel en el estado
         setFileData(dataAsString);
       };
-
+  
       reader.readAsBinaryString(file);
     }
   };
-
+  
   const getSourceValue = () => {
     const selector = document.getElementById('sourceSelector') as HTMLSelectElement;
     setFuenteseleccionada(selector.value)
@@ -333,6 +301,7 @@ const Multisearch: React.FC = () => {
                   precio: 0,
                   consulta: "Búsqueda por lote " + selectedSource,
                   plane: planId,
+                  puntero:{},
                   status: "IN PROGRESS",
                   query_id: jsonData.query_id
                 },
@@ -463,7 +432,6 @@ const Multisearch: React.FC = () => {
           //     // Append the Excel Blob to FormData
           //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
 
-<<<<<<< HEAD
           //     // Now, you can make your fetch request
           //     const posthistorial = await fetch(
           //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
@@ -482,26 +450,6 @@ const Multisearch: React.FC = () => {
           //       enviarCorreo(jsonResponse);
           //     }
           //   }
-=======
-              // Now, you can make your fetch request
-              const posthistorial = await fetch(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                {
-                  method: "POST",
-                  headers: {
-                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                  },
-                  body: newformdata, // Use the FormData object as the body
-                  cache: "no-store",
-                }
-              );
-              if (posthistorial.ok) {
-                const jsonResponse = await posthistorial.json();
-                console.log("Respuesta de la API:", jsonResponse);
-                enviarCorreo(jsonResponse, "Procesos Judiciales electrónicos personales");
-              }
-            }
->>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
 
           // }
 
@@ -528,7 +476,6 @@ const Multisearch: React.FC = () => {
           //     // Append the Excel Blob to FormData
           //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
 
-<<<<<<< HEAD
           //     // Now, you can make your fetch request
           //     const posthistorial = await fetch(
           //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
@@ -548,27 +495,6 @@ const Multisearch: React.FC = () => {
           //     }
           //   }
           // }
-=======
-              // Now, you can make your fetch request
-              const posthistorial = await fetch(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                {
-                  method: "POST",
-                  headers: {
-                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                  },
-                  body: newformdata, // Use the FormData object as the body
-                  cache: "no-store",
-                }
-              );
-              if (posthistorial.ok) {
-                const jsonResponse = await posthistorial.json();
-                console.log("Respuesta de la API:", jsonResponse);
-                enviarCorreo(jsonResponse, "Denuncias o noticias del delito personales");
-            }
-            }
-          }
->>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
 
           // if (selectedSource === "titulos") {
           //   if (selectedFuenteCredito !== null) {
@@ -593,7 +519,6 @@ const Multisearch: React.FC = () => {
           //     // Append the Excel Blob to FormData
           //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
 
-<<<<<<< HEAD
           //     // Now, you can make your fetch request
           //     const posthistorial = await fetch(
           //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
@@ -613,27 +538,6 @@ const Multisearch: React.FC = () => {
           //     }
           //   }
           // }
-=======
-              // Now, you can make your fetch request
-              const posthistorial = await fetch(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                {
-                  method: "POST",
-                  headers: {
-                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                  },
-                  body: newformdata, // Use the FormData object as the body
-                  cache: "no-store",
-                }
-              );
-              if (posthistorial.ok) {
-                const jsonResponse = await posthistorial.json();
-                console.log("Respuesta de la API:", jsonResponse);
-                enviarCorreo(jsonResponse, "Titulos");
-            }
-            }
-          }
->>>>>>> 9bc24b6dea93ab1062bca40b530b332dfd9582da
 
 
         } else {
@@ -682,8 +586,7 @@ const Multisearch: React.FC = () => {
             onChange={handleTypeSelect}
             className='search-inputs'
           >
-            <option value="nombres">Nombres</option>
-            <option value="cedulas">Cédulas</option>
+            <option selected value="cedulas">Cédulas</option>
           </select>
           <br></br>
           <label className='buscador-label'>Selecciona la fuente de datos</label>
@@ -720,9 +623,13 @@ const Multisearch: React.FC = () => {
       {isLoadingData &&
         <div className='loading-overlay'>
           <p>Estamos procesando tus datos</p>
+          <CircularProgress></CircularProgress>
+          <br></br>
+          <p>Puedes esperar aquí o</p>
+          <p>Visita tu  <a className='link-historial' href='/micuenta?ver=busquedas'>historial de búsquedas </a></p>
           <br></br>
           {/* <p>En breve comenzará la descarga</p> */}
-          <CircularProgress></CircularProgress>
+
         </div>
       }
       {!data && fileData && fileData.split(', ').length >= 1 &&

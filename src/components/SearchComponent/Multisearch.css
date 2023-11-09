@@ -124,3 +124,25 @@ align-items: center;
 padding: 25px;
 width: 100%;
   }
+
+  .link-historial {
+    color: #0099CC;
+    transition: color 0.5s ease; /* Transición suave de color */
+    animation: pulsate 1.5s infinite; /* Animación pulsante infinita */
+
+  }
+  
+
+  
+  @keyframes pulsate {
+    0% {
+      color: #0099CC;
+    }
+    50% {
+      color: #ffffff; /* Color blanco a la mitad del ciclo */
+    }
+    100% {
+      color: #0099CC;
+    }
+  }
+  

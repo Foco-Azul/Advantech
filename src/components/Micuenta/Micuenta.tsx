@@ -124,7 +124,7 @@ const Micuenta: React.FC = () => {
     }
 
 
-    const DescargaExcel = async (query_id: string, fuente: string) => {
+    const DescargaExcel = async (query_id: string, fuente: string, puntero: any) => {
         const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
             method: 'POST',
             headers: {
@@ -132,7 +132,7 @@ const Micuenta: React.FC = () => {
             },
             body: JSON.stringify({
                 query_id: query_id,
-                selection: {},
+                selection: puntero,
                 key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
             }),
         });
@@ -145,18 +145,21 @@ const Micuenta: React.FC = () => {
             console.log("notocias:", noticias)
             setData(noticias)
 
-            if (fuente.includes("noticias")) {
-                NoticiasExcel(data)
+            if (noticias) {
+                if (fuente.toLowerCase().includes("noticias")) {
+                    NoticiasExcel(noticias)
+                }
+                if (fuente.toLowerCase().includes("judicial")) {
+                    JudicialesExcel(noticias)
+                }
+                if (fuente.toLowerCase().includes("titulos")) {
+                    TitulosExcel(noticias)
+                }
+                if (fuente.toLowerCase().includes("accionistas")) {
+                    AccionistasExcel(noticias)
+                }
             }
-            if (fuente.includes("judicial")) {
-                JudicialesExcel(data)
-            }
-            if (fuente.includes("titulos")) {
-                TitulosExcel(data)
-            }
-            if (fuente.includes("accionistas")) {
-                AccionistasExcel(data)
-            }
+
         }
     }
 
@@ -167,7 +170,7 @@ const Micuenta: React.FC = () => {
                 return "#f1c816";
             case "FAILED":
                 return "red";
-            case "COMPLETED":
+            case "READY":
                 return "green";
             default:
                 return "black"; // Default color if status doesn't match any of the above
@@ -181,7 +184,7 @@ const Micuenta: React.FC = () => {
                 return "En proceso";
             case "FAILED":
                 return "Fallida";
-            case "COMPLETED":
+            case "READY":
                 return "Completada";
             default:
                 return status; // Si no coincide con ninguno de los estados anteriores, se mantiene igual
@@ -575,13 +578,16 @@ const Micuenta: React.FC = () => {
                                                                     <td>{search.attributes.creditos}</td>
                                                                     <td>{search.attributes.consulta}</td>
                                                                     <td style={{ color: getStatusColor(search.attributes.status) }} className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>{getStatusTranslation(search.attributes.status)}</td>
-                                                                   
-                                                                   
+
+
                                                                     <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
+
                                                                         {search.attributes.status === "IN PROGRESS" ? (
-                                                                             <button className='download-button excel proceso' >En proceso</button>
+                                                                            <button className='micuenta-download-button excel proceso' >En proceso</button>
+                                                                            ) : search.attributes.status === "FAILED" ? (
+                                                                                <button className='micuenta-download-button excel proceso' >Fallido</button>
                                                                         ) : (
-                                                                            <button className='download-button excel' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta)}>Descarga</button>
+                                                                            <button className='micuenta-download-button excel' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero)}>Descarga</button>
                                                                         )}
 
                                                                     </td>
@@ -589,13 +595,14 @@ const Micuenta: React.FC = () => {
 
                                                                     <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
 
-                                                                    {search.attributes.status === "IN PROGRESS" ? (
-                                                                            <button className='download-button json proceso' >En proceso</button>
+                                                                        {search.attributes.status === "IN PROGRESS" ? (
+                                                                            <button className='micuenta-download-button json proceso'>En proceso</button>
+                                                                        ) : search.attributes.status === "FAILED" ? (
+                                                                            <button className='micuenta-download-button json proceso' >Fallido</button>
                                                                         ) : (
-                                                                            <button className='download-button json' onClick={() => DescargarJSON(search.attributes.query_id)}>Descargar</button>
+                                                                            <button className='micuenta-download-button json' onClick={() => DescargarJSON(search.attributes.query_id)}>Descargar</button>
                                                                         )}
-                                                                        
-                                                                        
+
                                                                     </td>
                                                                 </tr>
                                                             ))}
