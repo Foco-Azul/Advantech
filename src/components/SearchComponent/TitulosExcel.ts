@@ -4,18 +4,7 @@ export const TitulosExcel = async (dataToDownload: any) => {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Datos');
 
-  // Definir estilos para el encabezado
-  const headerStyle = {
-    font: { size: 15, bold: true },
-    alignment: { horizontal: 'center' },
-    fill: {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'FFD9D9D9' },
-    },
-  };
-
-  // Agregar fila de encabezado
+  // Agregar encabezados
   const headerRow = worksheet.addRow([
     "Ruc",
     "Nombre",
@@ -50,28 +39,55 @@ export const TitulosExcel = async (dataToDownload: any) => {
   for (const ruc in dataToDownload) {
     if (Object.prototype.hasOwnProperty.call(dataToDownload, ruc)) {
       const rucData = dataToDownload[ruc];
-      for (const index in rucData) {
-        if (Object.prototype.hasOwnProperty.call(rucData, index)) {
-          const entry = rucData[index];
-          for (const tituloIndex in entry.titulos) {
-            if (Object.prototype.hasOwnProperty.call(entry.titulos, tituloIndex)) {
-              const titulo = entry.titulos[tituloIndex];
-              const rowData = [
-                ruc,
-                entry.nombre,
-                entry.genero,
-                entry.nacionalidad,
-                titulo.nivel,
-                titulo.titulo,
-                titulo.institucion,
-                titulo.tipo,
-                titulo.reconocido,
-                titulo.numero_de_registro,
-                titulo.desde,
-                titulo.observacion
-              ];
 
-              worksheet.addRow(rowData);
+      // Agregar fila con RUC y "Sin datos" en todas las columnas si el objeto está vacío
+      if (Object.keys(rucData).length === 0) {
+        const noDataRow = worksheet.addRow([
+          ruc,
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos",
+          "Sin datos"
+        ]);
+
+        noDataRow.eachCell((cell) => {
+          cell.font = {
+            size: 13,
+          };
+          cell.alignment = { horizontal: 'center' };
+        });
+      } else {
+        // Agregar datos
+        for (const index in rucData) {
+          if (Object.prototype.hasOwnProperty.call(rucData, index)) {
+            const entry = rucData[index];
+            for (const tituloIndex in entry.titulos) {
+              if (Object.prototype.hasOwnProperty.call(entry.titulos, tituloIndex)) {
+                const titulo = entry.titulos[tituloIndex];
+                const rowData = [
+                  ruc,
+                  entry.nombre || "Sin datos",
+                  entry.genero || "Sin datos",
+                  entry.nacionalidad || "Sin datos",
+                  titulo.nivel || "Sin datos",
+                  titulo.titulo || "Sin datos",
+                  titulo.institucion || "Sin datos",
+                  titulo.tipo || "Sin datos",
+                  titulo.reconocido || "Sin datos",
+                  titulo.numero_de_registro || "Sin datos",
+                  titulo.desde || "Sin datos",
+                  titulo.observacion || "Sin datos"
+                ];
+
+                worksheet.addRow(rowData);
+              }
             }
           }
         }
@@ -119,5 +135,4 @@ export const TitulosExcel = async (dataToDownload: any) => {
   // Liberar recursos
   URL.revokeObjectURL(url);
   return new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
 };
