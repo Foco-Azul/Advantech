@@ -426,7 +426,7 @@ function RespaldoLegalSeccion() {
                       </p>
                     </li>
                     <li>
-                      <p>
+            
                         <table className='tabla-cookies'>
                           <tr>
                             <th>NOMBRE</th>
@@ -453,7 +453,7 @@ function RespaldoLegalSeccion() {
                             <td>Google Analytics</td>
                           </tr>
                         </table>
-                      </p>
+                      
                     </li>
                     <li>
                       <p>
@@ -461,7 +461,7 @@ function RespaldoLegalSeccion() {
                       </p>
                     </li>
                     <li>
-                      <p>
+                      
                       <table className='tabla-cookies'>
                           <tr>
                             <th>NOMBRE</th>
@@ -492,7 +492,7 @@ function RespaldoLegalSeccion() {
                             <td>datos.advantech.com.ec</td>
                           </tr>
                         </table>
-                      </p>
+                      
                     </li>
                     <li>
                       <p>
@@ -500,7 +500,7 @@ function RespaldoLegalSeccion() {
                       </p>
                     </li>
                     <li>
-                      <p>
+                      
                       <table className='tabla-cookies'>
                           <tr>
                             <th>NOMBRE</th>
@@ -523,7 +523,7 @@ function RespaldoLegalSeccion() {
                             <td>Google Analytics</td>
                           </tr>
                         </table>
-                      </p>
+                      
                     </li>
                   </ul>
                 </li>
