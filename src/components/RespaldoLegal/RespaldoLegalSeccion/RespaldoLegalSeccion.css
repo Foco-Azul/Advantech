@@ -169,3 +169,17 @@
 }
 
 
+.tabla-cookies {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tabla-cookies th, .tabla-cookies td {
+  border: 1px solid #ddd; /* Bordes con un color gris claro */
+  padding: 8px; /* Ajusta el relleno según tu preferencia */
+  text-align: left; /* Alinea el texto a la izquierda en las celdas */
+}
+
+.tabla-cookies th {
+  background-color: #f2f2f2; /* Fondo gris claro para las celdas del encabezado */
+}

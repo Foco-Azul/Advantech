@@ -222,7 +222,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={nombres}
                   onChange={(e) => setNombres(e.target.value)}
                   placeholder='Nombres'
-                  
+                  required  
                 />
               </div>
 
@@ -235,7 +235,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={razonSocial}
                   onChange={(e) => setRazonSocial(e.target.value)}
                   placeholder='Razon Social'
-                  
+                  required  
                 />
               </div>
 
@@ -248,7 +248,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={rucCedula}
                   onChange={(e) => setRucCedula(e.target.value)}
                   placeholder='Ruc/Cédula'
-                  
+                  required  
                 />
               </div>
 
@@ -261,7 +261,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={direccion}
                   onChange={(e) => setDireccion(e.target.value)}
                   placeholder='Dirección'
-                  
+                  required  
                 />
               </div>
 
@@ -274,7 +274,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
                   placeholder='Teléfono'
-                  
+                  required  
                 />
               </div>
 
@@ -287,7 +287,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={email || ''}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder='Email'
-                  
+                  required  
                 />
               </div>
             </div>

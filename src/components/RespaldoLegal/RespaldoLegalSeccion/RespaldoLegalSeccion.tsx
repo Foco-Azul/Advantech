@@ -61,7 +61,7 @@ function RespaldoLegalSeccion() {
                     </li>
                     <li>
                       <p>
-                      2.1.3.	Este aviso se aplica a todos los usuarios de LA PÁGINA en todo el mundo, a menos que usen un servicio que otro aviso de privacidad cubra su jurisdicción
+                        2.1.3.	Este aviso se aplica a todos los usuarios de LA PÁGINA en todo el mundo, a menos que usen un servicio que otro aviso de privacidad cubra su jurisdicción
                       </p>
                     </li>
                     <li>
@@ -110,74 +110,69 @@ function RespaldoLegalSeccion() {
               <ul>
                 <li>
                   <p>
-                  3.1.	En Ecuador la sociedad (NOMBRE DE LA EMPRESA), será la responsable del tratamiento de los datos recopilados con relación al uso de los servicios de LA PÁGINA.
+                  3.1.	La sociedad HCT International, Inc, será la responsable del tratamiento de los datos recopilados con relación al uso de los servicios de LA PÁGINA.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.2.	En el Resto del Mundo la (NOMBRE DE LA EMPRESA LLC USA) será la responsable del tratamiento de los datos recopilados con relación al uso de los servicios de LA PÁGINA.
+                  3.2.	LA PÁGINA opera y procesa datos personales en todo el mundo. En ese sentido, respetamos sus derechos de protección de datos, ya sea que se encuentre en su país de origen o en otro lugar.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.3.	LA PÁGINA opera y procesa datos personales en todo el mundo. En ese sentido, respetamos sus derechos de protección de datos, ya sea que se encuentre en su país de origen o en otro lugar.
+                  3.3.	Esto significa que podemos transferir datos personales a distintas jurisdicciones que no sean su país de origen, con el fin de proporcionar nuestros servicios en un país diferente cuando lo solicite.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.4.	Esto significa que podemos transferir datos personales a distintas jurisdicciones que no sean su país de origen, con el fin de proporcionar nuestros servicios en un país diferente cuando lo solicite.
+                  3.4.	También podemos transferir datos personales a otro país si es necesario para responder a una solicitud de soporte al cliente.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.5.	También podemos transferir datos personales a otro país si es necesario para responder a una solicitud de soporte al cliente.
+                  3.5.	Debido a la naturaleza de nuestros servicios, es posible que otros usuarios tengan acceso a datos personales limitados en otro país.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.6.	Debido a la naturaleza de nuestros servicios, es posible que otros usuarios tengan acceso a datos personales limitados en otro país.
+                  3.6.	Esto lo hacemos para cumplir con los acuerdos con todos nuestros usuarios o conforme a sus instrucciones o consentimiento previo, decisiones de adecuación para los países correspondientes u otros mecanismos de transferencia disponibles en virtud de la ley vigente, como las Cláusulas contractuales básicas.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.7.	Esto lo hacemos para cumplir con los acuerdos con todos nuestros usuarios o conforme a sus instrucciones o consentimiento previo, decisiones de adecuación para los países correspondientes u otros mecanismos de transferencia disponibles en virtud de la ley vigente, como las Cláusulas contractuales básicas.
+                  3.7.	También podemos transferir datos a otros países para responder a una solicitud de datos personales de las fuerzas del orden público o requerimientos judiciales.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.8.	También podemos transferir datos a otros países para responder a una solicitud de datos personales de las fuerzas del orden público o requerimientos judiciales.
+                  3.8.	A fin de proporcionar medidas de protección adicionales para estas transferencias de datos, LA PÁGINA aplica un procedimiento interno sólido para procesar dichas solicitudes. 
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.9.	A fin de proporcionar medidas de protección adicionales para estas transferencias de datos, LA PÁGINA aplica un procedimiento interno sólido para procesar dichas solicitudes. 
+                  3.9.	LA PÁGINA solo divulga datos personales a las fuerzas del orden público de acuerdo con los requisitos reglamentarios de las leyes vigentes.
                   </p>
                 </li>
                 <li>
                   <p>
-                  3.10.	LA PÁGINA solo divulga datos personales a las fuerzas del orden público de acuerdo con los requisitos reglamentarios de las leyes vigentes.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                  3.11.	Para brindar una protección de datos equivalente donde sea que use nuestros servicios, LA PÁGINA implementó las siguientes medidas:
+                  3.10.	Para brindar una protección de datos equivalente donde sea que use nuestros servicios, LA PÁGINA implementó las siguientes medidas:
                   </p>
                 </li>
                 <li>
                   <ul>
                     <li>
                       <p>
-                      3.11.1.	Políticas y procedimientos que limitan el acceso y procesamiento de datos personales.
+                      3.10.1.	Políticas y procedimientos que limitan el acceso y procesamiento de datos personales.
                       </p>
                     </li>
                     <li>
                       <p>
-                      3.11.2.	Capacitación específica del personal responsable del tratamiento de los datos personales.
+                      3.10.2.	Capacitación específica del personal responsable del tratamiento de los datos personales.
                       </p>
                     </li>
                     <li>
                       <p>
-                      3.11.3.	Protección sólida de los datos mientras se transfieren entre LA PÁGINA y nuestros servidores, y cuando los datos se procesan en nuestros servidores. 
+                      3.10.3.	Protección sólida de los datos mientras se transfieren entre LA PÁGINA y nuestros servidores, y cuando los datos se procesan en nuestros servidores. 
                       </p>
                     </li>
                   </ul>
@@ -206,7 +201,7 @@ function RespaldoLegalSeccion() {
                         </li>
                         <li>
                           <p>
-                          4.1.1.2.	Datos demográficos: Podemos recopilar datos demográficos sobre los usuarios, como la fecha de nacimiento, la edad, el género y la ocupación, cuando sea necesario para ciertos servicios o programas. 
+                          4.1.1.2.	Datos demográficos: Podemos recopilar datos demográficos sobre los usuarios, como la fecha de nacimiento, la edad, el género y la ocupación, cuando sea necesario para ciertos servicios o programas.  
                           </p>
                         </li>
                         <li>
@@ -268,7 +263,7 @@ function RespaldoLegalSeccion() {
                         </li>
                         <li>
                           <p>
-                          4.1.3.2.	Proveedores que nos ayudan a verificar la identidad de los usuarios, información de antecedentes y cumplimiento de los requisitos, 
+                          4.1.3.2.	Proveedores que nos ayudan a verificar la identidad de los usuarios, información de antecedentes y cumplimiento de los requisitos.
                           </p>
                         </li>
                         <li>
@@ -357,12 +352,12 @@ function RespaldoLegalSeccion() {
                 </li>
                 <li>
                   <p>
-                  6.3.	LA PÁGINA usa cookies y tecnologías similares para autenticar usuarios, recordar las preferencias y configuraciones del usuario, determinar la popularidad del contenido, entregar campañas publicitarias y medir su eficacia y analizar el tránsito y las tendencias del sitio para comprender los comportamientos en línea y los intereses de las personas que interactúan con nuestros servicios
+                  6.3.	LA PÁGINA usa cookies y tecnologías similares para autenticar usuarios, recordar las preferencias y configuraciones del usuario, determinar la popularidad del contenido, entregar campañas publicitarias y medir su eficacia y analizar el tránsito y las tendencias del sitio para comprender los comportamientos en línea y los intereses de las personas que interactúan con nuestros servicios.
                   </p>
                 </li>
                 <li>
                   <p>
-                  6.4.	Adicionalmente LA PÁGINA permite que terceros realicen mediciones de audiencia y servicios analíticos. CONSERVACIÓN Y ELIMINACIÓN DE LOS DATOSLA PÁGINA conserva los datos del usuario por el tiempo que sea necesario para cumplir con los fines descritos anteriormente y conforme la normativa legal vigente. LA PÁGINA permite a los usuarios acceder o controlar los datos que recopila, desde la configuración de privacidad dentro de LA PÁGINA. ACTUALIZACIONES DEL AVISO Es posible que actualicemos este aviso ocasionalmente. Si realizamos cualquier actualización se notificará al usuario a través de LA PÁGINA y por medio correo electrónico. El uso de nuestros servicios después de una actualización constituye el consentimiento del aviso modificado en la medida en que la ley lo permita.
+                  6.4.	Adicionalmente LA PÁGINA permite que terceros realicen mediciones de audiencia y servicios analíticos. CONSERVACIÓN Y ELIMINACIÓN DE LOS DATOSLA PÁGINA conserva los datos del usuario por el tiempo que sea necesario para cumplir con los fines descritos anteriormente y conforme la normativa legal vigente.LA PÁGINA permite a los usuarios acceder o controlar los datos que recopila, desde la configuración de privacidad dentro de LA PÁGINA.ACTUALIZACIONES DEL AVISOEs posible que actualicemos este aviso ocasionalmente. Si realizamos cualquier actualización se notificará al usuario a través de LA PÁGINA y por medio correo electrónico. El uso de nuestros servicios después de una actualización constituye el consentimiento del aviso modificado en la medida en que la ley lo permita.
                   </p>
                 </li>
               </ul>
@@ -417,6 +412,120 @@ function RespaldoLegalSeccion() {
                   <p>
                   3.1.	El USUARIO puede configurar su navegador para instalar o eliminarlas, sin embargo, se debe tener en cuenta que podría afectar la funcionalidad de la pagina web. 
                   </p>
+                </li>
+                <li>
+                  <p>
+                  3.2.	Detalle de las cookies y su aceptación
+                  </p>
+                </li>
+                <li>
+                  <ul>
+                    <li>
+                      <p>
+                      3.2.1.	Sin una cuenta
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        <table className='tabla-cookies'>
+                          <tr>
+                            <th>NOMBRE</th>
+                            <th>ORIGEN</th>
+                          </tr>
+                          <tr>
+                            <td>1P_JAR</td>
+                            <td>Google Ads Optimization</td>
+                          </tr>
+                          <tr>
+                            <td>__stripe_mid</td>
+                            <td>Stripe</td>
+                          </tr>
+                          <tr>
+                            <td>__stripe_sid</td>
+                            <td>Stripe</td>
+                          </tr>
+                          <tr>
+                            <td>_ga</td>
+                            <td>Google Analytics</td>
+                          </tr>
+                          <tr>
+                            <td>_ga_H77JWD9QJ9</td>
+                            <td>Google Analytics</td>
+                          </tr>
+                        </table>
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                      3.2.2.	Con una cuenta
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                      <table className='tabla-cookies'>
+                          <tr>
+                            <th>NOMBRE</th>
+                            <th>ORIGEN</th>
+                          </tr>
+                          <tr>
+                            <td>1P_JAR</td>
+                            <td>Google Ads Optimization</td>
+                          </tr>
+                          <tr>
+                            <td>__stripe_mid</td>
+                            <td>Stripe</td>
+                          </tr>
+                          <tr>
+                            <td>__stripe_sid</td>
+                            <td>Stripe</td>
+                          </tr>
+                          <tr>
+                            <td>_ga</td>
+                            <td>Google Analytics</td>
+                          </tr>
+                          <tr>
+                            <td>_ga_H77JWD9QJ9</td>
+                            <td>Google Analytics</td>
+                          </tr>
+                          <tr>
+                            <td>appSession</td>
+                            <td>datos.advantech.com.ec</td>
+                          </tr>
+                        </table>
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                      3.2.3.	En calidad incognito
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                      <table className='tabla-cookies'>
+                          <tr>
+                            <th>NOMBRE</th>
+                            <th>ORIGEN</th>
+                          </tr>
+                          <tr>
+                            <td>__stripe_mid</td>
+                            <td>Stripe</td>
+                          </tr>
+                          <tr>
+                            <td>__stripe_sid</td>
+                            <td>Stripe</td>
+                          </tr>
+                          <tr>
+                            <td>_ga</td>
+                            <td>Google Analytics</td>
+                          </tr>
+                          <tr>
+                            <td>_ga_H77JWD9QJ9</td>
+                            <td>Google Analytics</td>
+                          </tr>
+                        </table>
+                      </p>
+                    </li>
+                  </ul>
                 </li>
               </ul>
              
@@ -534,30 +643,31 @@ function RespaldoLegalSeccion() {
             <div className="seccion-titulo">
               <h2>TERMINOS Y CONDICIONES</h2>
               <p>
-              Los presentes términos y condiciones generales de uso e información legal (en adelante, términos y condiciones) se aplican a la página, cuyo dominio es <a href="https://www.datos.advantech.com.ec/"><strong>https://www.datos.advantech.com.ec/</strong></a> sitio web propiedad de Advantech S.A.S
+              Los presentes términos y condiciones generales de uso e información legal (en adelante, términos y condiciones) se aplican a la página, cuyo dominio es <a href="https://www.datos.advantech.com.ec/"><strong>https://www.datos.advantech.com.ec/</strong></a> sitio web propiedad de HCT INTERNATIONAL, INC.
               Al utilizar el sitio, muestra su conformidad con los presentes términos y condiciones de uso. Si no se encuentra de acuerdo, no usarlo. <br />
               Los presentes términos y condiciones tienen carácter obligatorio y vinculante. Aplican a todos las compras, registros y acciones realizadas mediante la página Web. El uso de la Página Web implica el conocimiento y aceptación de ellos. <br />
-              A través de los presentes términos y condiciones, Advantech S.A.S pone a disposición de los usuarios el sitio web <a href="https://www.datos.advantech.com.ec/"><strong>https://www.datos.advantech.com.ec/</strong></a> (en adelante LA PAGINA) y el USUARIO en estos Términos de uso señalan al miembro que creó la cuenta. 
-              En cumplimiento de lo establecido en la normativa ecuatoriana, se exponen los siguientes datos identificativos del titular del sitio:
+              A través de los presentes términos y condiciones, HCT INTERNATIONAL, INC pone a disposición de los usuarios el sitio web <a href="https://www.datos.advantech.com.ec/"><strong>https://www.datos.advantech.com.ec/</strong></a> (en adelante LA PAGINA) y el USUARIO en estos Términos de uso señalan al miembro que creó la cuenta. 
+              En cumplimiento de lo establecido en la normativa ecuatoriana, se exponen los siguientes datos identificativos del titular del sitio: 
               </p>
               <ul>
                 <li>
                   <p>
-                  •	Razón social: ADVANTECH S.A.S <br />
-                  •	Domicilio Legal: Manuel Valdivieso y Luis Espinosa - Quito <br />
-                  •	RUC: 1793194416001
+                  •	Razón social: HCT INTERNATIONAL, INC.<br />
+                  •	Domicilio Legal: 2918 Bridle Brook Way Charlotte, NC 28270 Mecklenburg County<br />
+                  •	ID NUMBER: 1714639
                   </p>
                 </li>
               </ul>
               <h4>1.	TÉRMINOS DE USO.</h4>
               <p>
-              El acceso a la Página Web, y la creación de un perfil por parte del USUARIO, implica el conocimiento y la aceptación expresa e inequívoca de los presentes Términos y Condiciones Generales de Uso, Contratación, la Política de Privacidad y la aceptación de la Política de Cookies por parte de todos los USUARIOS, en el cual cada USUARIO expresa su consentimiento de comunicar sus datos personales en la Página Web y la misma, hará uso con interés legítimo, tal como lo establece la Ley Orgánica de Protección de Datos Personales.
+              El acceso a la Página Web, y la creación de un perfil por parte del USUARIO, implica el conocimiento y la aceptación expresa e inequívoca de los presentes Términos y Condiciones Generales de Uso, Contratación, la Política de Privacidad y la aceptación de la Política de Cookies por parte de todos los USUARIOS, en el cual cada USUARIO expresa su consentimiento de comunicar sus datos personales en la Página Web y la misma, hará uso con interés legítimo, tal como lo establece la Ley Orgánica de Protección de Datos Personales. <br />
+              El software de LA PAGINA es desarrollado para HCT INTERNATIONAL, INC
               </p>
               <br />
               <h4>2.	SERVICIO.</h4>
               <p>
               La Página Web, ofrece información actualizada periódicamente, para que el servicio sea adquirido por los USUARIOS. <br />
-              El USUARIO podrá acceder a bases de datos con información de fuentes públicas de manera sistematizada.
+              El USUARIO podrá acceder a bases de datos con información de fuentes públicas, páginas web con información pública de terceros, de manera sistematizada.
               </p>
               <br />
               <h4>3.	ACCESO Y REGISTRO PARA CLIENTES.</h4>
@@ -568,28 +678,27 @@ function RespaldoLegalSeccion() {
                 <li>
                   <p>
                   •	Haber cumplido o ser mayor de 18 años. <br />
-                  •	Completar de manera veraz los campos obligatorios del formulario de registro, en el que se solicitan datos de carácter personal como nombre de USUARIO, correo electrónico, número de teléfono. <br />
-                  •	Contar con correo electrónico para su registro y notificaciones <br />
+                  •	Completar de manera veraz los campos obligatorios del formulario de registro, en el que se solicitan datos de carácter  personal como nombre de USUARIO, correo electrónico. <br />
+                  •	Contar con correo electrónico para su registro y notificaciones. <br />
                   •	Aceptar las presentes Condiciones de Uso. <br />
-                  •	Aceptar la Política de Privacidad <br />
-                  •	Aceptar la Política de Cookies.
+                  •	Aceptar la Política de Privacidad. <br />
+                  •	Aceptar la Política de Cookies. <br />
                   </p>
                 </li>
               </ul>
               <p>
-              El USUARIO garantiza que todos los datos sobre su identidad y legitimidad facilitados en la Página Web son veraces, exactos, completos y se compromete a mantenerlos actualizados, tal cual lo establece la Ley Orgánica de Protección de Datos Personales en su artículo 10 literal h. <br />
+              El USUARIO garantiza que todos los datos sobre su identidad y legitimidad facilitados en la Página Web son veraces, exactos, completos y se compromete a mantenerlos actualizados, tal cual lo establece la Ley Orgánica de Protección de Datos Personales en su artículo 10 literal h). <br />
               Todo contenido brindado por LA PAGINA, es de uso personal, la información otorgada al USUARIO no transfiere ningún título o interés, es de carácter informativo. <br />
               El USUARIO puede acceder al contenido de LA PAGINA solo en los lugares geográficos en los que ofrecemos nuestro servicio y donde se tenga licencia para ese contenido, el contenido que puede estar disponible puede variar según la ubicación geográfica y cambia periódicamente. <br />
               En el supuesto en que el USUARIO facilite cualquier dato falso, inexacto o incompleto o si LA PÁGINA considera que existen motivos fundados para dudar sobre la veracidad, exactitud e integridad de estos, podrá denegarle el acceso y uso de la Página Web o de cualquiera de sus contenidos y/o servicios. <br />
-              El uso de la información obtenida en la página web, incluye todas las características y funcionalidades asociadas con esta, conforme a lo establecido en todas las leyes, normas y reglamentaciones vigentes, o cualquier otra restricción al uso del servicio o su contenido. <br />
-              El software de LA PAGINA es desarrollado para Advantech.S.A.S
+              El uso de la información obtenida en la página web, incluye todas las características y funcionalidades asociadas con esta, conforme a lo establecido en todas las leyes, normas y reglamentaciones vigentes, o cualquier otra restricción al uso del servicio o su contenido. 
               </p>
               <br />
               <h4>4.	PERFIL.</h4>
               <p>
               Para crear un usuario en la Página Web, el USUARIO seleccionará un nombre de usuario y una clave de acceso, tanto el nombre de usuario como la contraseña son estrictamente confidenciales, personales e intransferibles. La responsabilidad del uso de las credenciales de acceso a la página web es responsabilidad del USUARIO toda vez que, la página Web no puede garantizar la seguridad de estas si el USUARIO las usa en otro tipo de páginas o plataformas. <br />
               Una vez completado el registro, todo USUARIO podrá acceder a su perfil y completarlo, y editarlo y/o darse de baja según estime conveniente. LA PAGINA no almacena los datos de pago de los USUARIOS, que serán tratados y almacenados por el prestador de servicios de pago según descrito en las presentes Condiciones y en la Política de Privacidad. <br />
-              Específicamente para los datos de las tarjetas bancarias, se hace constar que LA PAGINA no almacena los datos facilitados por los USUARIOS, siendo tratados por los procesadores de pagos con los que LA PAGINA mantiene un acuerdo comercial para la tramitación de los pagos de compras que se realicen en la página web 
+              Específicamente para los datos de las tarjetas bancarias, se hace constar que LA PAGINA no almacena los datos facilitados por los USUARIOS, siendo tratados por los procesadores de pagos con los que LA PAGINA mantiene un acuerdo comercial para la tramitación de los pagos de compras que se realicen en la página web.
               </p>
               <br />
               <h4>5.	PAGO O MEMBRESIA</h4>
@@ -597,24 +706,23 @@ function RespaldoLegalSeccion() {
               Los USUARIOS son responsables de la información que envían para el pago, la PAGINA no puede garantizar la identidad de los USUARIOS registrados, es indispensable que los USUARIOS informen a LA PAGINA si la tarjeta de crédito asociada al perfil hubiera sido robada, y/o se estuviera utilizando por un tercero de forma fraudulenta para suspender el servicio en seguridad del USUARIO, adicionalmente deben realizar la denuncia ante la autoridad correspondiente en caso de robo, sustracción o sospecha de un mal uso de su tarjeta de crédito. <br />
               LA PAGINA adquiere el compromiso de colaborar con el USUARIO y las autoridades competentes, si así fuera necesario, para facilitar la prueba fehaciente del cargo indebido. <br />
               En caso de fraude, LA PAGINA se reserva el derecho a interponer las acciones que en su caso fueran menester cuando resulte perjudicado por el uso indebido del sitio. <br />
-              Al momento de confirmación de la compra y al registrar una cuenta personal, el usuario recibirá en su casilla de correo electrónico una confirmación de que la cuenta ha sido registrada, LA PAGINA pondrá un aviso en la Página Web, alertando a los USUARIOS sobre algún cambio, durante un tiempo razonable. <br /> 
-              Sin perjuicio de lo anterior, los USUARIOS son responsables de leer estos términos y condiciones cada vez que ingresen a la Página Web para ver si han sufrido modificaciones. 
+              Al momento de confirmación de la compra y al registrar una cuenta personal, el usuario recibirá en su casilla de correo electrónico una confirmación de que la cuenta ha sido registrada, LA PAGINA pondrá un aviso en la Página Web, alertando a los USUARIOS sobre algún cambio, durante un tiempo razonable. <br />
+              Sin perjuicio de lo anterior, los USUARIOS son responsables de leer estos términos y condiciones cada vez que ingresen a la Página Web para ver si han sufrido modificaciones. <br />
               </p>
               <br />
-              <h4>6.	INTERRUPCION DEL SERVICIO- EXCLUSIÓN DE RESPONSABILIDAD.</h4>
+              <h4>6.	INTERRUPCION DEL SERVICIO - EXCLUSIÓN DE RESPONSABILIDAD.</h4>
               <p>
               LA PAGINA se reserva el derecho de interrumpir, suspender o modificar en cualquier momento los servicios ofrecidos en la Página Web, ya sea en forma permanente o transitoria. <br />
-              No se requerirá la conformidad de los USUARIOS, ni será necesario aviso previo alguno. <br />
+              No se requerirá la conformidad de los USUARIOS, ni será necesario aviso previo alguno, siempre se respetará el plazo de servicio contratado por EL USUARIO pudiendo, de estar vigente, no renovarlo. <br />
               Asimismo, no garantiza el acceso o uso permanente de la Página Web, ya que éste podría interrumpirse por cuestiones técnicas ajenas a LA PAGINA. <br />
-              No obstante, lo mencionado anteriormente, si la suspensión o interrupción mencionada no obedeciere a razones de fuerza mayor o caso fortuito, LA PAGINA se compromete a cumplir las prestaciones que estuvieran pendientes al momento de la suspensión o interrupción, sin embargo, no garantiza que LA PAGINA se encuentre libre de virus, gusanos o cualquier otro elemento que pueda llegar a dañar o alterar el normal funcionamiento de un ordenador. No se responsabiliza por cualquier daño que pueda producirse en los equipos informáticos de los USUARIOS o de terceros como consecuencia de la navegación en la Página Web. 
-              <br />
-              Es responsabilidad y obligación exclusiva del USUARIO contar con las herramientas adecuadas para detectar, desinfectar y/o prevenir cualquier tipo de elementos y/o posibles daños de esta naturaleza.
+              No obstante, lo mencionado anteriormente, si la suspensión o interrupción mencionada no obedeciere a razones de fuerza mayor o caso fortuito, LA PAGINA se compromete a cumplir las prestaciones que estuvieran pendientes al momento de la suspensión o interrupción, sin embargo, no garantiza que LA PAGINA se encuentre libre de virus, gusanos o cualquier otro elemento que pueda llegar a dañar o alterar el normal funcionamiento de un ordenador. No se responsabiliza por cualquier daño que pueda producirse en los equipos informáticos de los USUARIOS o de terceros como consecuencia de la navegación en la Página Web. <br />
+              Es responsabilidad y obligación exclusiva del USUARIO contar con las herramientas adecuadas para detectar, desinfectar y/o prevenir cualquier tipo de elementos y/o posibles daños de esta naturaleza. 
               </p>
               <br />
               <h4>7.	FORMAS DE PAGO.</h4>
               <p>
               El pago de la información que se encuentra en la página web, LA PAGINA lo recibe en las cuentas de esta mediante el botón de pagos, mismo que, como fue señalado previamente, no le pertenece a LA PAGINA, sino que es proporcionado por un tercero, mediante un contrato. <br />
-              Para proceder al pago, el USUARIO deberá seguir todas y cada una de las instrucciones que aparecen en pantalla, proporcionando la siguiente información: <br />
+              Para proceder al pago, el USUARIO deberá seguir todas y cada una de las instrucciones que aparecen en pantalla, proporcionando la siguiente información:  <br />
               a) Número de tarjeta de crédito o débito; <br />
               b) Fecha de caducidad, así como <br />
               c) cualquier otra que se exija en pantalla. <br />
@@ -622,7 +730,7 @@ function RespaldoLegalSeccion() {
               Los datos del USUARIO se alojan en un servidor seguro propiedad del botón de pagos. <br />
               Asimismo, LA PAGINA manifiesta que, en ningún caso almacena los datos de pago proporcionados por los USUARIOS. <br />
               LA PAGINA entregará la información adquirida por el USUARIO, en las condiciones establecidas de acuerdo con el contenido y al precio adquirido. <br />
-              Si el USUARIO tiene algún problema con el desarrollo de su servicios, programa o producto, podrá contactar al servicio de atención al USUARIO soporte@advantech.com.ec
+              Si el USUARIO tiene algún problema con el desarrollo de su servicios, programa o producto, podrá contactar al servicio de atención al USUARIO <a href="mailto:soporte@advantech.com.ec" target='blank_'><strong>soporte@advantech.com.ec</strong></a>.
               </p>
               <br />
               <h4>8.	FACTURACIÓN.</h4>
@@ -669,18 +777,19 @@ function RespaldoLegalSeccion() {
                   </p>
                 </li>
               </ul>
-              <h4>10.	La responsabilidad del acceso y el uso del internet es del usuario, por lo tanto LA PAGINA no acarrea responsabilidad alguna derivada de dicho acto.</h4>
               <p>
+              La responsabilidad del acceso y el uso del internet es del usuario, por lo tanto LA PAGINA no acarrea responsabilidad alguna derivada de dicho acto. <br />
               El USUARIO debe tener en cuenta que LA PAGINA puede cancelar o restringir su uso si usted viola estos Términos de uso o está involucrado en el uso del servicio de forma ilegal o fraudulenta. <br />
               Cualquier USUARIO podrá reportar a otro USUARIO cuando considere que está incumpliendo las presentes Condiciones Generales de Uso, asimismo todos los USUARIOS pueden informar a LA PAGINA de cualquier abuso o vulneración de las presentes condiciones, a través del Formulario de Incidencias, LA PAGINA verificará este reporte, a la mayor brevedad posible, y adoptará las medidas que considere oportunas, reservándose el derecho a retirar y/o suspender a cualquier USUARIO de la Página Web por el incumplimiento de las presentes Términos y Condiciones. 
               </p>
               <br />
-              <h4>11.	ELIMINACION DEL USUARIO.</h4>
+              <h4>10.	ELIMINACION DEL USUARIO. </h4>
               <p>
-              El USUARIO podrá eliminarse de la Página Web y esto se comunicará mediante un correo electrónico a través del Formulario de Contacto o a través de su perfil en la página web.
+              El USUARIO podrá eliminarse de la Página Web por inactividad, solicitud de USUARIO o decisión de la Página Web y esto se comunicará mediante un correo electrónico a través del Formulario de Contacto o a través de su perfil en la página web. <br />
+              La información del usuario se mantendrá en la plataforma para fines estadísticos.
               </p>
               <br />
-              <h4>12.	RESPONSABILIDAD DE LA PAGINA.</h4>
+              <h4>11.	RESPONSABILIDAD DE LA PAGINA.</h4>
               <p>
               El USUARIO es responsable de contar con los servicios y equipos necesarios para la navegación por Internet y para acceder a la Página Web. <br />
               En caso de cualquier incidencia o dificultad para acceder a la Página Web, el USUARIO puede informarlo a través de los canales de contacto puestos a disposición del USUARIO, que procederá a analizar la incidencia y dará indicaciones al USUARIO acerca de cómo resolverla en el plazo más breve posible. <br />
@@ -690,25 +799,22 @@ function RespaldoLegalSeccion() {
               <ul>
                 <li>
                   <p>
-                  12.1.	La presencia de un virus en el sistema informático o terminal móvil del USUARIO que sea utilizado para la conexión a los servicios y contenidos de la Página Web; 
+                  11.1.	La presencia de un virus en el sistema informático o terminal móvil del USUARIO que sea utilizado para la conexión a los servicios y contenidos de la Página Web; 
                   </p>
                 </li>
                 <li>
                   <p>
-                  12.2.	Un mal funcionamiento del navegador; 
+                  11.2.	Un mal funcionamiento del navegador; 
                   </p>
                 </li>
                 <li>
                   <p>
-                  12.3.	Del uso de versiones no actualizadas del mismo. 
+                  11.3.	Del uso de versiones no actualizadas del mismo. <br />
+                  Dentro de la información ofertada por LA PAGINA no se responsabiliza por el mal uso que los USUARIOS o terceras personas den a dicha plataforma, así como los datos que puedan por dichos medios acceder personas no autorizadas para los efectos. 
                   </p>
                 </li>
               </ul>
-              <p>
-              Dentro de la información ofertada por LA PAGINA no se responsabiliza por el mal uso que los USUARIOS o terceras personas den a dicha plataforma, así como los datos que puedan por dichos medios acceder personas no autorizadas para los efectos. 
-              </p>
-              <br />
-              <h4>13.	PROPIEDAD INTELECTUAL.</h4>
+              <h4>12.	PROPIEDAD INTELECTUAL.</h4>
               <p>
               LA PAGINA es titular o licenciataria de todos los derechos de propiedad intelectual e industrial incluidos en el Sitio, así como sobre los contenidos accesibles a través de esta. <br />
               Los derechos de propiedad intelectual de la Página web, así como: textos, imágenes, fotografías,  diseño gráfico, estructura de navegación, Know How, información y contenidos del programa son titularidad de LA PAGINA, a quien corresponde el ejercicio exclusivo de los derechos de explotación de los mismos en cualquier forma y, en especial, los derechos de reproducción, distribución, comunicación pública y transformación, de conformidad con la legislación ecuatoriana de derechos de propiedad intelectual e industrial. <br />
@@ -721,12 +827,12 @@ function RespaldoLegalSeccion() {
               Todo lo que compartan los USUARIOS en la plataforma, LA PAGINA tendrá la máxima amplitud permitida por la legislación vigente, de los derechos de explotación de propiedad intelectual o industrial derivados de tales contenidos. 
               </p>
               <br />
-              <h4>14.	NOTIFICACIONES.</h4>
+              <h4>13.	NOTIFICACIONES.</h4>
               <p>
               Todas las notificaciones y/o comunicaciones que deban efectuarse por el uso de la Página Web bajo estos términos y condiciones generales, deberán realizarse por escrito: al USUARIO: mediante correo electrónico, a la cuenta de correo consignada por éste, o por carta documento, al domicilio declarado al inicio de este documento o a la cuenta de correo soporte@advantech.com.ec o a su domicilio legal enunciado en el inicio del presente documento. 
               </p>
               <br />
-              <h4>15.	JURISDICCIÓN</h4>
+              <h4>14.	JURISDICCIÓN</h4>
               <p>
               Los presentes términos y condiciones se encuentran regidos sin excepción y en todos sus puntos por las leyes de la República del Ecuador y serán interpretados de acuerdo con ellas. <br />
               Ante cualquier diferencia, desacuerdo o conflicto derivado de la interpretación, validez, alcance y/o aplicación de los presentes términos y condiciones generales, los USUARIOS se comunicarán con LA PAGINA haciéndole llegar su reclamo, para que las partes traten de lograr un acuerdo. <br />
@@ -735,27 +841,27 @@ function RespaldoLegalSeccion() {
               <ul>
                 <li>
                   <p>
-                  15.1.	Los árbitros serán seleccionados conforme lo establecido en la Ley de Arbitraje y Mediación. 
+                  14.1.	Los árbitros serán seleccionados conforme lo establecido en la Ley de Arbitraje y Mediación. 
                   </p>
                 </li>
                 <li>
                   <p>
-                  15.2.	Las partes renuncian a la jurisdicción ordinaria, se obligan a acatar el laudo que expida el Tribunal Arbitral y se comprometen a no interponer ningún tipo de recurso en contra del laudo arbitral. 
+                  14.2.	Las partes renuncian a la jurisdicción ordinaria, se obligan a acatar el laudo que expida el Tribunal Arbitral y se comprometen a no interponer ningún tipo de recurso en contra del laudo arbitral. 
                   </p>
                 </li>
                 <li>
                   <p>
-                  15.3.	Para la ejecución de las medidas cautelares, el Tribunal Arbitral tiene la facultad de solicitar de los funcionarios públicos, judiciales, policiales y administrativos su cumplimiento, sin que sea necesario recurrir a juez ordinario alguno. 
+                  14.3.	Para la ejecución de las medidas cautelares, el Tribunal Arbitral tiene la facultad de solicitar de los funcionarios públicos, judiciales, policiales y administrativos su cumplimiento, sin que sea necesario recurrir a juez ordinario alguno. 
                   </p>
                 </li>
                 <li>
                   <p>
-                  15.4.	El Tribunal Arbitral está integrado por tres árbitros que integrarán el tribunal arbitral e.- El procedimiento arbitral será confidencial y en derecho. 
+                  14.4.	El Tribunal Arbitral está integrado por tres árbitros que integrarán el tribunal arbitral e.- El procedimiento arbitral será confidencial y en derecho. 
                   </p>
                 </li>
                 <li>
                   <p>
-                  15.5.	El lugar de arbitraje será en las instalaciones del Centro de Arbitraje y Mediación de la Cámara de Comercio de Quito. 
+                  14.5.	El lugar de arbitraje será en las instalaciones del Centro de Arbitraje y Mediación de la Cámara de Comercio de Quito. 
                   </p>
                 </li>
               </ul>
