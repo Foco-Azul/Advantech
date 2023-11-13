@@ -203,19 +203,20 @@ const Multisearch: React.FC = () => {
         const worksheet = workbook.Sheets[firstSheetName];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
   
-        // Filtrar y mapear solo los números
+        // Filtrar y mapear solo los valores que son números
         const filteredData = sheetData
           .flat()
-          .filter((cell) => typeof cell === 'number');
+          .filter((cell) => typeof cell === 'number' || !isNaN(Number(cell)));
   
         // Eliminar valores duplicados usando una matriz y un conjunto auxiliar
         const uniqueData = [];
         const seen = new Set();
   
         for (const item of filteredData) {
-          if (!seen.has(item)) {
-            seen.add(item);
-            uniqueData.push(item);
+          const numValue = Number(item);
+          if (!isNaN(numValue) && !seen.has(numValue)) {
+            seen.add(numValue);
+            uniqueData.push(numValue);
           }
         }
   
@@ -233,6 +234,7 @@ const Multisearch: React.FC = () => {
       reader.readAsBinaryString(file);
     }
   };
+  
   
   const getSourceValue = () => {
     const selector = document.getElementById('sourceSelector') as HTMLSelectElement;
@@ -628,7 +630,6 @@ const Multisearch: React.FC = () => {
           <p>Puedes esperar aquí o</p>
           <p>Visita tu  <a className='link-historial' href='/micuenta?ver=busquedas'>historial de búsquedas </a></p>
           <br></br>
-          {/* <p>En breve comenzará la descarga</p> */}
 
         </div>
       }
