@@ -16,7 +16,7 @@ function Footer() {
 
   return (
     <>
-    <footer className="footer-home">
+    <footer className="footer-home" data-testid="footer-home">
       <div>
 
         <div className="footer-content">
@@ -24,7 +24,7 @@ function Footer() {
             <Link href="/" legacyBehavior passHref>
               <Image src={Logo} alt="Company Logo" width={164} height={133} />
             </Link>
-            <div className="footer-rrss">
+            <div className="footer-rrss" data-testid="footer-rrss">
               <Link href="https://www.linkedin.com/company/advantechint/" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></a></Link>
               <Link href="https://twitter.com/AdvantechDatos?s=20" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faTwitter} size="xl" /></a></Link>
               <Link href="https://www.facebook.com/profile.php?id=61550513552222&mibextid=2JQ9oc" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faSquareFacebook} size="xl" /></a></Link>
