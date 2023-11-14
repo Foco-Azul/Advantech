@@ -7,7 +7,7 @@ import IconCheck from "./image/icon-check.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
-async function SeccionRecursos() {
+ function SeccionRecursos() {
   return (
         <section className="seccion-recursos">
             <div>

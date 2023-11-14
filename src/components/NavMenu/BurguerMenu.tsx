@@ -105,7 +105,7 @@ const BurguerMenu: React.FC = () => {
 
   return (
     <div className="hamburger-menu">
-      <button className="hamburger-button" onClick={togglePopup}>
+      <button className="hamburger-button"  data-testid="toggle-button" onClick={togglePopup}>
         <span></span>
         <span></span>
         <span></span>

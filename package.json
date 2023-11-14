@@ -8,7 +8,7 @@
     "start": "next start",
     "sitemap": "next-sitemap --config next-sitemap.config.js",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --verbose",
     "test:watch": "jest --watchAll"
   },
   "dependencies": {

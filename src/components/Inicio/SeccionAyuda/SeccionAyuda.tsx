@@ -3,7 +3,7 @@ import './SeccionAyuda.css'
 import ImagenCheck from "./image/icon-check.svg"
 import ImageDatos from "./image/image-datos.svg"
 
-async function SeccionAyuda() {
+ function SeccionAyuda() {
   return (
         <section>
             <div className="seccion_2">
