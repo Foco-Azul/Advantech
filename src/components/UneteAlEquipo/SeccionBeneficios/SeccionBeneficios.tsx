@@ -1,9 +1,8 @@
 import Image from "next/image";
 import './SeccionBeneficios.css'
 import ImagenCheck from "./image/icon-check.svg"
-import ImageDatos from "./image/image-datos.svg"
 
-async function SeccionBeneficios() {
+ function SeccionBeneficios() {
   return (
         <section>
             <div className="seccion_2">
@@ -19,7 +18,7 @@ async function SeccionBeneficios() {
                         </div>
                         <div>
                             <h5>Trabajo remoto</h5>
-                            <p>Ofrecemos la posibilidad de trabajar de la comodidad de tu casa, no importa en que país te encuentres.</p>
+                            <p>Ofrecemos la posibilidad de trabajar de la comodidad de tu casa, no importa en qué país te encuentres.</p>
                         </div>
                     </div>
                     <div className="beneficio">

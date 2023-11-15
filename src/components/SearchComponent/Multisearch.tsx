@@ -202,24 +202,28 @@ const Multisearch: React.FC = () => {
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  
+  console.log("sheetdata",sheetData)
+
+
         // Filtrar y mapear solo los valores que son números
         const filteredData = sheetData
           .flat()
           .filter((cell) => typeof cell === 'number' || !isNaN(Number(cell)));
+          console.log("filtered data",filteredData)
+          
   
         // Eliminar valores duplicados usando una matriz y un conjunto auxiliar
         const uniqueData = [];
         const seen = new Set();
-  
+        
         for (const item of filteredData) {
-          const numValue = Number(item);
-          if (!isNaN(numValue) && !seen.has(numValue)) {
-            seen.add(numValue);
-            uniqueData.push(numValue);
+          const strValue = String(item);
+          if (!seen.has(strValue)) {
+            seen.add(strValue);
+            uniqueData.push(strValue);
           }
         }
-  
+        
         // Mostrar los valores únicos en la consola
         console.log('Valores únicos encontrados:', uniqueData);
   

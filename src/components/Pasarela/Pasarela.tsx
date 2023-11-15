@@ -24,7 +24,7 @@ const Pasarela: React.FC<PasarelaProps> = ({ price, plan, userid, creditos, plan
   return (
     <div className="pasarela">
       <Elements stripe={stripePromise}>
-        <CheckoutForm userid={userid} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} planvencimiento={planvencimiento} userCorreo={userCorreo}/>
+        <CheckoutForm userid={userid} price={price} plan={plan} creditos={creditos} userCredits={userCredits} planid={planid} planvencimiento={planvencimiento} userCorreo={userCorreo} nombres={""} razonSocial={""} rucCedula={""} direccion={""} telefono={""} email={""}/>
       </Elements>
     </div>
   );

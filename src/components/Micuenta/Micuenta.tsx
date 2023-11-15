@@ -262,7 +262,6 @@ const Micuenta: React.FC = () => {
         }
         setShowApiSection(!showApiSection);
     };
-    // ... your existing getuser function ...
     async function getuser() {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=plan.*&populate=historials.archivo`, {
@@ -310,7 +309,6 @@ const Micuenta: React.FC = () => {
         }
     }
     useEffect(() => {
-        // Llamar a la función cuando se carga el componente
         checkAndLogVerParam();
         getuser()
             .then((foundUser) => {
@@ -584,8 +582,8 @@ const Micuenta: React.FC = () => {
 
                                                                         {search.attributes.status === "IN PROGRESS" ? (
                                                                             <button className='micuenta-download-button excel proceso' >En proceso</button>
-                                                                            ) : search.attributes.status === "FAILED" ? (
-                                                                                <button className='micuenta-download-button excel proceso' >Fallido</button>
+                                                                        ) : search.attributes.status === "FAILED" ? (
+                                                                            <button className='micuenta-download-button excel proceso' >Fallido</button>
                                                                         ) : (
                                                                             <button className='micuenta-download-button excel' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero)}>Descarga</button>
                                                                         )}
@@ -693,7 +691,6 @@ const Micuenta: React.FC = () => {
 
                                 )}
 
-                                {/* Resto de tu código ... */}
                                 {activeTab === 'api' && (
                                     <div>
                                         <h2 className="micuenta-h2-datos">API</h2>

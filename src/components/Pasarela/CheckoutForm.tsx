@@ -207,7 +207,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
   };
 
   return (
-    <div>
+    <div data-testid="checkout-form">
       {paymentSuccess == false && <><p>Coloca los datos de facturación</p><br></br></>}
       <form onSubmit={handleSubmit} >
         {showForm && (

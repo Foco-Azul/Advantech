@@ -1,10 +1,7 @@
 "use client";
-import React, { useState } from 'react';
 import Image from 'next/image';
 import ImageEquipo from './image-equipo.svg'
 import './SeccionUneteAlEquipo.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck} from "@fortawesome/free-regular-svg-icons";
 
 function SeccionUneteAlEquipo() {
   return (

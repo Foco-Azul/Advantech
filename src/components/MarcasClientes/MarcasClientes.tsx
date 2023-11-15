@@ -10,9 +10,9 @@ function MarcasClientes() {
     <section className='seccion-aliados'>
       <div className='aliados-contenido'>
         <div className='empresas-marcas'>
-          <div><Image src={Marca_1} alt='Advantech Datos' ></Image></div>
-          <div><Image src={Marca_2} alt='Advantech Datos' ></Image></div>
-          <div><Image src={Marca_3} alt='Advantech Datos' ></Image></div>
+          <div><Image src={Marca_1} alt='Datafast' ></Image></div>
+          <div><Image src={Marca_2} alt='Diner Club Internacional' ></Image></div>
+          <div><Image src={Marca_3} alt='Banco Pichincha' ></Image></div>
         </div>
       </div>
     </section>

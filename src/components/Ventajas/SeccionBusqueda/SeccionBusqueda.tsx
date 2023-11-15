@@ -5,7 +5,6 @@ import Image2 from "./image/icon2.svg"
 import Image3 from "./image/Image2.svg"
 import Image4 from "./image/Image3.svg"
 import icon from "./image/icon.svg"
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCircleXmark} from "@fortawesome/free-regular-svg-icons";
 
