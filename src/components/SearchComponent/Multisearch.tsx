@@ -309,7 +309,11 @@ const Multisearch: React.FC = () => {
                   plane: planId,
                   puntero:{},
                   status: "IN PROGRESS",
-                  query_id: jsonData.query_id
+                  query_id: jsonData.query_id,
+                  busqueda: JSON.stringify({
+                    consulta: "Búsqueda por lote",
+                    fuente: selectedSource,
+                  }),
                 },
               }),
               cache: "no-store",

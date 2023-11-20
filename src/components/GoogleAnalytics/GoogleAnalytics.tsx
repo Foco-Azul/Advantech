@@ -5,6 +5,7 @@ import Script from 'next/script'
 export default function GoogleAnalytics({GA_MEASUREMENT_ID} : {GA_MEASUREMENT_ID : string}){
     return (
         <>
+            <meta name="google-site-verification" content="Kp1ALAt9sdolm94WP0Kp-ZR-A8KK5XrO5dfOj2Je69o" />
             <Script strategy="afterInteractive" 
                 src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}/>
             <Script id='google-analytics' strategy="afterInteractive"
