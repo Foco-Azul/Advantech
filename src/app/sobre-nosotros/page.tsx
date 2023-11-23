@@ -18,7 +18,8 @@ export const metadata:Metadata ={
     description:"Advantech Datos: Tu fuente confiable para acceder a datos de personas en Ecuador. Ofrecemos consultas de datos públicos de manera efectiva y eficiente. ¡Mejora tus procesos con nosotros!",
     openGraph: {
       images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
-    }
+    },
+    keywords: ["Sobre nosotros"]
 }
 
 export default function Sobrenosotros() {

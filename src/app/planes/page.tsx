@@ -18,7 +18,8 @@ export const metadata:Metadata ={
     description:"Descubre nuestros planes de suscripción para acceder a datos valiosos. Elige entre Personalizado, Standard, Premium y Enterprise. Obtén créditos, soporte personalizado y entrega de datos en varios formatos. ¡Conoce más sobre nuestras funcionalidades y tipos de consultas!",
     openGraph: {
       images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
-    }
+    },
+    keywords: ["Titulos universitarios", "Accionistas", "Noticias del delito", "Juicios"]
   }
 export default function Planes() {
     return (

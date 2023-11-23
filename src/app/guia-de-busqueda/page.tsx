@@ -15,7 +15,8 @@ export const metadata:Metadata ={
     description:"¡Descubre el poder de Advantech Datos! Nuestra guía te enseñará cómo realizar búsquedas simples y por lote.",
     openGraph: {
       images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
-    }
+    },
+    keywords: "Consultas datos públicos Ecuador"
   }
 export default function Planes() {
     return (

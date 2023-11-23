@@ -15,7 +15,8 @@ export const metadata:Metadata ={
     description:"Únete al equipo de Advantech Datos, una empresa en crecimiento que se dedica al análisis y transformación de datos. Si eres apasionado por el mundo de los datos y buscas oportunidades de trabajo remoto con flexibilidad y un gran ambiente laboral, ¡envíanos tu postulación hoy mismo!",
     openGraph: {
       images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
-    }
+    },
+    keywords: "Unete al equipo"
   }
 export default function UneteAlEquipo() {
     return (

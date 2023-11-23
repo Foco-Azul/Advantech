@@ -16,7 +16,8 @@ export const metadata: Metadata = {
   description: "Advantech Datos: Plataforma de búsqueda de datos en Ecuador. Realiza búsquedas simples o por lote de personas y empresas. Descarga datos en varios formatos.",
   openGraph: {
     images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
-  }
+  },
+  keywords: "Datos"
 }
 
 

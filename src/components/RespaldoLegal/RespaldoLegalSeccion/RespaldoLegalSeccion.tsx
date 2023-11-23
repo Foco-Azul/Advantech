@@ -19,7 +19,7 @@ function RespaldoLegalSeccion() {
         <div className='productos-pestañas'>
           <button className={activeTab === 'TERMINOS-Y-CONDICIONES' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('TERMINOS-Y-CONDICIONES')}>TERMINOS Y CONDICIONES</button>
           <button className={activeTab === 'AVISO-DE-PRIVACIDAD' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('AVISO-DE-PRIVACIDAD')}>AVISO DE PRIVACIDAD</button>
-          <button className={activeTab === 'POLITICA-DE-COOKIES' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('POLITICA-DE-COOKIES')}>POLITICA DE COOCKIES</button>
+          <button className={activeTab === 'POLITICA-DE-COOKIES' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('POLITICA-DE-COOKIES')}>POLITICA DE COOKIES</button>
           <button className={activeTab === 'POLITICAS-DE-PRIVACIDAD' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('POLITICAS-DE-PRIVACIDAD')}>POLITICAS DE PRIVACIDAD</button>
         </div>
         <div>

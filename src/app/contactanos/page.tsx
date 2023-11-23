@@ -15,7 +15,8 @@ export const metadata:Metadata ={
     description:"Advantech Datos: Ponte en contacto con nuestro equipo y obtén información sobre nuestros planes a la carta, estándar, premium y enterprise. Resuelve tus consultas sobre documentación y casos de uso para tu empresa. ¡Contáctanos ahora!",
     openGraph: {
       images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
-    }
+    },
+    keywords: "Advantech Datos"
   }
 export default function Contactanos() {
     return (
