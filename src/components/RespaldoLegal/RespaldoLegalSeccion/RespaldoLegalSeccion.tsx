@@ -425,48 +425,52 @@ function RespaldoLegalSeccion() {
                       3.2.1.	Sin una cuenta
                       </p>
                     </li>
-                    <li>
-            
+                    <li>           
                         <table className='tabla-cookies'>
-                          <tr>
-                            <th>NOMBRE</th>
-                            <th>ORIGEN</th>
-                          </tr>
-                          <tr>
-                            <td>1P_JAR</td>
-                            <td>Google Ads Optimization</td>
-                          </tr>
-                          <tr>
-                            <td>__stripe_mid</td>
-                            <td>Stripe</td>
-                          </tr>
-                          <tr>
-                            <td>__stripe_sid</td>
-                            <td>Stripe</td>
-                          </tr>
-                          <tr>
-                            <td>_ga</td>
-                            <td>Google Analytics</td>
-                          </tr>
-                          <tr>
-                            <td>_ga_H77JWD9QJ9</td>
-                            <td>Google Analytics</td>
-                          </tr>
-                        </table>
-                      
+                          <thead>
+                            <tr>
+                              <th>NOMBRE</th>
+                              <th>ORIGEN</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1P_JAR</td>
+                              <td>Google Ads Optimization</td>
+                            </tr>
+                            <tr>
+                              <td>__stripe_mid</td>
+                              <td>Stripe</td>
+                            </tr>
+                            <tr>
+                              <td>__stripe_sid</td>
+                              <td>Stripe</td>
+                            </tr>
+                            <tr>
+                              <td>_ga</td>
+                              <td>Google Analytics</td>
+                            </tr>
+                            <tr>
+                              <td>_ga_H77JWD9QJ9</td>
+                              <td>Google Analytics</td>
+                            </tr>
+                          </tbody>
+                        </table>                
                     </li>
                     <li>
                       <p>
                       3.2.2.	Con una cuenta
                       </p>
                     </li>
-                    <li>
-                      
+                    <li>                     
                       <table className='tabla-cookies'>
+                        <thead>
                           <tr>
-                            <th>NOMBRE</th>
-                            <th>ORIGEN</th>
+                              <th>NOMBRE</th>
+                              <th>ORIGEN</th>
                           </tr>
+                        </thead>
+                        <tbody>
                           <tr>
                             <td>1P_JAR</td>
                             <td>Google Ads Optimization</td>
@@ -491,21 +495,23 @@ function RespaldoLegalSeccion() {
                             <td>appSession</td>
                             <td>datos.advantech.com.ec</td>
                           </tr>
-                        </table>
-                      
+                        </tbody> 
+                      </table>                     
                     </li>
                     <li>
                       <p>
                       3.2.3.	En calidad incognito
                       </p>
                     </li>
-                    <li>
-                      
+                    <li>                   
                       <table className='tabla-cookies'>
+                        <thead>
                           <tr>
-                            <th>NOMBRE</th>
-                            <th>ORIGEN</th>
+                              <th>NOMBRE</th>
+                              <th>ORIGEN</th>
                           </tr>
+                        </thead>
+                        <tbody>
                           <tr>
                             <td>__stripe_mid</td>
                             <td>Stripe</td>
@@ -522,8 +528,8 @@ function RespaldoLegalSeccion() {
                             <td>_ga_H77JWD9QJ9</td>
                             <td>Google Analytics</td>
                           </tr>
-                        </table>
-                      
+                        </tbody>
+                      </table>                  
                     </li>
                   </ul>
                 </li>
