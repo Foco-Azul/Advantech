@@ -14,7 +14,7 @@ import { NoticiasExcel } from '../SearchComponent/NoticiasExcel';
 import { JudicialesExcel } from '../SearchComponent/JudicialesExcel';
 import { TitulosExcel } from '../SearchComponent/TitulosExcel';
 import AccionistasExcel from '../SearchComponent/AccionistasExcel';
-
+import SearchStatus from './SearchStatus';
 
 const Micuenta: React.FC = () => {
     const { user, error, isLoading } = useUser();
@@ -308,6 +308,7 @@ const Micuenta: React.FC = () => {
             throw new Error(`Failed to fetch data, ${error}`);
         }
     }
+
     useEffect(() => {
         checkAndLogVerParam();
         getuser()
@@ -340,7 +341,8 @@ const Micuenta: React.FC = () => {
                     console.error('Failed to fetch user data:', error);
                 });
         }
-    }, [user]);
+    }, [user, handleSearchStatusChange]);
+
     const handleButtonClick = (key: number) => {
         setBotonActivo(key);
         getHistorialPagos(key)
@@ -372,6 +374,9 @@ const Micuenta: React.FC = () => {
         console.log("purchasePaginas", purchasePagosPaginas.pageCount);
     } else {
         console.log("purchasePaginas is undefined or pageCount is not defined.");
+    }
+
+    function handleSearchStatusChange(queryId: string, newStatus: string): void {
     }
 
     return (
@@ -575,8 +580,19 @@ const Micuenta: React.FC = () => {
                                                                     <td>{search.attributes.fecha}</td>
                                                                     <td>{search.attributes.creditos}</td>
                                                                     <td>{search.attributes.consulta}</td>
-                                                                    <td style={{ color: getStatusColor(search.attributes.status) }} className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>{getStatusTranslation(search.attributes.status)}</td>
-
+                                                                    <td 
+                                                                    // style={{ color: getStatusColor(search.attributes.status) }} className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}
+                                                                    >
+                                                                        {/* {getStatusTranslation(search.attributes.status)} */}
+                                                                        <SearchStatus
+                                                                            queryId={search.attributes.query_id}
+                                                                            status={search.attributes.status}
+                                                                            translation={getStatusTranslation(search.attributes.status)}
+                                                                            getColor={getStatusColor}
+                                                                            isUnderline={status => status === "IN PROGRESS"}
+                                                                            onStatusChange={handleSearchStatusChange}
+                                                                            ></SearchStatus>
+                                                                    </td>
 
                                                                     <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
 

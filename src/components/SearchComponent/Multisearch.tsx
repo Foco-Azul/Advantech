@@ -30,6 +30,7 @@ const Multisearch: React.FC = () => {
   const currentDate = new Date();
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
+  const [progress, setProgress] = useState(0);
 
   // async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
   //   const nuevoHistorial = await fetch(
@@ -192,30 +193,55 @@ const Multisearch: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-  
+
     if (file) {
       const reader = new FileReader();
-  
+
       reader.onload = (event) => {
         const binaryString = event.target?.result as string;
         const workbook = XLSX.read(binaryString, { type: 'binary' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  console.log("sheetdata",sheetData)
+        console.log("sheetdata", sheetData)
 
+        // Verificar si el archivo es un archivo XLSX
+        if (!binaryString.startsWith("PK")) {
+          alert('El archivo no es un archivo XLSX válido.');
+          // Limpiar el valor del input de archivos para permitir al usuario seleccionar otro archivo.
+          e.target.value = '';
+          return;
+        }
+
+        // Obtener la cantidad de pestañas (hojas) en el archivo Excel
+        const numberOfSheets = workbook.SheetNames.length;
+
+        if (numberOfSheets !== 1) {
+          // Mostrar una alerta si el Excel no tiene exactamente una pestaña
+          alert('El archivo debe tener solamente una pestaña.');
+          // Limpiar el valor del input de archivos para permitir al usuario seleccionar otro archivo.
+          e.target.value = '';
+          return; // Salir de la función sin procesar el archivo
+        }
 
         // Filtrar y mapear solo los valores que son números
         const filteredData = sheetData
           .flat()
-          .filter((cell) => typeof cell === 'number' || !isNaN(Number(cell)));
-          console.log("filtered data",filteredData)
-          
-  
+          .filter((cell) => {
+            // Verificar si la celda contiene solo letras o menos de 3 números (excluyendo el punto)
+            const cellString = String(cell);
+            const containsOnlyLetters = /^[a-zA-Z]+$/.test(cellString);
+            const containsLessThanThreeNumbers = (cellString.match(/\d/g) || []).filter(digit => digit !== '.').length < 4;
+
+            return !containsOnlyLetters && !containsLessThanThreeNumbers;
+          });
+
+        console.log("prueba filtrados", filteredData);
+
         // Eliminar valores duplicados usando una matriz y un conjunto auxiliar
         const uniqueData = [];
         const seen = new Set();
-        
+
         for (const item of filteredData) {
           const strValue = String(item);
           if (!seen.has(strValue)) {
@@ -223,23 +249,30 @@ const Multisearch: React.FC = () => {
             uniqueData.push(strValue);
           }
         }
-        
+
+        if (uniqueData.length > 1000) {
+          alert('Hay más de 1000 RUCs en el archivo. Por favor, verifica el archivo seleccionado.');
+          // Limpiar el valor del input de archivos para permitir al usuario seleccionar otro archivo.
+          e.target.value = '';
+          return; // Salir de la función sin procesar el archivo
+        }
+
         // Mostrar los valores únicos en la consola
         console.log('Valores únicos encontrados:', uniqueData);
-  
+
         // Convierte los valores únicos en una cadena separada por comas y consoléala.
         const dataAsString = uniqueData.join(', ');
         console.log('FileData', dataAsString);
-  
+
         // Guardar los datos del archivo Excel en el estado
         setFileData(dataAsString);
       };
-  
+
       reader.readAsBinaryString(file);
     }
   };
-  
-  
+
+
   const getSourceValue = () => {
     const selector = document.getElementById('sourceSelector') as HTMLSelectElement;
     setFuenteseleccionada(selector.value)
@@ -277,7 +310,7 @@ const Multisearch: React.FC = () => {
         },
         body: JSON.stringify({
           list: fileData?.split(', '),
-          item_type: selectedType,
+          item_type: "cedulas",
           source: getSourceValue(),
           key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
         }),
@@ -307,7 +340,7 @@ const Multisearch: React.FC = () => {
                   precio: 0,
                   consulta: "Búsqueda por lote " + selectedSource,
                   plane: planId,
-                  puntero:{},
+                  puntero: {},
                   status: "IN PROGRESS",
                   query_id: jsonData.query_id,
                   busqueda: JSON.stringify({
@@ -345,6 +378,7 @@ const Multisearch: React.FC = () => {
             console.log('La API está lista.');
           } else {
             // Si la API no está lista, espera 1 segundo antes de realizar la siguiente verificación
+            setProgress((statusData.count / statusData.total) * 100);
             await new Promise(resolve => setTimeout(resolve, 1000));
             console.log("explota")
           }
@@ -633,7 +667,11 @@ const Multisearch: React.FC = () => {
       {isLoadingData &&
         <div className='loading-overlay'>
           <p>Estamos procesando tus datos</p>
-          <CircularProgress></CircularProgress>
+          {/* <CircularProgress></CircularProgress> */}
+          <p>{Math.round(progress)}%</p>
+          <div className="progress-bar-container">
+            <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+          </div>
           <br></br>
           <p>Puedes esperar aquí o</p>
           <p>Visita tu  <a className='link-historial' href='/micuenta?ver=busquedas'>historial de búsquedas </a></p>
