@@ -84,7 +84,7 @@ const Micuenta: React.FC = () => {
 
     const DescargarJSON = async (query_id: string) => {
 
-        const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ const Micuenta: React.FC = () => {
             body: JSON.stringify({
                 query_id: query_id,
                 selection: {},
-                key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+                key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
             }),
         });
 
@@ -125,7 +125,7 @@ const Micuenta: React.FC = () => {
 
 
     const DescargaExcel = async (query_id: string, fuente: string, puntero: any) => {
-        const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ const Micuenta: React.FC = () => {
             body: JSON.stringify({
                 query_id: query_id,
                 selection: puntero,
-                key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+                key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
             }),
         });
 

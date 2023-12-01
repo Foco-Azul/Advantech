@@ -16,16 +16,16 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
     useEffect(() => {
         const fetchData = async () => {
             let currentStatus = 'IN PROGRESS';
-
+            
             while (currentStatus === 'IN PROGRESS') {
-                const response = await fetch('https://splunk.hctint.com:9876/data/status', {
+                const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/status', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         query_id: queryId,
-                        key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+                        key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                     }),
                 });
 

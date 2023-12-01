@@ -303,7 +303,7 @@ const Multisearch: React.FC = () => {
 
     setIsLoadingData(true);
     try {
-      const response = await fetch('https://splunk.hctint.com:9876/data/create_search', {
+      const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/create_search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -312,7 +312,7 @@ const Multisearch: React.FC = () => {
           list: fileData?.split(', '),
           item_type: "cedulas",
           source: getSourceValue(),
-          key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+          key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
         }),
       });
 
@@ -359,14 +359,14 @@ const Multisearch: React.FC = () => {
 
         let status = null;
         while (status !== 'READY') {
-          const response = await fetch('https://splunk.hctint.com:9876/data/status', {
+          const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/status', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
               query_id: jsonData.query_id,
-              key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+              key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
             }),
           });
 
@@ -392,7 +392,7 @@ const Multisearch: React.FC = () => {
         //////////////////////////////// TRAER DATOS ////////////////////////////////
 
         console.log("json", jsonData)
-        const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -400,7 +400,7 @@ const Multisearch: React.FC = () => {
           body: JSON.stringify({
             query_id: jsonData.query_id,
             selection: {},
-            key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+            key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
           }),
         });
 

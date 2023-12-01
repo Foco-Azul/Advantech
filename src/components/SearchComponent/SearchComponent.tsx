@@ -188,7 +188,7 @@ const SearchComponent: React.FC = () => {
             // Reset empty input error
             setIsLoadingData(true);
             try {
-                const response = await fetch('https://splunk.hctint.com:9876/data/create_search', {
+                const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/create_search', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -197,7 +197,7 @@ const SearchComponent: React.FC = () => {
                         list: [searchInputValue],
                         item_type: selectedType,
                         source: getSourceValue(),
-                        key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+                        key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                     }),
                 });
 
@@ -205,14 +205,14 @@ const SearchComponent: React.FC = () => {
                     const jsonData = await response.json();
                     let status = null;
                     while (status !== 'READY') {
-                        const response = await fetch('https://splunk.hctint.com:9876/data/status', {
+                        const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/status', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
                                 query_id: jsonData.query_id,
-                                key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+                                key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                             }),
                         });
 
@@ -232,14 +232,14 @@ const SearchComponent: React.FC = () => {
 
                     setData(jsonData);
                     console.log("response", jsonData)
-                    const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_public_data', {
+                    const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_public_data', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
                             query_id: jsonData.query_id,
-                            key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+                            key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                         }),
                     });
 
@@ -312,7 +312,7 @@ const SearchComponent: React.FC = () => {
 
             selectionObj[NombreRuc] = SeleccionUsuario;
 
-            const response = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+            const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -320,7 +320,7 @@ const SearchComponent: React.FC = () => {
                 body: JSON.stringify({
                     query_id: data.query_id,
                     selection: selectionObj,
-                    key: `${process.env.ADVANTECH_PRIVATE_KEY}`
+                    key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                 }),
             });
 
@@ -348,7 +348,11 @@ const SearchComponent: React.FC = () => {
                                     plane: planId,
                                     status: "READY",
                                     query_id: data.query_id,
-                                    puntero: selectionObj
+                                    puntero: selectionObj,
+                                    busqueda: JSON.stringify({
+                                        fuente: selectedSource,
+                                        consulta: searchInputValue
+                                    }),
                                 },
                             }),
                             cache: "no-store",

@@ -117,7 +117,7 @@ const SearchComponent: React.FC = () => {
 
     const handleButtonClick = async () => {
         try {
-            const response = await fetch('https://splunk.hctint.com:9876/data/create_search', {
+            const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/create_search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ const SearchComponent: React.FC = () => {
                 const jsonData = await response.json();
                 setData(jsonData);
 
-                const secondResponse = await fetch('https://splunk.hctint.com:9876/data/get_public_data', {
+                const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_public_data', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -198,7 +198,7 @@ const SearchComponent: React.FC = () => {
 
             selectionObj[NombreRuc] = SeleccionUsuario;
 
-            const response = await fetch('https://splunk.hctint.com:9876/data/get_full_data', {
+            const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
