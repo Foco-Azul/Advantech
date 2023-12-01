@@ -25,7 +25,7 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
                     },
                     body: JSON.stringify({
                         query_id: queryId,
-                        key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                        key: `${process.env.ADVANTECH_PRIVATE_KEY}`
                     }),
                 });
 

@@ -197,7 +197,7 @@ const SearchComponent: React.FC = () => {
                         list: [searchInputValue],
                         item_type: selectedType,
                         source: getSourceValue(),
-                        key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                        key: `${process.env.ADVANTECH_PRIVATE_KEY}`
                     }),
                 });
 
@@ -212,7 +212,7 @@ const SearchComponent: React.FC = () => {
                             },
                             body: JSON.stringify({
                                 query_id: jsonData.query_id,
-                                key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                                key: `${process.env.ADVANTECH_PRIVATE_KEY}`
                             }),
                         });
 
@@ -239,7 +239,7 @@ const SearchComponent: React.FC = () => {
                         },
                         body: JSON.stringify({
                             query_id: jsonData.query_id,
-                            key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                            key: `${process.env.ADVANTECH_PRIVATE_KEY}`
                         }),
                     });
 
@@ -320,7 +320,7 @@ const SearchComponent: React.FC = () => {
                 body: JSON.stringify({
                     query_id: data.query_id,
                     selection: selectionObj,
-                    key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                    key: `${process.env.ADVANTECH_PRIVATE_KEY}`
                 }),
             });
 

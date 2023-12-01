@@ -312,7 +312,7 @@ const Multisearch: React.FC = () => {
           list: fileData?.split(', '),
           item_type: "cedulas",
           source: getSourceValue(),
-          key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+          key: `${process.env.ADVANTECH_PRIVATE_KEY}`
         }),
       });
 
@@ -366,7 +366,7 @@ const Multisearch: React.FC = () => {
             },
             body: JSON.stringify({
               query_id: jsonData.query_id,
-              key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+              key: `${process.env.ADVANTECH_PRIVATE_KEY}`
             }),
           });
 
@@ -400,7 +400,7 @@ const Multisearch: React.FC = () => {
           body: JSON.stringify({
             query_id: jsonData.query_id,
             selection: {},
-            key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+            key: `${process.env.ADVANTECH_PRIVATE_KEY}`
           }),
         });
 

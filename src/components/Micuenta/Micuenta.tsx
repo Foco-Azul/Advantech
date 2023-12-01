@@ -92,7 +92,7 @@ const Micuenta: React.FC = () => {
             body: JSON.stringify({
                 query_id: query_id,
                 selection: {},
-                key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                key: `${process.env.ADVANTECH_PRIVATE_KEY}`
             }),
         });
 
@@ -133,7 +133,7 @@ const Micuenta: React.FC = () => {
             body: JSON.stringify({
                 query_id: query_id,
                 selection: puntero,
-                key: 'focoazul_TPKBAnVd3a6_KGnLvuzmfHFbEhh7GsdLyJGceXaoWFq2P'
+                key: `${process.env.ADVANTECH_PRIVATE_KEY}`
             }),
         });
 
