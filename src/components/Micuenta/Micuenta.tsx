@@ -342,7 +342,7 @@ const Micuenta: React.FC = () => {
                     console.error('Failed to fetch user data:', error);
                 });
         }
-    }, [user, handleSearchStatusChange]);
+    }, [user]);
 
     const handleButtonClick = (key: number) => {
         setBotonActivo(key);
