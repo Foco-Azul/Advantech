@@ -60,6 +60,7 @@ const Micuenta: React.FC = () => {
     const checkAndLogVerParam = () => {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const codigo = urlSearchParams.get('ver');
+        
         if (codigo) {
             switch (codigo) {
                 case 'datos':

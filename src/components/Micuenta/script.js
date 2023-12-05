@@ -1,4 +1,4 @@
-// Espera a que se cargue la página
+/* Espera a que se cargue la página
 if (typeof window !== 'undefined') {
   window.addEventListener("load", function () {
       // Obtiene el valor de la parte de anclaje (#) de la URL
@@ -18,3 +18,4 @@ if (typeof window !== 'undefined') {
       }
   });
 }
+*/

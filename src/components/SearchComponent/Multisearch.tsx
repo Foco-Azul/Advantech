@@ -430,26 +430,26 @@ const Multisearch: React.FC = () => {
           //////////////////////////////////////////// RESTA DE CRÉDITOS /////////////////////////////////////////////
 
 
-          // if (userCredits) {
-          //   var restacreditos = fileData && selectedFuenteCredito && userCredits - selectedFuenteCredito * fileData.length
-          //   const postResponse = await fetch(
-          //     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
-          //     {
-          //       method: "PUT",
-          //       headers: {
-          //         "Content-Type": "application/json",
-          //       },
-          //       body: JSON.stringify({
-          //         data: {
-          //           plan: planId,
-          //           creditos: restacreditos,
-          //         },
-          //       }
-          //       ),
-          //       cache: "no-store",
-          //     }
-          //   );
-          // }
+           if (userCredits) {
+             var restacreditos = fileData && selectedFuenteCredito && userCredits - selectedFuenteCredito * fileData.length
+             const postResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
+               {
+                 method: "PUT",
+                 headers: {
+                   "Content-Type": "application/json",
+                 },
+                 body: JSON.stringify({
+                   data: {
+                     plan: planId,
+                     creditos: restacreditos,
+                   },
+                 }
+                 ),
+                 cache: "no-store",
+               }
+             );
+           }
 
           //////////////////////////////////////////// HISTORIAL /////////////////////////////////////////////
 
