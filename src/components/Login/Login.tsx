@@ -277,7 +277,7 @@ function Login({ loginname }: LoginProps) {
                 <li><a href="/micuenta/?ver=busquedas" >Historial de busquedas</a></li>
                 <li><a href="/micuenta/?ver=compras" >Historial de pagos</a></li>
                 <li><a href="/micuenta/?ver=soporte" >Soporte</a></li>
-                <li><a href="/api/auth/logout" >Salir</a></li>
+                <li><Link href="/api/auth/logout" >Salir</Link></li>
               </ul>
             </div>
             {/*

@@ -429,9 +429,9 @@ const Micuenta: React.FC = () => {
                                     Soporte
                                 </button>
 
-                                <a href="/api/auth/logout" className={"tab-button"}>
+                                <Link href="/api/auth/logout" className={"tab-button"}>
                                     Salir
-                                </a>
+                                </Link>
 
                                 {apiset && <button id='api'
                                     className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}

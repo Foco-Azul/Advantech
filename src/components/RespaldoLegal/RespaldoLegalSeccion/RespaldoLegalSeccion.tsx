@@ -367,7 +367,7 @@ function RespaldoLegalSeccion() {
             <div className="seccion-titulo">
               <h2>POLÍTICA DE COOKIES</h2>
               <p>
-              Las cookies son pequeños fragmentos de texto que se utilizan para almacenar información en navegadores web. Se usan para almacenar y recibir identificadores y otros datos en computadoras, teléfonos y otros dispositivos. Otras tecnologías, incluidos datos que almacenamos en tu navegador web o dispositivo, identificadores asociados con tu dispositivo y otro software, se utilizan con fines similares. En esta política, nos referimos a todas estas tecnologías con el nombre de "cookies".
+              Las cookies son pequeños fragmentos de texto que se utilizan para almacenar información en navegadores web. Se usan para almacenar y recibir identificadores y otros datos en computadoras, teléfonos y otros dispositivos. Otras tecnologías, incluidos datos que almacenamos en tu navegador web o dispositivo, identificadores asociados con tu dispositivo y otro software, se utilizan con fines similares. En esta política, nos referimos a todas estas tecnologías con el nombre de &ldquo;cookies&rdquo;.
               </p>
               <br />
               <h4>1.	USO DE COOKIES</h4>
@@ -555,7 +555,7 @@ function RespaldoLegalSeccion() {
                 </li>
                 <li>
                   <p>
-                  1.2.	Recopilamos y almacenamos automáticamente determinados tipos de información acerca de su uso en la página web, que incluye la información sobre su interacción con productos, el contenido y los servicios disponibles a través de LA PAGINA. Al igual que muchos sitios web, utilizamos "cookies" y otros identificadores únicos, y obtenemos ciertos tipos de información cuando su navegador web o dispositivo accede a la página web y a otro contenido servido por LA PAGINA o en su nombre en otros sitios web.
+                  1.2.	Recopilamos y almacenamos automáticamente determinados tipos de información acerca de su uso en la página web, que incluye la información sobre su interacción con productos, el contenido y los servicios disponibles a través de LA PAGINA. Al igual que muchos sitios web, utilizamos &ldquo;cookies&rdquo; y otros identificadores únicos, y obtenemos ciertos tipos de información cuando su navegador web o dispositivo accede a la página web y a otro contenido servido por LA PAGINA o en su nombre en otros sitios web.
                   </p>
                 </li>
                 <li>

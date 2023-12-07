@@ -30,7 +30,7 @@ function SeccionBusquedas() {
               <h2>Obteniendo datos de una persona</h2>
               <p>
                 <span className="guia-subtitulo">Realizando una busqueda: </span>
-                En la pestaña "Búsqueda Simple", puedes llevar a cabo búsquedas sin necesidad de iniciar sesión. Tienes la opción de buscar por <strong>nombre</strong> (preferiblemente el nombre completo) o por el número de <strong>RUC</strong> (identificación de la persona).
+                En la pestaña &ldquo;Búsqueda Simple&rdquo;, puedes llevar a cabo búsquedas sin necesidad de iniciar sesión. Tienes la opción de buscar por <strong>nombre</strong> (preferiblemente el nombre completo) o por el número de <strong>RUC</strong> (identificación de la persona).
                 <br />
                 Además, tendrás la opción de seleccionar las fuentes de resultados que deseas obtener, las cuales incluyen:
               </p>
@@ -61,7 +61,7 @@ function SeccionBusquedas() {
               <h2>Obteniendo datos de multiples personas</h2>
               <p>
                 <span className="guia-subtitulo">Realizando una busqueda: </span>
-                En la pestaña "Búsqueda por Lote", primero, debes iniciar sesión y contar con un plan para poder realizar una búsqueda. En este caso, deberás cargar un archivo Excel (XLSX) que contenga únicamente <strong>nombres</strong> o números de <strong>RUC</strong> de las personas que deseas buscar.
+                En la pestaña &ldquo;Búsqueda por Lote&rdquo;, primero, debes iniciar sesión y contar con un plan para poder realizar una búsqueda. En este caso, deberás cargar un archivo Excel (XLSX) que contenga únicamente <strong>nombres</strong> o números de <strong>RUC</strong> de las personas que deseas buscar.
                 <br />
                 Además, tendrás la opción de seleccionar las fuentes de resultados que deseas obtener, las cuales incluyen:
               </p>
