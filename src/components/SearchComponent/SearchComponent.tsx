@@ -197,7 +197,7 @@ const SearchComponent: React.FC = () => {
                         list: [searchInputValue],
                         item_type: selectedType,
                         source: getSourceValue(),
-                        key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
+                        key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                     }),
                 });
 
@@ -212,7 +212,7 @@ const SearchComponent: React.FC = () => {
                             },
                             body: JSON.stringify({
                                 query_id: jsonData.query_id,
-                                key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
+                                key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                             }),
                         });
 
@@ -239,7 +239,7 @@ const SearchComponent: React.FC = () => {
                         },
                         body: JSON.stringify({
                             query_id: jsonData.query_id,
-                            key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
+                            key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                         }),
                     });
 
@@ -320,7 +320,7 @@ const SearchComponent: React.FC = () => {
                 body: JSON.stringify({
                     query_id: data.query_id,
                     selection: selectionObj,
-                    key: `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
+                    key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
                 }),
             });
 
