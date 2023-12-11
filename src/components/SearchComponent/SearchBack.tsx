@@ -255,7 +255,7 @@ const SearchComponent: React.FC = () => {
             const jsonDataString = JSON.stringify(jsonobject, null, 2);
 
             // Agregar imagen como encabezado solo en la primera página
-            const imgData = 'https://admin.advantech.com.ec/uploads/Encabezado_47b7f38973.png';
+            const imgData = 'https://dev.advantech.com.ec:1334/uploads/Encabezado_47b7f38973.png';
 
             // Calcula el ancho proporcional de la imagen al ancho del PDF (ajustado al margen)
             const pdfWidth = 230; // Ajusta este valor según el ancho deseado del contenido

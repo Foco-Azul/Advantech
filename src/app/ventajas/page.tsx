@@ -14,7 +14,7 @@ export const metadata:Metadata ={
     title:"Ventajas",
     description:"Advantech Datos: Optimiza tu tiempo y recursos con nuestra herramienta de búsqueda de datos. Extrae información rápida y eficientemente, automatiza la recopilación de datos, garantiza la consistencia y estructura de los datos, y accede a información en tiempo real. Descubre las ventajas de utilizar Advantech para tomar decisiones basadas en evidencia y mejorar la productividad.",
     openGraph: {
-      images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
+      images: ['https://dev.advantech.com.ec:1334/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
     },
     keywords: "Búsqueda de datos"
   }

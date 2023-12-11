@@ -14,7 +14,7 @@ export const metadata:Metadata ={
     title:"Uso por industria",
     description:"Advantech Datos: Descubre cómo aprovechar el uso de datos en diferentes industrias. Obtén información sobre evaluación crediticia en finanzas y la gestión del talento en recursos humanos. Regístrate ahora y accede a miles de datos de personas de manera rápida y automática.",
     openGraph: {
-      images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
+      images: ['https://dev.advantech.com.ec:1334/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
     },
     keywords: ["Finanzas", "Recursos humanos"]
   }

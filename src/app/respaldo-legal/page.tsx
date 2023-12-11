@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Respaldo legal",
   description: "Explora nuestros términos y condiciones, políticas de privacidad y otros documentos legales en Advantech Datos para garantizar un uso seguro y transparente de nuestros servicios. Obtén acceso a información esencial para respaldo legal y conformidad.",
   openGraph: {
-    images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
+    images: ['https://dev.advantech.com.ec:1334/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   },
   keywords: ["Respaldo legal", "Terminos y condiciones", "Aviso privacidad", "Politica de Cookies", "Politicas de privacidad"]
 }

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Verificar cuenta",
   description: "Verifica tu cuenta",
   openGraph: {
-    images: ['https://admin.advantech.com.ec/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
+    images: ['https://dev.advantech.com.ec:1334/uploads/image_seo_Mesa_de_trabajo_1_4020ecf6f5.png']
   }
 }
 
