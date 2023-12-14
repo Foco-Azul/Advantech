@@ -307,14 +307,7 @@ function Login({ loginname }: LoginProps) {
                 </div>
               )}
             </div>
-            <button
-              className="logout-button"
-              onClick={() => {
-                window.location.href = "/api/auth/logout";
-              }}
-            >
-              SALIR
-            </button>
+            <Link className="logout-button" href="/api/auth/logout" >Salir</Link>
             {/*
             <button
               className="logout-button"

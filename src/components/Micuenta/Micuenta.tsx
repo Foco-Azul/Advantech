@@ -75,6 +75,9 @@ const Micuenta: React.FC = () => {
                 case 'soporte':
                     setActiveTab('soporte');
                     break;
+                case 'api':
+                    setActiveTab('api');
+                    break;
                 // Agrega más casos según tus necesidades
                 default:
                     break;

@@ -28,10 +28,10 @@ function SeccionProductos() {
             <button className={activeTab === 'DATOS POR API' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR API')}>DATOS POR API</button>
           </div>
           <div className={'pestaña-contenido ' + (activeTab === 'DATOS POR BUSCADOR' ? 'contenido-activo' : '')}>
-          <video src="https://dev.advantech.com.ec:1334/uploads/por-busqueda.mkv" width={600} controls></video>
+          <video src="https://dev.advantech.com.ec:1334/uploads/por-busqueda.mkv" width={600} controls autoPlay></video>
           </div>
           <div  className={'pestaña-contenido ' + (activeTab === 'DATOS POR DESCARGA' ? 'contenido-activo' : '')}>
-            <video src="https://dev.advantech.com.ec:1334/uploads/por-descarga.mkv" width={600} controls></video>
+            <video src="https://dev.advantech.com.ec:1334/uploads/por-descarga.mkv" width={600} controls autoPlay></video>
           </div>
           <div  className={'pestaña-contenido ' + (activeTab === 'DATOS POR API' ? 'contenido-activo' : '')}>
             <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>
