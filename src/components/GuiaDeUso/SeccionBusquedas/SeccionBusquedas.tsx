@@ -52,7 +52,7 @@ function SeccionBusquedas() {
               </p>
             </div>
             <div className='imagen'>
-              <video src="https://dev.advantech.com.ec:1334/uploads/por-descarga.mkv" controls></video>
+              <Image src="/video/por-descarga.gif" width={600} height={100} alt='Advantech Datos'></Image>
             </div>
           </div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'RECURSOS HUMANOS' ? 'contenido-activo' : '')}>
@@ -80,7 +80,7 @@ function SeccionBusquedas() {
               </p>
             </div>
             <div className='imagen'>
-              <video src="https://dev.advantech.com.ec:1334/uploads/busqueda-por-lote.mkv" controls></video>
+              <Image src="/video/busqueda-por-lote.gif" width={600} height={100} alt='Advantech Datos'></Image>
             </div>
           </div>
         </div>
