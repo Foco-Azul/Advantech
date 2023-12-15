@@ -16,7 +16,7 @@ function SeccionCreaTuCuenta() {
                         <h4>Crea tu cuenta gratuita</h4>
                         <h2>Consulta los datos de miles de personas</h2>
                         <p>Obtén datos de varias fuentes de consulta personas manera automática y rápida sin ser el titular de la información.</p>
-                        <Link href={"/api/auth/login"}><button className="hero-button">Crear cuenta</button></Link>
+                        <a href={"/api/auth/login"}><button className="hero-button">Crear cuenta</button></a>
                     </div>
                     <div>
                         <Image src={ImageGrafico} alt="Logo" width={352} height={277}></Image>

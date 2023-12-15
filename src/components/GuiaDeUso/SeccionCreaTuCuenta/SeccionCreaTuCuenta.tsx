@@ -12,7 +12,7 @@ function SeccionCreaTuCuenta() {
                         <h4>Crea tu cuenta gratuita</h4>
                         <h2>Y descubre más ventajas con Advantech</h2>
                         <p>Aprovecha estas ventajas en tu empresa para poder destacar sobre los demás.</p>
-                        <Link href={"/api/auth/login"}><button className="hero-button">Crear cuenta</button></Link>
+                        <a href={"/api/auth/login"}><button className="hero-button">Crear cuenta</button></a>
                     </div>
                 </div>
             </div>

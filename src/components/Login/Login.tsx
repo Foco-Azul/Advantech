@@ -277,7 +277,7 @@ function Login({ loginname }: LoginProps) {
                 <li><a href="/micuenta/?ver=busquedas" >Historial de busquedas</a></li>
                 <li><a href="/micuenta/?ver=compras" >Historial de pagos</a></li>
                 <li><a href="/micuenta/?ver=soporte" >Soporte</a></li>
-                <li><Link href="/api/auth/logout" >Salir</Link></li>
+                <li><a href="/api/auth/logout" >Salir</a></li>
               </ul>
             </div>
             {/*
@@ -307,7 +307,7 @@ function Login({ loginname }: LoginProps) {
                 </div>
               )}
             </div>
-            <Link className="logout-button" href="/api/auth/logout" >Salir</Link>
+            <a className="logout-button" href="/api/auth/logout" >Salir</a>
             {/*
             <button
               className="logout-button"
@@ -323,8 +323,8 @@ function Login({ loginname }: LoginProps) {
       )}
       {!user && (
         <div>
-          <Link href="/api/auth/login" legacyBehavior passHref><button className="logout-button" ><FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
-          </button></Link>
+          <a href="/api/auth/login"><button className="logout-button" ><FontAwesomeIcon icon={faUser} style={{ color: "#ffffff", }} /> {loginname}
+          </button></a>
         </div>
       )}
     </div>
