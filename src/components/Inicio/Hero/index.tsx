@@ -32,9 +32,9 @@ function Hero() {
           Encuentra datos públicos actualizados de personas en Ecuador con nuestro buscador en línea. <br />¡Consulta múltiples fuentes de manera sencilla!
             </h2>
           <br></br>
-          <Link href="/api/auth/login" className={`hero-button ${user !== undefined ? 'ocultar' : ''}`}>
+          <a href="/api/auth/login" className={`hero-button ${user !== undefined ? 'ocultar' : ''}`}>
             Crear cuenta
-          </Link>
+          </a>
           <br></br>
           <a href="/guia-de-busqueda" className="hero-icon-container">
             ¿Cómo funciona? <ArrowRight className="hero-icon" />
