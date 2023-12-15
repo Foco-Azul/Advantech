@@ -119,7 +119,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                 <Link href={"/confirmar-correo"}><button className="subscription-card-button">Verifica tu cuenta</button></Link>
             )}
             {(shouldShowCreateAccountButton && price !== 0) && (
-                <Link href={"/api/auth/login"}> <button className="subscription-card-button">Ingresa con tu cuenta</button></Link>
+                <a href={"/api/auth/login"}> <button className="subscription-card-button">Ingresa con tu cuenta</button></a>
             )}
             {(price == 0) &&
                 <Link href="/personalizado" legacyBehavior passHref>
