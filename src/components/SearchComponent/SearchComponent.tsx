@@ -852,11 +852,11 @@ const SearchComponent: React.FC = () => {
                             <>
                                 <br></br>
                                 <p className='search-error'>Recuerda que para que puedas descargar los datos encontrados, por favor crea una cuenta, y suscribete a un plan.</p>
-                                <Link href={"/api/auth/login"}>
+                                <a href={"/api/auth/login"}>
                                     <button className='search-menu-button' >
                                         Ingresa con tu cuenta para continuar
                                     </button>
-                                </Link>
+                                </a>
                             </>
                         }
 

@@ -115,7 +115,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
             )}
             {shouldShowCreateAccountButton && (
-            <Link href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></Link>
+            <a href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></a>
             )}
 
             {isOpen && (

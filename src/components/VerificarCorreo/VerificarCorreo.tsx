@@ -134,7 +134,7 @@ const VerificarCorreo: React.FC = () => {
       {(estado === 2) && ( // Renderiza el contenido si ingresa a la pagina y no esta logueado
         <div className='verificar-correo-contenido'>
           <h1 className="verificar-correo-titulo">Ingresa con tu cuenta para continuar la verificacion de tu correo</h1>
-          <Link href={"/api/auth/login"}><button className="hero-button">Ingresar</button></Link>
+          <a href={"/api/auth/login"}><button className="hero-button">Ingresar</button></a>
         </div>
       )}
     </UserProvider>
