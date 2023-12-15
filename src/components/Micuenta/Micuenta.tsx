@@ -15,6 +15,7 @@ import { JudicialesExcel } from '../SearchComponent/JudicialesExcel';
 import { TitulosExcel } from '../SearchComponent/TitulosExcel';
 import AccionistasExcel from '../SearchComponent/AccionistasExcel';
 import SearchStatus from './SearchStatus';
+import crypto from 'crypto';
 
 const Micuenta: React.FC = () => {
     const { user, error, isLoading } = useUser();
@@ -35,6 +36,9 @@ const Micuenta: React.FC = () => {
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
     const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "");
     const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos < 0);
+    const [generatedApi, setGeneratedApi] = useState('');
+    const [apiSectionVisible, setApiSectionVisible] = useState(true);
+
     console.log("planActual2", planId)
     interface PurchasePagina {
         page: number;
@@ -60,7 +64,7 @@ const Micuenta: React.FC = () => {
     const checkAndLogVerParam = () => {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const codigo = urlSearchParams.get('ver');
-        
+
         if (codigo) {
             switch (codigo) {
                 case 'datos':
@@ -88,7 +92,7 @@ const Micuenta: React.FC = () => {
 
     const DescargarJSON = async (query_id: string) => {
 
-        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
+        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -129,7 +133,7 @@ const Micuenta: React.FC = () => {
 
 
     const DescargaExcel = async (query_id: string, fuente: string, puntero: any) => {
-        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
+        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -249,6 +253,23 @@ const Micuenta: React.FC = () => {
             }
         }
     };
+
+    function generateApiKey(userEmail: string): string {
+        const currentDate = new Date();
+        const minute = currentDate.getMinutes();
+        const second = currentDate.getSeconds();
+    
+        // Agregar el minuto y el segundo a la cadena secreta
+        const secret = `tu_secreto_${minute}_${second}`;
+        
+        const hmac = crypto.createHmac('sha256', secret);
+        hmac.update(userEmail);
+        const apiKey = hmac.digest('hex');
+        setUserapi(apiKey)
+        return apiKey;
+    }
+    
+
     // Función para mostrar u ocultar la sección API
     const toggleApiSection = () => {
         // Si no se ha hecho clic en la sección API, entonces realiza la llamada para obtener el valor real de la API
@@ -382,6 +403,29 @@ const Micuenta: React.FC = () => {
 
     function handleSearchStatusChange(queryId: string, newStatus: string): void {
     }
+
+    const updateApiInDatabase = async (newApi: string) => {
+        const postResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    data: {
+                        apikey: newApi,
+                    },
+                }),
+                cache: "no-store",
+            }
+        );
+
+        if(postResponse.ok){
+            console.log(newApi)
+        }
+        // Manejar la respuesta del servidor según sea necesario
+    };
 
     return (
         <UserProvider>
@@ -584,7 +628,7 @@ const Micuenta: React.FC = () => {
                                                                     <td>{search.attributes.fecha}</td>
                                                                     <td>{search.attributes.creditos}</td>
                                                                     <td>{search.attributes.consulta}</td>
-                                                                    <td 
+                                                                    <td
                                                                     // style={{ color: getStatusColor(search.attributes.status) }} className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}
                                                                     >
                                                                         {/* {getStatusTranslation(search.attributes.status)} */}
@@ -595,7 +639,7 @@ const Micuenta: React.FC = () => {
                                                                             getColor={getStatusColor}
                                                                             isUnderline={status => status === "IN PROGRESS"}
                                                                             onStatusChange={handleSearchStatusChange}
-                                                                            ></SearchStatus>
+                                                                        ></SearchStatus>
                                                                     </td>
 
                                                                     <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
@@ -715,11 +759,8 @@ const Micuenta: React.FC = () => {
                                     <div>
                                         <h2 className="micuenta-h2-datos">API</h2>
                                         <div className="micuenta-datos api">
-                                            {/* No se muestra el botón "Mostrar API" cuando se ha hecho clic */}
-
-                                            <br></br>
-                                            <br></br>
-                                            {/* Sección API condicionalmente visible */}
+                                            <br />
+                                            <br />
                                             <div>
                                                 <div className="micuenta-api-box" onClick={copyApiKeyToClipboard}>
                                                     <div ref={apiKeyRef}>{userapi}</div>
@@ -738,10 +779,24 @@ const Micuenta: React.FC = () => {
                                                     Mostrar API
                                                 </div>
                                             )}
-
+                                            {/* Botón para regenerar API */}
+                                            {apiSectionVisible && userEmail && (
+                                                <div
+                                                    className="tab-button"
+                                                    onClick={() => {
+                                                        const newApi = generateApiKey(userEmail); // Asegúrate de tener userEmail disponible
+                                                        setGeneratedApi(newApi);
+                                                        
+                                                        updateApiInDatabase(newApi);
+                                                    }}
+                                                >
+                                                    Regenerar API
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 )}
+
 
 
                             </div>
