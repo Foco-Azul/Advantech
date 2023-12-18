@@ -297,13 +297,11 @@ const Multisearch: React.FC = () => {
     setSelectedType(e.target.value); // Actualiza el estado del tipo de búsqueda
   };
 
-
   const handleButtonClick = async () => {
-
 
     setIsLoadingData(true);
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/create_search', {
+      const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/create_search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -317,6 +315,29 @@ const Multisearch: React.FC = () => {
       });
 
       console.log("filedata", fileData)
+
+      //////////////////////////////////////////// RESTA DE CRÉDITOS /////////////////////////////////////////////
+
+      if (userCredits) {
+        var restacreditos = fileData && selectedFuenteCredito && userCredits - fileData?.split(', ').length * selectedFuenteCredito
+        const postResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data: {
+                plan: planId,
+                creditos: restacreditos,
+              },
+            }
+            ),
+            cache: "no-store",
+          }
+        );
+      }
 
       if (response.ok) {
 
@@ -357,9 +378,11 @@ const Multisearch: React.FC = () => {
 
 
 
+
+
         let status = null;
         while (status !== 'READY') {
-          const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/status', {
+          const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/status', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -392,7 +415,7 @@ const Multisearch: React.FC = () => {
         //////////////////////////////// TRAER DATOS ////////////////////////////////
 
         console.log("json", jsonData)
-        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
+        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -427,29 +450,6 @@ const Multisearch: React.FC = () => {
           // }
 
 
-          //////////////////////////////////////////// RESTA DE CRÉDITOS /////////////////////////////////////////////
-
-
-           if (userCredits) {
-             var restacreditos = fileData && selectedFuenteCredito && userCredits - selectedFuenteCredito * fileData.length
-             const postResponse = await fetch(
-              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
-               {
-                 method: "PUT",
-                 headers: {
-                   "Content-Type": "application/json",
-                 },
-                 body: JSON.stringify({
-                   data: {
-                     plan: planId,
-                     creditos: restacreditos,
-                   },
-                 }
-                 ),
-                 cache: "no-store",
-               }
-             );
-           }
 
           //////////////////////////////////////////// HISTORIAL /////////////////////////////////////////////
 
