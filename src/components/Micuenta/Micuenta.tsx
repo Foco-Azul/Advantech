@@ -737,8 +737,8 @@ const Micuenta: React.FC = () => {
                                                 </div>
                                                 <div>
                                                     <br></br>
-                                                    <p>Si necesitas ayuda envianos un mail a </p>
-                                                    <a href="mailto:contacto@advantech.com">contacto@advantech.com</a>
+                                                    <p>Si necesitas ayuda envíanos tu consulta mediante este formulario o envíanos a un email a <a href="mailto:contacto@advantech.com">contacto@advantech.com</a></p>
+                                                    
                                                     {userPlan == "Enterprise" &&
                                                         <>
                                                             <br></br>

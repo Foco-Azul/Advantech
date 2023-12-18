@@ -405,3 +405,13 @@ div.micuenta div.btn-acciones > button.activo{
     max-width: 115px;
     pointer-events: none;
 }
+
+body > div.micuenta > div.micuenta-div-container > div > div.micuenta-datos-container > div > div.overlay > div > button{
+    display: block;
+    margin: 20px auto;
+}
+body > div.micuenta > div.micuenta-div-container > div > div.micuenta-datos-container > div > div > div > div:nth-child(2) > p > a{
+    padding-bottom: 1px;
+    border-bottom: 1px solid #009FDE;
+    color: #009FDE ;
+}

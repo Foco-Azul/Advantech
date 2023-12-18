@@ -79,7 +79,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
             <hr className="subscription-hr" />
             <div className="subscription-caracteristics">
                 <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
-                    {(price != 0) ? ` ${creditos} créditos` : `Hasta  ${creditos} créditos`}
+                    {(price != 0) ? ` ${creditos.toLocaleString()} créditos` : `Hasta  ${creditos.toLocaleString()} créditos`}
                 </h3>
                 <h3><FontAwesomeIcon icon={faCalendarDays} style={{ color: "#009fde", }}  />
                     Duración de {planvencimiento} meses

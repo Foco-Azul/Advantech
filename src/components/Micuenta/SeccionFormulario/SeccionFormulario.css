@@ -85,6 +85,7 @@
 div.micuenta-datos-container > div.mi-cuenta-soporte > div > div.micuenta-datos{
   display: flex;
   flex-direction: column;
+  max-width: 500px;
 }
 
 div.micuenta-datos-container > div > div > div.micuenta-datos > div:nth-child(2){
