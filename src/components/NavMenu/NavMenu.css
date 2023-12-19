@@ -151,7 +151,7 @@ height: 70px;
 }
 
 
-@media (max-width: 525px) {
+@media (max-width: 768px) {
   .navigation-menu-list,
   .navigation-menu-container,
   .login-escritorio{

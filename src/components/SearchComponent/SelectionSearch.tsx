@@ -79,7 +79,7 @@ function SelectionSearch() {
             </div>
             <div className="content">
                 {isSimpleSearch ? <SearchComponent /> : null}
-                {isBatchSearch ? (userCredits != null ? <Multisearch /> : <SeccionCreaTuCuenta />) : null}
+                {isBatchSearch ? (user != null ? <Multisearch /> : <SeccionCreaTuCuenta />) : null}
             </div>
             <br></br>
         </div>
