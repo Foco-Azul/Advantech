@@ -16,11 +16,12 @@ import { TitulosExcel } from '../SearchComponent/TitulosExcel';
 import AccionistasExcel from '../SearchComponent/AccionistasExcel';
 import SearchStatus from './SearchStatus';
 import crypto from 'crypto';
-
 const Micuenta: React.FC = () => {
+
     const { user, error, isLoading } = useUser();
     const userEmail = user?.email;
     const [userPlan, setUserPlan] = useState<string | null>(null);
+    const [userName, setUserName] = useState<string | null>(null);
     const [userapi, setUserapi] = useState<string | null>("xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx");
     const [userCredits, setUserCredits] = useState<number | null>(null);
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
@@ -35,9 +36,11 @@ const Micuenta: React.FC = () => {
     const [showApiSection, setShowApiSection] = useState(false);
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
     const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "");
-    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos < 0);
+    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos <= 0);
     const [generatedApi, setGeneratedApi] = useState('');
     const [apiSectionVisible, setApiSectionVisible] = useState(true);
+    const [user_admin, setuser_admin] = useState<string | null>(null);
+    const [nameUser, setnameUser] = useState<String>("")
 
     console.log("planActual2", planId)
     interface PurchasePagina {
@@ -48,9 +51,6 @@ const Micuenta: React.FC = () => {
     }
     const [purchasePagosPaginas, setPurchasePagosPaginas] = useState<PurchasePagina | null>(null)
     const purchasePaginas = purchasePagosPaginas;
-    const correos = [
-        'carlosvargasbazoalto@gmail.com',
-        'santiago.rodriguez@hctint.com'];
     const [botonActivo, setBotonActivo] = useState<number | null>(null);
     const [purchasePagosTodos, setPurchasePagos] = useState<any[]>([]);
     const purchasePagos = purchasePagosTodos;
@@ -60,6 +60,8 @@ const Micuenta: React.FC = () => {
     const [apiset, setApiset] = useState(false);
     const { href: currentUrl, pathname } = useUrl() ?? {};
     const [mostrarEliminarCuenta, setMostrarEliminarCuenta] = useState(false);
+    const [mostrarCambiarUsuario, setMostrarCambiarNombre] = useState(false);
+    const [seCambioNombre, setseCambioNombre] = useState<boolean>(false);
     // Agregar la función para verificar y mostrar el valor de 'ver' en la consola
     const checkAndLogVerParam = () => {
         const urlSearchParams = new URLSearchParams(window.location.search);
@@ -132,7 +134,7 @@ const Micuenta: React.FC = () => {
     }
 
 
-    const DescargaExcel = async (query_id: string, fuente: string, puntero: any) => {
+    const DescargaExcel = async (query_id: string, fuente: string, puntero: any, consulta: string) => {
         const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
             method: 'POST',
             headers: {
@@ -155,16 +157,16 @@ const Micuenta: React.FC = () => {
 
             if (noticias) {
                 if (fuente.toLowerCase().includes("noticias")) {
-                    NoticiasExcel(noticias)
+                    NoticiasExcel(noticias, consulta)
                 }
                 if (fuente.toLowerCase().includes("judicial")) {
-                    JudicialesExcel(noticias)
+                    JudicialesExcel(noticias, consulta)
                 }
                 if (fuente.toLowerCase().includes("titulos")) {
-                    TitulosExcel(noticias)
+                    TitulosExcel(noticias, consulta)
                 }
                 if (fuente.toLowerCase().includes("accionistas")) {
-                    AccionistasExcel(noticias)
+                    AccionistasExcel(noticias, consulta)
                 }
             }
 
@@ -205,6 +207,13 @@ const Micuenta: React.FC = () => {
     }
     function handleClosePopup() {
         setMostrarEliminarCuenta(false);
+    }
+    function mostrarCambiarNombre() {
+        // Cuando haces clic en el enlace, cambia el estado para mostrar el div "Eliminar cuenta"
+        setMostrarCambiarNombre(true);
+    }
+    function cerrar_mostrarCambiarNombre() {
+        setMostrarCambiarNombre(false);
     }
     const handleDarseDeBaja = async () => {
         if (user) {
@@ -253,6 +262,27 @@ const Micuenta: React.FC = () => {
             }
         }
     };
+    const handleCambiarNombre= async () => {
+        if (user) {
+            // Realizar el POST con los datos requeridos
+            const postResponse = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        data: {
+                            username: nameUser
+                        },
+                    }),
+                    cache: "no-store",
+                }
+            );
+            setseCambioNombre(true);
+        }
+    };
 
     function generateApiKey(userEmail: string): string {
         const currentDate = new Date();
@@ -287,6 +317,30 @@ const Micuenta: React.FC = () => {
         }
         setShowApiSection(!showApiSection);
     };
+    async function getuserAdmin() {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/admin-users`, {
+
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                },
+                cache: "no-store",
+            });
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data, ${response.status}`);
+            }
+            const data = await response.json();
+            const admin_foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
+
+            console.log("admin_founduser", admin_foundUser)
+  
+            return admin_foundUser;
+        } catch (error) {
+            throw new Error(`Failed to fetch data, ${error}`);
+        }
+    }
     async function getuser() {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${userEmail}&populate=plan.*&populate=historials.archivo`, {
@@ -338,13 +392,18 @@ const Micuenta: React.FC = () => {
         checkAndLogVerParam();
         getuser()
             .then((foundUser) => {
+                console.log("nombre de usuario strapi", foundUser)
                 if (foundUser) {
-                    setUserPlan(foundUser.attributes.plan?.data.attributes.Plan);
+                    
+                    setUserPlan(foundUser.attributes.plan?.data?.attributes.Plan);
+                    setUserName(foundUser.attributes.username);
+                    
+                    console.log("usuario auth0",user)
                     setUserCredits(foundUser.attributes.creditos);
                     setUserVencimiento(foundUser.attributes.vencimiento);
-                    setApiset(foundUser.attributes.plan?.data.attributes.API)
+                    setApiset(foundUser.attributes.plan?.data?.attributes.API)
                     setUserId(foundUser.id)
-                    setPlanId(foundUser.attributes.plan?.data.id)
+                    setPlanId(foundUser.attributes.plan?.data?.id)
                     setPurchaseHistory(foundUser.attributes.historials.data);
                     setUserActivo(foundUser.attributes.estaactivo)
                     console.log(foundUser)
@@ -353,20 +412,27 @@ const Micuenta: React.FC = () => {
             .catch((error) => {
                 console.error('Failed to fetch user data:', error);
             });
-        console.log("user", user)
-        if (user && user.email && correos.includes(user.email)) {
-            getHistorialPagos(1)
-                .then((foundUser) => {
-                    if (foundUser) {
-                        setPurchasePagos(foundUser.data);
-                        setPurchasePagosPaginas(foundUser.meta.pagination)
-                    }
-                })
-                .catch((error) => {
-                    console.error('Failed to fetch user data:', error);
-                });
-        }
-    }, [user]);
+        getuserAdmin()
+            .then((admin_foundUser) => {
+                setuser_admin(admin_foundUser)
+                if (user && user.email && admin_foundUser) {
+                    getHistorialPagos(1)
+                        .then((foundUser) => {
+                            if (foundUser) {
+                                setPurchasePagos(foundUser.data);
+                                setPurchasePagosPaginas(foundUser.meta.pagination)
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Failed to fetch user data:', error);
+                        });
+                }
+            })
+        .catch((error) => {
+            console.error('Failed to fetch user data:', error);
+        });
+       
+    }, [user, mostrarCambiarUsuario]);
 
     const handleButtonClick = (key: number) => {
         setBotonActivo(key);
@@ -436,7 +502,7 @@ const Micuenta: React.FC = () => {
                         <br></br>
                         <br></br>
                         <br></br>
-                        <h2 className="micuenta-h2">{userEmail}</h2>
+                        <h2 className="micuenta-h2">{userName}</h2>
                         <h1 className="micuenta-h1">MI CUENTA</h1>
                         <br></br>
                         <br></br>
@@ -460,7 +526,7 @@ const Micuenta: React.FC = () => {
                                 >
                                     Historial de Búsquedas
                                 </button>
-                                {user.email && correos.includes(user.email) && (
+                                {user.email && user_admin && (
                                     <button
                                         id='pagos'
                                         className={`tab-button ${activeTab === 'pagos' ? 'active' : ''}`}
@@ -524,8 +590,51 @@ const Micuenta: React.FC = () => {
                                                     </>
                                                 )}
                                             </div>
+                                            <div className='micuenta-datos-card username'>
+                                                <span className='micuenta-datos-title'>Nombre de usuario</span>
+                                                <span className='micuenta-datos-subtitle username'>{userName}</span>
+                                                    <>
+                                                        <a>
+                                                            <button className='tab-button renovar' onClick={mostrarCambiarNombre} >
+                                                                Cambiar nombre
+                                                            </button>
+                                                        </a>
+                                                    </>
+                                            </div>
 
                                             {/* Verificar si los créditos son 0 o el plan está vencido */}
+                                        {mostrarCambiarUsuario && ( // Mostrar el div "Eliminar cuenta" si mostrarEliminarCuenta es true
+                                            <div className="overlay">
+                                                <div className='eliminar-cuenta'>
+                                                    <div className="cerrar-popup">
+                                                        <FontAwesomeIcon icon={faCircleXmark} size="2xl" onClick={cerrar_mostrarCambiarNombre} />
+                                                    </div>
+                                                    <h3 className='micuenta-h2'>Nombre de usuario</h3>
+                                                    {!seCambioNombre ? (
+                                                        <>                                            
+                                                        <div className='campo_cambiarNombre'>
+                                                            <input
+                                                            type="text"
+                                                            id="name"
+                                                            name="name"
+                                                            onChange={(e) => setnameUser(e.target.value)}
+                                                            required
+                                                            />
+                                                        </div>
+                                                        <br />
+                                                        <button
+                                                            className={`navigation-menu-button`}
+                                                            onClick={handleCambiarNombre}
+                                                        >
+                                                            Cambiar nombre
+                                                        </button>  
+                                                    </>
+                                                    ): ( <>
+                                                        <p>Se cambio correctamente el nomre de usuario</p>
+                                                    </>) }
+                                                </div>
+                                            </div>
+                                        )}
 
                                         </div>
                                         <div className='darse-de-baja'>
@@ -645,11 +754,11 @@ const Micuenta: React.FC = () => {
                                                                     <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
 
                                                                         {search.attributes.status === "IN PROGRESS" ? (
-                                                                            <button className='micuenta-download-button excel proceso' >En proceso</button>
+                                                                            <button className='micuenta-download-button proceso' >En proceso</button>
                                                                         ) : search.attributes.status === "FAILED" ? (
-                                                                            <button className='micuenta-download-button excel proceso' >Fallido</button>
+                                                                            <button className='micuenta-download-button proceso' >Fallido</button>
                                                                         ) : (
-                                                                            <button className='micuenta-download-button excel' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero)}>Descarga</button>
+                                                                            <button className='micuenta-download-button' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero, search.attributes.consulta)}>Descarga</button>
                                                                         )}
 
                                                                     </td>
@@ -658,11 +767,11 @@ const Micuenta: React.FC = () => {
                                                                     <td className={search.attributes.status == "IN PROGRESS" ? "underline-text" : ""}>
 
                                                                         {search.attributes.status === "IN PROGRESS" ? (
-                                                                            <button className='micuenta-download-button json proceso'>En proceso</button>
+                                                                            <button className='micuenta-download-button proceso'>En proceso</button>
                                                                         ) : search.attributes.status === "FAILED" ? (
-                                                                            <button className='micuenta-download-button json proceso' >Fallido</button>
+                                                                            <button className='micuenta-download-button proceso' >Fallido</button>
                                                                         ) : (
-                                                                            <button className='micuenta-download-button json' onClick={() => DescargarJSON(search.attributes.query_id)}>Descargar</button>
+                                                                            <button className='micuenta-download-button' onClick={() => DescargarJSON(search.attributes.query_id)}>Descargar</button>
                                                                         )}
 
                                                                     </td>
@@ -675,7 +784,7 @@ const Micuenta: React.FC = () => {
                                         </div>
                                     </>
                                 )}
-                                {activeTab === 'pagos' && user.email && correos.includes(user.email) && (
+                                {activeTab === 'pagos' && user.email && user_admin && (
                                     <>
                                         <h2 className='micuenta-h2-datos'>Facturación</h2>
                                         <div className="purchase-history-container pagos">

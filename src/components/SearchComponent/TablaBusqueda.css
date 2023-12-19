@@ -100,7 +100,9 @@ p {
     display: flex;
     flex-direction: row;
     width: 100%;
-    padding: 20px
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 

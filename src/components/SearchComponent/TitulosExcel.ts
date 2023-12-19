@@ -1,6 +1,6 @@
 import ExcelJS from 'exceljs';
 
-export const TitulosExcel = async (dataToDownload: any) => {
+export const TitulosExcel = async (dataToDownload: any, consulta: string) => {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Datos');
 
@@ -128,7 +128,7 @@ export const TitulosExcel = async (dataToDownload: any) => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "datos.xlsx";
+  a.download =  consulta+".xlsx";
 
   // Simular un clic en el enlace para iniciar la descarga
   a.click();

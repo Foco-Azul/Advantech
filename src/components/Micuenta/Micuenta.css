@@ -107,7 +107,16 @@
     padding: 30px;
     margin: 20px;
 }
-
+.micuenta-datos-card.username {
+    width: 350px;
+    height: 165px;
+    background: linear-gradient(90deg, #009FDE 0%, #89BAE7 100%);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin: 20px;
+}
 .micuenta-datos {
     display: flex;
     flex-direction: row;
@@ -117,6 +126,11 @@
 
 .micuenta-datos-subtitle {
     font-size: 40px;
+    color: white;
+    font-weight: 800;
+}
+.micuenta-datos-subtitle.username {
+    font-size: 18px;
     color: white;
     font-weight: 800;
 }
@@ -414,4 +428,16 @@ body > div.micuenta > div.micuenta-div-container > div > div.micuenta-datos-cont
     padding-bottom: 1px;
     border-bottom: 1px solid #009FDE;
     color: #009FDE ;
+}
+
+.campo_cambiarNombre{
+    display: flex;
+    flex-direction: column;
+}
+.campo_cambiarNombre input{
+    width: 360px;
+    padding: 13px 10px;
+    border: 1px solid #D4D7E5;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }

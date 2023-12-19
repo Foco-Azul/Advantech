@@ -30,11 +30,11 @@
 
 .seccion-suscripcion-tipo{
     display: flex;
-    flex-wrap: wrap;
     padding: 10px 0;
     align-items: center;
     justify-content: space-between;
-    max-height: 500px;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .seccion-suscripcion-tipo-empresa,
@@ -78,15 +78,11 @@
 }
 
 .suscripcion-imagen{
-    width: 600px;
-    height: 600px;
+    max-width: 1300px;
 }
 .suscripcion-imagen > img{
-    position: absolute;
-    z-index: -1;
-    margin-top: 40px;
-    margin-left: 0px;
-    max-width: 850px;
+    margin: auto;
+    max-width: 90%;
 }
 @media only screen and (max-width: 768px) {
 
@@ -94,10 +90,6 @@
     .seccion-suscripcion-tipo-persona{
         margin: 30px 20px;
     }
-    .suscripcion-imagen > img{
-        position: unset;
-        margin: auto;
-        max-width: 90%;    }
     .suscripcion-imagen{
         height: auto;
     }

@@ -150,14 +150,22 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     }
   };
 
-  const handleSelectAll = () => {
-    if (selectedItems.length === paginatedData?.length) {
-      setSelectedItems([]);
-    } else {
-      const allKeys = paginatedData?.map(item => item.key) || [];
-      setSelectedItems(allKeys);
-    }
-  };
+const handleSelectAll = () => {
+  const allKeys = paginatedData?.map(item => item.key) || [];
+  
+  // Verificar si todos los elementos de la página actual están seleccionados
+  const allSelected = allKeys.every(key => selectedItems.includes(key));
+  
+  if (allSelected) {
+    // Deseleccionar todos los elementos de la página actual
+    const newSelectedItems = selectedItems.filter(key => !allKeys.includes(key));
+    setSelectedItems(newSelectedItems);
+  } else {
+    // Seleccionar todos los elementos de la página actual manteniendo el estado anterior
+    const uniqueNewSelectedItems = Array.from(new Set([...selectedItems, ...allKeys]));
+    setSelectedItems(uniqueNewSelectedItems);
+  }
+};
 
   const handleClearFilters = () => {
     setSearchTerm('');

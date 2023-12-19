@@ -31,6 +31,9 @@ const Multisearch: React.FC = () => {
   const [selectedFuenteConsulta, setSelectedFuenteConsulta] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
   const [progress, setProgress] = useState(0);
+  const [selectedFuenteLimite, setselectedFuenteLimite] = useState<number | null>(null);
+  const [cantidadRucs, setcantidadRucs] = useState<number | null>(null);
+  const [nombreArchivo, setnombreArchivo] = useState<string>(""); 
 
   // async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
   //   const nuevoHistorial = await fetch(
@@ -98,27 +101,7 @@ const Multisearch: React.FC = () => {
 
   }, [user]);
 
-  useEffect(() => {
-    // Agrega un event listener para el evento 'beforeunload'
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isLoadingData) {
-        // Mostrar un cuadro de diálogo personalizado en lugar de la alerta del navegador
-        e.preventDefault();
-        e.returnValue = '';
-        const confirmationMessage = 'Estás abandonando la página mientras se realiza una búsqueda. ¿Estás seguro?';
-        if (window.confirm(confirmationMessage)) {
-          e.returnValue = null; // Permite abandonar la página si el usuario confirma
-        }
-      }
-    };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      // Limpia el event listener cuando el componente se desmonta
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isLoadingData]);
 
   const handleDownloadJSON = () => {
     if (data) {
@@ -203,8 +186,12 @@ const Multisearch: React.FC = () => {
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        console.log("sheetdata", sheetData)
+        console.log("sheetdata", file.name)
+        // Obtener el nombre del archivo
+        const fileName = file.name.replace(/\.[^/.]+$/, '');
 
+        setnombreArchivo(fileName)
+        console.log('Nombre del archivo:', nombreArchivo);
         // Verificar si el archivo es un archivo XLSX
         if (!binaryString.startsWith("PK")) {
           alert('El archivo no es un archivo XLSX válido.');
@@ -250,8 +237,10 @@ const Multisearch: React.FC = () => {
           }
         }
 
-        if (uniqueData.length > 1000) {
-          alert('Hay más de 1000 RUCs en el archivo. Por favor, verifica el archivo seleccionado.');
+        setcantidadRucs(uniqueData.length)
+
+        if (selectedFuenteLimite && uniqueData.length > selectedFuenteLimite) {
+          alert('Hay más de '+selectedFuenteLimite+' RUCs en el archivo. Por favor, verifica el archivo seleccionado.');
           // Limpiar el valor del input de archivos para permitir al usuario seleccionar otro archivo.
           e.target.value = '';
           return; // Salir de la función sin procesar el archivo
@@ -291,6 +280,7 @@ const Multisearch: React.FC = () => {
     setSelectedSource(selectedFuenteObj ? selectedFuenteObj.attributes.fuente : "");
     setSelectedFuenteCredito(selectedFuenteObj ? selectedFuenteObj.attributes.credito : null);
     setSelectedFuenteConsulta(selectedFuenteObj ? selectedFuenteObj.attributes.consulta : null);
+    setselectedFuenteLimite(selectedFuenteObj ? selectedFuenteObj.attributes.limite : null)
   };
 
   const handleTypeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -359,7 +349,7 @@ const Multisearch: React.FC = () => {
                   creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
                   fecha: currentDate,
                   precio: 0,
-                  consulta: "Búsqueda por lote " + selectedSource,
+                  consulta: nombreArchivo+" - Lote - " + selectedSource,
                   plane: planId,
                   puntero: {},
                   status: "IN PROGRESS",
@@ -367,6 +357,8 @@ const Multisearch: React.FC = () => {
                   busqueda: JSON.stringify({
                     consulta: "Búsqueda por lote",
                     fuente: selectedSource,
+                    archivo: nombreArchivo,
+                    tipo: "lote"
                   }),
                 },
               }),
@@ -675,16 +667,22 @@ const Multisearch: React.FC = () => {
           <br></br>
           <p>Puedes esperar aquí o</p>
           <p>Visita tu  <a className='link-historial' href='/micuenta?ver=busquedas'>historial de búsquedas </a></p>
+          <p>O realiza una<a className='link-historial' href='/busqueda'> nueva búsqueda</a></p>
           <br></br>
 
         </div>
       }
-      {!data && fileData && fileData.split(', ').length >= 1 &&
+      {!data && fileData && fileData.split(', ').length >= 1 && selectedSource && selectedFuenteLimite && cantidadRucs && cantidadRucs <= selectedFuenteLimite &&
         <>
           <br></br>
           <p>Créditos a consumir: {selectedFuenteCredito && fileData && fileData?.split(', ').length * selectedFuenteCredito}</p>
-
+          <p>Créditos disponibles: {userCredits}</p>
           <button onClick={handleButtonClick} className='download-button mostrar-datos'  >Obtener Datos</button>
+        </>}
+        {selectedFuenteLimite && cantidadRucs && cantidadRucs > selectedFuenteLimite &&
+        <>
+          <br></br>
+          <p>La cantidad maxima de RUCs admitida es {selectedFuenteLimite}</p>
         </>}
 
       {data && (
@@ -703,15 +701,17 @@ const Multisearch: React.FC = () => {
 
           <div className='download-button-container'>
 
-            {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data)}>Descargar Excel</button>}
-            {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data)}>Descargar Excel</button>}
-            {fuenteseleccionada == "titulos" && <button className='download-button excel' onClick={() => TitulosExcel(data)}>Descargar Excel</button>}
-            {fuenteseleccionada == "accionistas" && <button className='download-button excel' onClick={() => AccionistasExcel(data)}>Descargar Excel</button>}
+            {fuenteseleccionada == "noticias" && <button className='download-button' onClick={() => NoticiasExcel(data, nombreArchivo)}>Descargar Excel</button>}
+            {fuenteseleccionada == "judicial" && <button className='download-button' onClick={() => JudicialesExcel(data, nombreArchivo)}>Descargar Excel</button>}
+            {fuenteseleccionada == "titulos" && <button className='download-button' onClick={() => TitulosExcel(data, nombreArchivo)}>Descargar Excel</button>}
+            {fuenteseleccionada == "accionistas" && <button className='download-button' onClick={() => AccionistasExcel(data, nombreArchivo)}>Descargar Excel</button>}
 
 
-            <button className='download-button json' onClick={handleDownloadJSON}>Descargar Json</button>
+            <button className='download-button' onClick={handleDownloadJSON}>Descargar Json</button>
 
           </div>
+          <br />
+            <a className='volver-al-buscador lote' href='/busqueda' >Volver al buscador</a>
         </>
       )}
 

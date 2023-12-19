@@ -73,7 +73,16 @@ a.volver-al-buscador{
   margin-left: 10px;
   transition: 0.5s;
 }
-a.volver-al-buscador:hover{
+a.volver-al-buscador:hover,
+a.volver-al-buscador.lote:hover{
   transform: scale(1.05);
   margin-left: 20px;
+}
+a.volver-al-buscador.lote{
+    font-weight: 600;
+    color: #009FDE;
+    transition: 0.5s;
+    margin: auto;
+    text-align: center;
+    display: block;
 }

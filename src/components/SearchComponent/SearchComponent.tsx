@@ -344,14 +344,15 @@ const SearchComponent: React.FC = () => {
                                     creditos: selectedFuenteCredito * seleccionUsuarioCount * -1,
                                     fecha: currentDate,
                                     precio: 0,
-                                    consulta: selectedSource.charAt(0).toUpperCase() + selectedSource.slice(1) + " sobre " + searchInputValue,
+                                    consulta: searchInputValue+" - "+fuenteseleccionada,
                                     plane: planId,
                                     status: "READY",
                                     query_id: data.query_id,
                                     puntero: selectionObj,
                                     busqueda: JSON.stringify({
                                         fuente: selectedSource,
-                                        consulta: searchInputValue
+                                        consulta: searchInputValue,
+                                        tipo: "simple"
                                     }),
                                 },
                             }),
@@ -872,10 +873,10 @@ const SearchComponent: React.FC = () => {
                                 {/* <button className='busqueda-menu-button' onClick={handleConvertToXls}>
                                     Convertir a XLS
                                 </button> */}
-                                {fuenteseleccionada == "noticias" && <button className='download-button excel' onClick={() => NoticiasExcel(data.data)}>Descargar Excel</button>}
-                                {fuenteseleccionada == "judicial" && <button className='download-button excel' onClick={() => JudicialesExcel(data.data)}>Descargar Excel</button>}
-                                {fuenteseleccionada == "titulos" && <button className='download-button excel' onClick={() => TitulosExcel(data.data)}>Descargar Excel</button>}
-                                {fuenteseleccionada == "accionistas" && <button className='download-button excel' onClick={() => AccionistasExcel(data.data)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "noticias" && <button className='download-button' onClick={() => NoticiasExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "judicial" && <button className='download-button' onClick={() => JudicialesExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "titulos" && <button className='download-button' onClick={() => TitulosExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "accionistas" && <button className='download-button' onClick={() => AccionistasExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
                             </div>
                             <button className='busqueda-menu-button' onClick={handleReloadPage}>
                                 Iniciar una nueva búsqueda

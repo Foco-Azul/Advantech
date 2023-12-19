@@ -23,7 +23,7 @@ function Login({ loginname }: LoginProps) {
   const { user, error, isLoading } = useUser();
   const [showSubPerfil, setShowSubPerfil] = useState(false); // Nuevo estado para controlar la visibilidad
   const [isPerfilOpen, setPerfilOpen] = useState(false);
-
+  const [userName, setUserName] = useState<string | null>(null);
   const toggleRecursos = () => {
     setPerfilOpen(!isPerfilOpen);
   };
@@ -59,6 +59,7 @@ function Login({ loginname }: LoginProps) {
       const data = await response.json();
       console.log(data);
       const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
+      setUserName(foundUser.attributes.username);
       const fechaHoraActual = new Date().toISOString();
       const codigoAleatorio = Math.random().toString(36).substring(2, 8);
       const codigoUnico = fechaHoraActual.replace(/[^a-zA-Z0-9]/g, '') + codigoAleatorio;
@@ -169,7 +170,7 @@ function Login({ loginname }: LoginProps) {
                   body: JSON.stringify({
                     data: {
                       email: user.email,
-                      username: user.name,
+                      username: user.name?.split("@")[0],
                       vencimiento: "2023-01-01",
                       codigo_de_verificacion: codigoUnico,
                       apikey:  generateApiKey(user.email),
@@ -199,7 +200,7 @@ function Login({ loginname }: LoginProps) {
                     body: JSON.stringify({
                       data: {
                         email: user.email,
-                        username: user.name,
+                        username: user.name?.split("@")[0],
                         vencimiento: "2023-01-01",
                         plan: 4,
                         apikey:  generateApiKey(user.email),
@@ -230,7 +231,7 @@ function Login({ loginname }: LoginProps) {
                     body: JSON.stringify({
                       data: {
                         email: user.email,
-                        username: user.name,
+                        username: user.name?.split("@")[0],
                         vencimiento: "2023-01-01",
                         plan: 4,
                         apikey:  generateApiKey(user.email),
@@ -270,7 +271,7 @@ function Login({ loginname }: LoginProps) {
             onMouseEnter={() => setShowSubPerfil(true)} // Mostrar sub_recursos cuando el mouse está sobre "Recursos"
             onMouseLeave={() => setShowSubPerfil(false)} // Ocultar sub_recursos cuando el mouse sale de "Recursos"
           >
-            <a className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {user.email?.split("@")[0]} &nbsp; <FontAwesomeIcon icon={showSubPerfil ? faChevronUp : faChevronDown} /></a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
+            <a className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {userName} &nbsp; <FontAwesomeIcon icon={showSubPerfil ? faChevronUp : faChevronDown} /></a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
             <div className={`navigation-sub_menu-trigger  ${showSubPerfil ? "visible" : ""} `}>
               <ul>
                 <li><a href="/micuenta" >Mi cuenta</a></li>
