@@ -34,14 +34,14 @@ function Login({ loginname }: LoginProps) {
     }
   }, [user]);
   async function getusers() {
+
     // Verificar si user es undefined antes de continuar
     if (!user) {
       return;
-    }else{
-
     }
 
     try {
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${user.email}`,
         {
@@ -56,14 +56,16 @@ function Login({ loginname }: LoginProps) {
       if (response.status !== 200) {
         throw new Error(`Failed to fetch data, ${response.status}`);
       }
+      
       const data = await response.json();
       console.log(data);
       const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
-      setUserName(foundUser.attributes.username);
       const fechaHoraActual = new Date().toISOString();
       const codigoAleatorio = Math.random().toString(36).substring(2, 8);
       const codigoUnico = fechaHoraActual.replace(/[^a-zA-Z0-9]/g, '') + codigoAleatorio;
       if (foundUser) {
+        setUserName(foundUser.attributes.username);
+        console.log("USUARIO", user)
         console.log("El correo electrónico existe en el array de objetos.");
         // Aquí puedes hacer algo con el usuario encontrado
         console.log(foundUser)
@@ -149,6 +151,7 @@ function Login({ loginname }: LoginProps) {
       } else {
         console.log("El correo electrónico no existe en el array de objetos.");
         if (foundUser && typeof user.email === 'string') {
+          setUserName(foundUser.attributes.username);
           console.log("El correo electrónico existe en el array de objetos.");
           // Aquí puedes hacer algo con el usuario encontrado
           console.log(foundUser);
@@ -170,7 +173,7 @@ function Login({ loginname }: LoginProps) {
                   body: JSON.stringify({
                     data: {
                       email: user.email,
-                      username: user.name?.split("@")[0],
+                      username: user.email?.split("@")[0],
                       vencimiento: "2023-01-01",
                       codigo_de_verificacion: codigoUnico,
                       apikey:  generateApiKey(user.email),
@@ -200,7 +203,7 @@ function Login({ loginname }: LoginProps) {
                     body: JSON.stringify({
                       data: {
                         email: user.email,
-                        username: user.name?.split("@")[0],
+                        username: user.email?.split("@")[0],
                         vencimiento: "2023-01-01",
                         plan: 4,
                         apikey:  generateApiKey(user.email),
@@ -231,7 +234,7 @@ function Login({ loginname }: LoginProps) {
                     body: JSON.stringify({
                       data: {
                         email: user.email,
-                        username: user.name?.split("@")[0],
+                        username: user.email?.split("@")[0],
                         vencimiento: "2023-01-01",
                         plan: 4,
                         apikey:  generateApiKey(user.email),
