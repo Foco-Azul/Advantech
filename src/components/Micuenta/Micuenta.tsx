@@ -471,8 +471,9 @@ const Micuenta: React.FC = () => {
 
     function handleSearchStatusChange(queryId: string, newStatus: string): void {
         setTimeout(() => {
-            setActualizarEstadoConsulta((prevEstado) => prevEstado + 1);
-        }, 3000); // Ajusta el tiempo de espera en milisegundos según tus necesidades
+            setActualizarEstadoConsulta((actualizarEstadoConsulta) => actualizarEstadoConsulta + 1);
+            console.log("ENTROOOOOOOOOO")
+        }, 60000); // Ajusta el tiempo de espera en milisegundos según tus necesidades
     }
     
 

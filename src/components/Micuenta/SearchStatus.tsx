@@ -46,7 +46,7 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
                     const tiempoTranscurrido = tiempoActualEnSegundos - tiempoInicioEnSegundos;
 
                     // Calcula y actualiza el progreso
-                    if (statusData.total > 0) {
+                    if (statusData.total > 0 && Math.min((tiempoTranscurrido / (statusData.total * selectedFuenteEspera)) * 100, 100) > 0) {
                         setProgress(Math.min((tiempoTranscurrido / (statusData.total * selectedFuenteEspera)) * 100, 100));
                     }
                     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -65,7 +65,8 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
     return (
         <>
             <div style={{ color: getColor(status) }}>
-                {translation}
+                {progress < 100 && translation}
+                {status === 'IN PROGRESS' && progress == 100 && "Finalizando"}
                 {status === 'IN PROGRESS' && (
                     <div className="progress-bar-container">
                         <p>{Math.round(progress)}%</p>
