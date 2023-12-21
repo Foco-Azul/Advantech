@@ -32,8 +32,9 @@ const Multisearch: React.FC = () => {
   const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
   const [progress, setProgress] = useState(0);
   const [selectedFuenteLimite, setselectedFuenteLimite] = useState<number | null>(null);
+  const [selectedFuenteEspera, setselectedFuenteEspera] = useState<number | null>(null);
   const [cantidadRucs, setcantidadRucs] = useState<number | null>(null);
-  const [nombreArchivo, setnombreArchivo] = useState<string>(""); 
+  const [nombreArchivo, setnombreArchivo] = useState<string>("");
 
   // async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
   //   const nuevoHistorial = await fetch(
@@ -240,7 +241,7 @@ const Multisearch: React.FC = () => {
         setcantidadRucs(uniqueData.length)
 
         if (selectedFuenteLimite && uniqueData.length > selectedFuenteLimite) {
-          alert('Hay más de '+selectedFuenteLimite+' RUCs en el archivo. Por favor, verifica el archivo seleccionado.');
+          alert('Hay más de ' + selectedFuenteLimite + ' RUCs en el archivo. Por favor, verifica el archivo seleccionado.');
           // Limpiar el valor del input de archivos para permitir al usuario seleccionar otro archivo.
           e.target.value = '';
           return; // Salir de la función sin procesar el archivo
@@ -281,6 +282,7 @@ const Multisearch: React.FC = () => {
     setSelectedFuenteCredito(selectedFuenteObj ? selectedFuenteObj.attributes.credito : null);
     setSelectedFuenteConsulta(selectedFuenteObj ? selectedFuenteObj.attributes.consulta : null);
     setselectedFuenteLimite(selectedFuenteObj ? selectedFuenteObj.attributes.limite : null)
+    setselectedFuenteEspera(selectedFuenteObj ? selectedFuenteObj.attributes.espera : null)
   };
 
   const handleTypeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -349,7 +351,7 @@ const Multisearch: React.FC = () => {
                   creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
                   fecha: currentDate,
                   precio: 0,
-                  consulta: nombreArchivo+" - Lote - " + selectedSource,
+                  consulta: nombreArchivo + " - Lote - " + selectedSource,
                   plane: planId,
                   puntero: {},
                   status: "IN PROGRESS",
@@ -358,7 +360,8 @@ const Multisearch: React.FC = () => {
                     consulta: "Búsqueda por lote",
                     fuente: selectedSource,
                     archivo: nombreArchivo,
-                    tipo: "lote"
+                    tipo: "lote",
+                    tiempo: selectedFuenteEspera
                   }),
                 },
               }),
@@ -373,6 +376,10 @@ const Multisearch: React.FC = () => {
 
 
         let status = null;
+
+        const HoraInicioenSegundos = Math.floor(new Date().getTime() / 1000);
+        const CantidadTotaldeSegundos = cantidadRucs && selectedFuenteEspera && cantidadRucs * selectedFuenteEspera;
+        
         while (status !== 'READY') {
           const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/status', {
             method: 'POST',
@@ -384,26 +391,28 @@ const Multisearch: React.FC = () => {
               key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
             }),
           });
-
+        
           const statusData = await response.json();
           status = statusData.status;
-
+        
           if (status === 'READY') {
             // Procesa la respuesta si es necesario
             console.log('La API está lista.');
           } else {
-            // Si la API no está lista, espera 1 segundo antes de realizar la siguiente verificación
-            setProgress((statusData.count / statusData.total) * 100);
+            // Si la API no está lista, calcula y actualiza el progreso antes de realizar la siguiente verificación
+            const HoraActualenSegundos = Math.floor(new Date().getTime() / 1000);
+            const tiempoTranscurrido = HoraActualenSegundos - HoraInicioenSegundos;
+        
+            if (CantidadTotaldeSegundos && CantidadTotaldeSegundos > 0) {
+              setProgress((tiempoTranscurrido / CantidadTotaldeSegundos) * 100);
+            }
+        
+            // Espera 1 segundo antes de realizar la siguiente verificación
             await new Promise(resolve => setTimeout(resolve, 1000));
-            console.log("explota")
+            console.log("Esperando...");
           }
         }
-
-
-
-
-
-
+        
         //////////////////////////////// TRAER DATOS ////////////////////////////////
 
         console.log("json", jsonData)
@@ -659,7 +668,6 @@ const Multisearch: React.FC = () => {
       {isLoadingData &&
         <div className='loading-overlay'>
           <p>Estamos procesando tus datos</p>
-          {/* <CircularProgress></CircularProgress> */}
           <p>{Math.round(progress)}%</p>
           <div className="progress-bar-container">
             <div className="progress-bar" style={{ width: `${progress}%` }}></div>
@@ -679,7 +687,7 @@ const Multisearch: React.FC = () => {
           <p>Créditos disponibles: {userCredits}</p>
           <button onClick={handleButtonClick} className='download-button mostrar-datos'  >Obtener Datos</button>
         </>}
-        {selectedFuenteLimite && cantidadRucs && cantidadRucs > selectedFuenteLimite &&
+      {selectedFuenteLimite && cantidadRucs && cantidadRucs > selectedFuenteLimite &&
         <>
           <br></br>
           <p>La cantidad maxima de RUCs admitida es {selectedFuenteLimite}</p>
@@ -711,7 +719,7 @@ const Multisearch: React.FC = () => {
 
           </div>
           <br />
-            <a className='volver-al-buscador lote' href='/busqueda' >Volver al buscador</a>
+          <a className='volver-al-buscador lote' href='/busqueda' >Volver al buscador</a>
         </>
       )}
 

@@ -40,7 +40,8 @@ const Micuenta: React.FC = () => {
     const [generatedApi, setGeneratedApi] = useState('');
     const [apiSectionVisible, setApiSectionVisible] = useState(true);
     const [user_admin, setuser_admin] = useState<string | null>(null);
-    const [nameUser, setnameUser] = useState<String>("")
+    const [nameUser, setnameUser] = useState<String>("");
+    const [actualizarEstadoConsulta, setActualizarEstadoConsulta] = useState(1);
 
     console.log("planActual2", planId)
     interface PurchasePagina {
@@ -62,6 +63,53 @@ const Micuenta: React.FC = () => {
     const [mostrarEliminarCuenta, setMostrarEliminarCuenta] = useState(false);
     const [mostrarCambiarUsuario, setMostrarCambiarNombre] = useState(false);
     const [seCambioNombre, setseCambioNombre] = useState<boolean>(false);
+
+    useEffect(() => {
+        checkAndLogVerParam();
+        getuser()
+            .then((foundUser) => {
+                console.log("nombre de usuario strapi", foundUser)
+                if (foundUser) {
+
+                    setUserPlan(foundUser.attributes.plan?.data?.attributes.Plan);
+                    setUserName(foundUser.attributes.username);
+
+                    console.log("usuario auth0", user)
+                    setUserCredits(foundUser.attributes.creditos);
+                    setUserVencimiento(foundUser.attributes.vencimiento);
+                    setApiset(foundUser.attributes.plan?.data?.attributes.API)
+                    setUserId(foundUser.id)
+                    setPlanId(foundUser.attributes.plan?.data?.id)
+                    setPurchaseHistory(foundUser.attributes.historials.data);
+                    setUserActivo(foundUser.attributes.estaactivo)
+                    console.log(foundUser)
+                }
+            })
+            .catch((error) => {
+                console.error('Failed to fetch user data:', error);
+            });
+        getuserAdmin()
+            .then((admin_foundUser) => {
+                setuser_admin(admin_foundUser)
+                if (user && user.email && admin_foundUser) {
+                    getHistorialPagos(1)
+                        .then((foundUser) => {
+                            if (foundUser) {
+                                setPurchasePagos(foundUser.data);
+                                setPurchasePagosPaginas(foundUser.meta.pagination)
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Failed to fetch user data:', error);
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error('Failed to fetch user data:', error);
+            });
+
+    }, [user, mostrarCambiarUsuario, actualizarEstadoConsulta]);
+
     // Agregar la función para verificar y mostrar el valor de 'ver' en la consola
     const checkAndLogVerParam = () => {
         const urlSearchParams = new URLSearchParams(window.location.search);
@@ -262,7 +310,7 @@ const Micuenta: React.FC = () => {
             }
         }
     };
-    const handleCambiarNombre= async () => {
+    const handleCambiarNombre = async () => {
         if (user) {
             // Realizar el POST con los datos requeridos
             const postResponse = await fetch(
@@ -288,17 +336,17 @@ const Micuenta: React.FC = () => {
         const currentDate = new Date();
         const minute = currentDate.getMinutes();
         const second = currentDate.getSeconds();
-    
+
         // Agregar el minuto y el segundo a la cadena secreta
         const secret = `tu_secreto_${minute}_${second}`;
-        
+
         const hmac = crypto.createHmac('sha256', secret);
         hmac.update(userEmail);
         const apiKey = hmac.digest('hex');
         setUserapi(apiKey)
         return apiKey;
     }
-    
+
 
     // Función para mostrar u ocultar la sección API
     const toggleApiSection = () => {
@@ -335,7 +383,7 @@ const Micuenta: React.FC = () => {
             const admin_foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
 
             console.log("admin_founduser", admin_foundUser)
-  
+
             return admin_foundUser;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -388,52 +436,6 @@ const Micuenta: React.FC = () => {
         }
     }
 
-    useEffect(() => {
-        checkAndLogVerParam();
-        getuser()
-            .then((foundUser) => {
-                console.log("nombre de usuario strapi", foundUser)
-                if (foundUser) {
-                    
-                    setUserPlan(foundUser.attributes.plan?.data?.attributes.Plan);
-                    setUserName(foundUser.attributes.username);
-                    
-                    console.log("usuario auth0",user)
-                    setUserCredits(foundUser.attributes.creditos);
-                    setUserVencimiento(foundUser.attributes.vencimiento);
-                    setApiset(foundUser.attributes.plan?.data?.attributes.API)
-                    setUserId(foundUser.id)
-                    setPlanId(foundUser.attributes.plan?.data?.id)
-                    setPurchaseHistory(foundUser.attributes.historials.data);
-                    setUserActivo(foundUser.attributes.estaactivo)
-                    console.log(foundUser)
-                }
-            })
-            .catch((error) => {
-                console.error('Failed to fetch user data:', error);
-            });
-        getuserAdmin()
-            .then((admin_foundUser) => {
-                setuser_admin(admin_foundUser)
-                if (user && user.email && admin_foundUser) {
-                    getHistorialPagos(1)
-                        .then((foundUser) => {
-                            if (foundUser) {
-                                setPurchasePagos(foundUser.data);
-                                setPurchasePagosPaginas(foundUser.meta.pagination)
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Failed to fetch user data:', error);
-                        });
-                }
-            })
-        .catch((error) => {
-            console.error('Failed to fetch user data:', error);
-        });
-       
-    }, [user, mostrarCambiarUsuario]);
-
     const handleButtonClick = (key: number) => {
         setBotonActivo(key);
         getHistorialPagos(key)
@@ -468,7 +470,11 @@ const Micuenta: React.FC = () => {
     }
 
     function handleSearchStatusChange(queryId: string, newStatus: string): void {
+        setTimeout(() => {
+            setActualizarEstadoConsulta((prevEstado) => prevEstado + 1);
+        }, 3000); // Ajusta el tiempo de espera en milisegundos según tus necesidades
     }
+    
 
     const updateApiInDatabase = async (newApi: string) => {
         const postResponse = await fetch(
@@ -487,7 +493,7 @@ const Micuenta: React.FC = () => {
             }
         );
 
-        if(postResponse.ok){
+        if (postResponse.ok) {
             console.log(newApi)
         }
         // Manejar la respuesta del servidor según sea necesario
@@ -593,48 +599,48 @@ const Micuenta: React.FC = () => {
                                             <div className='micuenta-datos-card username'>
                                                 <span className='micuenta-datos-title'>Nombre de usuario</span>
                                                 <span className='micuenta-datos-subtitle username'>{userName}</span>
-                                                    <>
-                                                        <a>
-                                                            <button className='tab-button renovar' onClick={mostrarCambiarNombre} >
-                                                                Cambiar nombre
-                                                            </button>
-                                                        </a>
-                                                    </>
+                                                <>
+                                                    <a>
+                                                        <button className='tab-button renovar' onClick={mostrarCambiarNombre} >
+                                                            Cambiar nombre
+                                                        </button>
+                                                    </a>
+                                                </>
                                             </div>
 
                                             {/* Verificar si los créditos son 0 o el plan está vencido */}
-                                        {mostrarCambiarUsuario && ( // Mostrar el div "Eliminar cuenta" si mostrarEliminarCuenta es true
-                                            <div className="overlay">
-                                                <div className='eliminar-cuenta'>
-                                                    <div className="cerrar-popup">
-                                                        <FontAwesomeIcon icon={faCircleXmark} size="2xl" onClick={cerrar_mostrarCambiarNombre} />
-                                                    </div>
-                                                    <h3 className='micuenta-h2'>Nombre de usuario</h3>
-                                                    {!seCambioNombre ? (
-                                                        <>                                            
-                                                        <div className='campo_cambiarNombre'>
-                                                            <input
-                                                            type="text"
-                                                            id="name"
-                                                            name="name"
-                                                            onChange={(e) => setnameUser(e.target.value)}
-                                                            required
-                                                            />
+                                            {mostrarCambiarUsuario && ( // Mostrar el div "Eliminar cuenta" si mostrarEliminarCuenta es true
+                                                <div className="overlay">
+                                                    <div className='eliminar-cuenta'>
+                                                        <div className="cerrar-popup">
+                                                            <FontAwesomeIcon icon={faCircleXmark} size="2xl" onClick={cerrar_mostrarCambiarNombre} />
                                                         </div>
-                                                        <br />
-                                                        <button
-                                                            className={`navigation-menu-button`}
-                                                            onClick={handleCambiarNombre}
-                                                        >
-                                                            Cambiar nombre
-                                                        </button>  
-                                                    </>
-                                                    ): ( <>
-                                                        <p>Se cambio correctamente el nomre de usuario</p>
-                                                    </>) }
+                                                        <h3 className='micuenta-h2'>Nombre de usuario</h3>
+                                                        {!seCambioNombre ? (
+                                                            <>
+                                                                <div className='campo_cambiarNombre'>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="name"
+                                                                        name="name"
+                                                                        onChange={(e) => setnameUser(e.target.value)}
+                                                                        required
+                                                                    />
+                                                                </div>
+                                                                <br />
+                                                                <button
+                                                                    className={`navigation-menu-button`}
+                                                                    onClick={handleCambiarNombre}
+                                                                >
+                                                                    Cambiar nombre
+                                                                </button>
+                                                            </>
+                                                        ) : (<>
+                                                            <p>Se cambio correctamente el nomre de usuario</p>
+                                                        </>)}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
+                                            )}
 
                                         </div>
                                         <div className='darse-de-baja'>
@@ -745,9 +751,11 @@ const Micuenta: React.FC = () => {
                                                                             queryId={search.attributes.query_id}
                                                                             status={search.attributes.status}
                                                                             translation={getStatusTranslation(search.attributes.status)}
+                                                                            createdAt={search.attributes.createdAt}
                                                                             getColor={getStatusColor}
                                                                             isUnderline={status => status === "IN PROGRESS"}
                                                                             onStatusChange={handleSearchStatusChange}
+                                                                            selectedFuenteEspera = {search.attributes.busqueda?.tiempo}
                                                                         ></SearchStatus>
                                                                     </td>
 
@@ -847,7 +855,7 @@ const Micuenta: React.FC = () => {
                                                 <div>
                                                     <br></br>
                                                     <p>Si necesitas ayuda envíanos tu consulta mediante este formulario o envíanos a un email a <a href="mailto:contacto@advantech.com">contacto@advantech.com</a></p>
-                                                    
+
                                                     {userPlan == "Enterprise" &&
                                                         <>
                                                             <br></br>
@@ -895,7 +903,7 @@ const Micuenta: React.FC = () => {
                                                     onClick={() => {
                                                         const newApi = generateApiKey(userEmail); // Asegúrate de tener userEmail disponible
                                                         setGeneratedApi(newApi);
-                                                        
+
                                                         updateApiInDatabase(newApi);
                                                     }}
                                                 >
