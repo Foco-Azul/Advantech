@@ -31,7 +31,7 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
                     },
                     body: JSON.stringify({
                         query_id: queryId,
-                        key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
+                        key: process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY
                     }),
                 });
 
@@ -41,6 +41,7 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
                 currentStatus = statusData.status;
 
                 if (currentStatus === 'IN PROGRESS') {
+
                     // Calcula el tiempo transcurrido en segundos
                     const tiempoActualEnSegundos = Math.floor(new Date().getTime() / 1000);
                     const tiempoTranscurrido = tiempoActualEnSegundos - tiempoInicioEnSegundos;
