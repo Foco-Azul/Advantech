@@ -54,7 +54,6 @@ function Footer() {
             <div>
               <h2 className="column-title">MI CUENTA</h2>
               <ul>
-                {user && <li className="list-row"><a href='/micuenta/?ver=api' className="link">API</a></li>}
                 <li className="list-row"><a href='/micuenta/?ver=busquedas' className="link">Historial de busquedas</a></li>
                 <li className="list-row"><a href='/micuenta/?ver=compras' className="link">Historial de pagos</a></li>
                 <li className="list-row"><a href='/micuenta' className="link">Mis datos</a></li>

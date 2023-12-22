@@ -579,13 +579,21 @@ const Micuenta: React.FC = () => {
                                             </div>
                                             <div className='micuenta-datos-card'>
                                                 <span className='micuenta-datos-title'>Fecha de vencimiento</span>
-                                                <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
-                                                {(isPlanVencido) && (
+                                                {isPlanVencido && userPlan ? (
+                                                    <>
+                                                        <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                        <Link href={"/planes"}>
+                                                        <button className='tab-button renovar'>
+                                                            Renovar Plan
+                                                        </button>
+                                                        </Link>
+                                                    </>
+                                                    ) : (
                                                     <>
                                                         <Link href={"/planes"}>
-                                                            <button className='tab-button renovar' >
-                                                                Renovar Plan
-                                                            </button>
+                                                        <button className='tab-button renovar'>
+                                                            Comprar Plan
+                                                        </button>
                                                         </Link>
                                                     </>
                                                 )}
@@ -864,7 +872,7 @@ const Micuenta: React.FC = () => {
 
                                 )}
 
-                                {activeTab === 'api' && (
+                                {activeTab === 'api' &&  apiset &&  (
                                     <div>
                                         <h2 className="micuenta-h2-datos">API</h2>
                                         <div className="micuenta-datos api">
