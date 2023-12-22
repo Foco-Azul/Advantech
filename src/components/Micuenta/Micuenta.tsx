@@ -473,7 +473,7 @@ const Micuenta: React.FC = () => {
         setTimeout(() => {
             setActualizarEstadoConsulta((actualizarEstadoConsulta) => actualizarEstadoConsulta + 1);
             console.log("ENTROOOOOOOOOO")
-        }, 60000); // Ajusta el tiempo de espera en milisegundos según tus necesidades
+        }, 70000); // Ajusta el tiempo de espera en milisegundos según tus necesidades
     }
     
 

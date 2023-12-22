@@ -53,6 +53,7 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
                 } else if (currentStatus === 'READY') {
                     console.log('La API está lista.');
                     onStatusChange(queryId, currentStatus);
+                    setProgress(100)
                 }
             }
         };
@@ -67,6 +68,7 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
             <div style={{ color: getColor(status) }}>
                 {progress < 100 && translation}
                 {status === 'IN PROGRESS' && progress == 100 && "Finalizando"}
+                {status === 'READY' && progress == 100 && "Completada"}
                 {status === 'IN PROGRESS' && (
                     <div className="progress-bar-container">
                         <p>{Math.round(progress)}%</p>
