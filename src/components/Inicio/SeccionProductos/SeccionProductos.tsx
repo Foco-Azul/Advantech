@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './SeccionProductos.css';
 import Image from 'next/image';
 import ImageEmail from "./image/image-contenido-pestaña.svg"
+import Laptop from "./image/laptop.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,12 +29,19 @@ function SeccionProductos() {
             <button className={activeTab === 'DATOS POR API' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('DATOS POR API')}>DATOS POR API</button>
           </div>
           <div className={'pestaña-contenido ' + (activeTab === 'DATOS POR BUSCADOR' ? 'contenido-activo' : '')}>
-          <Image src="/video/por-busqueda.gif" width={600} height={100} alt='Advantech Datos'></Image>
+            <div className='imagen-contenedor'>
+              <Image src="/video/por-busqueda.gif" width={504} height={100} alt='Advantech Datos'></Image>
+
+              <Image src={Laptop} width={700} height={480} alt="advantech-email"></Image>
+            </div>
           </div>
-          <div  className={'pestaña-contenido ' + (activeTab === 'DATOS POR DESCARGA' ? 'contenido-activo' : '')}>
-            <Image src="/video/por-descarga.gif" width={600} height={100} alt='Advantech Datos'></Image>
+          <div className={'pestaña-contenido ' + (activeTab === 'DATOS POR DESCARGA' ? 'contenido-activo' : '')}>
+            <div className='imagen-contenedor'>
+              <Image src="/video/por-descarga.gif" width={504} height={100} alt='Advantech Datos'></Image>
+              <Image src={Laptop} width={700} height={480} alt="advantech-email"></Image>
+            </div>
           </div>
-          <div  className={'pestaña-contenido ' + (activeTab === 'DATOS POR API' ? 'contenido-activo' : '')}>
+          <div className={'pestaña-contenido ' + (activeTab === 'DATOS POR API' ? 'contenido-activo' : '')}>
             <Image src={ImageEmail} width={700} height={480} alt="advantech-email"></Image>
           </div>
         </div>
