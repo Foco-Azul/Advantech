@@ -58,18 +58,12 @@ function Login({ loginname }: LoginProps) {
       }
       
       const data = await response.json();
-      console.log(data);
       const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
       const fechaHoraActual = new Date().toISOString();
       const codigoAleatorio = Math.random().toString(36).substring(2, 8);
       const codigoUnico = fechaHoraActual.replace(/[^a-zA-Z0-9]/g, '') + codigoAleatorio;
       if (foundUser) {
         setUserName(foundUser.attributes.username);
-        console.log("USUARIO", user)
-        console.log("El correo electrónico existe en el array de objetos.");
-        // Aquí puedes hacer algo con el usuario encontrado
-        console.log(foundUser)
-        //console.log(foundUser.attributes.codigo_de_verificacion);
         if (user && user.sub && user.sub.includes("auth0") && foundUser.attributes.codigo_de_verificacion == null) {
           // Realizar el POST con los datos requeridos
          const postResponse = await fetch(
@@ -90,9 +84,7 @@ function Login({ loginname }: LoginProps) {
          );
          
          if (postResponse.status === 200) {
-           console.log("Usuario creado con éxito.");
          } else {
-           console.log(postResponse.status);
            throw new Error(`Failed to create user, ${postResponse.status}`);
          }
        }
@@ -116,9 +108,7 @@ function Login({ loginname }: LoginProps) {
         );
         
         if (postResponse.status === 200) {
-          console.log("Usuario creado con éxito.");
         } else {
-          console.log(postResponse.status);
           throw new Error(`Failed to create user, ${postResponse.status}`);
         }
       }
@@ -142,24 +132,14 @@ function Login({ loginname }: LoginProps) {
         );
         
         if (postResponse.status === 200) {
-          console.log("Usuario creado con éxito.");
         } else {
-          console.log(postResponse.status);
           throw new Error(`Failed to create user, ${postResponse.status}`);
         }
       }
       } else {
-        console.log("El correo electrónico no existe en el array de objetos.");
         if (foundUser && typeof user.email === 'string') {
           setUserName(foundUser.attributes.username);
-          console.log("El correo electrónico existe en el array de objetos.");
-          // Aquí puedes hacer algo con el usuario encontrado
-          console.log(foundUser);
-          console.log("api", generateApiKey(user.email))
         } else {
-          console.log("El correo electrónico no existe en el array de objetos.");
-
-          // Realizar el POST con los datos requeridos
           if (typeof user.email === 'string') {
             if (user && user.sub && user.sub.includes("auth0")) {
               // Realizar el POST con los datos requeridos
@@ -185,9 +165,7 @@ function Login({ loginname }: LoginProps) {
                 }
               );
               if (postResponse.status === 200) {
-                console.log("Usuario creado con éxito.");
               } else {
-                console.log(postResponse.status);
                 throw new Error(`Failed to create user, ${postResponse.status}`);
               }
             }else{
@@ -216,9 +194,7 @@ function Login({ loginname }: LoginProps) {
                 );
 
                 if (postResponse.status === 200) {
-                  console.log("Usuario creado con éxito.");
                 } else {
-                  console.log(postResponse.status);
                   throw new Error(`Failed to create user, ${postResponse.status}`);
                 }
               }else{
@@ -247,9 +223,7 @@ function Login({ loginname }: LoginProps) {
                 );
 
                 if (postResponse.status === 200) {
-                  console.log("Usuario creado con éxito.");
                 } else {
-                  console.log(postResponse.status);
                   throw new Error(`Failed to create user, ${postResponse.status}`);
                 }
               }

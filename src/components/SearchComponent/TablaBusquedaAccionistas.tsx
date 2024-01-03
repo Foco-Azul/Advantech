@@ -58,7 +58,6 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
 
   useEffect(() => {
     onSelectedItems(selectedItems);
-    console.log(data)
 
   }, [selectedItems]);
 

@@ -62,7 +62,6 @@ const SearchComponent: React.FC = () => {
             }
         );
         const data = await nuevoHistorial.json();
-        console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
         const postCorreo = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
             {
@@ -103,7 +102,6 @@ const SearchComponent: React.FC = () => {
             const data = await response.json();
             const foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
 
-            console.log("founduser", foundUser)
             return foundUser;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -130,7 +128,6 @@ const SearchComponent: React.FC = () => {
             }
             const data = await response.json();
             setCreditosFuente(data.data)
-            console.log("creditos-fuentes", data.data)
             return data;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -152,12 +149,6 @@ const SearchComponent: React.FC = () => {
                     setUserVencimiento(userVencimiento);
                     setUserId(userId)
                     setPlanId(planId)
-
-                    console.log("Precio:", userPlanData)
-                    console.log("Creditos:", userCredits)
-                    console.log("Uservencimiento:", userVencimiento)
-                    console.log("userid:", userId)
-                    console.log("planid:", planId)
                 }
             })
             .catch((error) => {
@@ -188,7 +179,7 @@ const SearchComponent: React.FC = () => {
             // Reset empty input error
             setIsLoadingData(true);
             try {
-                const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/create_search', {
+                const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/create_search', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -205,7 +196,7 @@ const SearchComponent: React.FC = () => {
                     const jsonData = await response.json();
                     let status = null;
                     while (status !== 'READY') {
-                        const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/status', {
+                        const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/status', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -221,18 +212,15 @@ const SearchComponent: React.FC = () => {
 
                         if (status === 'READY') {
                             // Procesa la respuesta si es necesario
-                            console.log('La API está lista.');
                         } else {
                             // Si la API no está lista, espera 1 segundo antes de realizar la siguiente verificación
                             await new Promise(resolve => setTimeout(resolve, 1000));
-                            console.log("explota")
                         }
                     }
 
 
                     setData(jsonData);
-                    console.log("response", jsonData)
-                    const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_public_data', {
+                    const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_public_data', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -269,7 +257,6 @@ const SearchComponent: React.FC = () => {
                             const allItems = Object.keys(noticias[primeraPropiedad]);
                             handleSelectedItems(allItems);
                         }
-                        console.log("data", data)
                         if (!user) {
                             // Guardar searchInputValue en el localStorage si el usuario no está registrado
                             localStorage.setItem('searchInputValue', searchInputValue);
@@ -304,15 +291,11 @@ const SearchComponent: React.FC = () => {
 
     const handleThirdApiButtonClick = async () => {
         try {
-            console.log("NombreRuc:", NombreRuc);
-            console.log("Query_id:", data.query_id);
             const selectionObj: SelectionObject = {}; // Provide type information here
-
             // selectionObj[NombreRuc] = ["0", "1"];
-
             selectionObj[NombreRuc] = SeleccionUsuario;
 
-            const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL+'/data/get_full_data', {
+            const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -344,7 +327,7 @@ const SearchComponent: React.FC = () => {
                                     creditos: selectedFuenteCredito * seleccionUsuarioCount * -1,
                                     fecha: currentDate,
                                     precio: 0,
-                                    consulta: searchInputValue+" - "+fuenteseleccionada,
+                                    consulta: searchInputValue + " - " + fuenteseleccionada,
                                     plane: planId,
                                     status: "READY",
                                     query_id: data.query_id,
@@ -361,7 +344,7 @@ const SearchComponent: React.FC = () => {
                     );
                 }
 
-                
+
                 if (userCredits) {
                     var restacreditos = selectedFuenteCredito && userCredits - selectedFuenteCredito * seleccionUsuarioCount
                     const postResponse = await fetch(
@@ -383,139 +366,6 @@ const SearchComponent: React.FC = () => {
                     );
                 }
                 setMostrartabla(false)
-
-                // //////////////////////////////////////////// HISTORIAL JUDICIALES  //////////////////////////////////////////// 
-
-                // if (selectedSource === "judicial") {
-                //     if (selectedFuenteCredito !== null) {
-                //         const newformdata = new FormData();
-
-                //         // Create an object with your data
-                //         const postData = {
-                //             auth_0_user: userId,
-                //             creditos: selectedFuenteCredito * -1,
-                //             fecha: currentDate,
-                //             precio: 0,
-                //             consulta: "Judiciales " + searchInputValue,
-                //             plane: planId,
-                //         };
-
-                //         // Append the JSON data as a string
-                //         newformdata.append('data', JSON.stringify(postData));
-
-                //         // Generate the Excel file as a Blob using the generateExcelBlob function
-                //         const excelBlob = await JudicialesExcel(jsonData.data);
-
-                //         // Append the Excel Blob to FormData
-                //         newformdata.append('files.archivo', excelBlob, `Judicial_${searchInputValue}.xlsx`);
-
-                //         // Now, you can make your fetch request
-                //         const posthistorial = await fetch(
-                //             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                //             {
-                //                 method: "POST",
-                //                 headers: {
-                //                     Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                //                 },
-                //                 body: newformdata, // Use the FormData object as the body
-                //                 cache: "no-store",
-                //             }
-                //         );
-                //         if (posthistorial.ok) {
-                //             const jsonResponse = await posthistorial.json();
-                //             console.log("Respuesta de la API:", jsonResponse);
-                //         }
-                //     }
-                // }
-
-
-                // ////////////////////////////////////////////  HISTORIAL NOTICIAS //////////////////////////////////////////// 
-
-                // if (selectedSource === "noticias") {
-                //     if (selectedFuenteCredito !== null) {
-                //         const newformdata = new FormData();
-
-                //         // Create an object with your data
-                //         const postData = {
-                //             auth_0_user: userId,
-                //             creditos: selectedFuenteCredito * -1,
-                //             fecha: currentDate,
-                //             precio: 0,
-                //             consulta: "Noticias " + searchInputValue,
-                //             plane: planId,
-                //         };
-
-                //         // Append the JSON data as a string
-                //         newformdata.append('data', JSON.stringify(postData));
-
-                //         // Generate the Excel file as a Blob using the generateExcelBlob function
-                //         const excelBlob = await NoticiasExcel(jsonData.data);
-
-                //         // Append the Excel Blob to FormData
-                //         newformdata.append('files.archivo', excelBlob, `Noticias_${searchInputValue}.xlsx`);
-
-                //         // Now, you can make your fetch request
-                //         const posthistorial = await fetch(
-                //             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                //             {
-                //                 method: "POST",
-                //                 headers: {
-                //                     Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                //                 },
-                //                 body: newformdata, // Use the FormData object as the body
-                //                 cache: "no-store",
-                //             }p
-                //         );
-                //         if (posthistorial.ok) {
-                //             const jsonResponse = await posthistorial.json();
-                //             console.log("Respuesta de la API:", jsonResponse);
-                //         }
-                //     }
-                // }
-
-                // ////////////////////////////////////////////  HISTORIAL TITULOS //////////////////////////////////////////// 
-
-                // if (selectedSource === "titulos") {
-                //     if (selectedFuenteCredito !== null) {
-                //         const newformdata = new FormData();
-
-                //         // Create an object with your data
-                //         const postData = {
-                //             auth_0_user: userId,
-                //             creditos: selectedFuenteCredito * -1,
-                //             fecha: currentDate,
-                //             precio: 0,
-                //             consulta: "Titulos " + searchInputValue,
-                //             plane: planId,
-                //         };
-
-                //         // Append the JSON data as a string
-                //         newformdata.append('data', JSON.stringify(postData));
-
-                //         // Generate the Excel file as a Blob using the generateExcelBlob function
-                //         const excelBlob = await TitulosExcel(jsonData.data);
-
-                //         // Append the Excel Blob to FormData
-                //         newformdata.append('files.archivo', excelBlob, `Titulos_${searchInputValue}.xlsx`);
-
-                //         // Now, you can make your fetch request
-                //         const posthistorial = await fetch(
-                //             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-                //             {
-                //                 method: "POST",
-                //                 headers: {
-                //                     Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-                //                 },
-                //                 body: newformdata, // Use the FormData object as the body
-                //                 cache: "no-store",
-                //             }
-                //         );
-                //         if (posthistorial.ok) {
-                //             const jsonResponse = await posthistorial.json();
-                //             console.log("Respuesta de la API:", jsonResponse);
-                //         }
-                //     }
-                // }
 
             }
         } catch (error) {
@@ -613,7 +463,6 @@ const SearchComponent: React.FC = () => {
 
     const handleSelectedItems = (selectedItems: string[]) => {
         // Aquí puedes manejar los elementos seleccionados como desees
-        console.log('Elementos seleccionados:', selectedItems);
         setSeleccionUsuario(selectedItems)
     };
 
@@ -642,7 +491,6 @@ const SearchComponent: React.FC = () => {
     const handleReloadPage = () => {
         window.location.reload(); // This will reload the page
     };
-    console.log("DatosTabla", DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0)
     return (
         <UserProvider>
 
@@ -873,10 +721,10 @@ const SearchComponent: React.FC = () => {
                                 {/* <button className='busqueda-menu-button' onClick={handleConvertToXls}>
                                     Convertir a XLS
                                 </button> */}
-                                {fuenteseleccionada == "noticias" && <button className='download-button' onClick={() => NoticiasExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
-                                {fuenteseleccionada == "judicial" && <button className='download-button' onClick={() => JudicialesExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
-                                {fuenteseleccionada == "titulos" && <button className='download-button' onClick={() => TitulosExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
-                                {fuenteseleccionada == "accionistas" && <button className='download-button' onClick={() => AccionistasExcel(data.data, searchInputValue+" - "+fuenteseleccionada)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "noticias" && <button className='download-button' onClick={() => NoticiasExcel(data.data, searchInputValue + " - " + fuenteseleccionada)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "judicial" && <button className='download-button' onClick={() => JudicialesExcel(data.data, searchInputValue + " - " + fuenteseleccionada)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "titulos" && <button className='download-button' onClick={() => TitulosExcel(data.data, searchInputValue + " - " + fuenteseleccionada)}>Descargar Excel</button>}
+                                {fuenteseleccionada == "accionistas" && <button className='download-button' onClick={() => AccionistasExcel(data.data, searchInputValue + " - " + fuenteseleccionada)}>Descargar Excel</button>}
                             </div>
                             <button className='busqueda-menu-button' onClick={handleReloadPage}>
                                 Iniciar una nueva búsqueda

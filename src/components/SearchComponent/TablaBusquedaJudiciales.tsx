@@ -36,7 +36,6 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
   useEffect(() => {
     if (data) {
-      console.log("data", data)
       const counts: { [city: string]: number } = {};
       const yearCounts: { [year: string]: number } = {};
 

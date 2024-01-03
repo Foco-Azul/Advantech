@@ -54,7 +54,6 @@ const SearchComponent: React.FC = () => {
             const data = await response.json();
             const foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
 
-            console.log("founduser", foundUser)
             return foundUser;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -78,7 +77,6 @@ const SearchComponent: React.FC = () => {
             }
             const data = await response.json();
             setCreditosFuente(data.data)
-            console.log("creditos-fuentes", data.data)
             return data;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -101,11 +99,6 @@ const SearchComponent: React.FC = () => {
                     setUserId(userId)
                     setPlanId(planId)
 
-                    console.log("Precio:", userPlanData)
-                    console.log("Creditos:", userCredits)
-                    console.log("Uservencimiento:", userVencimiento)
-                    console.log("userid:", userId)
-                    console.log("planid:", planId)
                 }
             })
             .catch((error) => {
@@ -190,11 +183,7 @@ const SearchComponent: React.FC = () => {
 
     const handleThirdApiButtonClick = async () => {
         try {
-            console.log("NombreRuc:", NombreRuc);
-            console.log("Query_id:", data.query_id);
             const selectionObj: SelectionObject = {}; // Provide type information here
-
-            // selectionObj[NombreRuc] = ["0", "1"];
 
             selectionObj[NombreRuc] = SeleccionUsuario;
 
@@ -332,7 +321,6 @@ const SearchComponent: React.FC = () => {
 
     const handleSelectedItems = (selectedItems: string[]) => {
         // Aquí puedes manejar los elementos seleccionados como desees
-        console.log('Elementos seleccionados:', selectedItems);
         setSeleccionUsuario(selectedItems)
     };
 

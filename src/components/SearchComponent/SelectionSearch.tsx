@@ -54,7 +54,6 @@ function SelectionSearch() {
             const data = await response.json();
             const foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
 
-            console.log("founduser", foundUser)
             return foundUser;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);

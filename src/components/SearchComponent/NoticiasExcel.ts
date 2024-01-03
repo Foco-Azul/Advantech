@@ -64,7 +64,6 @@ export const NoticiasExcel = async (dataToDownload: any, consulta: string) => {
               for (const sujetoKey in sujetos) {
                 if (Object.prototype.hasOwnProperty.call(sujetos, sujetoKey)) {
                   const sujetoData = sujetos[sujetoKey];
-                  console.log(entryData[entryKey]["noticia_del_delito"]);
                   const rowData = [
                     ruc, // Columna "Ruc"
                     entryData[entryKey].type || "",

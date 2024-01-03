@@ -35,8 +35,6 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
                     }),
                 });
 
-                console.log("selectedFuenteEspera", selectedFuenteEspera)
-
                 const statusData = await response.json();
                 currentStatus = statusData.status;
 
@@ -52,7 +50,6 @@ const SearchStatus: React.FC<SearchStatusProps> = ({ queryId, status, translatio
                     }
                     await new Promise(resolve => setTimeout(resolve, 3000));
                 } else if (currentStatus === 'READY') {
-                    console.log('La API está lista.');
                     onStatusChange(queryId, currentStatus);
                     setProgress(100)
                 }

@@ -36,41 +36,6 @@ const Multisearch: React.FC = () => {
   const [cantidadRucs, setcantidadRucs] = useState<number | null>(null);
   const [nombreArchivo, setnombreArchivo] = useState<string>("");
 
-  // async function enviarCorreo(jsonResponse: { data: { id: any; }; }) {
-  //   const nuevoHistorial = await fetch(
-  //     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-  //       },
-  //       cache: "no-store",
-  //     }
-  //   );
-  //   const data = await nuevoHistorial.json();
-  //   console.log("url de historial", data.data.attributes.archivo.data.attributes.url);
-  //   const postCorreo = await fetch(
-  //     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
-  //       },
-  //       body: JSON.stringify({
-  //         data: {
-  //           nombre: userEmail,
-  //           asunto: "Busqueda completada",
-  //           para: userEmail,
-  //           contenido: process.env.NEXT_PUBLIC_STRAPI_URL + data.data.attributes.archivo.data.attributes.url,
-  //         },
-  //       }),
-  //       cache: "no-store",
-  //     }
-  //   );
-  // }
-
 
   useEffect(() => {
     getuser()
@@ -87,12 +52,6 @@ const Multisearch: React.FC = () => {
           setUserVencimiento(userVencimiento);
           setUserId(userId)
           setPlanId(planId)
-
-          console.log("Precio:", userPlanData)
-          console.log("Creditos:", userCredits)
-          console.log("Uservencimiento:", userVencimiento)
-          console.log("userid:", userId)
-          console.log("planid:", planId)
         }
       })
       .catch((error) => {
@@ -145,7 +104,6 @@ const Multisearch: React.FC = () => {
       const data = await response.json();
       const foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
 
-      console.log("founduser", foundUser)
       return foundUser;
     } catch (error) {
       throw new Error(`Failed to fetch data, ${error}`);
@@ -168,7 +126,6 @@ const Multisearch: React.FC = () => {
       }
       const data = await response.json();
       setCreditosFuente(data.data)
-      console.log("creditos-fuentes", data)
       return data;
     } catch (error) {
       throw new Error(`Failed to fetch data, ${error}`);
@@ -187,12 +144,10 @@ const Multisearch: React.FC = () => {
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const sheetData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        console.log("sheetdata", file.name)
         // Obtener el nombre del archivo
         const fileName = file.name.replace(/\.[^/.]+$/, '');
 
         setnombreArchivo(fileName)
-        console.log('Nombre del archivo:', nombreArchivo);
         // Verificar si el archivo es un archivo XLSX
         if (!binaryString.startsWith("PK")) {
           alert('El archivo no es un archivo XLSX válido.');
@@ -224,9 +179,6 @@ const Multisearch: React.FC = () => {
             return !containsOnlyLetters && !containsLessThanThreeNumbers;
           });
 
-        console.log("prueba filtrados", filteredData);
-
-        // Eliminar valores duplicados usando una matriz y un conjunto auxiliar
         const uniqueData = [];
         const seen = new Set();
 
@@ -247,12 +199,7 @@ const Multisearch: React.FC = () => {
           return; // Salir de la función sin procesar el archivo
         }
 
-        // Mostrar los valores únicos en la consola
-        console.log('Valores únicos encontrados:', uniqueData);
-
-        // Convierte los valores únicos en una cadena separada por comas y consoléala.
         const dataAsString = uniqueData.join(', ');
-        console.log('FileData', dataAsString);
 
         // Guardar los datos del archivo Excel en el estado
         setFileData(dataAsString);
@@ -305,8 +252,6 @@ const Multisearch: React.FC = () => {
           key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
         }),
       });
-
-      console.log("filedata", fileData)
 
       //////////////////////////////////////////// RESTA DE CRÉDITOS /////////////////////////////////////////////
 
@@ -397,7 +342,6 @@ const Multisearch: React.FC = () => {
         
           if (status === 'READY') {
             // Procesa la respuesta si es necesario
-            console.log('La API está lista.');
           } else {
             // Si la API no está lista, calcula y actualiza el progreso antes de realizar la siguiente verificación
             const HoraActualenSegundos = Math.floor(new Date().getTime() / 1000);
@@ -409,13 +353,11 @@ const Multisearch: React.FC = () => {
         
             // Espera 1 segundo antes de realizar la siguiente verificación
             await new Promise(resolve => setTimeout(resolve, 1000));
-            console.log("Esperando...");
           }
         }
         
         //////////////////////////////// TRAER DATOS ////////////////////////////////
 
-        console.log("json", jsonData)
         const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
           method: 'POST',
           headers: {
@@ -430,160 +372,9 @@ const Multisearch: React.FC = () => {
 
         if (secondResponse.ok) {
           const secondJsonData = await secondResponse.json();
-          console.log("secondJsonData:", secondJsonData)
           const noticias = secondJsonData.data;
 
-          console.log("notocias:", noticias)
-
           setData(noticias)
-
-
-          // if (selectedSource === "judicial") {
-          //   JudicialesExcel(noticias);
-          // }
-
-          // if (selectedSource === "noticias") {
-          //   NoticiasExcel(noticias);
-          // }
-
-          // if (selectedSource === "titulos") {
-          //   TitulosExcel(noticias);
-          // }
-
-
-
-          //////////////////////////////////////////// HISTORIAL /////////////////////////////////////////////
-
-          // if (selectedSource === "judicial") {
-          //   if (selectedFuenteCredito !== null) {
-          //     const newformdata = new FormData();
-
-          //     // Create an object with your data
-          //     const postData = {
-          //       auth_0_user: userId,
-          //       creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
-          //       fecha: currentDate,
-          //       precio: 0,
-          //       consulta: "Búsqueda por lote",
-          //       plane: planId,
-          //     };
-
-          //     // Append the JSON data as a string
-          //     newformdata.append('data', JSON.stringify(postData));
-
-          //     // Generate the Excel file as a Blob using the generateExcelBlob function
-          //     const excelBlob = await JudicialesExcel(noticias);
-
-          //     // Append the Excel Blob to FormData
-          //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
-
-          //     // Now, you can make your fetch request
-          //     const posthistorial = await fetch(
-          //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-          //       {
-          //         method: "POST",
-          //         headers: {
-          //           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-          //         },
-          //         body: newformdata, // Use the FormData object as the body
-          //         cache: "no-store",
-          //       }
-          //     );
-          //     if (posthistorial.ok) {
-          //       const jsonResponse = await posthistorial.json();
-          //       console.log("Respuesta de la API:", jsonResponse);
-          //       enviarCorreo(jsonResponse);
-          //     }
-          //   }
-
-          // }
-
-          // if (selectedSource === "noticias") {
-          //   if (selectedFuenteCredito !== null) {
-          //     const newformdata = new FormData();
-
-          //     // Create an object with your data
-          //     const postData = {
-          //       auth_0_user: userId,
-          //       creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
-          //       fecha: currentDate,
-          //       precio: 0,
-          //       consulta: "Búsqueda por lote",
-          //       plane: planId,
-          //     };
-
-          //     // Append the JSON data as a string
-          //     newformdata.append('data', JSON.stringify(postData));
-
-          //     // Generate the Excel file as a Blob using the generateExcelBlob function
-          //     const excelBlob = await NoticiasExcel(noticias);
-
-          //     // Append the Excel Blob to FormData
-          //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
-
-          //     // Now, you can make your fetch request
-          //     const posthistorial = await fetch(
-          //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-          //       {
-          //         method: "POST",
-          //         headers: {
-          //           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-          //         },
-          //         body: newformdata, // Use the FormData object as the body
-          //         cache: "no-store",
-          //       }
-          //     );
-          //     if (posthistorial.ok) {
-          //       const jsonResponse = await posthistorial.json();
-          //       console.log("Respuesta de la API:", jsonResponse);
-          //       enviarCorreo(jsonResponse);
-          //     }
-          //   }
-          // }
-
-          // if (selectedSource === "titulos") {
-          //   if (selectedFuenteCredito !== null) {
-          //     const newformdata = new FormData();
-
-          //     // Create an object with your data
-          //     const postData = {
-          //       auth_0_user: userId,
-          //       creditos: selectedFuenteCredito && fileData && fileData.split(', ').length * selectedFuenteCredito * -1,
-          //       fecha: currentDate,
-          //       precio: 0,
-          //       consulta: "Búsqueda por lote",
-          //       plane: planId,
-          //     };
-
-          //     // Append the JSON data as a string
-          //     newformdata.append('data', JSON.stringify(postData));
-
-          //     // Generate the Excel file as a Blob using the generateExcelBlob function
-          //     const excelBlob = await TitulosExcel(noticias);
-
-          //     // Append the Excel Blob to FormData
-          //     newformdata.append('files.archivo', excelBlob, 'Noticias del delito.xlsx');
-
-          //     // Now, you can make your fetch request
-          //     const posthistorial = await fetch(
-          //       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
-          //       {
-          //         method: "POST",
-          //         headers: {
-          //           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-          //         },
-          //         body: newformdata, // Use the FormData object as the body
-          //         cache: "no-store",
-          //       }
-          //     );
-          //     if (posthistorial.ok) {
-          //       const jsonResponse = await posthistorial.json();
-          //       console.log("Respuesta de la API:", jsonResponse);
-          //       enviarCorreo(jsonResponse);
-          //     }
-          //   }
-          // }
-
 
         } else {
           console.error('Segunda llamada a la API fallida:', secondResponse.statusText);
@@ -601,12 +392,10 @@ const Multisearch: React.FC = () => {
   };
 
   const copyDataToClipboard = () => {
-    console.log('Clic en datos');
     // Verifica si existe data antes de copiarla al portapapeles
     if (data) {
       // Convierte data a formato JSON y lo copia al portapapeles
       const jsonData = JSON.stringify(data, null, 2);
-      console.log("copiar")
       navigator.clipboard.writeText(jsonData)
         .then(() => {
           alert('Datos copiados al portapapeles');
