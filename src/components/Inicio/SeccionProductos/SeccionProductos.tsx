@@ -31,7 +31,6 @@ function SeccionProductos() {
           <div className={'pestaña-contenido ' + (activeTab === 'DATOS POR BUSCADOR' ? 'contenido-activo' : '')}>
             <div className='imagen-contenedor'>
               <Image src="/video/por-busqueda.gif" width={504} height={100} alt='Advantech Datos'></Image>
-
               <Image src={Laptop} width={700} height={480} alt="advantech-email"></Image>
             </div>
           </div>

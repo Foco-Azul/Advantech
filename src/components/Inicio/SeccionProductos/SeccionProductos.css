@@ -1,5 +1,6 @@
 .seccion-productos{
     padding: 50px 0;
+    margin-bottom: 100px;
 }
 
 .productos-contenido{
@@ -99,7 +100,9 @@
 
 .imagen-contenedor {
   position: relative;
-  margin-top: 200px;
+  margin-top: 270px;
+  scale: 1.5;
+  margin-bottom: 270px;
 }
 
 .imagen-contenedor img {
@@ -109,4 +112,4 @@
   right: 0;
   bottom: 0;
   margin: auto;
-}
+ }
