@@ -51,7 +51,7 @@ function ObtencionDatos() {
           </div>
         </div>
         <br></br>
-        <Link href="/planes"><button className="obtenciondatos-button">Ver fuentes de créditos</button></Link>
+        <Link href="/planes#fuentes"><button className="obtenciondatos-button">Ver fuentes de créditos</button></Link>
       </div>
     </div>
   );

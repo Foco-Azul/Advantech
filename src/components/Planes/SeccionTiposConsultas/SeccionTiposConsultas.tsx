@@ -3,7 +3,7 @@ import './SeccionTiposConsultas.css';
 function SeccionTiposConsultas() {
 
   return (
-    <section className='seccion-Tipos-Consultas'>
+    <section className='seccion-Tipos-Consultas' id='fuentes'>
         <div>
             <div className="tipos-consultas-head-container">
                 <h2 className="tipos-consultas-head-title">Tipos de consultas</h2>

@@ -82,6 +82,7 @@ function NavMenu() {
                     <li><a href="/busqueda">Buscar datos</a></li>
                     <li><a href="/guia-de-busqueda">Guía de busqueda</a></li>
                     <li><a href="/uso-por-industria">Uso por industria</a></li>
+                    <li><a href="/planes">Precios</a></li>
                   </ul>
                 </div>
               </li>
