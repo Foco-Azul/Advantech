@@ -73,7 +73,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
         <div className="subscription-card">
             <div className="subscription-card-header">
                 <h2 className="subscription-plan">{plan}</h2>
-                <h3 className="subscription-price"> {(price != 0) ? `$ ${price}` : "Desde $3"}</h3>
+                <h3 className="subscription-price"> {(price != 0) ? `$ ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}` : "Desde $3"}</h3>
                 <h3 className="subscription-pricecredits">   {(price != 0) ? ` ${price / creditos} / crédito` : ""}</h3>
             </div>
             <hr className="subscription-hr" />
