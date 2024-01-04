@@ -84,9 +84,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
       setPayerror(result.error.message || null);
       setShowForm(true);
       setShowPaymentButton(true);
-      console.log(result.error.message);
     } else {
-      console.log("El pago se procesó correctamente");
       if (result.paymentIntent.status === 'succeeded') {
         setShowForm(false);
         setShowPaymentButton(false);
@@ -121,7 +119,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           }
         );
         if (postResponse.status === 200) {
-          console.log("nombres",nombres)
           const posthistorial = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
             {
@@ -192,14 +189,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
               }
             );
           }
-          console.log("Usuario actualizado con éxito.");
-
-          // Redirect to "/busqueda" after 2 seconds
           setTimeout(() => {
             //window.location.href = "/busqueda";
           }, 2000);
         } else {
-          console.log(postResponse.status);
           throw new Error(`Failed to create user, ${postResponse.status}`);
         }
       }

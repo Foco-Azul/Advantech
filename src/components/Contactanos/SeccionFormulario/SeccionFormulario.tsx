@@ -74,10 +74,8 @@ const SeccionFormulario: React.FC = () => {
       );
 
       if (postResponse.status === 200) {
-        console.log("Formulario enviado con exito");
         setFormSubmitted(true);
       } else {
-        console.log(postResponse.status);
         throw new Error(`Failed to create user, ${postResponse.status}`);
       }
     } catch (error) {

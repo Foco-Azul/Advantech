@@ -114,7 +114,6 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       const paginatedFilteredData = filteredData.slice(startIndex, endIndex);
       setPaginatedData(paginatedFilteredData);
     }
-    console.log("data", data)
   }, [data, currentPage, sortColumn, sortOrder, searchTerm, selectedCities, selectedYears]);
 
 

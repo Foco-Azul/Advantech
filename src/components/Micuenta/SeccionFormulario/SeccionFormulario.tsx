@@ -17,7 +17,6 @@ interface SeccionFormularioProps {
   planActual: string;
 }
 const SeccionFormulario: React.FC<SeccionFormularioProps> = ({ planActual }) => {
-  console.log("planActual", planActual)
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -77,10 +76,8 @@ const SeccionFormulario: React.FC<SeccionFormularioProps> = ({ planActual }) => 
       );
 
       if (postResponse.status === 200) {
-        console.log("Formulario enviado con exito");
         setFormSubmitted(true);
       } else {
-        console.log(postResponse.status);
         throw new Error(`Failed to create user, ${postResponse.status}`);
       }
     } catch (error) {

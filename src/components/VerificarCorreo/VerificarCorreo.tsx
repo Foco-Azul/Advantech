@@ -18,12 +18,12 @@ const VerificarCorreo: React.FC = () => {
   const [creditosFuente, setCreditosFuente] = useState<any[]>([]);
   const [severifico, setSeverifico] = useState(false); // Agrega la variable severifico
   const [estado, setEstado] = useState(-2); // Agrega la variable severifico
-  
+
 
   async function searchUser() {
-    
+
     try {
-      if(user){
+      if (user) {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${user.email}`,
           {
@@ -40,17 +40,16 @@ const VerificarCorreo: React.FC = () => {
         }
         const data = await response.json();
         const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
-        console.log("urlSearchParams")
         if (user && user.sub && user.sub.includes("auth0")) {
           // Realiza la acción cuando user.sub contiene "auth0"
-          if (foundUser ) {
+          if (foundUser) {
             // Haz algo con el usuario encontrado
             const userPlanData = foundUser.attributes.plan?.data.attributes.Precio;
             const userCredits = foundUser.attributes.creditos;
             const userVencimiento = foundUser.attributes.vencimiento;
             const userId = foundUser.id;
             const planId = foundUser.attributes.plan?.data.id;
-    
+
             setUserPlanData(userPlanData);
             setUserCredits(userCredits);
             setUserVencimiento(userVencimiento);
@@ -59,9 +58,9 @@ const VerificarCorreo: React.FC = () => {
 
             const urlSearchParams = new URLSearchParams(window.location.search);
             const codigo = urlSearchParams.get('codigo');
-            
-            if(foundUser.attributes.auth0 == false){
-              if(codigo && foundUser.attributes.codigo_de_verificacion == codigo){
+
+            if (foundUser.attributes.auth0 == false) {
+              if (codigo && foundUser.attributes.codigo_de_verificacion == codigo) {
                 try {
                   const postResponse = await fetch(
                     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userId}`,
@@ -82,28 +81,27 @@ const VerificarCorreo: React.FC = () => {
                   if (postResponse.status === 200) {
                     //se verifico la cuenta
                     setEstado(1);
-                  }else{
+                  } else {
                     throw new Error(`Failed to create user, ${postResponse.status}`);
                   }
                 } catch (error) {
-                  console.log(error);
                 }
-              }else{
+              } else {
                 setEstado(-1);
               }
-            }else{
+            } else {
               setEstado(0);
             }
           }
-        }else{
-           // Redirige al usuario a la página de inicio ("/")
-           //window.location.href = "/";
-           setEstado(0);
+        } else {
+          // Redirige al usuario a la página de inicio ("/")
+          //window.location.href = "/";
+          setEstado(0);
         }
-      }else{
+      } else {
         setEstado(2);
       }
-    }catch (error) {
+    } catch (error) {
       console.error(`Failed to fetch data, ${error}`);
     }
   }
