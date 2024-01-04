@@ -736,7 +736,7 @@ function RespaldoLegalSeccion() {
               Los datos del USUARIO se alojan en un servidor seguro propiedad del botón de pagos. <br />
               Asimismo, LA PAGINA manifiesta que, en ningún caso almacena los datos de pago proporcionados por los USUARIOS. <br />
               LA PAGINA entregará la información adquirida por el USUARIO, en las condiciones establecidas de acuerdo con el contenido y al precio adquirido. <br />
-              Si el USUARIO tiene algún problema con el desarrollo de su servicios, programa o producto, podrá contactar al servicio de atención al USUARIO <a href="mailto:soporte@advantech.com.ec" target='blank_'><strong>soporte@advantech.com.ec</strong></a>.
+              Si el USUARIO tiene algún problema con el desarrollo de su servicio, programa o producto, podrá contactar al servicio de atención al USUARIO <a href={`mailto:${process.env.NEXT_PUBLIC_ADVANTECH_EMAIL_SUPORT}`} target='_blank'><strong>{process.env.NEXT_PUBLIC_ADVANTECH_EMAIL_SUPORT}</strong></a>.
               </p>
               <br />
               <h4>8.	FACTURACIÓN.</h4>
@@ -835,7 +835,7 @@ function RespaldoLegalSeccion() {
               <br />
               <h4>13.	NOTIFICACIONES.</h4>
               <p>
-              Todas las notificaciones y/o comunicaciones que deban efectuarse por el uso de la Página Web bajo estos términos y condiciones generales, deberán realizarse por escrito: al USUARIO: mediante correo electrónico, a la cuenta de correo consignada por éste, o por carta documento, al domicilio declarado al inicio de este documento o a la cuenta de correo soporte@advantech.com.ec o a su domicilio legal enunciado en el inicio del presente documento. 
+              Todas las notificaciones y/o comunicaciones que deban efectuarse por el uso de la Página Web bajo estos términos y condiciones generales, deberán realizarse por escrito: al USUARIO: mediante correo electrónico, a la cuenta de correo consignada por éste, o por carta documento, al domicilio declarado al inicio de este documento o a la cuenta de correo <strong>{process.env.NEXT_PUBLIC_ADVANTECH_EMAIL_SUPORT}</strong> o a su domicilio legal enunciado en el inicio del presente documento. 
               </p>
               <br />
               <h4>14.	JURISDICCIÓN</h4>
