@@ -42,7 +42,7 @@ function SeccionProductos() {
           </div>
           <div className={'pestaña-contenido ' + (activeTab === 'DATOS POR API' ? 'contenido-activo' : '')}>
             <div className='imagen-contenedor'>
-              <Image src="/video/por-descarga.gif" width={504} height={100} alt='Advantech Datos'></Image>
+              <Image src="/video/por-api.gif" width={504} height={100} alt='Advantech Datos'></Image>
               <Image src={Laptop} width={700} height={480} alt="advantech-email"></Image>
             </div>
           </div>
