@@ -22,6 +22,7 @@ interface SubscriptionCardProps {
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid, userCorreo, auth0 }) => {
     const { user} = useUser();
     const [isOpen, setIsOpen] = useState(false);
+    const [esValido, setEsValido] = useState(true);
     const [buycredits, setBuyCredits] = useState(0);
     const [priceTiers, setPriceTiers] = useState<any[]>([]);
     // Lógica para determinar cuándo mostrar cada botón
@@ -45,8 +46,12 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = Number(event.target.value);
         if (!isNaN(inputValue) && inputValue >= priceTiers[0]?.attributes.minimo && inputValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo) {
-            setBuyCredits(inputValue);
+            //setBuyCredits(inputValue);
+            setEsValido(true)
+        }else{
+            setEsValido(false)
         }
+        setBuyCredits(inputValue);
     };
 
     async function planalacarta() {
@@ -108,7 +113,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
 
             <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
             <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
-            {shouldShowBuyCreditsButton && (
+            {shouldShowBuyCreditsButton && esValido &&(
             <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
             )}
             {shouldShowVerifyAccountButton && (
