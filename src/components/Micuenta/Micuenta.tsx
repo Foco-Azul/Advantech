@@ -586,23 +586,30 @@ const Micuenta: React.FC = () => {
                                             </div>
                                             <div className='micuenta-datos-card'>
                                                 <span className='micuenta-datos-title'>Fecha de vencimiento</span>
-                                                {isPlanVencido && userPlan ? (
+                                                {isPlanVencido && userPlan &&(
                                                     <>
-                                                        <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
-                                                        <Link href={"/planes"}>
-                                                        <button className='tab-button renovar'>
-                                                            Renovar Plan
-                                                        </button>
-                                                        </Link>
+                                                    <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                    <Link href={"/planes"}>
+                                                    <button className='tab-button renovar'>
+                                                        Comprar Plan
+                                                    </button>
+                                                    </Link>
                                                     </>
-                                                    ) : (
+                                                )}
+                                                {!userPlan &&(
                                                     <>
-                                                        <Link href={"/planes"}>
-                                                        <button className='tab-button renovar'>
-                                                            Comprar Plan
-                                                        </button>
-                                                        </Link>
-                                                    </>
+                                                    <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                    <Link href={"/planes"}>
+                                                    <button className='tab-button renovar'>
+                                                        Comprar Plan
+                                                    </button>
+                                                    </Link>
+                                                    </> 
+                                                )}
+                                               {!isPlanVencido && userPlan &&(
+                                                    <>
+                                                    <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                    </> 
                                                 )}
                                             </div>
                                             <div className='micuenta-datos-card username'>

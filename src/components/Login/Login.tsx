@@ -140,6 +140,11 @@ function Login({ loginname }: LoginProps) {
         if (foundUser && typeof user.email === 'string') {
           setUserName(foundUser.attributes.username);
         } else {
+
+          var fechaActual = new Date();
+          fechaActual.setMonth(fechaActual.getMonth() + 1);
+          var fechaVencimiento = fechaActual.toISOString();
+
           if (typeof user.email === 'string') {
             if (user && user.sub && user.sub.includes("auth0")) {
               // Realizar el POST con los datos requeridos
@@ -154,7 +159,12 @@ function Login({ loginname }: LoginProps) {
                     data: {
                       email: user.email,
                       username: user.email?.split("@")[0],
-                      vencimiento: "2023-01-01",
+                      //Vencimiento especial por lanzamiento
+                      vencimiento: fechaVencimiento,
+                      //Vencimiento normal comentar linea 163 y descomentar linea 165
+                      //vencimiento: "2023-01-01",
+                      plan: 4, //Para registro normal comentar esta linea
+                      creditos: 100, //Para registro normal comentar esta linea
                       codigo_de_verificacion: codigoUnico,
                       apikey:  generateApiKey(user.email),
                       auth0: false,
@@ -182,8 +192,12 @@ function Login({ loginname }: LoginProps) {
                       data: {
                         email: user.email,
                         username: user.email?.split("@")[0],
-                        vencimiento: "2023-01-01",
-                        plan: 4,
+                        //Vencimiento especial por lanzamiento
+                        vencimiento: fechaVencimiento,
+                        //Vencimiento normal comentar linea 163 y descomentar linea 165
+                        //vencimiento: "2023-01-01",
+                        plan: 4, //Para registro normal comentar esta linea
+                        creditos: 100, //Para registro normal comentar esta linea
                         apikey:  generateApiKey(user.email),
                         google: true,
                         estaactivo: true
@@ -211,8 +225,12 @@ function Login({ loginname }: LoginProps) {
                       data: {
                         email: user.email,
                         username: user.email?.split("@")[0],
-                        vencimiento: "2023-01-01",
-                        plan: 4,
+                        //Vencimiento especial por lanzamiento
+                        vencimiento: fechaVencimiento,
+                        //Vencimiento normal comentar linea 163 y descomentar linea 165
+                        //vencimiento: "2023-01-01",
+                        plan: 4, //Para registro normal comentar esta linea
+                        creditos: 100, //Para registro normal comentar esta linea
                         apikey:  generateApiKey(user.email),
                         microsoft: true,
                         estaactivo: true
