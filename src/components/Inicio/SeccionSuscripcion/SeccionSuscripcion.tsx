@@ -9,17 +9,14 @@ function SeccionRecursos() {
     return (
         <section className={`seccion-suscripcion`}>
             <div>
-                <div className="seccion-suscripcion-marcas">
-
+                <div className="seccion-suscripcion-marcas-titulo">
+                <h4>Precios</h4>
                 </div>
                 <div className="seccion-suscripcion-encabezado">
                     <h2>Suscripción para obtener información de bases de datos públicas</h2>
                     <p>Advantech Datos es una suscripción que te brinda acceso a bases de datos de personas de distintas fuentes públicas.</p>
                 </div>
                 <div className="seccion-suscripcion-tipo">
-                    <div className="suscripcion-imagen">
-                        <Image src={ImageSuscripcion} alt="Advantech Datos"></Image>
-                    </div>
                     <div className="seccion-suscripcion-tipo-empresa">
                         <Image src={IconPc} width={80} height={80} alt="advantech-suscripcion"></Image>
                         <h4>Planes a tu medida</h4>

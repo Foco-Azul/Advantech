@@ -1,5 +1,5 @@
 .seccion-recursos{
-    padding: 50px 0;
+    padding: 50px 0 0px;
 }
 .seccion-recursos > div{
     max-width: 1300px;
@@ -36,7 +36,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 50px 0;
+    padding: 50px 0 0;
 }
 .seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont{
     max-width: 570px;
