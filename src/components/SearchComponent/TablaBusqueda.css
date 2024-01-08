@@ -169,7 +169,7 @@ p {
 }
 
 .buscador-tabla-container {
-    width: 85%;
+    max-width: 85vw;
 }
 
 .open {
