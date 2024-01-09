@@ -114,7 +114,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
             <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
             {shouldShowBuyCreditsButton && esValido &&(
-            <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits} créditos</button>
+            <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString()} créditos</button>
             )}
             {shouldShowVerifyAccountButton && (
             <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
@@ -130,8 +130,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                             X
                         </button>
                         <h4>Confirmar tus creditos</h4>
-                        <p>Precio: ${nuevoPrecio.toFixed(2)}</p>
-                        <p>Créditos a obtener {buycredits}</p>
+                        <p>Precio: ${nuevoPrecio.toLocaleString()}</p>
+                        <p>Créditos a obtener {buycredits.toLocaleString()}</p>
                         <br></br>
                         <Pasarela
                             planvencimiento={planvencimiento}

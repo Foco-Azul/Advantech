@@ -147,7 +147,7 @@ const BurguerMenu: React.FC = () => {
           </ul>
           <div className="popup-footer">
             <Login loginname={"INGRESAR"} />
-            <button className="navigation-menu-button" >NUESTROS PLANES</button>
+            <Link className="navigation-menu-button2" href={"/planes"}>NUESTROS PLANES</Link>
           </div>
         </div>
       )}
