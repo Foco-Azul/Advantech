@@ -10,6 +10,7 @@ import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import Marca_1 from "./image/datafast.png"
 import Marca_2 from "./image/diners.png"
 import Marca_3 from "./image/pichincha.png"
+import Bandera from "./image/bandera-ecuador.png"
 import Link from "next/link";
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import React, { useEffect, useState } from 'react';
@@ -21,16 +22,21 @@ function Hero() {
       <div className="hero-grid">
         <div className="hero-content">
           <br></br>
-          <h1 className="hero-short-title">Desbloquea el potencial de los datos</h1>
           <h2 className="hero-short-title">Impulsa tu organización al siguiente nivel</h2>
+          <h1 className="hero-short-title">Desbloquea el potencial de los datos</h1>
           <h1 className="hero-short-title-movil">Desbloquea <br /> el potencial <br /> de los datos</h1>
            <div className="hero-buscador-contenedor">
             <Link href={"/busqueda"}><button className="hero-buscador-btn"><FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />Ingresa a nuestro buscador</button></Link>
            </div>
           <br></br>
+          {/*
           <h2 className="hero-description">
-          Encuentra datos públicos actualizados de personas en Ecuador con nuestro buscador en línea. <br />¡Consulta múltiples fuentes de manera sencilla!
+          Encuentra datos públicos actualizados de personas en Ecuador  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <Image src={Bandera} alt='Advantech Datos' width={20} ></Image> con nuestro buscador en línea. <br />¡Consulta múltiples fuentes de manera sencilla!
             </h2>
+          */}
+          <h2 className="hero-description">
+          Encuentra datos públicos actualizados de personas en Ecuador 🇪🇨 con nuestro buscador en línea. <br />¡Consulta múltiples fuentes de manera sencilla!
+          </h2>
           <br></br>
           <a href="/api/auth/login" className={`hero-button ${user !== undefined ? 'ocultar' : ''}`}>
             Crear cuenta

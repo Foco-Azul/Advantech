@@ -568,8 +568,8 @@ const Micuenta: React.FC = () => {
                                         <h2 className='micuenta-h2-datos'>Mis datos</h2>
                                         <div className='micuenta-datos'>
                                             <div className='micuenta-datos-card'>
-                                                <span className='micuenta-datos-title'>Mis créditos actuales </span>
-                                                <span className='micuenta-datos-subtitle'>{userCredits}</span>
+                                                <span className='micuenta-datos-title'>Mis créditos actuales </span> 
+                                                <span className='micuenta-datos-subtitle'>{userCredits?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</span>
                                                 {(userCredits != null && userCredits < 5) && (
                                                     <>
                                                         <Link href={"/planes"}>

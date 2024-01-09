@@ -1,5 +1,6 @@
 .seccion-recursos{
     padding: 50px 0 0px;
+    margin-top: 250px;
 }
 .seccion-recursos > div{
     max-width: 1300px;
@@ -14,16 +15,18 @@
 }
 
 .seccion-recursos > div > .seccion-recursos-superior > .seccion-recursos-superior-izq > h4{ 
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 800;
     margin-bottom: 25px;
     color: #009FDE;
+    text-transform: uppercase;
 }
 .seccion-recursos > div > .seccion-recursos-superior > .seccion-recursos-superior-izq > h2{ 
     font-size: 32px;
     font-weight: 800;
     max-width: 600px;
     color: #131022;
+    line-height: 36px;
 }
 .seccion-recursos > div > .seccion-recursos-superior > .seccion-recursos-superior-izq > p{ 
     max-width: 420px;
@@ -78,5 +81,11 @@
     }
     .seccion-recursos > div > .seccion-recursos-inferior > .seccion-recursos-inferior-cont{
         margin-bottom: 50px;
+    }
+    .seccion-recursos{
+        margin-top: -100px;
+    }
+    .seccion-recursos-superior{
+        gap: 40px;
     }
 }

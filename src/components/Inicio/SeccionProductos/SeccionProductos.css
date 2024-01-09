@@ -16,15 +16,17 @@
     width: 460px;
 }
 .productos-izq > h4{
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 800;
     margin-bottom: 25px;
     color: #009FDE;
+    text-transform: uppercase;
 }
 .productos-izq > h2{
     font-size: 32px;
     font-weight: 800;
     color: #131022;
+    line-height: 36px;
 }
 .productos-izq > p{
     max-width: 420px;

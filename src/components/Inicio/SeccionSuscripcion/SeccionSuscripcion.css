@@ -1,16 +1,18 @@
 .seccion-suscripcion{
     padding: 70px 0 50px 0;
 }
-
 .seccion-suscripcion > div{
+    display: flex;
     max-width: 1300px;
+    padding: 20px;
     margin: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}   
+body > div.hero-back > section.seccion-suscripcion > div > div:nth-child(1){
+    max-width: 500px;
 }
-
-.seccion-suscripcion-encabezado{
-    text-align: center;
-}
-
 .seccion-suscripcion-encabezado > h2{
     font-size: 32px;
     font-weight: 800;
@@ -18,12 +20,13 @@
     margin: 0 auto 30px auto;
     line-height: 34px;
     color: #131022;
+    text-align: start;
 }
 
 .seccion-suscripcion-encabezado > p{
     font-size: 16px;
     font-weight: 400;
-    margin: auto;
+    margin: 0;
     max-width: 600px;
     color: #585C7B;
 }
@@ -73,9 +76,6 @@
     margin-left: 10px;
 }
 
-.seccion-suscripcion-footer{
-    text-align: center;
-}
 
 .suscripcion-imagen{
     max-width: 1300px;
@@ -84,14 +84,13 @@
     margin: auto;
     max-width: 90%;
 }
-.seccion-suscripcion-marcas-titulo{
-    text-align: center;
-}
+
 .seccion-suscripcion-marcas-titulo > h4{
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 800;
     margin-bottom: 25px;
     color: #009FDE;
+    text-transform: uppercase;
 }
 @media only screen and (max-width: 768px) {
 

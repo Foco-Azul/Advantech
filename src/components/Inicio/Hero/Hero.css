@@ -3,8 +3,8 @@
     padding: 50px 0 0 0;
   }
 
-.hero-short-title {
-    color: var(--brand-primary, #009FDE);
+h1.hero-short-title {
+    color: #131022;
     text-align: center;
     font-size: 42px;
     font-family: Manrope, sans-serif;
@@ -52,10 +52,14 @@ h2.hero-short-title {
     font-style: normal;
     font-weight: 400;
     line-height: 160%;
-    max-width: 570px;
+    max-width: 640px;
     padding: 0 20px;
 }
-
+.hero-description > img{
+    position: absolute;
+    right: 29.1vw;
+    margin-top: -23px;
+}
 .hero-button {
     border-radius: 6px;
     background: var(--brand-primary, #009FDE);
@@ -191,5 +195,10 @@ h2.hero-short-title {
         max-width: 70%;
         padding: 20px;
         margin: auto;
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .hero-buscador-btn svg{
+        margin: 0 3vw 0 -4vw;
     }
 }
