@@ -192,10 +192,12 @@ const SearchComponent: React.FC = () => {
                     }),
                 });
 
+                let continueLoop = true;
+
                 if (response.ok) {
                     const jsonData = await response.json();
                     let status = null;
-                    while (status !== 'READY') {
+                    while (continueLoop && status !== 'READY') {
                         const response = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/status', {
                             method: 'POST',
                             headers: {
@@ -209,10 +211,17 @@ const SearchComponent: React.FC = () => {
 
                         const statusData = await response.json();
                         status = statusData.status;
+                        console.log(status)
 
                         if (status === 'READY') {
                             // Procesa la respuesta si es necesario
-                        } else {
+                        }
+                        else if (status === 'FAILED') {
+                            // Si el estado es 'FAILED', establece los datos de la tabla en un objeto vacío
+                            setDatosTabla({ searchInputValue: {} });
+                            continueLoop = false; // Sal del bucle si el estado es 'FAILED'
+                        }
+                        else {
                             // Si la API no está lista, espera 1 segundo antes de realizar la siguiente verificación
                             await new Promise(resolve => setTimeout(resolve, 1000));
                         }
@@ -234,6 +243,7 @@ const SearchComponent: React.FC = () => {
                     if (secondResponse.ok) {
                         const secondJsonData = await secondResponse.json();
                         const noticias = secondJsonData.data;
+                        console.log(secondJsonData)
                         setDatosTabla(noticias);
                         let primeraPropiedad;
                         for (let propiedad in noticias) {
@@ -250,6 +260,8 @@ const SearchComponent: React.FC = () => {
                                 properties.push(nombrePropiedad);
                             }
 
+
+
                             setPropiedadArray(properties);
                             setIsSecondApiResponseSuccessful(true);
 
@@ -261,6 +273,7 @@ const SearchComponent: React.FC = () => {
                             // Guardar searchInputValue en el localStorage si el usuario no está registrado
                             localStorage.setItem('searchInputValue', searchInputValue);
                         }
+
                         if (user) {
                             localStorage.removeItem('searchInputValue');
                             localStorage.removeItem('selectedSource');
