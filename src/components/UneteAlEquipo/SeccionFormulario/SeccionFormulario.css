@@ -7,7 +7,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  width: 1085px;
+  width: 82vw;
   margin: auto;
 }
 .formulario-unete_al_equipo .formulario-contenedor{
@@ -103,5 +103,14 @@
   .formulario-unete_al_equipo .campos input,
   .formulario-unete_al_equipo .campos select{
       max-width: 67vw;
+  }
+  .formulario-contenedor{
+    padding: 20px !important;
+  }
+  .formulario-unete_al_equipo .formulario-contenedor .campos{
+    margin: 0;
+  }
+  .formulario-unete_al_equipo .unete_al_equipo .formulario-contenido{
+    width: 78vw;
   }
 }
