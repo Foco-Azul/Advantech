@@ -19,8 +19,8 @@ function SeccionContactanos() {
           </ul>
           <p>En nuestra página de Documentación encontrarás tutoriales sobre el uso de nuestros productos y contacto directo de soporte técnico.</p>
           <div className='contacto'>
-            <Link href="mailto:contacto@advantech.com" target='_blank'><FontAwesomeIcon icon={faEnvelopesBulk} size="2xl" /></Link>
-            <p>Envíanos un correo electrónico haciendo clic en el ícono de la izquierda o al correo <Link href="mailto:contacto@advantech.com" target='_blank'>contacto@advantech.com</Link></p>
+            <Link href="mailto:info@advantech.com.ec" target='_blank'><FontAwesomeIcon icon={faEnvelopesBulk} size="2xl" /></Link>
+            <p>Envíanos un correo electrónico haciendo clic en el ícono de la izquierda o al correo <Link href="mailto:info@advantech.com.ec" target='_blank'>info@advantech.com.ec</Link></p>
           </div>
           <br />
           <div className='contacto'>
