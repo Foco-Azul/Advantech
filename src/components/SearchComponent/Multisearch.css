@@ -172,6 +172,24 @@ td {
   /* Ajusta la anchura inicial si es necesario */
   transition: width 0.5s ease;
 }
+.hero-icon-container {
+  color: var(--brand-primary, #009FDE);
+  text-align: center;
+  font-size: 14px;
+  font-family: Manrope, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  display: flex;
+  transition: 0.5s;
+}
+.hero-icon-container svg {
+  height: 20px;
+}
+.hero-icon-container:hover{
+  transform: scale(1.05);
+  margin-left: 20px;
+}
 
 
 @keyframes gradientAnimation {

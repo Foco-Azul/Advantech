@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function SeccionBusquedas() {
-  const [activeTab, setActiveTab] = useState('FINANZAS');
+  const [activeTab, setActiveTab] = useState('BUSQUEDA SIMPLE');
 
   const handleTabClick = (tab: React.SetStateAction<string>) => {
     setActiveTab(tab);
@@ -20,11 +20,12 @@ function SeccionBusquedas() {
     <section className='seccion-uso_de_datos'>
       <div className="uso_de_datos-container">
         <div className='productos-pestañas'>
-          <button className={activeTab === 'FINANZAS' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('FINANZAS')}>BUSQUEDA SIMPLE</button>
-          <button className={activeTab === 'RECURSOS HUMANOS' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('RECURSOS HUMANOS')}>BUSQUEDA POR LOTE</button>
+          <button className={activeTab === 'BUSQUEDA SIMPLE' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('BUSQUEDA SIMPLE')}>BUSQUEDA SIMPLE</button>
+          <button className={activeTab === 'BUSQUEDA POR LOTE' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('BUSQUEDA POR LOTE')}>BUSQUEDA POR LOTE</button>
+          <button className={activeTab === 'BUSQUEDA POR API' ? 'pestaña-activo' : ''} onClick={() => handleTabClick('BUSQUEDA POR API')}>BUSQUEDA POR API</button>
         </div>
         <div>
-          <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'FINANZAS' ? 'contenido-activo' : '')}>
+          <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'BUSQUEDA SIMPLE' ? 'contenido-activo' : '')}>
             <div className="seccion-titulo">
               <h4>Guia para realizar una busqueda simple</h4>
               <h2>Obteniendo datos de una persona</h2>
@@ -37,6 +38,8 @@ function SeccionBusquedas() {
                 <ul>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
                 </ul>
               <p>
                 <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
@@ -55,7 +58,7 @@ function SeccionBusquedas() {
               <Image src="/video/por-descarga.gif" width={600} height={100} alt='Advantech Datos'></Image>
             </div>
           </div>
-          <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'RECURSOS HUMANOS' ? 'contenido-activo' : '')}>
+          <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'BUSQUEDA POR LOTE' ? 'contenido-activo' : '')}>
             <div className="seccion-titulo">
               <h4>Guia para realizar una busqueda por lote</h4>
               <h2>Obteniendo datos de multiples personas</h2>
@@ -68,6 +71,8 @@ function SeccionBusquedas() {
                 <ul>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
                 </ul>
                 <Link href="https://dev.advantech.com.ec:1334/uploads/Prueba_4e7858f26d.xlsx" legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Descarga nuestro Excel de ejemplo<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
               <p>
@@ -81,6 +86,36 @@ function SeccionBusquedas() {
             </div>
             <div className='imagen'>
               <Image src="/video/busqueda-por-lote.gif" width={600} height={100} alt='Advantech Datos'></Image>
+            </div>
+          </div>
+          <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'BUSQUEDA POR API' ? 'contenido-activo' : '')}>
+            <div className="seccion-titulo">
+              <h4>Guia para realizar una busqueda por API</h4>
+              <h2>Obteniendo datos de multiples personas</h2>
+              <p>
+                <span className="guia-subtitulo">Realizando una busqueda: </span>
+                En la pestaña &ldquo;Búsqueda por API&rdquo;, primero, debes contar con el plan Enterprise y usar tu APIKEY para realizar una búsqueda. En este caso, podras buscar por el número de <strong>RUC</strong> de las personas que deseas buscar.
+                <br />
+                Además, tendrás la opción de ingresar las fuentes de resultados que deseas obtener, las cuales incluyen:
+              </p>
+                <ul>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
+                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
+                </ul>
+                <Link href="https://api-dev.advantech.com.ec:3002/docs/" legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Ingresa a la documentacion de la API<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
+              <p>
+                <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
+                Los resultados de la búsqueda por RUC te dará resultados precisos de una sola persona.
+              </p>
+              <p>
+                <span className="guia-subtitulo">Obteniendo los resultados: </span>
+                Para acceder a los resultados de la búsqueda, es necesario contar con plan Enterprise, usar tu APIKEY y contar con los créditos requeridos para obtener los datos. Podras obtener los resultados en formato <strong>JSON</strong>.
+              </p>
+            </div>
+            <div className='imagen'>
+              <Image src="/video/por-api.gif" width={600} height={100} alt='Advantech Datos'></Image>
             </div>
           </div>
         </div>

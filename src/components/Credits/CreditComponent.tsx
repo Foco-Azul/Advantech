@@ -41,6 +41,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
 
     const handleClose = () => {
         setIsOpen(false);
+        window.location.reload(); 
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,6 +95,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             nuevoPrecio = buycredits * priceTiers[priceTiers.length - 1].attributes.preciocredito;
         }
     }
+    console.log("foundUser.attributes.vencimiento", uservencimiento)
 
     // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
     return (
@@ -139,11 +141,12 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                         <br></br>
                         <Pasarela
                             planvencimiento={planvencimiento}
+                            uservencimiento= {uservencimiento}
                             price={nuevoPrecio}
                             plan={plan}
                             creditos={buycredits}
                             userCredits={userCredits}
-                            planid={4}
+                            planid={planid}
                             userid={userid} 
                             userCorreo={userCorreo}                       />
                     </div>
@@ -172,7 +175,7 @@ const CreditComponent: React.FC = () => {
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
-                    const planId = foundUser.attributes?.plan?.data?.id
+                    const planId = foundUser?.attributes?.plan?.data?.id ?? 4;
                     const userCorreo = foundUser.attributes.email;
                     const auth0 = foundUser.attributes.auth0;
                     setUserPlanPrice(userPlanData);
@@ -219,7 +222,7 @@ const CreditComponent: React.FC = () => {
                     price={0}
                     plan={'de creditos'}
                     creditos={0}
-                    planid={4}
+                    planid={planId}
                     planvencimiento={6}
                     userid={userId} 
                     userCorreo={userCorreo}         

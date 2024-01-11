@@ -46,6 +46,7 @@
     align-items: center;
     flex-wrap: wrap;
     align-items: flex-start;
+    justify-content: center;
 }
 
 .tab-buttons {

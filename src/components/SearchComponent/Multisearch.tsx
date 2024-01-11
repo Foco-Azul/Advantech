@@ -11,6 +11,7 @@ import Titulostable from './Titulostable';
 import { TitulosExcel } from './TitulosExcel';
 import Accionistastable from './Accionistastable';
 import AccionistasExcel from './AccionistasExcel';
+import { ArrowRight } from "lucide-react";
 
 const Multisearch: React.FC = () => {
   const [fileData, setFileData] = useState<string | null>(null);
@@ -412,8 +413,13 @@ const Multisearch: React.FC = () => {
       {!data &&
         <div className='buscador-container'>
           <label className='buscador-label aviso'>En los siguientes campos tienes que seleccionar la fuente de datos, y consecuentemente subir el archivo en formato xlsx (Excel).</label>
-          <br></br>
+          <br />
+          <a href="/guia-de-busqueda" className="hero-icon-container">
+            ¿Cómo funciona? <ArrowRight className="hero-icon" />
+          </a>
+          <br/>
           <label className='buscador-label'>Selecciona el tipo de búsqueda</label>
+
           <select
             id="typeSelector"
             value={selectedType}

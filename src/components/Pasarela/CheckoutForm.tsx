@@ -12,6 +12,7 @@ interface CheckoutFormProps {
   userCredits: number | null;
   planid: number | null;
   planvencimiento: number;
+  uservencimiento: string | number | null;
   userid: number | null;
   userCorreo: string | null;
   nombres: string;
@@ -22,7 +23,7 @@ interface CheckoutFormProps {
   email: string;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planvencimiento, userCorreo }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planvencimiento, uservencimiento,  userCorreo }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user, error, isLoading } = useUser();
@@ -95,10 +96,30 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
         }
 
         var fechaActual = new Date();
-        var mesesASumar = planvencimiento;
-        fechaActual.setMonth(fechaActual.getMonth() + mesesASumar);
-        var fechaVencimiento = fechaActual.toISOString();
-
+        if (uservencimiento !== null) {
+          var uservencimiento_data = new Date(uservencimiento);
+          var diferenciaEnMeses =
+            (uservencimiento_data.getFullYear() - fechaActual.getFullYear()) * 12 +
+            (uservencimiento_data.getMonth() - fechaActual.getMonth());  
+          console.log("Diferencia en meses:", diferenciaEnMeses);
+          if(planvencimiento > diferenciaEnMeses){
+            if(diferenciaEnMeses>=0){
+              var mesesASumar = planvencimiento;
+              fechaActual.setMonth(fechaActual.getMonth() + mesesASumar + diferenciaEnMeses);
+              var fechaVencimiento = fechaActual.toISOString();
+            }else{
+              var mesesASumar = planvencimiento;
+              fechaActual.setMonth(fechaActual.getMonth() + mesesASumar);
+              var fechaVencimiento = fechaActual.toISOString();
+            }
+          }else{
+            var fechaVencimiento = uservencimiento_data.toISOString();
+          }
+        }else{
+          var mesesASumar = planvencimiento;
+          fechaActual.setMonth(fechaActual.getMonth() + mesesASumar);
+          var fechaVencimiento = fechaActual.toISOString();
+        }
         const postResponse = await fetch(
           `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${userid}`,
           {

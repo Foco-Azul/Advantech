@@ -19,6 +19,7 @@ import { NoticiasExcel } from './NoticiasExcel';
 import { JudicialesExcel } from './JudicialesExcel';
 import { TitulosExcel } from './TitulosExcel';
 import AccionistasExcel from './AccionistasExcel';
+import { ArrowRight } from "lucide-react";
 
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
@@ -521,8 +522,11 @@ const SearchComponent: React.FC = () => {
                         <div className='buscador-container'>
 
                             <label className='buscador-label aviso'>En los siguientes campos tienes que completar con el nombre o RUC de la persona o entidad que deseas buscar, además selecciona la fuente de donde quieres los datos.</label>
-                            <br></br>
-                            <br></br>
+                            <br />
+                                <a href="/guia-de-busqueda" className="hero-icon-container">
+                                    ¿Cómo funciona? <ArrowRight className="hero-icon" />
+                                </a>
+                            <br/>
                             <label className='buscador-label'>Selecciona el tipo de búsqueda</label>
                             <select
                                 id="typeSelector"

@@ -140,7 +140,7 @@ const Micuenta: React.FC = () => {
     };
 
 
-    const DescargarJSON = async (query_id: string) => {
+    const DescargarJSON = async (query_id: string, consulta: string) => {
 
         const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
             method: 'POST',
@@ -170,7 +170,7 @@ const Micuenta: React.FC = () => {
                 // Crea un enlace de descarga
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = "datos.json";
+                a.download = consulta+".json";
 
                 // Simula un clic en el enlace para iniciar la descarga
                 a.click();
@@ -795,7 +795,7 @@ const Micuenta: React.FC = () => {
                                                                         ) : search.attributes.status === "FAILED" ? (
                                                                             <button className='micuenta-download-button proceso' >Fallido</button>
                                                                         ) : (
-                                                                            <button className='micuenta-download-button' onClick={() => DescargarJSON(search.attributes.query_id)}>Descargar</button>
+                                                                            <button className='micuenta-download-button' onClick={() => DescargarJSON(search.attributes.query_id, search.attributes.consulta)}>Descargar</button>
                                                                         )}
 
                                                                     </td>

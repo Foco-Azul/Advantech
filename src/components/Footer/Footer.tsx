@@ -53,6 +53,7 @@ function Footer() {
             <div>
               <h2 className="column-title">MI CUENTA</h2>
               <ul>
+                <li className="list-row"><a href='https://api-dev.advantech.com.ec:3002/docs/' target="_blank" className="link">Documentacion API</a></li>
                 <li className="list-row"><a href='/micuenta/?ver=busquedas' className="link">Historial de busquedas</a></li>
                 <li className="list-row"><a href='/micuenta/?ver=compras' className="link">Historial de pagos</a></li>
                 <li className="list-row"><a href='/micuenta' className="link">Mis datos</a></li>
