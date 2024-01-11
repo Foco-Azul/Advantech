@@ -549,16 +549,16 @@ const Micuenta: React.FC = () => {
                                     Soporte
                                 </button>
 
-                                <a href="/api/auth/logout" className={"tab-button"}>
-                                    Salir
-                                </a>
-
                                 {apiset && <button id='api'
                                     className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('api')}
                                 >
                                     API
                                 </button>}
+
+                                <a href="/api/auth/logout" className={"tab-button"}>
+                                    Salir
+                                </a>
 
                             </div>
 
@@ -652,7 +652,7 @@ const Micuenta: React.FC = () => {
                                                                 </button>
                                                             </>
                                                         ) : (<>
-                                                            <p>Se cambio correctamente el nomre de usuario</p>
+                                                            <p>Se cambio correctamente el nombre de usuario</p>
                                                         </>)}
                                                     </div>
                                                 </div>
@@ -782,7 +782,7 @@ const Micuenta: React.FC = () => {
                                                                         ) : search.attributes.status === "FAILED" ? (
                                                                             <button className='micuenta-download-button proceso' >Fallido</button>
                                                                         ) : (
-                                                                            <button className='micuenta-download-button' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero, search.attributes.consulta)}>Descarga</button>
+                                                                            <button className='micuenta-download-button' onClick={() => DescargaExcel(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero, search.attributes.consulta)}>Descargar</button>
                                                                         )}
 
                                                                     </td>

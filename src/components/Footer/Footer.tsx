@@ -26,7 +26,6 @@ function Footer() {
             </Link>
             <div className="footer-rrss" data-testid="footer-rrss">
               <Link href="https://www.linkedin.com/company/advantechint/" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faLinkedin} size="xl" /></a></Link>
-              <Link href="https://twitter.com/AdvantechDatos?s=20" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faTwitter} size="xl" /></a></Link>
               <Link href="https://www.facebook.com/profile.php?id=61550513552222&mibextid=2JQ9oc" legacyBehavior passHref><a target="_blank"><FontAwesomeIcon icon={faSquareFacebook} size="xl" /></a></Link>
             </div>
           </div>
@@ -36,7 +35,7 @@ function Footer() {
               <ul>
                 <li className="list-row"><a href='/busqueda' className="link">Buscar datos</a></li>
                 <li className="list-row"><a href='/guia-de-busqueda' className="link">Guía de busqueda</a></li>
-                <li className="list-row"><Link href='https://stats.uptimerobot.com/MqqMLIxxZQ' legacyBehavior passHref><a className="link" target="_blank">Monitorio uptime</a></Link></li>
+                <li className="list-row"><Link href='https://stats.uptimerobot.com/MqqMLIxxZQ' legacyBehavior passHref><a className="link" target="_blank">Monitoreo uptime</a></Link></li>
                 <li className="list-row"><a href='/uso-por-industria' className="link">Uso por industria</a></li>
                 <li className="list-row"><a href='/ventajas' className="link">Ventajas</a></li>
               </ul>
@@ -65,7 +64,7 @@ function Footer() {
         </div>
 
         <div className="footer-final">
-          <p>© 2023 Derechos reservados Advantech</p>
+          <p>© 2024 Derechos reservados Advantech</p>
         </div>
       </div>
     </footer>

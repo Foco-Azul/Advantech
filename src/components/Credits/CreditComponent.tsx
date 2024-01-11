@@ -51,7 +51,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
         }else{
             setEsValido(false)
         }
-        setBuyCredits(inputValue);
+        setBuyCredits(Math.round(inputValue));
     };
 
     async function planalacarta() {
@@ -112,10 +112,14 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <hr className="credit-hr" />
 
             <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
-            <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
             {shouldShowBuyCreditsButton && esValido &&(
-            <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString()} créditos</button>
+                <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
             )}
+
+            {shouldShowBuyCreditsButton && esValido &&(
+                <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString()} créditos</button>
+            )}
+            
             {shouldShowVerifyAccountButton && (
             <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
             )}
