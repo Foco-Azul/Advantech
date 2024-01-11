@@ -12,6 +12,7 @@ interface SubscriptionCardProps {
     creditos: number;
     userCredits: number | null;
     planid: number | null;
+    planActual: number | null;
     planvencimiento: number;
     uservencimiento: string | number | null;
     userid: number | null;
@@ -19,7 +20,7 @@ interface SubscriptionCardProps {
     auth0: boolean | null;
 }
 
-const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid, userCorreo, auth0 }) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid, planActual, userCorreo, auth0 }) => {
     const { user} = useUser();
     const [isOpen, setIsOpen] = useState(false);
     const [esValido, setEsValido] = useState(true);
@@ -146,7 +147,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                             plan={plan}
                             creditos={buycredits}
                             userCredits={userCredits}
-                            planid={planid}
+                            planid={4}
+                            planActual={planActual}
                             userid={userid} 
                             userCorreo={userCorreo}                       />
                     </div>
@@ -163,7 +165,7 @@ const CreditComponent: React.FC = () => {
     const [userCredits, setUserCredits] = useState<number | null>(null);
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
-    const [planId, setPlanId] = useState<number | null>(null);
+    const [planActual, setPlanActual] = useState<number | null>(null);
     const [userCorreo, setUserCorreo] = useState<string | null>(null);
     const [auth0, setAuth0] = useState<boolean | null>(null);
     
@@ -175,14 +177,14 @@ const CreditComponent: React.FC = () => {
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
-                    const planId = foundUser?.attributes?.plan?.data?.id ?? 4;
+                    const planActual = foundUser?.attributes?.plan?.data?.id ?? 4;
                     const userCorreo = foundUser.attributes.email;
                     const auth0 = foundUser.attributes.auth0;
                     setUserPlanPrice(userPlanData);
                     setUserCredits(userCredits);
                     setUserVencimiento(userVencimiento);
                     setUserId(userId)
-                    setPlanId(planId)
+                    setPlanActual(planActual);
                     setUserCorreo(userCorreo);
                     setAuth0(auth0);
                 }
@@ -222,7 +224,8 @@ const CreditComponent: React.FC = () => {
                     price={0}
                     plan={'de creditos'}
                     creditos={0}
-                    planid={planId}
+                    planid={4}
+                    planActual={planActual}
                     planvencimiento={6}
                     userid={userId} 
                     userCorreo={userCorreo}         

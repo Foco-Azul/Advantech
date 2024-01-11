@@ -14,6 +14,7 @@ interface SubscriptionCardProps {
     creditos: number;
     userCredits: number | null;
     planid: number;
+    planActual: number | null;
     planvencimiento: number;
     uservencimiento: string | number | null;
     userid: number | null;
@@ -48,7 +49,7 @@ interface Plan {
     };
 }
 
-const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid, userCorreo, auth0     }) => {
+const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, api, userid, plan, planvencimiento, userPlanPrice, txt, uservencimiento, creditos, userCredits, xlsx, csv, pdf, soporte, planid, planActual, userCorreo, auth0}) => {
     const { user} = useUser();
     const [isOpen, setIsOpen] = useState(false);
     // Lógica para determinar cuándo mostrar cada botón
@@ -140,11 +141,13 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                         <Pasarela
                             userid={userid}
                             planvencimiento={planvencimiento}
+                            uservencimiento={uservencimiento}
                             price={price}
                             plan={plan}
                             creditos={creditos}
                             userCredits={userCredits}
                             planid={planid}
+                            planActual={planActual}
                             userCorreo={userCorreo}
                         />
                     </div>
@@ -163,6 +166,7 @@ const SubscriptionComponent: React.FC = () => {
     const [userVencimiento, setUserVencimiento] = useState<number | null>(null);
     const [userCorreo, setUserEmail] = useState<string | null>(null);
     const [userId, setUserId] = useState<number | null>(null);
+    const [planActual, setPlanActual] = useState<number | null>(null);
     const [auth0, setAuth0] = useState<boolean | null>(null);
 
     useEffect(() => {
@@ -181,6 +185,7 @@ const SubscriptionComponent: React.FC = () => {
                     const userCredits = foundUser.attributes.creditos;
                     const userVencimiento = foundUser.attributes.vencimiento;
                     const userId = foundUser.id
+                    const planActual = foundUser?.attributes?.plan?.data?.id ?? -1;
                     const userCorreo = foundUser.attributes.email;
                     const auth0 = foundUser.attributes.auth0;
                     setUserPlanPrice(userPlanData);
@@ -188,6 +193,7 @@ const SubscriptionComponent: React.FC = () => {
                     setUserVencimiento(userVencimiento);
                     setUserEmail(userCorreo);
                     setUserId(userId);
+                    setPlanActual(planActual ?? -1);
                     setAuth0(auth0);
                 }
             })
@@ -244,6 +250,7 @@ const SubscriptionComponent: React.FC = () => {
                     <SubscriptionCard
                         key={plan.id}
                         planid={plan.id}
+                        planActual={planActual}
                         price={plan.attributes.Precio}
                         plan={plan.attributes.Plan}
                         userPlanPrice={userPlanPrice}

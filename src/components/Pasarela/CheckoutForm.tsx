@@ -11,6 +11,7 @@ interface CheckoutFormProps {
   creditos: number;
   userCredits: number | null;
   planid: number | null;
+  planActual: number | null;
   planvencimiento: number;
   uservencimiento: string | number | null;
   userid: number | null;
@@ -23,7 +24,7 @@ interface CheckoutFormProps {
   email: string;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planvencimiento, uservencimiento,  userCorreo }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planActual, planvencimiento, uservencimiento,  userCorreo }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user, error, isLoading } = useUser();
@@ -129,8 +130,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
             },
             body: JSON.stringify({
               data: {
-                plan: planid,
-                creditos: creditos + userCredits,
+                plan: (planActual !== 4 && planid === 4) ? planActual : planid,
+               creditos: creditos + userCredits,
                 vencimiento: fechaVencimiento,
                 estaactivo: true
               },
@@ -169,7 +170,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
               cache: "no-store",
             }
           );
-          if(planid==4){
+          if(planActual == planid || planid == 4){
             const postResponse = await fetch(
               `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
               {
