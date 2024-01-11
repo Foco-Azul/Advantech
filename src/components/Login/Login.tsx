@@ -62,6 +62,7 @@ function Login({ loginname }: LoginProps) {
       const fechaHoraActual = new Date().toISOString();
       const codigoAleatorio = Math.random().toString(36).substring(2, 8);
       const codigoUnico = fechaHoraActual.replace(/[^a-zA-Z0-9]/g, '') + codigoAleatorio;
+
       if (foundUser) {
         setUserName(foundUser.attributes.username);
         if (user && user.sub && user.sub.includes("auth0") && foundUser.attributes.codigo_de_verificacion == null) {
@@ -141,13 +142,56 @@ function Login({ loginname }: LoginProps) {
           setUserName(foundUser.attributes.username);
         } else {
 
+          const credito_gratuito = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/credito-gratuito?populate=*`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+              },
+              cache: "no-store",
+            }
+          );
+          if (credito_gratuito.status !== 200) {
+            throw new Error(`Failed to fetch data, ${credito_gratuito.status}`);
+          }
+          const credito_gratuito_data = (await credito_gratuito.json()).data.attributes;
           var fechaActual = new Date();
-          fechaActual.setMonth(fechaActual.getMonth() + 1);
+          fechaActual.setMonth(fechaActual.getMonth() + credito_gratuito_data.meses);
           var fechaVencimiento = fechaActual.toISOString();
-
+          
           if (typeof user.email === 'string') {
             if (user && user.sub && user.sub.includes("auth0")) {
               // Realizar el POST con los datos requeridos
+              var body_data;
+              if (credito_gratuito_data.activo) {
+                body_data = JSON.stringify({
+                  data : {
+                    email: user.email,
+                    username: user.email?.split("@")[0],
+                    vencimiento: fechaVencimiento,
+                    plan: credito_gratuito_data.id_plan.data.id,
+                    creditos: credito_gratuito_data.creditos,
+                    codigo_de_verificacion: codigoUnico,
+                    apikey: generateApiKey(user.email),
+                    auth0: false,
+                    estaactivo: true,
+                  }
+                });
+              } else {
+                body_data = JSON.stringify({
+                  data : {
+                    email: user.email,
+                    username: user.email?.split("@")[0],
+                    vencimiento: "2023-01-01",
+                    codigo_de_verificacion: codigoUnico,
+                    apikey: generateApiKey(user.email),
+                    auth0: false,
+                    estaactivo: true,
+                  }
+                });
+              }
               const postResponse = await fetch(
                 `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
                 {
@@ -155,22 +199,7 @@ function Login({ loginname }: LoginProps) {
                   headers: {
                     "Content-Type": "application/json",
                   },
-                  body: JSON.stringify({
-                    data: {
-                      email: user.email,
-                      username: user.email?.split("@")[0],
-                      //Vencimiento especial por lanzamiento
-                      vencimiento: fechaVencimiento,
-                      //Vencimiento normal comentar linea 163 y descomentar linea 165
-                      //vencimiento: "2023-01-01",
-                      plan: 4, //Para registro normal comentar esta linea
-                      creditos: 100, //Para registro normal comentar esta linea
-                      codigo_de_verificacion: codigoUnico,
-                      apikey:  generateApiKey(user.email),
-                      auth0: false,
-                      estaactivo: true
-                    },
-                  }),
+                  body: body_data,
                   cache: "no-store",
                 }
               );
@@ -180,7 +209,35 @@ function Login({ loginname }: LoginProps) {
               }
             }else{
               if (user && user.sub && user.sub.includes("google")) {
-                  // Realizar el POST con los datos requeridos
+                // Realizar el POST con los datos requeridos
+                var body_data;
+                if (credito_gratuito_data.activo) {
+                  body_data = JSON.stringify({
+                    data : {
+                      email: user.email,
+                      username: user.email?.split("@")[0],
+                      vencimiento: fechaVencimiento,
+                      plan: credito_gratuito_data.id_plan.data.id,
+                      creditos: credito_gratuito_data.creditos,
+                      codigo_de_verificacion: codigoUnico,
+                      apikey:  generateApiKey(user.email),
+                      google: true,
+                      estaactivo: true
+                    }
+                  });
+                } else {
+                  body_data = JSON.stringify({
+                    data : {
+                      email: user.email,
+                      username: user.email?.split("@")[0],
+                      vencimiento: "2023-01-01",
+                      codigo_de_verificacion: codigoUnico,
+                      apikey:  generateApiKey(user.email),
+                      google: true,
+                      estaactivo: true
+                    }
+                  });
+                }
                 const postResponse = await fetch(
                   `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
                   {
@@ -188,21 +245,7 @@ function Login({ loginname }: LoginProps) {
                     headers: {
                       "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({
-                      data: {
-                        email: user.email,
-                        username: user.email?.split("@")[0],
-                        //Vencimiento especial por lanzamiento
-                        vencimiento: fechaVencimiento,
-                        //Vencimiento normal comentar linea 163 y descomentar linea 165
-                        //vencimiento: "2023-01-01",
-                        plan: 4, //Para registro normal comentar esta linea
-                        creditos: 100, //Para registro normal comentar esta linea
-                        apikey:  generateApiKey(user.email),
-                        google: true,
-                        estaactivo: true
-                      },
-                    }),
+                    body: body_data,
                     cache: "no-store",
                   }
                 );
@@ -214,6 +257,34 @@ function Login({ loginname }: LoginProps) {
               }else{
                 if (user && user.sub && user.sub.includes("windowslive")) {
                   // Realizar el POST con los datos requeridos
+                  var body_data;
+                  if (credito_gratuito_data.activo) {
+                    body_data = JSON.stringify({
+                      data : {
+                        email: user.email,
+                        username: user.email?.split("@")[0],
+                        vencimiento: fechaVencimiento,
+                        plan: credito_gratuito_data.id_plan.data.id,
+                        creditos: credito_gratuito_data.creditos,
+                        codigo_de_verificacion: codigoUnico,
+                        apikey:  generateApiKey(user.email),
+                        microsoft: true,
+                        estaactivo: true
+                      }
+                    });
+                  } else {
+                    body_data = JSON.stringify({
+                      data : {
+                        email: user.email,
+                        username: user.email?.split("@")[0],
+                        vencimiento: "2023-01-01",
+                        codigo_de_verificacion: codigoUnico,
+                        apikey:  generateApiKey(user.email),
+                        microsoft: true,
+                        estaactivo: true
+                      }
+                    });
+                  }
                 const postResponse = await fetch(
                   `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users`,
                   {
@@ -221,21 +292,7 @@ function Login({ loginname }: LoginProps) {
                     headers: {
                       "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({
-                      data: {
-                        email: user.email,
-                        username: user.email?.split("@")[0],
-                        //Vencimiento especial por lanzamiento
-                        vencimiento: fechaVencimiento,
-                        //Vencimiento normal comentar linea 163 y descomentar linea 165
-                        //vencimiento: "2023-01-01",
-                        plan: 4, //Para registro normal comentar esta linea
-                        creditos: 100, //Para registro normal comentar esta linea
-                        apikey:  generateApiKey(user.email),
-                        microsoft: true,
-                        estaactivo: true
-                      },
-                    }),
+                    body: body_data,
                     cache: "no-store",
                   }
                 );
