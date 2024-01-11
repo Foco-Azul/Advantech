@@ -211,7 +211,6 @@ const SearchComponent: React.FC = () => {
 
                         const statusData = await response.json();
                         status = statusData.status;
-                        console.log(status)
 
                         if (status === 'READY') {
                             // Procesa la respuesta si es necesario

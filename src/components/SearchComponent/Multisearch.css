@@ -1,16 +1,19 @@
 /* Estilos para el elemento superpuesto */
 .loading-overlay {
-  position: fixed; /* Se mantiene fijo en la ventana */
+  position: fixed;
+  /* Se mantiene fijo en la ventana */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Fondo semitransparente */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Asegura que esté en la parte superior de otros elementos */
+  z-index: 9999;
+  /* Asegura que esté en la parte superior de otros elementos */
   backdrop-filter: blur(5px);
 }
 
@@ -57,24 +60,24 @@
   line-height: 18px;
 }
 
-.excel{
+.excel {
   background-color: #1e6d42;
 }
 
 
-.json{
+.json {
   background-color: #f1c816;
   color: black;
 }
 
 
-.download-button-container{
+.download-button-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.buscador-label-excel{
+.buscador-label-excel {
   margin: 10px auto;
   text-align: center;
   display: flex;
@@ -82,92 +85,107 @@
   width: 100%;
 }
 
-.table-container{
+.table-container {
   width: 90%;
   margin: auto;
   max-height: 500px;
   overflow-y: scroll;
- box-shadow: 0px 0px 18px 0px rgba(99, 101, 241, 0.384);
- max-width: 80vw;
- }
+  box-shadow: 0px 0px 18px 0px rgba(99, 101, 241, 0.384);
+  max-width: 80vw;
+}
 
- thead {
+thead {
   position: sticky;
   top: 0;
-  background-color: #0099CC; /* Cambia el color de fondo según tus preferencias */
-  z-index: 1; /* Coloca el encabezado por encima del contenido desplazable */
+  background-color: #0099CC;
+  /* Cambia el color de fondo según tus preferencias */
+  z-index: 1;
+  /* Coloca el encabezado por encima del contenido desplazable */
   color: white;
   text-align: center;
-  }
+}
 
-  td{
-    text-align: center;
-  }
+td {
+  text-align: center;
+}
 
 
 
-  .mostrar-datos{
-    margin: auto;
-    margin-top: 20px;
-    width: 100%;
+.mostrar-datos {
+  margin: auto;
+  margin-top: 20px;
+  width: 100%;
 
-  }
+}
 
-  .input-file{
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 25px;
-width: 100%;
-  }
+.input-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  width: 100%;
+}
 
-  .link-historial {
+.link-historial {
+  color: #0099CC;
+  transition: color 0.5s ease;
+  /* Transición suave de color */
+  animation: pulsate 1.5s infinite;
+  /* Animación pulsante infinita */
+
+}
+
+
+
+@keyframes pulsate {
+  0% {
     color: #0099CC;
-    transition: color 0.5s ease; /* Transición suave de color */
-    animation: pulsate 1.5s infinite; /* Animación pulsante infinita */
+  }
 
+  50% {
+    color: #ffffff;
+    /* Color blanco a la mitad del ciclo */
   }
-  
 
-  
-  @keyframes pulsate {
-    0% {
-      color: #0099CC;
-    }
-    50% {
-      color: #ffffff; /* Color blanco a la mitad del ciclo */
-    }
-    100% {
-      color: #0099CC;
-    }
+  100% {
+    color: #0099CC;
   }
-  
+}
 
-  .progress-bar-container {
-    width: 80%;
-    max-width: 400px; /* Ajusta el ancho máximo según tus preferencias */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 20px 0;
-  }
-  
-  .progress-bar {
-    height: 20px;
-    background: linear-gradient(90deg, #0099CC, #ffffff, #0099CC);
-    background-size: 200% 100%;
-    animation: gradientAnimation 1.5s ease infinite;
-    width: 100%; /* Ajusta la anchura inicial si es necesario */
-    transition: width 0.5s ease;
-  }
-  
 
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 100% 0;
-    }
-    100% {
-      background-position: -100% 0;
-    }
+.progress-bar-container {
+  width: 80%;
+  max-width: 400px;
+  /* Ajusta el ancho máximo según tus preferencias */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.progress-bar {
+  height: 20px;
+  background: linear-gradient(90deg, #0099CC, #ffffff, #0099CC);
+  background-size: 200% 100%;
+  animation: gradientAnimation 1.5s ease infinite;
+  width: 100%;
+  /* Ajusta la anchura inicial si es necesario */
+  transition: width 0.5s ease;
+}
+
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 100% 0;
   }
-  
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@media only screen and (max-width: 525px) {
+  .loading-overlay {
+    padding: 15px;
+  }
+}
