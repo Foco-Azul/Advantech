@@ -49,6 +49,15 @@ const SearchComponent: React.FC = () => {
     const [fuenteseleccionada, setFuenteseleccionada] = useState("");
     const [selectedType, setSelectedType] = useState<string>("nombres"); // Por defecto selecciona "nombre"
 
+    const getCurrentHour = () => {
+        return new Date().getHours();
+    };
+
+    const isNightTime = () => {
+        const currentHour = getCurrentHour();
+        return currentHour >= 21 || currentHour < 7;
+    };
+
     async function enviarCorreo(jsonResponse: { data: { attributes: any; id: any; }; }) {
         const nuevoHistorial = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials/${jsonResponse.data.id}?populate=archivo`,
@@ -568,7 +577,8 @@ const SearchComponent: React.FC = () => {
                                         <>  <div className='loading-overlay'>
                                             <p>Estamos procesando tus datos</p>
                                             <br></br>
-                                            {/* <p>En breve comenzará la descarga</p> */}
+                                            {isNightTime() && <p>En la noche, las fuentes pueden tardar más en procesar solicitamos de tu paciencia</p>}
+                                            <br></br>
                                             <CircularProgress></CircularProgress>
                                         </div>
                                         </>
