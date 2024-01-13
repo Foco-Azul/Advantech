@@ -349,7 +349,9 @@ const Multisearch: React.FC = () => {
             const tiempoTranscurrido = HoraActualenSegundos - HoraInicioenSegundos;
         
             if (CantidadTotaldeSegundos && CantidadTotaldeSegundos > 0) {
-              setProgress((tiempoTranscurrido / CantidadTotaldeSegundos) * 100);
+              // Asegura que el progreso nunca sea mayor al 100%
+              const nuevoProgreso = (tiempoTranscurrido / CantidadTotaldeSegundos) * 100;
+              setProgress(Math.min(nuevoProgreso, 100));
             }
         
             // Espera 1 segundo antes de realizar la siguiente verificación
