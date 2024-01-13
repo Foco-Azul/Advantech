@@ -252,7 +252,6 @@ const SearchComponent: React.FC = () => {
                     if (secondResponse.ok) {
                         const secondJsonData = await secondResponse.json();
                         const noticias = secondJsonData.data;
-                        console.log(secondJsonData)
                         setDatosTabla(noticias);
                         let primeraPropiedad;
                         for (let propiedad in noticias) {
