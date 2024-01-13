@@ -876,7 +876,8 @@ const Micuenta: React.FC = () => {
                                                         <>
                                                             <br></br>
                                                             <br></br>
-                                                            <a className="tab-button" href="https://api.whatsapp.com/send?phone=17049707717">Solicitar soporte por WhatsApp</a>
+                                                            <a className="tab-button" href={"https://api.whatsapp.com/send?phone=" + process.env.NEXT_PUBLIC_ADVANTECH_TELEFONO_SOPORTE} target='_blank'>Solicitar soporte por WhatsApp</a>
+
                                                         </>
 
                                                     }

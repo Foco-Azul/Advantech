@@ -23,10 +23,12 @@ function SeccionContactanos() {
             <p>Envíanos un correo electrónico haciendo clic en el ícono de la izquierda o al correo <Link href="mailto:info@advantech.com.ec" target='_blank'>info@advantech.com.ec</Link></p>
           </div>
           <br />
+          {/*
           <div className='contacto'>
             <Link href="tel:+593984765158" target='_blank'><FontAwesomeIcon icon={faPhone} size="2xl" /></Link>
             <p>Envíanos un mensaje o realiza una llamada haciendo clic en el ícono de la izquierda o al número <Link href="tel:+593984765158" target='_blank'>+593 984 765 158</Link></p>
           </div>
+          */}
         </div>
       </div>
     </section>
