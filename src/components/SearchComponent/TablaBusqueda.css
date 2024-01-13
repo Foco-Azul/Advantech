@@ -191,3 +191,10 @@ p {
 .clear-filters-button:hover{
     color: red;
 }
+
+
+@media only screen and (max-width: 525px) {
+    .buscador-tabla-container {
+       overflow-x: scroll;
+    }
+}
