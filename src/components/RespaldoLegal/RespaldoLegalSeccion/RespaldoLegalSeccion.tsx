@@ -426,6 +426,7 @@ function RespaldoLegalSeccion() {
                       </p>
                     </li>
                     <li>           
+                      <div className='tabla-cookies-contenedor'>
                         <table className='tabla-cookies'>
                           <thead>
                             <tr>
@@ -455,7 +456,8 @@ function RespaldoLegalSeccion() {
                               <td>Google Analytics</td>
                             </tr>
                           </tbody>
-                        </table>                
+                        </table>        
+                      </div>        
                     </li>
                     <li>
                       <p>
@@ -463,40 +465,42 @@ function RespaldoLegalSeccion() {
                       </p>
                     </li>
                     <li>                     
-                      <table className='tabla-cookies'>
-                        <thead>
-                          <tr>
-                              <th>NOMBRE</th>
-                              <th>ORIGEN</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1P_JAR</td>
-                            <td>Google Ads Optimization</td>
-                          </tr>
-                          <tr>
-                            <td>__stripe_mid</td>
-                            <td>Stripe</td>
-                          </tr>
-                          <tr>
-                            <td>__stripe_sid</td>
-                            <td>Stripe</td>
-                          </tr>
-                          <tr>
-                            <td>_ga</td>
-                            <td>Google Analytics</td>
-                          </tr>
-                          <tr>
-                            <td>_ga_H77JWD9QJ9</td>
-                            <td>Google Analytics</td>
-                          </tr>
-                          <tr>
-                            <td>appSession</td>
-                            <td>datos.advantech.com.ec</td>
-                          </tr>
-                        </tbody> 
-                      </table>                     
+                      <div className='tabla-cookies-contenedor'>
+                        <table className='tabla-cookies'>
+                          <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>ORIGEN</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1P_JAR</td>
+                              <td>Google Ads Optimization</td>
+                            </tr>
+                            <tr>
+                              <td>__stripe_mid</td>
+                              <td>Stripe</td>
+                            </tr>
+                            <tr>
+                              <td>__stripe_sid</td>
+                              <td>Stripe</td>
+                            </tr>
+                            <tr>
+                              <td>_ga</td>
+                              <td>Google Analytics</td>
+                            </tr>
+                            <tr>
+                              <td>_ga_H77JWD9QJ9</td>
+                              <td>Google Analytics</td>
+                            </tr>
+                            <tr>
+                              <td>appSession</td>
+                              <td>datos.advantech.com.ec</td>
+                            </tr>
+                          </tbody> 
+                        </table>    
+                      </div>                 
                     </li>
                     <li>
                       <p>
@@ -504,32 +508,34 @@ function RespaldoLegalSeccion() {
                       </p>
                     </li>
                     <li>                   
-                      <table className='tabla-cookies'>
-                        <thead>
-                          <tr>
-                              <th>NOMBRE</th>
-                              <th>ORIGEN</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>__stripe_mid</td>
-                            <td>Stripe</td>
-                          </tr>
-                          <tr>
-                            <td>__stripe_sid</td>
-                            <td>Stripe</td>
-                          </tr>
-                          <tr>
-                            <td>_ga</td>
-                            <td>Google Analytics</td>
-                          </tr>
-                          <tr>
-                            <td>_ga_H77JWD9QJ9</td>
-                            <td>Google Analytics</td>
-                          </tr>
-                        </tbody>
-                      </table>                  
+                      <div className='tabla-cookies-contenedor'>
+                        <table className='tabla-cookies'>
+                          <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>ORIGEN</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>__stripe_mid</td>
+                              <td>Stripe</td>
+                            </tr>
+                            <tr>
+                              <td>__stripe_sid</td>
+                              <td>Stripe</td>
+                            </tr>
+                            <tr>
+                              <td>_ga</td>
+                              <td>Google Analytics</td>
+                            </tr>
+                            <tr>
+                              <td>_ga_H77JWD9QJ9</td>
+                              <td>Google Analytics</td>
+                            </tr>
+                          </tbody>
+                        </table>   
+                      </div>               
                     </li>
                   </ul>
                 </li>

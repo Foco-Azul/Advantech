@@ -65,7 +65,8 @@ function Login({ loginname }: LoginProps) {
 
       if (foundUser) {
         setUserName(foundUser.attributes.username);
-        if (user && user.sub && user.sub.includes("auth0") && foundUser.attributes.codigo_de_verificacion == null) {
+        console.log("hola", user && user.sub && user.sub.includes("auth0") && foundUser.attributes.codigo_de_verificacion == null)
+        if (user && user.sub && user.sub.includes("auth0") && foundUser.attributes.auth0 == null) {
           // Realizar el POST con los datos requeridos
          const postResponse = await fetch(
           `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
@@ -77,7 +78,8 @@ function Login({ loginname }: LoginProps) {
              body: JSON.stringify({
                data: {
                  codigo_de_verificacion: codigoUnico,
-                 auth0: false
+                 auth0: false,
+                 estaactivo: true,
                },
              }),
              cache: "no-store",
@@ -100,8 +102,8 @@ function Login({ loginname }: LoginProps) {
             },
             body: JSON.stringify({
               data: {
-                codigo_de_verificacion: codigoUnico,
-                google: true
+                google: true,
+                estaactivo: true,
               },
             }),
             cache: "no-store",
@@ -124,8 +126,8 @@ function Login({ loginname }: LoginProps) {
             },
             body: JSON.stringify({
               data: {
-                codigo_de_verificacion: codigoUnico,
-                microsoft: true
+                microsoft: true,
+                estaactivo: true,
               },
             }),
             cache: "no-store",
@@ -219,7 +221,6 @@ function Login({ loginname }: LoginProps) {
                       vencimiento: fechaVencimiento,
                       plan: credito_gratuito_data.id_plan.data.id,
                       creditos: credito_gratuito_data.creditos,
-                      codigo_de_verificacion: codigoUnico,
                       apikey:  generateApiKey(user.email),
                       google: true,
                       estaactivo: true
@@ -231,7 +232,6 @@ function Login({ loginname }: LoginProps) {
                       email: user.email,
                       username: user.email?.split("@")[0],
                       vencimiento: "2023-01-01",
-                      codigo_de_verificacion: codigoUnico,
                       apikey:  generateApiKey(user.email),
                       google: true,
                       estaactivo: true
@@ -266,7 +266,6 @@ function Login({ loginname }: LoginProps) {
                         vencimiento: fechaVencimiento,
                         plan: credito_gratuito_data.id_plan.data.id,
                         creditos: credito_gratuito_data.creditos,
-                        codigo_de_verificacion: codigoUnico,
                         apikey:  generateApiKey(user.email),
                         microsoft: true,
                         estaactivo: true
@@ -278,7 +277,6 @@ function Login({ loginname }: LoginProps) {
                         email: user.email,
                         username: user.email?.split("@")[0],
                         vencimiento: "2023-01-01",
-                        codigo_de_verificacion: codigoUnico,
                         apikey:  generateApiKey(user.email),
                         microsoft: true,
                         estaactivo: true

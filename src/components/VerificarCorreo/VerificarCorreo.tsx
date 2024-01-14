@@ -18,7 +18,31 @@ const VerificarCorreo: React.FC = () => {
   const [creditosFuente, setCreditosFuente] = useState<any[]>([]);
   const [severifico, setSeverifico] = useState(false); // Agrega la variable severifico
   const [estado, setEstado] = useState(-2); // Agrega la variable severifico
+  const [codigo_de_verificacion, setCodigo_de_verificacion] = useState<string | null>(null);
+  const [enviado, setEnviado] = useState(false); // Estado para indicar si el correo ha sido enviado
 
+  async function handleEnviarCorreoClick(){
+    const postResponse2 = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
+      {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`
+          },
+          body: JSON.stringify({
+              data: {
+                  nombre: userEmail,
+                  asunto: "Verifica tu cuenta",
+                  para: userEmail,
+                  contenido: codigo_de_verificacion
+              },
+          }),
+          cache: "no-store",
+      }
+    );
+    setEnviado(true)
+  };
 
   async function searchUser() {
 
@@ -49,12 +73,14 @@ const VerificarCorreo: React.FC = () => {
             const userVencimiento = foundUser.attributes.vencimiento;
             const userId = foundUser.id;
             const planId = foundUser.attributes.plan?.data.id;
+            const codigo_de_verificacion = foundUser.attributes.codigo_de_verificacion;
 
             setUserPlanData(userPlanData);
             setUserCredits(userCredits);
             setUserVencimiento(userVencimiento);
             setUserId(userId);
             setPlanId(planId);
+            setCodigo_de_verificacion(codigo_de_verificacion);
 
             const urlSearchParams = new URLSearchParams(window.location.search);
             const codigo = urlSearchParams.get('codigo');
@@ -115,6 +141,12 @@ const VerificarCorreo: React.FC = () => {
         <div className='verificar-correo-contenido'>
           <h1 className="verificar-correo-titulo">Revisa tu correo para verificar tu cuenta</h1>
           <Link href={"/"}><button className="hero-button">Volver al inicio</button></Link>
+          <br />
+          {!enviado ? (
+            <button className="hero-button" onClick={handleEnviarCorreoClick}>Enviar correo de verificación</button>
+            ) : (
+              <><br /><p>Se envió correctamente el correo de verificación</p></>
+          )}
         </div>
       )}
       {(estado === 0) && ( // Renderiza el contenido si ingresa a la pagina estando verificado

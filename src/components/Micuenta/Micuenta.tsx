@@ -35,7 +35,7 @@ const Micuenta: React.FC = () => {
     const [purchaseHistory, setPurchaseHistory] = useState<Array<any>>([]);
     const [showApiSection, setShowApiSection] = useState(false);
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
-    const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "");
+    const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "" || purchase.attributes.consulta === null);
     const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos <= 0);
     const [generatedApi, setGeneratedApi] = useState('');
     const [apiSectionVisible, setApiSectionVisible] = useState(true);
@@ -303,7 +303,7 @@ const Micuenta: React.FC = () => {
                     }
                 );
                 // Recargar la página después de completar ambos POST
-                window.location.reload();
+                window.location.href = '/api/auth/logout';
             } else {
                 console.log(postResponse.status);
                 throw new Error(`Failed to create user, ${postResponse.status}`);
@@ -414,7 +414,7 @@ const Micuenta: React.FC = () => {
     }
     async function getHistorialPagos(page: number) {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials?filters[consulta][$eq]=&pagination[page]=${page}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials?filters[tipo][$eq]=compra&filters[tipo][$eq]=devuelto&pagination[page]=${page}`, {
 
                 method: "GET",
                 headers: {
@@ -675,13 +675,12 @@ const Micuenta: React.FC = () => {
                                                     <ul>
                                                         <li>Tu acceso al sitio se eliminará por completo.</li>
                                                         <li>Ya no recibirás correos electrónicos por parte de Advantech Datos.</li>
-                                                        <li>Sin embargo, tus registros de pagos y búsquedas seguirán almacenados en nuestra base de datos.</li>
+                                                        <li>Sin embargo, tus registros de pagos, búsquedas, plan y creditos seguirán almacenados en nuestra base de datos.</li>
+                                                        <li>Podras recuperar tu cuenta volviendo a iniciar sesión con tu mismo correo.</li>
                                                     </ul>
                                                     <br />
-                                                    {userActivo ? (
-                                                        <p><strong>Tu cuenta se dará de baja en las próximas 24 horas.</strong></p>
-                                                    ) : (
-                                                        <p><strong>Esta cuenta se la dará de baja en las próximas 24 horas.</strong></p>
+                                                    {userActivo && (
+                                                        <p><strong>Al hacer clic en darse de baja se cerrara tu sesión actual.</strong></p>
                                                     )}
                                                     {userActivo ? (
                                                         <button

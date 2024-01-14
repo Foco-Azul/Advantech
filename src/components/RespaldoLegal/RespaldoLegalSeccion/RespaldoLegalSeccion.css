@@ -183,3 +183,7 @@
 .tabla-cookies th {
   background-color: #f2f2f2; /* Fondo gris claro para las celdas del encabezado */
 }
+.tabla-cookies-contenedor{
+  max-width: 73vw;
+  overflow: scroll;
+}

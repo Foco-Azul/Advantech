@@ -160,7 +160,9 @@
     top: -10px;
     z-index: 10;
 }
-
+.micuenta-history-table-head.pagos > tr > th{
+    min-width: 101px;
+}
 tr:nth-child(even) {
     background-color: #0099cc12;
 }
@@ -224,11 +226,7 @@ tr:nth-child(even) {
     max-width: 550px;
 }
 
-.eliminar-cuenta > ul,
-.eliminar-cuenta > p,
-.eliminar-cuenta > button{
-    margin-left: 50px;
-}
+
 
 .hero-icon-container {
     color: var(--brand-primary, #009FDE);
