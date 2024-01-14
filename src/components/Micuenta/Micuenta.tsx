@@ -43,7 +43,6 @@ const Micuenta: React.FC = () => {
     const [nameUser, setnameUser] = useState<String>("");
     const [actualizarEstadoConsulta, setActualizarEstadoConsulta] = useState(1);
 
-    console.log("planActual2", planId)
     interface PurchasePagina {
         page: number;
         pageSize: number;
@@ -68,13 +67,11 @@ const Micuenta: React.FC = () => {
         checkAndLogVerParam();
         getuser()
             .then((foundUser) => {
-                console.log("nombre de usuario strapi", foundUser)
                 if (foundUser) {
 
                     setUserPlan(foundUser.attributes.plan?.data?.attributes.Plan);
                     setUserName(foundUser.attributes.username);
 
-                    console.log("usuario auth0", user)
                     setUserCredits(foundUser.attributes.creditos);
                     setUserVencimiento(foundUser.attributes.vencimiento);
                     setApiset(foundUser.attributes.plan?.data?.attributes.API)
@@ -82,7 +79,6 @@ const Micuenta: React.FC = () => {
                     setPlanId(foundUser.attributes.plan?.data?.id)
                     setPurchaseHistory(foundUser.attributes.historials.data);
                     setUserActivo(foundUser.attributes.estaactivo)
-                    console.log(foundUser)
                 }
             })
             .catch((error) => {
@@ -197,10 +193,8 @@ const Micuenta: React.FC = () => {
 
         if (secondResponse.ok) {
             const secondJsonData = await secondResponse.json();
-            console.log("secondJsonData:", secondJsonData)
             const noticias = secondJsonData.data;
 
-            console.log("notocias:", noticias)
             setData(noticias)
 
             if (noticias) {
@@ -282,7 +276,7 @@ const Micuenta: React.FC = () => {
                 }
             );
             if (postResponse.status === 200) {
-                console.log("la cuenta fue dado de baja");
+
                 const postResponse2 = await fetch(
                     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
                     {
@@ -305,7 +299,6 @@ const Micuenta: React.FC = () => {
                 // Recargar la página después de completar ambos POST
                 window.location.href = '/api/auth/logout';
             } else {
-                console.log(postResponse.status);
                 throw new Error(`Failed to create user, ${postResponse.status}`);
             }
         }
@@ -412,7 +405,6 @@ const Micuenta: React.FC = () => {
             const data = await response.json();
             const admin_foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
 
-            console.log("admin_founduser", admin_foundUser)
 
             return admin_foundUser;
         } catch (error) {
@@ -436,7 +428,6 @@ const Micuenta: React.FC = () => {
             const data = await response.json();
             const foundUser = data.data.find((obj: { attributes: { email: string | null | undefined; }; }) => obj.attributes.email === userEmail);
 
-            console.log("founduser", foundUser)
             return foundUser;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -459,7 +450,6 @@ const Micuenta: React.FC = () => {
             const data = await response.json();
             const foundUser = data
 
-            console.log("founduserPagos", foundUser)
             return foundUser;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
@@ -492,18 +482,16 @@ const Micuenta: React.FC = () => {
         }
     };
     
-    console.log("searchHistory", purchaseHistoryFiltered)
-    console.log("purchasePagos", purchasePagos)
     if (purchasePagosPaginas && purchasePagosPaginas.pageCount !== undefined) {
-        console.log("purchasePaginas", purchasePagosPaginas.pageCount);
+
     } else {
-        console.log("purchasePaginas is undefined or pageCount is not defined.");
+
     }
 
     function handleSearchStatusChange(queryId: string, newStatus: string): void {
         setTimeout(() => {
             setActualizarEstadoConsulta((actualizarEstadoConsulta) => actualizarEstadoConsulta + 1);
-            console.log("ENTROOOOOOOOOO")
+
         }, 70000); // Ajusta el tiempo de espera en milisegundos según tus necesidades
     }
 
@@ -526,7 +514,7 @@ const Micuenta: React.FC = () => {
         );
 
         if (postResponse.ok) {
-            console.log(newApi)
+
         }
         // Manejar la respuesta del servidor según sea necesario
     };
