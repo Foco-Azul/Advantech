@@ -96,7 +96,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             nuevoPrecio = buycredits * priceTiers[priceTiers.length - 1].attributes.preciocredito;
         }
     }
-    console.log("foundUser.attributes.vencimiento", uservencimiento)
 
     // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
     return (

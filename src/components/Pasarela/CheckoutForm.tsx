@@ -102,7 +102,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           var diferenciaEnMeses =
             (uservencimiento_data.getFullYear() - fechaActual.getFullYear()) * 12 +
             (uservencimiento_data.getMonth() - fechaActual.getMonth());  
-          console.log("Diferencia en meses:", diferenciaEnMeses);
           if(planvencimiento > diferenciaEnMeses || diferenciaEnMeses < 0){
             var mesesASumar = planvencimiento;
             fechaActual.setMonth(fechaActual.getMonth() + mesesASumar);

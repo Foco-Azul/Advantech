@@ -170,7 +170,7 @@ const Micuenta: React.FC = () => {
                 // Crea un enlace de descarga
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = consulta+".json";
+                a.download = consulta + ".json";
 
                 // Simula un clic en el enlace para iniciar la descarga
                 a.click();
@@ -347,6 +347,36 @@ const Micuenta: React.FC = () => {
         return apiKey;
     }
 
+    function letraANumero(letra: any) {
+        // Convierte una letra a su posición en el alfabeto (ignora mayúsculas/minúsculas)
+        return letra.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+    }
+
+    function claveLetrasANumeros(clave: any) {
+        // Convierte la clave de letras a números y suma todos los valores
+        let suma = 0;
+        for (let i = 0; i < clave.length; i++) {
+            let char = clave[i];
+            if (char.match(/[a-z]/i)) {
+                suma += letraANumero(char);
+            }
+        }
+        return suma;
+    }
+
+    function encriptar(texto: any) {
+        let claveNumerica = claveLetrasANumeros(`${process.env.NEXT_PUBLIC_ADVANTECH_API_SECRET}`);
+        let textoEncriptado = '';
+
+        for (let i = 0; i < texto.length; i += 2) {
+            let byte = parseInt(texto.substr(i, 2), 16);
+            let encriptado = (byte + claveNumerica) % 256;
+            textoEncriptado += encriptado.toString(16).padStart(2, '0');
+        }
+        return textoEncriptado;
+    }
+
+    
 
     // Función para mostrar u ocultar la sección API
     const toggleApiSection = () => {
@@ -461,6 +491,7 @@ const Micuenta: React.FC = () => {
             });
         }
     };
+    
     console.log("searchHistory", purchaseHistoryFiltered)
     console.log("purchasePagos", purchasePagos)
     if (purchasePagosPaginas && purchasePagosPaginas.pageCount !== undefined) {
@@ -475,7 +506,7 @@ const Micuenta: React.FC = () => {
             console.log("ENTROOOOOOOOOO")
         }, 70000); // Ajusta el tiempo de espera en milisegundos según tus necesidades
     }
-    
+
 
     const updateApiInDatabase = async (newApi: string) => {
         const postResponse = await fetch(
@@ -568,7 +599,7 @@ const Micuenta: React.FC = () => {
                                         <h2 className='micuenta-h2-datos'>Mis datos</h2>
                                         <div className='micuenta-datos'>
                                             <div className='micuenta-datos-card'>
-                                                <span className='micuenta-datos-title'>Mis créditos actuales </span> 
+                                                <span className='micuenta-datos-title'>Mis créditos actuales </span>
                                                 <span className='micuenta-datos-subtitle'>{userCredits?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</span>
                                                 {(userCredits != null && userCredits < 5) && (
                                                     <>
@@ -586,30 +617,30 @@ const Micuenta: React.FC = () => {
                                             </div>
                                             <div className='micuenta-datos-card'>
                                                 <span className='micuenta-datos-title'>Fecha de vencimiento</span>
-                                                {isPlanVencido && userPlan &&(
+                                                {isPlanVencido && userPlan && (
                                                     <>
-                                                    <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
-                                                    <Link href={"/planes"}>
-                                                    <button className='tab-button renovar'>
-                                                        Comprar Plan
-                                                    </button>
-                                                    </Link>
+                                                        <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                        <Link href={"/planes"}>
+                                                            <button className='tab-button renovar'>
+                                                                Comprar Plan
+                                                            </button>
+                                                        </Link>
                                                     </>
                                                 )}
-                                                {!userPlan &&(
+                                                {!userPlan && (
                                                     <>
-                                                    <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
-                                                    <Link href={"/planes"}>
-                                                    <button className='tab-button renovar'>
-                                                        Comprar Plan
-                                                    </button>
-                                                    </Link>
-                                                    </> 
+                                                        <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                        <Link href={"/planes"}>
+                                                            <button className='tab-button renovar'>
+                                                                Comprar Plan
+                                                            </button>
+                                                        </Link>
+                                                    </>
                                                 )}
-                                               {!isPlanVencido && userPlan &&(
+                                                {!isPlanVencido && userPlan && (
                                                     <>
-                                                    <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
-                                                    </> 
+                                                        <span className='micuenta-datos-subtitle'>{userVencimiento}</span>
+                                                    </>
                                                 )}
                                             </div>
                                             <div className='micuenta-datos-card username'>
@@ -770,7 +801,7 @@ const Micuenta: React.FC = () => {
                                                                             getColor={getStatusColor}
                                                                             isUnderline={status => status === "IN PROGRESS"}
                                                                             onStatusChange={handleSearchStatusChange}
-                                                                            selectedFuenteEspera = {search.attributes.busqueda?.tiempo}
+                                                                            selectedFuenteEspera={search.attributes.busqueda?.tiempo}
                                                                         ></SearchStatus>
                                                                     </td>
 
@@ -888,7 +919,7 @@ const Micuenta: React.FC = () => {
 
                                 )}
 
-                                {activeTab === 'api' &&  apiset &&  (
+                                {activeTab === 'api' && apiset && (
                                     <div>
                                         <h2 className="micuenta-h2-datos">API</h2>
                                         <div className="micuenta-datos api">
@@ -896,7 +927,7 @@ const Micuenta: React.FC = () => {
                                             <br />
                                             <div>
                                                 <div className="micuenta-api-box" onClick={copyApiKeyToClipboard}>
-                                                    <div ref={apiKeyRef}>{userapi}</div>
+                                                    <div ref={apiKeyRef}>{encriptar(userapi)}</div>
                                                 </div>
                                                 {isCopied && <div className="copied-text">Copiado</div>}
                                             </div>
