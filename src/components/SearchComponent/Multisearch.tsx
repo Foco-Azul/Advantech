@@ -302,6 +302,7 @@ const Multisearch: React.FC = () => {
                   puntero: {},
                   status: "IN PROGRESS",
                   query_id: jsonData.query_id,
+                  tipo: "busqueda",
                   busqueda: JSON.stringify({
                     consulta: "Búsqueda por lote",
                     fuente: selectedSource,

@@ -699,7 +699,7 @@ const Micuenta: React.FC = () => {
                                                     </ul>
                                                     <br />
                                                     {userActivo && (
-                                                        <p><strong>Al hacer clic en darse de baja se cerrara tu sesión actual.</strong></p>
+                                                        <p><strong>Al hacer clic en darse de baja se cerrará tu sesión actual.</strong></p>
                                                     )}
                                                     {userActivo ? (
                                                         <button

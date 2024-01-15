@@ -353,6 +353,7 @@ const SearchComponent: React.FC = () => {
                                     status: "READY",
                                     query_id: data.query_id,
                                     puntero: selectionObj,
+                                    tipo: "busqueda",
                                     busqueda: JSON.stringify({
                                         fuente: selectedSource,
                                         consulta: searchInputValue,

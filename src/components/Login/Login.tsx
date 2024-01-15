@@ -65,7 +65,6 @@ function Login({ loginname }: LoginProps) {
 
       if (foundUser) {
         setUserName(foundUser.attributes.username);
-        console.log("hola", user && user.sub && user.sub.includes("auth0") && foundUser.attributes.codigo_de_verificacion == null)
         if (user && user.sub && user.sub.includes("auth0") && foundUser.attributes.auth0 == null) {
           // Realizar el POST con los datos requeridos
          const postResponse = await fetch(
