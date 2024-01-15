@@ -11,7 +11,7 @@ import Titulostable from './Titulostable';
 import { TitulosExcel } from './TitulosExcel';
 import Accionistastable from './Accionistastable';
 import AccionistasExcel from './AccionistasExcel';
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Link } from "lucide-react";
 
 const Multisearch: React.FC = () => {
   const [fileData, setFileData] = useState<string | null>(null);
@@ -483,8 +483,13 @@ const Multisearch: React.FC = () => {
           <br></br>
           <p>Créditos a consumir: {selectedFuenteCredito && fileData && fileData?.split(', ').length * selectedFuenteCredito}</p>
           <p>Créditos disponibles: {userCredits}</p>
-          <button onClick={handleButtonClick} className='download-button mostrar-datos'  >Obtener Datos</button>
-        </>}
+          {userCredits && selectedFuenteCredito && fileData && fileData?.split(', ').length * selectedFuenteCredito > userCredits ? (
+            <a href='/planes' className='download-button mostrar-datos comprar-creditos'>Comprar creditos</a>
+          ):(
+            <button onClick={handleButtonClick} className='download-button mostrar-datos'  >Obtener Datos</button>
+          )}
+        </>
+      }
       {selectedFuenteLimite && cantidadRucs && cantidadRucs > selectedFuenteLimite &&
         <>
           <br></br>

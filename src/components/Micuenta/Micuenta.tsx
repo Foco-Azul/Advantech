@@ -435,7 +435,7 @@ const Micuenta: React.FC = () => {
     }
     async function getHistorialPagos(page: number) {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials?filters[tipo][$eq]=compra&filters[tipo][$eq]=devuelto&pagination[page]=${page}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials?filters[tipo][$eq]=compra&filters[tipo][$eq]=devuelto&sort[0]=fecha:desc&pagination[page]=${page}`, {
 
                 method: "GET",
                 headers: {
@@ -600,7 +600,11 @@ const Micuenta: React.FC = () => {
                                                 )}
                                             </div>
                                             <div className='micuenta-datos-card'>
+                                                {!isPlanVencido ?(
                                                 <span className='micuenta-datos-title'>Mi plan activo </span>
+                                                ):(
+                                                <span className='micuenta-datos-title'>Plan vencido </span>
+                                                )}
                                                 <span className='micuenta-datos-subtitle'>{userPlan}</span>
                                             </div>
                                             <div className='micuenta-datos-card'>

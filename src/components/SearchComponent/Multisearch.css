@@ -191,7 +191,11 @@ td {
   margin-left: 20px;
 }
 
-
+.download-button.mostrar-datos.comprar-creditos,
+.download-button.mostrar-datos{
+  display: block;
+  width: fit-content;
+}
 @keyframes gradientAnimation {
   0% {
     background-position: 100% 0;
