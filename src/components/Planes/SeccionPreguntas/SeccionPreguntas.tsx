@@ -60,7 +60,7 @@ function SeccionPreguntas() {
               <FontAwesomeIcon icon={isOpen[3] ? faChevronUp : faChevronDown} />
             </div>
             <div className="acordeon-contenido">
-              <p>En el inicio el usuario podrá establecer si el plan seleccionado se va a renovar automáticamente o que la suscripción finalice una vez terminado el periodo.</p>
+              <p>La renovación está sujeta a la solicitud del usuario.</p>
             </div>
           </div>
         </div>

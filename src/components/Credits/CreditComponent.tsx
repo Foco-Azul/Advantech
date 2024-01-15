@@ -47,13 +47,17 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = Number(event.target.value);
-        if (!isNaN(inputValue) && inputValue >= priceTiers[0]?.attributes.minimo && inputValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo) {
+        if (!isNaN(inputValue) && inputValue >= priceTiers[0]?.attributes.minimo  && inputValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo) {
             //setBuyCredits(inputValue);
             setEsValido(true)
         }else{
             setEsValido(false)
         }
         setBuyCredits(Math.round(inputValue));
+        if(inputValue > priceTiers[priceTiers.length - 1]?.attributes.maximo){
+            setBuyCredits(Math.round(priceTiers[priceTiers.length - 1]?.attributes.maximo))
+            setEsValido(true)
+        } 
     };
 
     async function planalacarta() {

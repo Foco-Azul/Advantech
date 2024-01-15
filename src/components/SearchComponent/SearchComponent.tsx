@@ -660,9 +660,12 @@ const SearchComponent: React.FC = () => {
                                     <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
                                 </div>
                             }
-                            {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 && <><p>Mis créditos:{userCredits}</p>
-                                <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito * seleccionUsuarioCount}</p>
-                            </>}
+                            {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 && 
+                                <>
+                                    <p>Mis créditos:{userCredits}</p>
+                                    <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito * seleccionUsuarioCount}</p>
+                                </>
+                            }
 
                             {user && seleccionUsuarioCount == 0 && <button className='busqueda-menu-button' onClick={handleReloadPage}>
                                 Iniciar una nueva búsqueda
@@ -671,7 +674,7 @@ const SearchComponent: React.FC = () => {
 
                         </div>
                         {    //Caso con créditos y usuario
-                            user && userCredits != null && selectedFuenteCredito && userCredits >= selectedFuenteCredito &&
+                            user && userCredits != null && selectedFuenteCredito && userCredits >= selectedFuenteCredito * seleccionUsuarioCount &&
                             seleccionUsuarioCount > 0 && mostrartabla && !isPlanVencido &&
                             <>
                                 <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
@@ -684,7 +687,7 @@ const SearchComponent: React.FC = () => {
                         }
                         {
                             //Caso sin créditos
-                            user && userCredits != null && selectedFuenteCredito && (userCredits < selectedFuenteCredito) &&
+                            user && userCredits != null && selectedFuenteCredito && (userCredits < selectedFuenteCredito * seleccionUsuarioCount) &&
                             <>
                                 <br></br>
                                 <p className='search-error'>Tus créditos no son suficientes para traer estos datos</p>

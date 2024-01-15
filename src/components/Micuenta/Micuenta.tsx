@@ -40,7 +40,7 @@ const Micuenta: React.FC = () => {
     const [generatedApi, setGeneratedApi] = useState('');
     const [apiSectionVisible, setApiSectionVisible] = useState(true);
     const [user_admin, setuser_admin] = useState<string | null>(null);
-    const [nameUser, setnameUser] = useState<String>("");
+    const [nameUser, setnameUser] = useState<string>("");
     const [actualizarEstadoConsulta, setActualizarEstadoConsulta] = useState(1);
 
     interface PurchasePagina {
@@ -62,6 +62,18 @@ const Micuenta: React.FC = () => {
     const [mostrarEliminarCuenta, setMostrarEliminarCuenta] = useState(false);
     const [mostrarCambiarUsuario, setMostrarCambiarNombre] = useState(false);
     const [seCambioNombre, setseCambioNombre] = useState<boolean>(false);
+
+    const cambiarNombre = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let inputValue = event.target.value;
+    
+        // Eliminar caracteres especiales utilizando una expresión regular
+        inputValue = inputValue.replace(/[^a-zA-Z0-9]/g, '');
+    
+        // Limitar la longitud a 20 caracteres
+        inputValue = inputValue.slice(0, 20);
+    
+        setnameUser(inputValue);
+    };
 
     useEffect(() => {
         checkAndLogVerParam();
@@ -435,7 +447,7 @@ const Micuenta: React.FC = () => {
     }
     async function getHistorialPagos(page: number) {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials?filters[tipo][$eq]=compra&filters[tipo][$eq]=devuelto&sort[0]=fecha:desc&pagination[page]=${page}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials?filters[tipo][$eq]=compra&filters[tipo][$eq]=devuelto&filters[tipo][$eq]=bienvenida&sort[0]=fecha:desc&pagination[page]=${page}`, {
 
                 method: "GET",
                 headers: {
@@ -658,13 +670,14 @@ const Micuenta: React.FC = () => {
                                                         {!seCambioNombre ? (
                                                             <>
                                                                 <div className='campo_cambiarNombre'>
-                                                                    <input
-                                                                        type="text"
-                                                                        id="name"
-                                                                        name="name"
-                                                                        onChange={(e) => setnameUser(e.target.value)}
-                                                                        required
-                                                                    />
+                                                                <input
+                                                                    type="text"
+                                                                    id="name"
+                                                                    name="name"
+                                                                    value={nameUser}
+                                                                    onChange={cambiarNombre}
+                                                                    required
+                                                                />
                                                                 </div>
                                                                 <br />
                                                                 <button

@@ -163,6 +163,7 @@ function Login({ loginname }: LoginProps) {
           var fechaVencimiento = fechaActual.toISOString();
           
           if (typeof user.email === 'string') {
+            var data_post_user;
             if (user && user.sub && user.sub.includes("auth0")) {
               // Realizar el POST con los datos requeridos
               var body_data;
@@ -204,7 +205,9 @@ function Login({ loginname }: LoginProps) {
                   cache: "no-store",
                 }
               );
+              
               if (postResponse.status === 200) {
+                data_post_user = await postResponse.json()
               } else {
                 throw new Error(`Failed to create user, ${postResponse.status}`);
               }
@@ -250,6 +253,7 @@ function Login({ loginname }: LoginProps) {
                 );
 
                 if (postResponse.status === 200) {
+                  data_post_user = await postResponse.json()
                 } else {
                   throw new Error(`Failed to create user, ${postResponse.status}`);
                 }
@@ -295,11 +299,39 @@ function Login({ loginname }: LoginProps) {
                 );
 
                 if (postResponse.status === 200) {
+                  data_post_user = await postResponse.json()
                 } else {
                   throw new Error(`Failed to create user, ${postResponse.status}`);
                 }
               }
               }
+            }
+            if(data_post_user && data_post_user.data.id){
+              const posthistorial = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/historials`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    data: {
+                      auth_0_user: data_post_user.data.id,
+                      creditos: credito_gratuito_data.creditos,
+                      fecha: new Date(),
+                      precio: 0,
+                      plane: credito_gratuito_data.id_plan.data.id,
+                      consulta:"",
+                      tipo: "bienvenida",
+                      factura: {
+                        email: user.email,
+                      },  
+                    },
+                  }
+                  ),
+                  cache: "no-store",
+                }
+              );
             }
           }
         }
