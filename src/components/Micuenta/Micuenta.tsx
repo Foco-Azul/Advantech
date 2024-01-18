@@ -148,7 +148,7 @@ const Micuenta: React.FC = () => {
     };
 
 
-    const DescargarJSON = async (query_id: string, consulta: string) => {
+    const DescargarJSON = async (query_id: string, consulta: string, puntero: any,) => {
 
         const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
             method: 'POST',
@@ -157,7 +157,7 @@ const Micuenta: React.FC = () => {
             },
             body: JSON.stringify({
                 query_id: query_id,
-                selection: {},
+                selection: {puntero},
                 key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
             }),
         });
@@ -830,7 +830,7 @@ const Micuenta: React.FC = () => {
                                                                         ) : search.attributes.status === "FAILED" ? (
                                                                             <button className='micuenta-download-button proceso' >Fallido</button>
                                                                         ) : (
-                                                                            <button className='micuenta-download-button' onClick={() => DescargarJSON(search.attributes.query_id, search.attributes.consulta)}>Descargar</button>
+                                                                            <button className='micuenta-download-button' onClick={() => DescargarJSON(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero)}>Descargar</button>
                                                                         )}
 
                                                                     </td>
@@ -932,7 +932,7 @@ const Micuenta: React.FC = () => {
                                             <br />
                                             <div>
                                                 <div className="micuenta-api-box" onClick={copyApiKeyToClipboard}>
-                                                    <div ref={apiKeyRef}>{encriptar(userapi)}</div>
+                                                    <div ref={apiKeyRef}>{userapi === 'xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx' ? userapi : encriptar(userapi)}</div>
                                                 </div>
                                                 {isCopied && <div className="copied-text">Copiado</div>}
                                             </div>
