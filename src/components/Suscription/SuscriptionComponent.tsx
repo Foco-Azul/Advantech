@@ -93,7 +93,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                     {soporte && (plan === "Personalizado" || plan === "Estándar" || plan === "Premium")
                         ? "Soporte por formulario"
                         : plan === "Enterprise"
-                        ? "Soporte por Mail | Teléfono"
+                        ? "Soporte por Formulario | Teléfono"
                         : "Soporte personalizado"}
                 </h3>
                 <h3><FontAwesomeIcon icon={faDownload} style={{ color: "#009fde", }} />

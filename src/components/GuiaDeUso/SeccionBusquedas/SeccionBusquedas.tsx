@@ -104,7 +104,7 @@ function SeccionBusquedas() {
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
                   <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
                 </ul>
-                <Link href="https://api-dev.advantech.com.ec:3002/docs/" legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Ingresa a la documentacion de la API<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
+                <Link href={`${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_URL}:${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_PUERTO}/docs/`} legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Ingresa a la documentacion de la API<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
               <p>
                 <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
                 Los resultados de la búsqueda por RUC te dará resultados precisos de una sola persona.

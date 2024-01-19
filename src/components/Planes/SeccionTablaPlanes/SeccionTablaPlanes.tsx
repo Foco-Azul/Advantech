@@ -26,7 +26,7 @@ function SeccionTablaPlanes() {
                         <td>Por formulario</td>
                         <td>Por formulario</td>
                         <td>Por formulario</td>
-                        <td>Mail | Teléfono</td>
+                        <td>Formulario | Teléfono</td>
                     </tr>
                     <tr>
                         <th>Entrega de datos</th>

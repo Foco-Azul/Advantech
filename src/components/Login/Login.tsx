@@ -355,7 +355,7 @@ function Login({ loginname }: LoginProps) {
             <a className="login-name"><FontAwesomeIcon icon={faUserTie} size="xl" /> &nbsp; {userName} &nbsp; <FontAwesomeIcon icon={showSubPerfil ? faChevronUp : faChevronDown} /></a> {/* Mostrar la parte del correo antes del símbolo "@" si está definida */}
             <div className={`navigation-sub_menu-trigger  ${showSubPerfil ? "visible" : ""} `}>
               <ul>
-                <li className="sub-menu"><a href="https://api-dev.advantech.com.ec:3002/docs/" target="_blank">Documentación API</a></li>
+                <li className="sub-menu"><a href={`${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_URL}:${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_PUERTO}/docs/`} target="_blank">Documentación API</a></li>
                 <li><a href="/micuenta" >Mi cuenta</a></li>
                 <li><a href="/micuenta/?ver=busquedas" >Historial de busquedas</a></li>
                 <li><a href="/micuenta/?ver=compras" >Historial de pagos</a></li>
@@ -382,7 +382,7 @@ function Login({ loginname }: LoginProps) {
               {isPerfilOpen && (
                 <div>
                   <ul>
-                    <li className="sub-menu"><a href="https://api-dev.advantech.com.ec:3002/docs/" target="_blank">Documentación API</a></li>
+                    <li className="sub-menu"><a href={`${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_URL}:${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_PUERTO}/docs/`} target="_blank">Documentación API</a></li>
                     <li className="sub-menu"><Link href="/micuenta" legacyBehavior passHref>Mi cuenta</Link></li>
                     <li className="sub-menu"><Link href="/micuenta/?ver=busquedas" legacyBehavior passHref>Historial de busquedas</Link></li>
                     <li className="sub-menu"><Link href="/micuenta/?ver=compras" legacyBehavior passHref>Historial de pagos</Link></li>

@@ -27,22 +27,46 @@ const SeccionFormulario: React.FC = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false); // Nuevo estado para verificar si se envió el formulario
   
+  // Función para sanitizar el campo de texto
+  const sanitizeText = (input: string): string => {
+    // Implementa la lógica de sanitización según tus necesidades
+    // Por ejemplo, podrías usar expresiones regulares para permitir solo caracteres alfanuméricos
+    return input.replace(/[^a-zA-Z0-9\s]/g, '');
+  };
+
+  // Función para sanitizar el número de teléfono
+  const sanitizePhone = (input: string): string => {
+    // Implementa la lógica de sanitización según tus necesidades
+    // Por ejemplo, podrías usar expresiones regulares para permitir solo dígitos y algunos caracteres especiales
+    return input.replace(/[^0-9+()-]/g, '');
+  };
+
+  // Función para sanitizar la dirección de correo electrónico
+  const sanitizeEmail = (input: string): string => {
+    // Implementa la lógica de sanitización según tus necesidades
+    // En este caso, no se realiza una sanitización exhaustiva, ya que la validación de correo electrónico es más compleja
+    // Puedes utilizar bibliotecas como validator.js para realizar validaciones más completas
+    return input.trim();
+  };
+  
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
 
-    if (type === 'checkbox') {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: !prevData[name as keyof FormData], // Cast explícito
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    let sanitizedValue = value;
+
+     if (name === 'name' || name === 'lastName' || name === 'message') {
+       sanitizedValue = sanitizeText(value);
+     } else if (name === 'phone') {
+       sanitizedValue = sanitizePhone(value);
+     } else if (name === 'email') {
+       sanitizedValue = sanitizeEmail(value);
+     }
+     setFormData((prevData) => ({
+       ...prevData,
+       [name]: sanitizedValue,
+     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -117,6 +141,7 @@ const SeccionFormulario: React.FC = () => {
               id="name"
               name="name"
               value={formData.name}
+              maxLength={50}
               onChange={handleChange}
               required
             />
@@ -128,6 +153,7 @@ const SeccionFormulario: React.FC = () => {
               id="lastName"
               name="lastName"
               value={formData.lastName}
+              maxLength={50}
               onChange={handleChange}
               required
             />
@@ -139,6 +165,7 @@ const SeccionFormulario: React.FC = () => {
               id="email"
               name="email"
               value={formData.email}
+              maxLength={50}
               onChange={handleChange}
               required
             />
@@ -150,6 +177,7 @@ const SeccionFormulario: React.FC = () => {
               id="phone"
               name="phone"
               value={formData.phone}
+              maxLength={20}
               onChange={handleChange}
               pattern="[0-9]*"  // Expresión regular para permitir solo números
               required
@@ -162,6 +190,7 @@ const SeccionFormulario: React.FC = () => {
               id="company"
               name="company"
               value={formData.company}
+              maxLength={50}
               onChange={handleChange}
             />
           </div>
@@ -171,6 +200,7 @@ const SeccionFormulario: React.FC = () => {
               id="message"
               name="message"
               value={formData.message}
+              maxLength={500}
               onChange={handleChange}
               placeholder="Explícanos el motivo de tu contacto"
               required

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import "./SeccionFormulario.css"
 import Link from 'next/link';
 
@@ -30,30 +30,80 @@ const SeccionFormulario: React.FC = () => {
     pdf: null,
   });
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false); // Nuevo estado para verificar si se envió el formulario
+  const [fileError, setFileError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [fileVacio, setFileVacio] = useState<boolean>(false);
+  const [fileValidar, setFileValidar] = useState<boolean>(false);
+
+  // Función para sanitizar el campo de texto
+  const sanitizeText = (input: string): string => {
+    // Implementa la lógica de sanitización según tus necesidades
+    // Por ejemplo, podrías usar expresiones regulares para permitir solo caracteres alfanuméricos
+    return input.replace(/[^a-zA-Z0-9\s]/g, '');
+  };
+
+  // Función para sanitizar el número de teléfono
+  const sanitizePhone = (input: string): string => {
+    // Implementa la lógica de sanitización según tus necesidades
+    // Por ejemplo, podrías usar expresiones regulares para permitir solo dígitos y algunos caracteres especiales
+    return input.replace(/[^0-9+()-]/g, '');
+  };
+
+  // Función para sanitizar la dirección de correo electrónico
+  const sanitizeEmail = (input: string): string => {
+    // Implementa la lógica de sanitización según tus necesidades
+    // En este caso, no se realiza una sanitización exhaustiva, ya que la validación de correo electrónico es más compleja
+    // Puedes utilizar bibliotecas como validator.js para realizar validaciones más completas
+    return input.trim();
+  };
+
+
   
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
+     // Sanitiza el valor según el nombre del campo
+     let sanitizedValue = value;
 
-    if (type === 'checkbox') {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: !prevData[name as keyof FormData], // Cast explícito
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+     if (name === 'name' || name === 'lastName' || name === 'referencia') {
+       sanitizedValue = sanitizeText(value);
+     } else if (name === 'phone') {
+       sanitizedValue = sanitizePhone(value);
+     } else if (name === 'email') {
+       sanitizedValue = sanitizeEmail(value);
+     }
+     setFormData((prevData) => ({
+       ...prevData,
+       [name]: sanitizedValue,
+     }));
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setFormData((prevData) => ({
-      ...prevData,
-      pdf: file,
-    }));
+
+    // Validar el tamaño máximo (5MB)
+    if (file && file.size > 5 * 1024 * 1024) {
+      setFileError('El archivo es demasiado grande.');
+      // Puedes realizar otras acciones según tus necesidades, como limpiar el estado del archivo
+      setFormData((prevData) => ({
+        ...prevData,
+        pdf: null,
+      }));
+      setFileVacio(false)
+    } else {
+      setFileError(null);
+      setFormData((prevData) => ({
+        ...prevData,
+        pdf: file,
+      }));
+      setFileVacio(true)
+    }
+  };
+  const handleCustomButtonClick = () => {
+    // Abre el cuadro de diálogo de selección de archivos cuando se hace clic en el botón personalizado
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,8 +147,10 @@ const SeccionFormulario: React.FC = () => {
       console.error('Error sending form data to Strapi:', error);
       // Maneja el error según tus necesidades
     }
-  };  
-
+  }; 
+  const validarCampos = () => {
+    setFileValidar(true)
+  }; 
   return (
     <section className="formulario-unete_al_equipo">
       <div className="formulario-contenedor">
@@ -117,6 +169,7 @@ const SeccionFormulario: React.FC = () => {
                 id="name"
                 name="name"
                 value={formData.name}
+                maxLength={50}
                 onChange={handleChange}
                 required
               />
@@ -128,6 +181,7 @@ const SeccionFormulario: React.FC = () => {
                 id="lastName"
                 name="lastName"
                 value={formData.lastName}
+                maxLength={50}
                 onChange={handleChange}
                 required
               />
@@ -139,6 +193,7 @@ const SeccionFormulario: React.FC = () => {
                 id="email"
                 name="email"
                 value={formData.email}
+                maxLength={50}
                 onChange={handleChange}
                 required
               />
@@ -150,6 +205,7 @@ const SeccionFormulario: React.FC = () => {
                 id="phone"
                 name="phone"
                 value={formData.phone}
+                maxLength={20}
                 onChange={handleChange}
                 required
               />
@@ -177,6 +233,7 @@ const SeccionFormulario: React.FC = () => {
                 id="pais"
                 name="pais"
                 value={formData.pais}
+                maxLength={20}
                 onChange={handleChange}
                 required
               />
@@ -196,14 +253,26 @@ const SeccionFormulario: React.FC = () => {
             </div>
             <div className='campos'>
               <label htmlFor="pdf">Subir CV*</label>
+              {/* Este input está oculto visualmente */}
               <input
                 type="file"
                 id="pdf"
-                name="pdf"
                 accept=".pdf"
+                name="pdf"
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                required
                 onChange={handleFileChange}
               />
+              <div className='input'>
+                <a onClick={handleCustomButtonClick}>Seleccionar archivo</a>
+              </div>
+              {!fileVacio && fileValidar && !fileError &&<p style={{ color: 'red' }}>Campo obligatorio</p>}
+              {fileError && <p style={{ color: 'red' }}>{fileError}</p>}
+              {/* Muestra el nombre del archivo seleccionado o un mensaje predeterminado */}
+              <p>Archivo seleccionado: {formData.pdf ? formData.pdf.name : 'Ninguno'}</p>
               <p>Tamaño máximo de archivo: 5MB</p>
+              {/* Botón personalizado */}
             </div>
             <div className='campos'>
               <label htmlFor="referencia">Referencias*</label>
@@ -211,6 +280,7 @@ const SeccionFormulario: React.FC = () => {
                 id="referencia"
                 name="referencia"
                 value={formData.referencia}
+                maxLength={500}
                 onChange={handleChange}
                 placeholder="Explícanos el motivo de tu contacto"
                 required
@@ -229,7 +299,7 @@ const SeccionFormulario: React.FC = () => {
                 <p>Estoy de acuerdo con los <Link href={"#"}>términos y condiciones.</Link></p>
               </label>
             </div>
-            <button className="hero-button" type="submit">Enviar</button>
+            <button className="hero-button" type="submit" onClick={validarCampos}>Enviar</button>
           </div>
         </form>
         )}
