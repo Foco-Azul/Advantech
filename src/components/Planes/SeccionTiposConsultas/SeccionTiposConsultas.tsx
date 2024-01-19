@@ -24,7 +24,6 @@ function SeccionTiposConsultas() {
             }
             const data = await response.json();
             setCreditosFuente(data.data)
-            console.log("hola2", CreditosFuentes)
             return data;
         } catch (error) {
             throw new Error(`Failed to fetch data, ${error}`);
