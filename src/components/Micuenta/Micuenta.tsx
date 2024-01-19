@@ -157,7 +157,7 @@ const Micuenta: React.FC = () => {
             },
             body: JSON.stringify({
                 query_id: query_id,
-                selection: {puntero},
+                selection: puntero,
                 key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
             }),
         });

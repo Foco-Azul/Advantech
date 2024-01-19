@@ -58,9 +58,7 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
 
   useEffect(() => {
     onSelectedItems(selectedItems);
-
-  }, [selectedItems]);
-
+  });
 
   const toggleSelectItem = (itemKey: string) => {
     setSelectedItems(prevSelectedItems => {

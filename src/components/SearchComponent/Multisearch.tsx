@@ -443,10 +443,11 @@ const Multisearch: React.FC = () => {
               Seleccionar fuente
             </option>
             {CreditosFuentes.map((fuente) => (
-              <option className='options' key={fuente.id} value={fuente.attributes.fuente}>
+               fuente.attributes.estaactivo === true && <option className='options' key={fuente.id} value={fuente.attributes.fuente}>
                 {fuente.attributes.consulta}
               </option>
             ))}
+
           </select>
         </div>
       }

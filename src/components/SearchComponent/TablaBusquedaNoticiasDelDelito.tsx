@@ -119,7 +119,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
   useEffect(() => {
     onSelectedItems(selectedItems);
-  }, [selectedItems]);
+  });
 
 
   const toggleSelectItem = (itemKey: string) => {

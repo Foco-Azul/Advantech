@@ -178,7 +178,6 @@ const SearchComponent: React.FC = () => {
             setSelectedSource(savedSelectedSource);
         }
 
-
     }, [user]);
 
     const handleButtonClick = async () => {
@@ -523,10 +522,10 @@ const SearchComponent: React.FC = () => {
 
                             <label className='buscador-label aviso'>En los siguientes campos tienes que completar con el nombre o RUC de la persona o entidad que deseas buscar, además selecciona la fuente de donde quieres los datos.</label>
                             <br />
-                                <a href="/guia-de-busqueda" className="hero-icon-container">
-                                    ¿Cómo funciona? <ArrowRight className="hero-icon" />
-                                </a>
-                            <br/>
+                            <a href="/guia-de-busqueda" className="hero-icon-container">
+                                ¿Cómo funciona? <ArrowRight className="hero-icon" />
+                            </a>
+                            <br />
                             <label className='buscador-label'>Selecciona el tipo de búsqueda</label>
                             <select
                                 id="typeSelector"
@@ -562,9 +561,12 @@ const SearchComponent: React.FC = () => {
                                     Seleccionar fuente
                                 </option>
                                 {CreditosFuentes.map((fuente) => (
-                                    <option key={fuente.id} value={fuente.attributes.fuente}>
-                                        {fuente.attributes.consulta}
-                                    </option>
+                                    // Verificar si la propiedad estaactivo es true
+                                    fuente.attributes.estaactivo === true && (
+                                        <option key={fuente.id} value={fuente.attributes.fuente}>
+                                            {fuente.attributes.consulta}
+                                        </option>
+                                    )
                                 ))}
                             </select>
                             {selectedSource !== '' && searchInputValue != "" && (
@@ -661,7 +663,7 @@ const SearchComponent: React.FC = () => {
                                     <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
                                 </div>
                             }
-                            {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 && 
+                            {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 &&
                                 <>
                                     <p>Mis créditos:{userCredits}</p>
                                     <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito * seleccionUsuarioCount}</p>
@@ -681,11 +683,12 @@ const SearchComponent: React.FC = () => {
                                 <button className='search-menu-button' onClick={handleThirdApiButtonClick}>
                                     Obtener en detalle los datos seleccionados
                                 </button>
-                                <a className='volver-al-buscador' href='/busqueda' >
-                                    Volver al buscador
-                                </a>
+
                             </>
                         }
+                        <a className='volver-al-buscador' href='/busqueda' >
+                            Volver al buscador
+                        </a>
                         {
                             //Caso sin créditos
                             user && userCredits != null && selectedFuenteCredito && (userCredits < selectedFuenteCredito * seleccionUsuarioCount) &&
