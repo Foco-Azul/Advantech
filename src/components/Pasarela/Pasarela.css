@@ -1,4 +1,4 @@
-.pasarela{
+.pasarela {
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -6,8 +6,17 @@
     margin: auto;
 }
 
-.checkoutform-container-button{
+.checkoutform-container-button {
     align-items: center;
     display: flex;
     justify-content: center;
+}
+
+.tarjeta-pago {
+    background-color: rgba(0, 0, 0, 0.023);
+    height: 55px;
+}
+
+#facturacionCheckbox{
+    margin-right: 5px;
 }

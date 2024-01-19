@@ -21,7 +21,7 @@ interface SubscriptionCardProps {
 }
 
 const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan, planvencimiento, userPlanPrice, uservencimiento, creditos, userCredits, planid, planActual, userCorreo, auth0 }) => {
-    const { user} = useUser();
+    const { user } = useUser();
     const [isOpen, setIsOpen] = useState(false);
     const [esValido, setEsValido] = useState(true);
     const [buycredits, setBuyCredits] = useState(0);
@@ -29,35 +29,35 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     // Lógica para determinar cuándo mostrar cada botón
     const shouldShowCreateAccountButton = user === undefined;
     const shouldShowVerifyAccountButton =
-      user &&
-      user.sub &&
-      user.sub.includes('auth0') &&
-      auth0 === false;
+        user &&
+        user.sub &&
+        user.sub.includes('auth0') &&
+        auth0 === false;
     const shouldShowBuyCreditsButton =
-      user &&
-      ((user.sub && user.sub.includes('auth0') && auth0 === true) || (user.sub && !user.sub.includes('auth0')));
+        user &&
+        ((user.sub && user.sub.includes('auth0') && auth0 === true) || (user.sub && !user.sub.includes('auth0')));
     const handleSubscribe = () => {
         setIsOpen(true);
     };
 
     const handleClose = () => {
         setIsOpen(false);
-        window.location.reload(); 
+        window.location.reload();
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = Number(event.target.value);
-        if (!isNaN(inputValue) && inputValue >= priceTiers[0]?.attributes.minimo  && inputValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo) {
+        if (!isNaN(inputValue) && inputValue >= priceTiers[0]?.attributes.minimo && inputValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo) {
             //setBuyCredits(inputValue);
             setEsValido(true)
-        }else{
+        } else {
             setEsValido(false)
         }
         setBuyCredits(Math.round(inputValue));
-        if(inputValue > priceTiers[priceTiers.length - 1]?.attributes.maximo){
+        if (inputValue > priceTiers[priceTiers.length - 1]?.attributes.maximo) {
             setBuyCredits(Math.round(priceTiers[priceTiers.length - 1]?.attributes.maximo))
             setEsValido(true)
-        } 
+        }
     };
 
     async function planalacarta() {
@@ -118,19 +118,19 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <hr className="credit-hr" />
 
             <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
-            {shouldShowBuyCreditsButton && esValido &&(
+            {shouldShowBuyCreditsButton && esValido && (
                 <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
             )}
 
-            {shouldShowBuyCreditsButton && esValido &&(
+            {shouldShowBuyCreditsButton && esValido && (
                 <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString()} créditos</button>
             )}
-            
+
             {shouldShowVerifyAccountButton && (
-            <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
+                <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
             )}
             {shouldShowCreateAccountButton && (
-            <a href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></a>
+                <a href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></a>
             )}
 
             {isOpen && (
@@ -145,15 +145,15 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                         <br></br>
                         <Pasarela
                             planvencimiento={planvencimiento}
-                            uservencimiento= {uservencimiento}
+                            uservencimiento={uservencimiento}
                             price={nuevoPrecio}
                             plan={plan}
                             creditos={buycredits}
                             userCredits={userCredits}
                             planid={4}
                             planActual={planActual}
-                            userid={userid} 
-                            userCorreo={userCorreo}                       />
+                            userid={userid}
+                            userCorreo={userCorreo} />
                     </div>
                 </div>
             )}
@@ -171,7 +171,7 @@ const CreditComponent: React.FC = () => {
     const [planActual, setPlanActual] = useState<number | null>(null);
     const [userCorreo, setUserCorreo] = useState<string | null>(null);
     const [auth0, setAuth0] = useState<boolean | null>(null);
-    
+
     useEffect(() => {
         getuser()
             .then((foundUser) => {
@@ -230,9 +230,9 @@ const CreditComponent: React.FC = () => {
                     planid={4}
                     planActual={planActual}
                     planvencimiento={6}
-                    userid={userId} 
-                    userCorreo={userCorreo}         
-                    auth0={auth0}          />
+                    userid={userId}
+                    userCorreo={userCorreo}
+                    auth0={auth0} />
             </UserProvider>
         </div>
     );

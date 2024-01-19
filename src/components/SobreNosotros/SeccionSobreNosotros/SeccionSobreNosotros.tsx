@@ -20,6 +20,8 @@ function SobreNosotros() {
         <br></br>
         <p className="sobrenosotros-text">Armados con las tecnologías más avanzadas, nuestro compromiso es obtener el mayor valor de sus datos, de cualquier manera que se presenten, continuamente.</p>
         <br></br>
+        <a href="https://www.advantech.com.ec" target="_blank" rel="noopener noreferrer" className="sobrenosotros-text" >Conócenos más en <span className="sobrenosotros-icon-container">www.advantech.com.ec</span> </a>
+        <br></br>
         <Link href={"/sobre-nosotros#nuestra-experiencia"}><button className="sobrenosotros-button">Nuestra experiencia</button></Link>
         <br></br>
         <Link href="/planes" legacyBehavior passHref><a className="sobrenosotros-icon-container">¿Cómo obtenemos datos?<FontAwesomeIcon icon={faArrowRight} className="hero-icon"/></a></Link>

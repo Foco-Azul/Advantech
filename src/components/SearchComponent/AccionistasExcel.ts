@@ -86,7 +86,7 @@ export const AccionistasExcel = async (dataToDownload: any, consulta: string) =>
 
   //Creacion del header secundario
   const headerRow = worksheet.addRow([
-    'Ruc',
+    'RUC/Nombre',
     //Accionista Actual
     'Expediente',
     'Nombre',

@@ -51,7 +51,7 @@ function SeccionBusquedas() {
               </p>
               <p>
                 <span className="guia-subtitulo">Obteniendo los resultados: </span>
-                Para acceder a los resultados de la búsqueda, es necesario iniciar sesión y suscribirse a un plan que incluya los <strong>créditos</strong> necesarios para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formato <strong>PDF</strong>, <strong>XLSX</strong> o <strong>CSV</strong>.
+                Para acceder a los resultados de la búsqueda, es necesario iniciar sesión y suscribirse a un plan que incluya los <strong>créditos</strong> necesarios para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formato <strong>PDF</strong>, <strong>XLSX</strong> .
               </p>
             </div>
             <div className='imagen'>
@@ -81,7 +81,7 @@ function SeccionBusquedas() {
               </p>
               <p>
                 <span className="guia-subtitulo">Obteniendo los resultados: </span>
-                Para acceder a los resultados de la búsqueda, es necesario que inicies sesión, te suscribas a un plan y contar con los créditos requeridos para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formatos como <strong>PDF</strong>, <strong>XLSX</strong>, <strong>CSV</strong> o <strong>JSON</strong>.
+                Para acceder a los resultados de la búsqueda, es necesario que inicies sesión, te suscribas a un plan y contar con los créditos requeridos para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formatos como <strong>PDF</strong>, <strong>XLSX</strong> o <strong>JSON</strong>.
               </p>
             </div>
             <div className='imagen'>

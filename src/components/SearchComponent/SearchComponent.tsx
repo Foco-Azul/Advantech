@@ -607,6 +607,7 @@ const SearchComponent: React.FC = () => {
                                                 Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length +
                                                 " registros para " +
                                                 searchInputValue +
+                                                " de la fuente " + fuenteseleccionada +
                                                 ", selecciona los registros que desees, y descargarlos."}
                                             <br />
                                             {"Tenemos un filtro a la izquierda donde puedes precisar más los datos de tu búsqueda. Recuerda que la descarga tiene un valor de " +

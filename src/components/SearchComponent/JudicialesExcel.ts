@@ -17,7 +17,7 @@ export const JudicialesExcel = async (dataToDownload: any, consulta: string) => 
 
   // Agregar fila de encabezado
   const headerRow = worksheet.addRow([
-    "Ruc",
+    "RUC/Nombre",
     "Type",
     "Id Juicio",
     "Delito",

@@ -24,7 +24,7 @@ interface CheckoutFormProps {
   email: string;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planActual, planvencimiento, uservencimiento,  userCorreo }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, creditos, userCredits, planid, planActual, planvencimiento, uservencimiento, userCorreo }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user, error, isLoading } = useUser();
@@ -40,6 +40,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
   const [email, setEmail] = useState(userCorreo || '');
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   const handleCardSectionFocus = () => {
     setPayerror(null);
@@ -81,7 +82,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
     });
 
     setLoading(false);
-    
+
     if (result.error) {
       setPayerror(result.error.message || null);
       setShowForm(true);
@@ -101,15 +102,15 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
           var uservencimiento_data = new Date(uservencimiento);
           var diferenciaEnMeses =
             (uservencimiento_data.getFullYear() - fechaActual.getFullYear()) * 12 +
-            (uservencimiento_data.getMonth() - fechaActual.getMonth());  
-          if(planvencimiento > diferenciaEnMeses || diferenciaEnMeses < 0){
+            (uservencimiento_data.getMonth() - fechaActual.getMonth());
+          if (planvencimiento > diferenciaEnMeses || diferenciaEnMeses < 0) {
             var mesesASumar = planvencimiento;
             fechaActual.setMonth(fechaActual.getMonth() + mesesASumar);
             var fechaVencimiento = fechaActual.toISOString();
-          }else{
+          } else {
             var fechaVencimiento = uservencimiento_data.toISOString();
           }
-        }else{
+        } else {
           var mesesASumar = planvencimiento;
           fechaActual.setMonth(fechaActual.getMonth() + mesesASumar);
           var fechaVencimiento = fechaActual.toISOString();
@@ -124,7 +125,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
             body: JSON.stringify({
               data: {
                 plan: (planActual !== 4 && planid === 4) ? planActual : planid,
-               creditos: creditos + userCredits,
+                creditos: creditos + userCredits,
                 vencimiento: fechaVencimiento,
                 estaactivo: true
               },
@@ -148,7 +149,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   fecha: new Date(),
                   precio: price,
                   plane: planid,
-                  consulta:"",
+                  consulta: "",
                   tipo: "compra",
                   factura: {
                     nombres: nombres,
@@ -157,14 +158,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                     direccion: direccion,
                     telefono: telefono,
                     email: email,
-                  },  
+                  },
                 },
               }
               ),
               cache: "no-store",
             }
           );
-          if(planActual == planid || planid == 4){
+          if (planActual == planid || planid == 4) {
             const postResponse = await fetch(
               `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
               {
@@ -184,7 +185,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                 cache: "no-store",
               }
             );
-          }else{
+          } else {
             const postResponse = await fetch(
               `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/correo-enviados`,
               {
@@ -215,13 +216,25 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
     }
   };
 
+  const handleCheckboxChange = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+    setMostrarFormulario(e.target.checked);
+  };
+
   return (
     <div data-testid="checkout-form">
-      {paymentSuccess == false && <><p>Coloca los datos de facturación</p><br></br></>}
+      <input
+        type="checkbox"
+        id="facturacionCheckbox"
+        onChange={handleCheckboxChange}
+      />
+      <label htmlFor="facturacionCheckbox">{" "}Desea facturar esta transacción?</label>
+
       <form onSubmit={handleSubmit} >
         {showForm && (
           <div onMouseEnter={handleCardSectionFocus} >
-            <div className='facturacion'>
+            {mostrarFormulario && <div className='facturacion'>
+              {paymentSuccess == false && <>
+              <br></br><p>Coloca los datos de facturación</p><br></br></>}
               <div className='campo'>
                 <label htmlFor="nombres">Nombres:</label>
                 <input
@@ -231,7 +244,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={nombres}
                   onChange={(e) => setNombres(e.target.value)}
                   placeholder='Nombres'
-                  required  
+                  required
                 />
               </div>
 
@@ -244,7 +257,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={razonSocial}
                   onChange={(e) => setRazonSocial(e.target.value)}
                   placeholder='Razon Social'
-                  required  
+                  required
                 />
               </div>
 
@@ -257,7 +270,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={rucCedula}
                   onChange={(e) => setRucCedula(e.target.value)}
                   placeholder='Ruc/Cédula'
-                  required  
+                  required
                 />
               </div>
 
@@ -270,7 +283,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={direccion}
                   onChange={(e) => setDireccion(e.target.value)}
                   placeholder='Dirección'
-                  required  
+                  required
                 />
               </div>
 
@@ -283,7 +296,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
                   placeholder='Teléfono'
-                  required  
+                  required
                 />
               </div>
 
@@ -296,12 +309,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   value={email || ''}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder='Email'
-                  required  
+                  required
                 />
               </div>
-            </div>
-            <div className='tarjeta-pago'>  
-              <p>Coloca los datos de tu tarjeta</p>
+            </div>}
+
+            <br></br>
+            <p>Coloca los datos de tu tarjeta</p>
+            <div className='tarjeta-pago'>
               <br />
               <CardSection />
             </div>
