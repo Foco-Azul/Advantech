@@ -25,7 +25,7 @@ function Tabla() {
                 <tbody>
                     {priceTiers.map((tier, index) => (
                         <tr key={index} className={index % 2 === 0 ? '' : 'tabla-tr'}>
-                               <td className="tabla-text">{`${tier.attributes.minimo.toLocaleString()} - ${tier.attributes.maximo.toLocaleString()}`}</td>
+                               <td className="tabla-text">{`${tier.attributes.minimo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} - ${tier.attributes.maximo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`}</td>
                             <td className="tabla-text">{`$${tier.attributes.preciocredito.toFixed(2)}`}</td>
                         </tr>
                     ))}

@@ -158,6 +158,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                     direccion: direccion,
                     telefono: telefono,
                     email: email,
+                    emitir: mostrarFormulario,
                   },
                 },
               }
@@ -222,12 +223,12 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
 
   return (
     <div data-testid="checkout-form">
-      <input
-        type="checkbox"
-        id="facturacionCheckbox"
-        onChange={handleCheckboxChange}
-      />
-      <label htmlFor="facturacionCheckbox">{" "}Desea facturar esta transacción?</label>
+      {!paymentSuccess && 
+      <><input
+          type="checkbox"
+          id="facturacionCheckbox"
+          onChange={handleCheckboxChange} /><label htmlFor="facturacionCheckbox">{" "}¿Desea facturar esta transacción?</label></>
+      }
 
       <form onSubmit={handleSubmit} >
         {showForm && (

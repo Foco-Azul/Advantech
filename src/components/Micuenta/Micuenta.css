@@ -255,7 +255,7 @@ tr:nth-child(even) {
 }
 
 /* Estilo para el div de eliminación de cuenta (popup) */
-.eliminar-cuenta {
+.overlay > div.cambiar-nombre{
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -263,16 +263,27 @@ tr:nth-child(even) {
     max-width: 700px;
     text-align: center;
   }
-.eliminar-cuenta > ul{
+.eliminar-cuenta{
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 700px;
+    text-align: center;
+  }
+.eliminar-cuenta > ul,
+.cambiar-nombre> ul{
     text-align: initial;
 }
-.eliminar-cuenta > h3{
+.eliminar-cuenta > h3,
+.cambiar-nombre > h3{
     font-size: 32px;
     font-weight: 800;
     color: #009fde;
     margin-bottom: 20px;
 }
-.eliminar-cuenta > button{
+.eliminar-cuenta > button,
+.cambiar-nombre > button{
     margin: 20px;
 }
   /* Estilo para el fondo semitransparente detrás del popup */
@@ -446,4 +457,15 @@ body > div.micuenta > div.micuenta-div-container > div > div.micuenta-datos-cont
         overflow-x: scroll;
         max-width: none;
     }
+    .overlay > div.cambiar-nombre{
+        width: 90vw;
     }
+    .campo_cambiarNombre > input{
+        width: 80vw;
+    }
+}
+@media only screen and (max-width: 768px) {
+    button.navigation-menu-button.cambiar-nombre{
+        display: inline;
+    }
+}

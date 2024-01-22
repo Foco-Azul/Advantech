@@ -69,6 +69,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
 
     const handleClose = () => {
         setIsOpen(false);
+        window.location.reload();
     };
     return (
         <div className="subscription-card">
@@ -134,8 +135,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
                         </button>
                         <h4>Confirmar tu suscripción</h4>
                         <h2 className="subscription-plan" >Plan {plan}</h2>
-                        <h3 className="subscription-price">Precio: ${price.toLocaleString()}</h3>
-                        <p>Créditos a obtener {creditos}</p>
+                        <h3 className="subscription-price">Precio: ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</h3>
+                        <p>Créditos a obtener {creditos.toLocaleString()}</p>
                         <hr className="subscription-hr" />
                         <br></br>
                         <Pasarela

@@ -140,7 +140,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                             X
                         </button>
                         <h4>Confirmar tus creditos</h4>
-                        <p>Precio: ${nuevoPrecio.toLocaleString()}</p>
+                        <p>Precio: ${nuevoPrecio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</p>
                         <p>Créditos a obtener {buycredits.toLocaleString()}</p>
                         <br></br>
                         <Pasarela

@@ -662,7 +662,7 @@ const Micuenta: React.FC = () => {
                                             {/* Verificar si los créditos son 0 o el plan está vencido */}
                                             {mostrarCambiarUsuario && ( // Mostrar el div "Eliminar cuenta" si mostrarEliminarCuenta es true
                                                 <div className="overlay">
-                                                    <div className='eliminar-cuenta'>
+                                                    <div className='cambiar-nombre'>
                                                         <div className="cerrar-popup">
                                                             <FontAwesomeIcon icon={faCircleXmark} size="2xl" onClick={cerrar_mostrarCambiarNombre} />
                                                         </div>
@@ -678,10 +678,11 @@ const Micuenta: React.FC = () => {
                                                                     onChange={cambiarNombre}
                                                                     required
                                                                 />
+                                                                <label htmlFor="name">Solo se permite caracteres Alfanumericos <br /> (Ej. Carlos123)</label>
                                                                 </div>
                                                                 <br />
                                                                 <button
-                                                                    className={`navigation-menu-button`}
+                                                                    className={`navigation-menu-button cambiar-nombre`}
                                                                     onClick={handleCambiarNombre}
                                                                 >
                                                                     Cambiar nombre
