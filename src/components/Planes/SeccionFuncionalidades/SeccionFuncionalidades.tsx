@@ -66,7 +66,6 @@ disponibles, estos se sumarán a tu nuevo plan.</span></li>
                 <p>Nuestro servicio te permite acceder a los datos que necesites en diferentes formatos, listos para que puedas implementarlo de la forma que necesites. Disponible según plan de suscripción.</p>
                 <ul>
                     <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>PDF</span></li>
-                    <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>CSV</span></li>
                     <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>XLSX</span></li>
                 </ul>
             </div>
