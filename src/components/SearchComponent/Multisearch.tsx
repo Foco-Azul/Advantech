@@ -500,6 +500,9 @@ const Multisearch: React.FC = () => {
       {data && (
 
         <>
+          <br />
+          <a className='volver-al-buscador lote' href='/busqueda' >Volver al buscador</a>
+          <br />
           <p>Datos obtenidos sobre  {selectedFuenteConsulta}</p>
           <br></br>
           <div className='table-container' onClick={copyDataToClipboard}>
@@ -522,8 +525,6 @@ const Multisearch: React.FC = () => {
             <button className='download-button' onClick={handleDownloadJSON}>Descargar Json</button>
 
           </div>
-          <br />
-          <a className='volver-al-buscador lote' href='/busqueda' >Volver al buscador</a>
         </>
       )}
 

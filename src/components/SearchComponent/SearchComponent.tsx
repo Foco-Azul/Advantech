@@ -601,6 +601,8 @@ const SearchComponent: React.FC = () => {
                         {
                             mostrartabla &&
                             <>
+                                <a className='volver-al-buscador lote' href='/busqueda' >Volver al buscador</a>
+                                <br />
                                 <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
                                 <p>
                                     {DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 ? (
@@ -686,9 +688,6 @@ const SearchComponent: React.FC = () => {
 
                             </>
                         }
-                        <a className='volver-al-buscador' href='/busqueda' >
-                            Volver al buscador
-                        </a>
                         {
                             //Caso sin créditos
                             user && userCredits != null && selectedFuenteCredito && (userCredits < selectedFuenteCredito * seleccionUsuarioCount) &&
