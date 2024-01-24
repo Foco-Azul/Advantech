@@ -745,6 +745,7 @@ const Micuenta: React.FC = () => {
                                                     <thead className="micuenta-history-table-head">
                                                         <tr>
                                                             <th>Fecha</th>
+                                                            <th>Descripción</th>
                                                             <th>Precio</th>
                                                             <th>Créditos</th>
                                                         </tr>
@@ -753,6 +754,7 @@ const Micuenta: React.FC = () => {
                                                         {purchaseHistoryFiltered.map((purchase: any) => (
                                                             <tr key={purchase.id}>
                                                                 <td>{purchase.attributes.fecha}</td>
+                                                                <td>{purchase.attributes.tipo}</td>
                                                                 <td>${purchase.attributes.precio}</td>
                                                                 <td>{purchase.attributes.creditos}</td>
                                                             </tr>

@@ -108,13 +108,14 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             <h3>Cantidad de créditos a comprar</h3>
             <input
                 className="credit-input"
-                type="number"
+                type="text" // Cambia el tipo de 'number' a 'text'
                 min={priceTiers[0]?.attributes.minimo}
                 max={priceTiers[priceTiers.length - 1]?.attributes.maximo}
-                value={buycredits.toString()}
+                value={buycredits}
                 onChange={handleInputChange}
                 placeholder="Ingrese la cantidad de créditos"
             />
+
             <hr className="credit-hr" />
 
             <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
@@ -140,7 +141,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                             X
                         </button>
                         <h4>Confirmar tus creditos</h4>
-                        <p>Precio: ${nuevoPrecio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</p>
+                        <p>Precio: ${nuevoPrecio.toFixed(2)}</p>
                         <p>Créditos a obtener {buycredits.toLocaleString()}</p>
                         <br></br>
                         <Pasarela
