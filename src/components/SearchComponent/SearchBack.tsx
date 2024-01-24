@@ -455,9 +455,6 @@ const SearchComponent: React.FC = () => {
                                         <button className='busqueda-menu-button' onClick={handleConvertToXls}>
                                             Convertir a XLS
                                         </button>
-                                        {/* 
-                    <button className='busqueda-menu-button' onClick={}>Convertir a CSV</button>
-                    <button className='busqueda-menu-button' onClick={}>Convertir a TXT</button> */}
                                     </>
                                 )}
                             </>

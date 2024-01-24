@@ -601,8 +601,10 @@ const SearchComponent: React.FC = () => {
                         {
                             mostrartabla &&
                             <>
-                                <a className='volver-al-buscador lote' href='/busqueda' >Volver al buscador</a>
-                                <br />
+                                {user && <button className='busqueda-menu-button arriba' onClick={handleReloadPage}>
+                                Iniciar una nueva búsqueda
+                            </button>
+                            }
                                 <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
                                 <p>
                                     {DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 ? (
@@ -622,6 +624,7 @@ const SearchComponent: React.FC = () => {
                                         "Obtuvimos 0 registros para " + searchInputValue + ", verifica los datos ingresados, RECUERDA que para datos más precisos puedes buscar por RUC o cédula."
                                     )}
                                 </p>
+
 
                                 {fuenteseleccionada == "noticias" &&
                                     <>

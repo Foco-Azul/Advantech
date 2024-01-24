@@ -123,3 +123,9 @@ transform: scaleX(0.9);
     padding: 9px 20px;
     line-height: 18px;
    }
+
+   .arriba{
+    display: flex;
+    margin: auto;
+    margin-bottom: 20px;
+   }
