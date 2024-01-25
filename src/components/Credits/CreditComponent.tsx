@@ -24,8 +24,10 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     const { user } = useUser();
     const [isOpen, setIsOpen] = useState(false);
     const [esValido, setEsValido] = useState(true);
-    const [buycredits, setBuyCredits] = useState(0);
+    const [buycredits, setBuyCredits] = useState<number>(0);
     const [priceTiers, setPriceTiers] = useState<any[]>([]);
+    const [planValido, setPlanValido] = useState<boolean>(false);
+    const [dataPlan, setDataPlan] = useState<Plan | null>(null);
     // Lógica para determinar cuándo mostrar cada botón
     const shouldShowCreateAccountButton = user === undefined;
     const shouldShowVerifyAccountButton =
@@ -44,22 +46,59 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
         setIsOpen(false);
         window.location.reload();
     };
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = Number(event.target.value);
-        if (!isNaN(inputValue) && inputValue >= priceTiers[0]?.attributes.minimo && inputValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo) {
-            //setBuyCredits(inputValue);
-            setEsValido(true)
-        } else {
-            setEsValido(false)
-        }
-        setBuyCredits(Math.round(inputValue));
-        if (inputValue > priceTiers[priceTiers.length - 1]?.attributes.maximo) {
-            setBuyCredits(Math.round(priceTiers[priceTiers.length - 1]?.attributes.maximo))
-            setEsValido(true)
+        const inputValue = event.target.value.replace(/[^\d]/g, '');
+        const numericValue = parseFloat(inputValue);
+        if(!planValido){
+            if (!isNaN(numericValue)) {
+                if (numericValue >= priceTiers[0]?.attributes.minimo){
+                    if(numericValue <= priceTiers[priceTiers.length - 1]?.attributes.maximo){
+                        setEsValido(true)
+                        setBuyCredits(numericValue)
+                    }else{
+                        setBuyCredits(Math.round(priceTiers[priceTiers.length - 1]?.attributes.maximo))
+                        setEsValido(true)
+                    }
+                }else{
+                    if(numericValue > 0){
+                        setBuyCredits(numericValue);
+                        setEsValido(false);
+                    }else{
+                        setBuyCredits(0);
+                        setEsValido(false);
+                    }
+                }
+            } else {
+                setEsValido(false);
+                setBuyCredits(0);
+            }
+        }else{
+            if (!isNaN(numericValue)) {
+                console.log("borram3", Math.round(3 / ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos)))
+                if (numericValue >= Math.round(3 / ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos))){
+                    if(numericValue <= (dataPlan as Plan).attributes.Creditos){
+                        setEsValido(true)
+                        setBuyCredits(numericValue)
+                    }else{
+                        setBuyCredits((dataPlan as Plan).attributes.Creditos)
+                        setEsValido(true)
+                    }
+                }else{
+                    if(numericValue > 0){
+                        setEsValido(false);
+                        setBuyCredits(numericValue);
+                    }else{
+                        setBuyCredits(0);
+                        setEsValido(false);
+                    }
+                }
+            } else {
+                setEsValido(false);
+                setBuyCredits(0);
+            }
         }
     };
-
+    
     async function planalacarta() {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/plan-a-la-cartas`, {
@@ -83,85 +122,213 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     }
 
     useEffect(() => {
-        // Lógica para obtener los datos de la API y establecer los price tiers
-        planalacarta().then((data) => {
-            setPriceTiers(data);
-            setBuyCredits(data[0]?.attributes.minimo); // Establecer el valor inicial como el mínimo de la API
-        });
-    }, []);
-
-
-    let nuevoPrecio = 0;
-    if (buycredits > 0) {
-        const selectedTier = priceTiers.find(tier => buycredits >= tier.attributes.minimo && buycredits <= tier.attributes.maximo);
-        if (selectedTier) {
-            nuevoPrecio = buycredits * selectedTier.attributes.preciocredito;
-        } else {
-            nuevoPrecio = buycredits * priceTiers[priceTiers.length - 1].attributes.preciocredito;
+        if (!user) {
+            // Lógica para obtener los datos de la API y establecer los price tiers
+            planalacarta().then((data) => {
+                setPriceTiers(data);
+                setBuyCredits(data[0]?.attributes.minimo); // Establecer el valor inicial como el mínimo de la API
+            });
+        }else{
+            if(planActual !=4){
+                getPlan(Number(planActual)).then((foundPlan) => {
+                    if(foundPlan){
+                        setDataPlan(foundPlan)
+                        setPlanValido(true);
+                        setBuyCredits(Math.round(3 / (foundPlan.attributes.Precio / foundPlan.attributes.Creditos)))
+                    }else{
+                        // Lógica para obtener los datos de la API y establecer los price tiers
+                        planalacarta().then((data) => {
+                            setPriceTiers(data);
+                            setBuyCredits(data[0]?.attributes.minimo); // Establecer el valor inicial como el mínimo de la API
+                        });
+                        setPlanValido(false);
+                    }
+                })
+                setPlanValido(false);
+            }else{
+                planalacarta().then((data) => {
+                    setPriceTiers(data);
+                    setBuyCredits(data[0]?.attributes.minimo); // Establecer el valor inicial como el mínimo de la API
+                });
+                setPlanValido(false);
+            }
         }
+    }, [user, planActual,userCredits]);
+    async function getPlan(id : number) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/planes/${id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+              },
+              cache: "no-store",
+            }
+          );
+          if (response.status !== 200) {
+            throw new Error(`Failed to fetch data, ${response.status}`);
+          }
+          const foundPlan = await response.json();
+          return foundPlan.data;
+      }catch(e){
+
+      }
     }
 
     // Aquí puedes hacer lo que necesites con el nuevo precio, como enviarlo a la pasarela de pago
-    return (
-        <div className="credit-card">
-            <p className="credit-card-p">Tus créditos actuales: {userCredits}</p>
-            <h3>Cantidad de créditos a comprar</h3>
-            <input
-                className="credit-input"
-                type="text" // Cambia el tipo de 'number' a 'text'
-                min={priceTiers[0]?.attributes.minimo}
-                max={priceTiers[priceTiers.length - 1]?.attributes.maximo}
-                value={buycredits}
-                onChange={handleInputChange}
-                placeholder="Ingrese la cantidad de créditos"
-            />
-
-            <hr className="credit-hr" />
-
-            <h3>Precio: ${nuevoPrecio.toFixed(2)}</h3>
-            {shouldShowBuyCreditsButton && esValido && (
-                <p>${(nuevoPrecio / buycredits).toFixed(2)} por crédito</p>
-            )}
-
-            {shouldShowBuyCreditsButton && esValido && (
-                <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString()} créditos</button>
-            )}
-
-            {shouldShowVerifyAccountButton && (
-                <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
-            )}
-            {shouldShowCreateAccountButton && (
-                <a href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></a>
-            )}
-
-            {isOpen && (
-                <div className="credit-popup">
-                    <div className="credit-popup-content">
-                        <button className="credit-close-button" onClick={handleClose}>
-                            X
-                        </button>
-                        <h4>Confirmar tus creditos</h4>
-                        <p>Precio: ${nuevoPrecio.toFixed(2)}</p>
-                        <p>Créditos a obtener {buycredits.toLocaleString()}</p>
-                        <br></br>
-                        <Pasarela
-                            planvencimiento={planvencimiento}
-                            uservencimiento={uservencimiento}
-                            price={nuevoPrecio}
-                            plan={plan}
-                            creditos={buycredits}
-                            userCredits={userCredits}
-                            planid={4}
-                            planActual={planActual}
-                            userid={userid}
-                            userCorreo={userCorreo} />
+    if(!planValido){
+        let nuevoPrecio = 0;
+        if (buycredits > 0) {
+            const selectedTier = priceTiers.find(tier => buycredits >= tier.attributes.minimo && buycredits <= tier.attributes.maximo);
+            if (selectedTier) {
+                nuevoPrecio = buycredits * selectedTier.attributes.preciocredito;
+            } else {
+                nuevoPrecio = buycredits * priceTiers[priceTiers.length - 1].attributes.preciocredito;
+            }
+        }
+        return (
+            <div className="credit-card">
+                <p className="credit-card-p">Tus créditos actuales: {userCredits}</p>
+                <h3>Cantidad de créditos a comprar</h3>
+                <input
+                    className="credit-input"
+                    type="text" // Cambia el tipo de 'number' a 'text'
+                    //min={priceTiers[0]?.attributes.minimo}
+                    //max={priceTiers[priceTiers.length - 1]?.attributes.maximo}
+                    value={buycredits === 0 ? '' : buycredits.toLocaleString('es-ES')}
+                    onChange={handleInputChange}
+                />
+    
+                <hr className="credit-hr" />
+    
+                <h3>Precio: ${nuevoPrecio.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                {shouldShowBuyCreditsButton && esValido && (
+                    <p>${(nuevoPrecio / buycredits).toLocaleString('es-ES')} por crédito</p>
+                )}
+    
+                {shouldShowBuyCreditsButton && esValido && (
+                    <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString('es-ES')} créditos</button>
+                )}
+    
+                {shouldShowVerifyAccountButton && (
+                    <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
+                )}
+                {shouldShowCreateAccountButton && (
+                    <a href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></a>
+                )}
+    
+                {isOpen && (
+                    <div className="credit-popup">
+                        <div className="credit-popup-content">
+                            <button className="credit-close-button" onClick={handleClose}>
+                                X
+                            </button>
+                            <h4>Confirmar tus creditos</h4>
+                            <p>Precio: ${nuevoPrecio.toFixed(2)}</p>
+                            <p>Créditos a obtener {buycredits.toLocaleString()}</p>
+                            <br></br>
+                            <Pasarela
+                                planvencimiento={planvencimiento}
+                                uservencimiento={uservencimiento}
+                                price={nuevoPrecio}
+                                plan={plan}
+                                creditos={buycredits}
+                                userCredits={userCredits}
+                                planid={4}
+                                planActual={planActual}
+                                userid={userid}
+                                userCorreo={userCorreo} />
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
-    );
+                )}
+            </div>
+        );
+    }else{
+        let nuevoPrecio = 0;
+        if (buycredits > 0) {
+            const selectedTier = buycredits >= Math.round(3 / ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos)) && buycredits <= (dataPlan as Plan).attributes.Creditos;
+            if (selectedTier) {
+                nuevoPrecio = parseFloat((buycredits * ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos)).toFixed(2));
+            }
+        }
+        console.log("borrame1", buycredits, nuevoPrecio, ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos));
+        return (
+            <div className="credit-card">
+                <p className="credit-card-p">Tus créditos actuales: {userCredits}</p>
+                <h3>Cantidad de créditos a comprar</h3>
+                <input
+                    className="credit-input"
+                    type="text" // Cambia el tipo de 'number' a 'text'
+                    //min={priceTiers[0]?.attributes.minimo}
+                    //max={priceTiers[priceTiers.length - 1]?.attributes.maximo}
+                    value={buycredits === 0 ? '' : buycredits.toLocaleString('es-ES')}
+                    onChange={handleInputChange}
+                />
+    
+                <hr className="credit-hr" />
+    
+                <h3>Precio: ${nuevoPrecio.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                {shouldShowBuyCreditsButton && esValido && (
+                    <p>${(nuevoPrecio / buycredits).toLocaleString('es-ES')} por crédito</p>
+                )}
+    
+                {shouldShowBuyCreditsButton && esValido && (
+                    <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString('es-ES')} créditos</button>
+                )}
+    
+                {shouldShowVerifyAccountButton && (
+                    <Link href={"/confirmar-correo"}><button className="credit-button">Verifica tu cuenta</button></Link>
+                )}
+                {shouldShowCreateAccountButton && (
+                    <a href={"/api/auth/login"}> <button className="credit-button">Ingresa con tu cuenta</button></a>
+                )}
+    
+                {isOpen && (
+                    <div className="credit-popup">
+                        <div className="credit-popup-content">
+                            <button className="credit-close-button" onClick={handleClose}>
+                                X
+                            </button>
+                            <h4>Confirmar tus creditos</h4>
+                            <p>Precio: ${nuevoPrecio.toFixed(2)}</p>
+                            <p>Créditos a obtener {buycredits.toLocaleString()}</p>
+                            <br></br>
+                            <Pasarela
+                                planvencimiento={planvencimiento}
+                                uservencimiento={uservencimiento}
+                                price={nuevoPrecio}
+                                plan={plan}
+                                creditos={buycredits}
+                                userCredits={userCredits}
+                                planid={4}
+                                planActual={planActual}
+                                userid={userid}
+                                userCorreo={userCorreo} />
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    }
 };
-
+interface Plan {
+    id: number;
+    attributes: {
+      lan: string;
+      Buscador: boolean;
+      Precio: number;
+      API: boolean;
+      Creditos: number;
+      Vencimiento: number;
+      XLSX: boolean;
+      CSV: boolean;
+      TXT: boolean;
+      PDF: boolean;
+      Soporte: boolean;
+    };
+  }
 const CreditComponent: React.FC = () => {
     const { user, error, isLoading } = useUser();
     const userEmail = user?.email;
@@ -172,10 +339,11 @@ const CreditComponent: React.FC = () => {
     const [planActual, setPlanActual] = useState<number | null>(null);
     const [userCorreo, setUserCorreo] = useState<string | null>(null);
     const [auth0, setAuth0] = useState<boolean | null>(null);
+    const [planValido, setPlanValido] = useState<boolean>(false);
 
     useEffect(() => {
-        getuser()
-            .then((foundUser) => {
+        if (user) {
+            getuser().then((foundUser) => {
                 if (foundUser) {
                     const userPlanData = foundUser.attributes.plan.data?.attributes.Precio;
                     const userCredits = foundUser.attributes.creditos;
@@ -196,7 +364,7 @@ const CreditComponent: React.FC = () => {
             .catch((error) => {
                 console.error('Failed to fetch user data:', error);
             });
-
+        }
     }, [user]);
     async function getuser() {
         try {

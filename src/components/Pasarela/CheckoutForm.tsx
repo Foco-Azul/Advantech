@@ -64,7 +64,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
       const res = await fetch("/api/intent", {
         method: "POST",
         body: JSON.stringify({
-          amount: (Number(price.toFixed(2)) * 100),
+          amount: Number((price * 100).toFixed(2)),
           description: "Pago por plan " + plan
         }),
       });
