@@ -6,20 +6,20 @@ import './Tabla.css';
 interface Plan {
     id: number;
     attributes: {
-      lan: string;
-      Buscador: boolean;
-      Precio: number;
-      API: boolean;
-      Creditos: number;
-      Vencimiento: number;
-      XLSX: boolean;
-      CSV: boolean;
-      TXT: boolean;
-      PDF: boolean;
-      Soporte: boolean;
+        lan: string;
+        Buscador: boolean;
+        Precio: number;
+        API: boolean;
+        Creditos: number;
+        Vencimiento: number;
+        XLSX: boolean;
+        CSV: boolean;
+        TXT: boolean;
+        PDF: boolean;
+        Soporte: boolean;
     };
-  }
-  
+}
+
 function Tabla() {
     const [priceTiers, setPriceTiers] = useState<any[]>([]);
     const { user, error, isLoading } = useUser();
@@ -33,24 +33,24 @@ function Tabla() {
                 setPriceTiers(data);
             });
             setPlanValido(false);
-        }else{
+        } else {
             getusers().then((foundUser) => {
                 if (foundUser && foundUser.attributes.vencimiento && foundUser.attributes.plan.data.id) {
                     const vencimiento = new Date(foundUser.attributes.vencimiento);
-                    if (vencimiento > new Date() && foundUser.attributes.plan.data.id !=4) {
+                    if (vencimiento > new Date() && foundUser.attributes.plan.data.id != 4) {
                         setPlanValido(true);
                         getPlan(foundUser.attributes.plan.data.id).then((foundPlan) => {
-                            if(foundPlan){
+                            if (foundPlan) {
                                 setPlan(foundPlan)
                             }
                         })
-                    }else{
+                    } else {
                         setPlanValido(false);
                         planalacarta().then((data) => {
                             setPriceTiers(data);
                         });
                     }
-                }else{
+                } else {
                     setPlanValido(false);
                     planalacarta().then((data) => {
                         setPriceTiers(data);
@@ -62,51 +62,51 @@ function Tabla() {
 
     async function getusers() {
         try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${user?.email}&populate=*`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-              },
-              cache: "no-store",
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${user?.email}&populate=*`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                    },
+                    cache: "no-store",
+                }
+            );
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data, ${response.status}`);
             }
-          );
-          if (response.status !== 200) {
-            throw new Error(`Failed to fetch data, ${response.status}`);
-          }
 
-          const data = await response.json();
-          const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user?.email);
-          return foundUser;
-      }catch(e){
+            const data = await response.json();
+            const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user?.email);
+            return foundUser;
+        } catch (e) {
 
-      }
+        }
     }
-    async function getPlan(id : number) {
+    async function getPlan(id: number) {
         try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/planes/${id}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
-              },
-              cache: "no-store",
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/planes/${id}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                    },
+                    cache: "no-store",
+                }
+            );
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data, ${response.status}`);
             }
-          );
-          if (response.status !== 200) {
-            throw new Error(`Failed to fetch data, ${response.status}`);
-          }
-          const foundPlan = await response.json();
-          return foundPlan.data;
-      }catch(e){
+            const foundPlan = await response.json();
+            return foundPlan.data;
+        } catch (e) {
 
-      }
+        }
     }
-    if(!planValido){
+    if (!planValido) {
         return (
             <div className="tabla-container">
                 <h3 className="tabla-title-h3">Rangos de precio</h3>
@@ -120,7 +120,7 @@ function Tabla() {
                     <tbody>
                         {priceTiers.map((tier, index) => (
                             <tr key={index} className={index % 2 === 0 ? '' : 'tabla-tr'}>
-                                   <td className="tabla-text">{`${tier.attributes.minimo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} - ${tier.attributes.maximo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`}</td>
+                                <td className="tabla-text">{`${tier.attributes.minimo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')} - ${tier.attributes.maximo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`}</td>
                                 <td className="tabla-text">{`$${tier.attributes.preciocredito.toFixed(2)}`}</td>
                             </tr>
                         ))}
@@ -128,12 +128,13 @@ function Tabla() {
                 </table>
             </div>
         );
-    }else{
+    } else {
         //RETORNARA ESTO CUANDO EL USUARIO TENGA UN PLAN DIFERENTE AL PERSONALIZADO
         return (
             <div className="tabla-container">
-                <h3 className="tabla-title-h3">Rangos de precio</h3>
-                <table className="tabla-card">
+                <h3 className="tabla-title-h3">Por ser parte de Advantech</h3>
+                <h3 className="tabla-title-h3">Tenemos un precio especial para ti</h3>
+                {/* <table className="tabla-card">
                     <thead className="tabla-head">
                         <tr>
                             <th className="tabla-title-i">Rango de créditos</th>
@@ -147,11 +148,18 @@ function Tabla() {
                             <td className="tabla-text">{`$ ${plan && plan.attributes ? Number(plan.attributes.Precio / plan.attributes.Creditos).toLocaleString('es-ES') : ''}`}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> */}
+
+                <div className='micuenta-datos-card username'>
+                    <span className='micuenta-datos-title'>Costo por crédito</span>
+                    <span className='micuenta-datos-subtitle username'>   {`$ ${plan && plan.attributes ? Number(plan.attributes.Precio / plan.attributes.Creditos).toLocaleString('es-ES') : ''}`}</span>
+                    <span className='micuenta-datos-title'>Rango de compra</span>
+                    <span className='micuenta-datos-subtitle username'>  {`${plan && plan.attributes ? Math.round(3 / (plan.attributes.Precio / plan.attributes.Creditos)) : ''} - ${plan && plan.attributes ? Number(plan.attributes.Creditos).toLocaleString('es-ES') : ''}`}</span>
+                </div>
             </div>
         );
     }
-   
+
 }
 
 async function planalacarta() {

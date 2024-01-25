@@ -52,3 +52,48 @@
     font-weight: 800;
     line-height: 130%;
 }
+
+.micuenta-datos-card {
+    width: 325px;
+    height: 265px;
+    background: linear-gradient(90deg, #009FDE 0%, #89BAE7 100%);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin: 20px;
+}
+.micuenta-datos-card.username {
+    width: 350px;
+    height: 220px;
+    background: linear-gradient(90deg, #009FDE 0%, #89BAE7 100%);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    margin: 20px;
+}
+.micuenta-datos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.micuenta-datos-subtitle {
+    font-size: 32px;
+    color: white;
+    font-weight: 800;
+}
+.micuenta-datos-subtitle.username {
+    font-size: 32px;
+    color: white;
+    font-weight: 800;
+}
+
+
+
+.micuenta-datos-title {
+    font-size: 24px;
+    color: white;
+    font-weight: 800;
+}
