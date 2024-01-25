@@ -129,7 +129,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                 setBuyCredits(data[0]?.attributes.minimo); // Establecer el valor inicial como el mínimo de la API
             });
         }else{
-            if(planActual !=4){
+            if(planActual !=4 && new Date(planvencimiento) > new Date()){
                 getPlan(Number(planActual)).then((foundPlan) => {
                     if(foundPlan){
                         setDataPlan(foundPlan)
