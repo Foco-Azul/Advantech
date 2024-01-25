@@ -179,7 +179,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
     return (
       <tr>
-        <th className='tablabusqueda-esquinaizquierda' onClick={handleSelectAll}>Seleccionar todo</th>
+        <th className='tablabusqueda-esquinaizquierda' onClick={handleSelectAll}>Seleccionar página</th>
         <th onClick={() => handleSort("cedula")}>
           cedula {isSortingColumn("cedula") && (isAscending ? "▲" : "▼")}
         </th>
@@ -344,6 +344,42 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     );
   };
 
+
+  const SelectAllRegisters = () => {
+    // Obtener todas las claves de datos paginados y no solo de la página actual
+    const allKeys = data
+      ? Object.entries(data).flatMap(([propertyKey, items]) =>
+          Object.keys(items).map(itemKey => itemKey)
+        )
+      : [];
+  
+    // Verificar si todos los elementos están seleccionados
+    const allSelected = allKeys.every(key => selectedItems.includes(key));
+  
+    if (allSelected) {
+      // Deseleccionar todos los elementos
+      setSelectedItems([]);
+    } else {
+      // Seleccionar todos los elementos manteniendo el estado anterior
+      const uniqueNewSelectedItems = Array.from(new Set([...selectedItems, ...allKeys]));
+      setSelectedItems(uniqueNewSelectedItems);
+    }
+  };
+  
+  const selectAllButtonText = () => {
+    const allKeys = data
+      ? Object.entries(data).flatMap(([propertyKey, items]) =>
+          Object.keys(items).map(itemKey => itemKey)
+        )
+      : [];
+
+    // Verificar si todos los elementos están seleccionados
+    const allSelected = allKeys.every(key => selectedItems.includes(key));
+
+    return allSelected ? "Deseleccionar todo" : "Seleccionar todo";
+  };
+
+
   return (
     <div >
       {data != null && Object.keys(data[Object.keys(data)[0]]).length === 0 && (
@@ -355,6 +391,9 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
           <div className='container-tablabusqueda'>
             <div className='buscador-filtros'>
+            <button className='busqueda-menu-button todo' onClick={SelectAllRegisters}>
+                {selectAllButtonText()}
+              </button>
               <h3 className='buscador-filtros-h3'>FILTROS</h3>
               <h4 className="buscador-filtros-h4">Filtrar por buscador</h4>
               <input

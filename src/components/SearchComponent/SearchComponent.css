@@ -129,3 +129,10 @@ transform: scaleX(0.9);
     margin: auto;
     margin-bottom: 20px;
    }
+
+   .todo{
+    display: flex;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 15px;
+   }
