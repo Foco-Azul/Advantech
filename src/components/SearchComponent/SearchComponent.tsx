@@ -21,6 +21,7 @@ import { TitulosExcel } from './TitulosExcel';
 import AccionistasExcel from './AccionistasExcel';
 import { ArrowRight } from "lucide-react";
 
+
 const SearchComponent: React.FC = () => {
     const [data, setData] = useState<any>(null);
     const [propiedadArray, setPropiedadArray] = useState<string[]>([]);
@@ -401,50 +402,70 @@ const SearchComponent: React.FC = () => {
         return selector.value;
     };
 
+    
     const handleConvertToPdf = () => {
         if (Datos && Datos.data) {
             const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
-            const jsonobject = Datos.data
+            const jsonobject = Datos.data;
+            console.log(jsonobject)
             const jsonDataString = JSON.stringify(jsonobject, null, 2);
-
+    
             // Agregar imagen como encabezado solo en la primera página
-            const imgData = 'https://dev.advantech.com.ec:1334/uploads/Encabezado_47b7f38973.png';
-
+            const imgData = 'https://dev.advantech.com.ec:1334/uploads/Encabezado_47b7f38973';
+    
             // Calcula el ancho proporcional de la imagen al ancho del PDF (ajustado al margen)
-            const pdfWidth = 230; // Ajusta este valor según el ancho deseado del contenido
+            const pdfWidth = 200; // Ajusta este valor según el ancho deseado del contenido
             const imgProps = { width: pdfWidth, height: (pdfWidth * 97) / 903 };
-
-            let y = 0; // Variable para controlar la posición vertical del texto
+    
+            let y = 10; // Comienza desde una posición más baja para evitar problemas en la primera línea
             let firstPage = true; // Bandera para verificar la primera página
-
+    
             // Función para agregar una nueva página y restablecer la posición vertical (y)
             const addNewPage = () => {
                 doc.addPage();
-                y = 0;
-                y += 10; // Incrementar la posición vertical para evitar superponer el texto en la imagen
+                y = 10; // Reiniciar la posición vertical
             };
-
+    
             // Contenido principal
-            const lines = doc.splitTextToSize(jsonDataString, pdfWidth);
+            const lines = doc.splitTextToSize(jsonDataString.replace(/[{}",]/g, ""), pdfWidth);
             for (let i = 0; i < lines.length; i++) {
-                if (y + 10 > doc.internal.pageSize.getHeight()) { // Comprobar si hay suficiente espacio vertical
-                    addNewPage(); // Agregar una nueva página si no hay suficiente espacio
+                if (y + 10 > doc.internal.pageSize.getHeight()) {
+                    addNewPage();
                 }
-
+    
                 if (firstPage) {
                     doc.addImage(imgData, 'PNG', 0, 0, imgProps.width, imgProps.height);
                     firstPage = false;
-                    y += 60; // Incrementar la posición vertical después del encabezado en la primera página
+                    y += 30; // Incrementar la posición vertical después del encabezado en la primera página
                 }
-
-                doc.text(lines[i], 15, y);
-                y += 10; // Incrementar la posición vertical para la siguiente línea
+    
+                doc.setFontSize(10); // Ajustar el tamaño de la fuente a 10
+    
+                // Calcular la indentación y agregar espacios correspondientes
+                const indentation = lines[i].search(/\S/); // Encuentra la primera posición no vacía
+    
+                if (indentation > 0) {
+                    // Si hay indentación, agregar espacios antes del texto
+                    const indentedLine = ' '.repeat(indentation) + lines[i].trim();
+                    doc.text(indentedLine, 15, y);
+                } else {
+                    // Si no hay indentación, agregar la línea directamente
+                    doc.text(lines[i].trim(), 15, y);
+                }
+    
+                y += 8; // Incrementar la posición vertical para la siguiente línea, ajustar según sea necesario
             }
-
+    
             doc.save(`${NombreRuc} - Advantech.pdf`);
         }
     };
-
+    
+    
+    
+    
+    
+    
+    
     const handleConvertToXls = () => {
         // Simular llamado a la API y descargar los datos como XLS
         const data = JSON.parse(Datos.data);
@@ -602,9 +623,9 @@ const SearchComponent: React.FC = () => {
                             mostrartabla &&
                             <>
                                 {user && <button className='busqueda-menu-button arriba' onClick={handleReloadPage}>
-                                Iniciar una nueva búsqueda
-                            </button>
-                            }
+                                    Iniciar una nueva búsqueda
+                                </button>
+                                }
                                 <label className='buscador-label-datos'>Datos sobre {searchInputValue}</label>
                                 <p>
                                     {DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 ? (
@@ -664,9 +685,11 @@ const SearchComponent: React.FC = () => {
                         <br></br>
                         <div>
                             {!mostrartabla &&
-                                <div className='json-container'>
-                                    <pre className='search-json'>{JSON.stringify(data, null, 2)}</pre>
-                                </div>
+                                <>
+                                    <label className='buscador-label aviso'>Obtuviste tus datos con éxito, puedes descargarlos aquí o puedes acceder a ellos a travéz de Mi cuenta</label>
+                                    <br></br>
+                                    <br></br>
+                                </>
                             }
                             {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 &&
                                 <>

@@ -4,11 +4,11 @@ const nextConfig = {
     ignoreDuringBuilds: true, // Desactiva la regla durante la construcción
   },
   images: {
-    domains: ["admin.advantech.com.ec", "lh3.googleusercontent.com"],
+    domains: ["dev.advantech.com.ec:1334", "lh3.googleusercontent.com"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "admin.advantech.com.ec",
+        hostname: "dev.advantech.com.ec:1334",
         port: "",
         pathname: "/uploads/format_webp/**",
       },
