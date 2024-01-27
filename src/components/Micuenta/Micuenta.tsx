@@ -35,7 +35,7 @@ const Micuenta: React.FC = () => {
     const [purchaseHistory, setPurchaseHistory] = useState<Array<any>>([]);
     const [showApiSection, setShowApiSection] = useState(false);
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
-    const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta === "" || purchase.attributes.consulta === null);
+    const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.tipo == "compra" || purchase.attributes.tipo == "bienvenida" || purchase.attributes.tipo == "ajuste");
     const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos <= 0);
     const [generatedApi, setGeneratedApi] = useState('');
     const [apiSectionVisible, setApiSectionVisible] = useState(true);
@@ -65,13 +65,13 @@ const Micuenta: React.FC = () => {
 
     const cambiarNombre = (event: React.ChangeEvent<HTMLInputElement>) => {
         let inputValue = event.target.value;
-    
+
         // Eliminar caracteres especiales utilizando una expresión regular
         inputValue = inputValue.replace(/[^a-zA-Z0-9]/g, '');
-    
+
         // Limitar la longitud a 20 caracteres
         inputValue = inputValue.slice(0, 20);
-    
+
         setnameUser(inputValue);
     };
 
@@ -381,7 +381,7 @@ const Micuenta: React.FC = () => {
         return textoEncriptado;
     }
 
-    
+
 
     // Función para mostrar u ocultar la sección API
     const toggleApiSection = () => {
@@ -493,7 +493,7 @@ const Micuenta: React.FC = () => {
             });
         }
     };
-    
+
     if (purchasePagosPaginas && purchasePagosPaginas.pageCount !== undefined) {
 
     } else {
@@ -612,10 +612,10 @@ const Micuenta: React.FC = () => {
                                                 )}
                                             </div>
                                             <div className='micuenta-datos-card'>
-                                                {!isPlanVencido ?(
-                                                <span className='micuenta-datos-title'>Mi plan activo </span>
-                                                ):(
-                                                <span className='micuenta-datos-title'>Plan vencido </span>
+                                                {!isPlanVencido ? (
+                                                    <span className='micuenta-datos-title'>Mi plan activo </span>
+                                                ) : (
+                                                    <span className='micuenta-datos-title'>Plan vencido </span>
                                                 )}
                                                 <span className='micuenta-datos-subtitle'>{userPlan}</span>
                                             </div>
@@ -670,15 +670,15 @@ const Micuenta: React.FC = () => {
                                                         {!seCambioNombre ? (
                                                             <>
                                                                 <div className='campo_cambiarNombre'>
-                                                                <input
-                                                                    type="text"
-                                                                    id="name"
-                                                                    name="name"
-                                                                    value={nameUser}
-                                                                    onChange={cambiarNombre}
-                                                                    required
-                                                                />
-                                                                <label htmlFor="name">Solo se permite caracteres Alfanumericos <br /> (Ej. Carlos123)</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="name"
+                                                                        name="name"
+                                                                        value={nameUser}
+                                                                        onChange={cambiarNombre}
+                                                                        required
+                                                                    />
+                                                                    <label htmlFor="name">Solo se permite caracteres Alfanumericos <br /> (Ej. Carlos123)</label>
                                                                 </div>
                                                                 <br />
                                                                 <button
@@ -754,7 +754,7 @@ const Micuenta: React.FC = () => {
                                                         {purchaseHistoryFiltered.map((purchase: any) => (
                                                             <tr key={purchase.id}>
                                                                 <td>{purchase.attributes.fecha}</td>
-                                                                <td>{purchase.attributes.tipo}</td>
+                                                                <td>{purchase.attributes.consulta}</td>
                                                                 <td>${purchase.attributes.precio}</td>
                                                                 <td>{purchase.attributes.creditos}</td>
                                                             </tr>

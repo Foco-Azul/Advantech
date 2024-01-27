@@ -149,7 +149,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
                   fecha: new Date(),
                   precio: price,
                   plane: planid,
-                  consulta: "",
+                  consulta: "Compra de plan " + plan,
                   tipo: "compra",
                   factura: {
                     nombres: nombres,
