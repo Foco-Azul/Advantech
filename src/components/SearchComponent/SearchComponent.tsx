@@ -416,7 +416,7 @@ const SearchComponent: React.FC = () => {
             const imgData = "/Logo.png"
 
             // Calcula el ancho proporcional de la imagen al ancho del PDF (ajustado al margen)
-            const pdfWidth = 210; // Ajusta este valor según el ancho deseado del contenido
+            const pdfWidth = 250; // Ajusta este valor según el ancho deseado del contenido
             const imgProps = { width: pdfWidth, height: (pdfWidth * 97) / 903 };
 
             let y = 10; // Comienza desde una posición más baja para evitar problemas en la primera línea
