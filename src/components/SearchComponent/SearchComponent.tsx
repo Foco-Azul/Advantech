@@ -684,7 +684,7 @@ const SearchComponent: React.FC = () => {
                         <div>
                             {!mostrartabla &&
                                 <>
-                                    <label className='buscador-label aviso'>Obtuviste tus datos con éxito, puedes descargarlos aquí o puedes acceder a ellos a travéz de Mi cuenta</label>
+                                    <label className='buscador-label aviso'>Obtuviste tus datos con éxito, puedes descargarlos aquí o puedes acceder a ellos a través de Mi cuenta</label>
                                     <br></br>
                                     <br></br>
                                 </>
