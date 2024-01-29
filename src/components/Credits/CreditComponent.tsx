@@ -25,6 +25,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
     const [isOpen, setIsOpen] = useState(false);
     const [esValido, setEsValido] = useState(true);
     const [buycredits, setBuyCredits] = useState<number>(0);
+    const [buycreditsInput, setBuyCreditsInput] = useState<number>(0);
     const [priceTiers, setPriceTiers] = useState<any[]>([]);
     const [planValido, setPlanValido] = useState<boolean>(false);
     const [dataPlan, setDataPlan] = useState<Plan | null>(null);
@@ -74,7 +75,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
             }
         }else{
             if (!isNaN(numericValue)) {
-                console.log("borram3", Math.round(3 / ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos)))
                 if (numericValue >= Math.round(3 / ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos))){
                     if(numericValue <= (dataPlan as Plan).attributes.Creditos){
                         setEsValido(true)
@@ -129,7 +129,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                 setBuyCredits(data[0]?.attributes.minimo); // Establecer el valor inicial como el mínimo de la API
             });
         }else{
-            if(planActual !=4 && new Date(planvencimiento) > new Date()){
+            if(uservencimiento && planActual !=4 && new Date(uservencimiento) > new Date()){
                 getPlan(Number(planActual)).then((foundPlan) => {
                     if(foundPlan){
                         setDataPlan(foundPlan)
@@ -153,8 +153,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                 setPlanValido(false);
             }
         }
-    }, [user, planActual,userCredits]);
-    async function getPlan(id : number) {
+        }, [user, planActual, userCredits]);
+        async function getPlan(id : number) {
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/planes/${id}`,
@@ -194,22 +194,26 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                 <h3>Cantidad de créditos a comprar</h3>
                 <input
                     className="credit-input"
-                    type="text" // Cambia el tipo de 'number' a 'text'
-                    //min={priceTiers[0]?.attributes.minimo}
-                    //max={priceTiers[priceTiers.length - 1]?.attributes.maximo}
-                    value={buycredits === 0 ? '' : buycredits.toLocaleString('es-ES')}
+                    type="text"
+                    value={buycredits === 0
+                        ? ''
+                        : buycredits.toLocaleString('es-ES', {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
+                            useGrouping: true, // Usar agrupación de miles
+                          })}
                     onChange={handleInputChange}
                 />
     
                 <hr className="credit-hr" />
     
-                <h3>Precio: ${nuevoPrecio.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                <h3>Precio: ${nuevoPrecio.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true,})}</h3>
                 {shouldShowBuyCreditsButton && esValido && (
                     <p>${(nuevoPrecio / buycredits).toLocaleString('es-ES')} por crédito</p>
                 )}
     
                 {shouldShowBuyCreditsButton && esValido && (
-                    <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString('es-ES')} créditos</button>
+                    <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString('es-ES', {useGrouping: true})} créditos</button>
                 )}
     
                 {shouldShowVerifyAccountButton && (
@@ -253,7 +257,6 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                 nuevoPrecio = parseFloat((buycredits * ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos)).toFixed(2));
             }
         }
-        console.log("borrame1", buycredits, nuevoPrecio, ((dataPlan as Plan).attributes.Precio / (dataPlan as Plan).attributes.Creditos));
         return (
             <div className="credit-card">
                 <p className="credit-card-p">Tus créditos actuales: {userCredits}</p>
@@ -263,19 +266,19 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userid, price, plan
                     type="text" // Cambia el tipo de 'number' a 'text'
                     //min={priceTiers[0]?.attributes.minimo}
                     //max={priceTiers[priceTiers.length - 1]?.attributes.maximo}
-                    value={buycredits === 0 ? '' : buycredits.toLocaleString('es-ES')}
+                    value={buycredits === 0 ? '' : buycredits.toLocaleString('es-ES',{useGrouping: true})}
                     onChange={handleInputChange}
                 />
     
                 <hr className="credit-hr" />
     
-                <h3>Precio: ${nuevoPrecio.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                <h3>Precio: ${nuevoPrecio.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true})}</h3>
                 {shouldShowBuyCreditsButton && esValido && (
                     <p>${(nuevoPrecio / buycredits).toLocaleString('es-ES')} por crédito</p>
                 )}
     
                 {shouldShowBuyCreditsButton && esValido && (
-                    <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString('es-ES')} créditos</button>
+                    <button className="credit-button" onClick={handleSubscribe}>Comprar {buycredits.toLocaleString('es-ES', {useGrouping: true})} créditos</button>
                 )}
     
                 {shouldShowVerifyAccountButton && (

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUserTie, faChevronDown, faChevronUp, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import crypto from 'crypto';
+import Loading from "@/components/Loading/Loading";
 
 interface LoginProps {
   loginname: string;
@@ -24,8 +25,30 @@ function Login({ loginname }: LoginProps) {
   const [showSubPerfil, setShowSubPerfil] = useState(false); // Nuevo estado para controlar la visibilidad
   const [isPerfilOpen, setPerfilOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [procesando, setProcesando] = useState(true);
   const toggleRecursos = () => {
     setPerfilOpen(!isPerfilOpen);
+  };
+   // Función para crear y añadir el elemento al body
+   const crearElemento = () => {
+    const nuevoElemento = document.createElement('div');
+    nuevoElemento.innerHTML = `
+      <section class='precarga'>
+        <div class='animacion'>
+          <img src="/image/logo-advantech-datos.svg" alt="Company Logo" width="164" height="133"/>
+        </div>
+      </section>
+    `;
+    nuevoElemento.id = 'procesando'; // Puedes agregar un ID para referenciarlo posteriormente
+    document.body.appendChild(nuevoElemento);
+  };
+
+  // Función para remover el elemento del body
+  const removerElemento = () => {
+    const elementoExistente = document.getElementById('procesando');
+    if (elementoExistente) {
+      document.body.removeChild(elementoExistente);
+    }
   };
 
   React.useEffect(() => {
@@ -34,14 +57,13 @@ function Login({ loginname }: LoginProps) {
     }
   }, [user]);
   async function getusers() {
-
     // Verificar si user es undefined antes de continuar
     if (!user) {
+      removerElemento();
       return;
     }
-
     try {
-
+      crearElemento()
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users?filters[email][$eq]=${user.email}`,
         {
@@ -56,13 +78,11 @@ function Login({ loginname }: LoginProps) {
       if (response.status !== 200) {
         throw new Error(`Failed to fetch data, ${response.status}`);
       }
-      
       const data = await response.json();
       const foundUser = data.data.find((obj: { attributes: { email: string; }; }) => obj.attributes.email === user.email);
       const fechaHoraActual = new Date().toISOString();
       const codigoAleatorio = Math.random().toString(36).substring(2, 8);
       const codigoUnico = fechaHoraActual.replace(/[^a-zA-Z0-9]/g, '') + codigoAleatorio;
-
       if (foundUser) {
         setUserName(foundUser.attributes.username);
         if (user && user.sub && user.sub.includes("auth0") && foundUser.attributes.auth0 == null) {
@@ -89,8 +109,8 @@ function Login({ loginname }: LoginProps) {
          } else {
            throw new Error(`Failed to create user, ${postResponse.status}`);
          }
-       }
-       if (user && user.sub && user.sub.includes("google") && foundUser.attributes.google==null) {
+        }
+        if (user && user.sub && user.sub.includes("google") && foundUser.attributes.google==null) {
         // Realizar el POST con los datos requeridos
         const postResponse = await fetch(
           `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
@@ -113,36 +133,33 @@ function Login({ loginname }: LoginProps) {
         } else {
           throw new Error(`Failed to create user, ${postResponse.status}`);
         }
-      }
-      if (user && user.sub && user.sub.includes("windowslive") && foundUser.attributes.microsoft==null) {
-        // Realizar el POST con los datos requeridos
-        const postResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              data: {
-                microsoft: true,
-                estaactivo: true,
-              },
-            }),
-            cache: "no-store",
-          }
-        );
-        
-        if (postResponse.status === 200) {
-        } else {
-          throw new Error(`Failed to create user, ${postResponse.status}`);
         }
-      }
+        if (user && user.sub && user.sub.includes("windowslive") && foundUser.attributes.microsoft==null) {
+          // Realizar el POST con los datos requeridos
+          const postResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth0users/${foundUser.id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: {
+                  microsoft: true,
+                  estaactivo: true,
+                },
+              }),
+              cache: "no-store",
+            }
+          );
+          
+          if (postResponse.status === 200) {
+          } else {
+            throw new Error(`Failed to create user, ${postResponse.status}`);
+          }
+        }
       } else {
-        if (foundUser && typeof user.email === 'string') {
-          setUserName(foundUser.attributes.username);
-        } else {
-
+        setUserName((user.email ? user.email.toString() : "").split("@")[0]);
           const credito_gratuito = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/credito-gratuito?populate=*`,
             {
@@ -321,10 +338,11 @@ function Login({ loginname }: LoginProps) {
                       fecha: new Date(),
                       precio: 0,
                       plane: credito_gratuito_data.id_plan.data.id,
-                      consulta:"",
+                      consulta: "Regalo de bienvenida",
                       tipo: "bienvenida",
                       factura: {
                         email: user.email,
+                        emitir: false
                       },  
                     },
                   }
@@ -334,8 +352,8 @@ function Login({ loginname }: LoginProps) {
               );
             }
           }
-        }
       }
+      removerElemento();
     } catch (error) {
       console.error(`Failed to fetch data, ${error}`);
     }
@@ -345,6 +363,7 @@ function Login({ loginname }: LoginProps) {
   if (error) return <div>{error.message}</div>;
 
   return (
+    <>
     <div className="login-container">
       {user && (
         <div>
@@ -412,7 +431,8 @@ function Login({ loginname }: LoginProps) {
         </div>
       )}
     </div>
-  );
+    </>
+    );
 }
 
 export default Login;

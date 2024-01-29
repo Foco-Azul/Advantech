@@ -33,6 +33,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
   const [showPaymentButton, setShowPaymentButton] = useState(true);
   const [loading, setLoading] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [procesando, setProcesando] = useState(false);
 
   const [nombres, setNombres] = useState('');
   const [razonSocial, setRazonSocial] = useState('');
@@ -91,12 +92,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
       if (result.paymentIntent.status === 'succeeded') {
         setShowForm(false);
         setShowPaymentButton(false);
-        setPaymentSuccess(true); // Actualiza el estado para indicar que el pago fue exitoso
-
+        setProcesando(true)
+        //setPaymentSuccess(true); // Actualiza el estado para indicar que el pago fue exitoso
         if (userCredits === null) {
           userCredits = 0;
         }
-
         var fechaActual = new Date();
         if (uservencimiento !== null) {
           var uservencimiento_data = new Date(uservencimiento);
@@ -213,6 +213,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
         } else {
           throw new Error(`Failed to create user, ${postResponse.status}`);
         }
+        setProcesando(false)
+        setPaymentSuccess(true); // Actualiza el estado para indicar que el pago fue exitoso
       }
     }
   };
@@ -223,7 +225,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
 
   return (
     <div data-testid="checkout-form">
-      {!paymentSuccess && 
+      {!paymentSuccess && !procesando &&
       <><input
           type="checkbox"
           id="facturacionCheckbox"
@@ -327,6 +329,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ price, userid, plan, credit
         {payerror && (
           <div className='payerror'>
             {payerror}
+          </div>
+        )}
+        {procesando && ( // Muestra el div verde si el pago fue exitoso
+          <div style={{ color: 'blue' }}>
+            Se esta procesando el pago
           </div>
         )}
         {paymentSuccess && ( // Muestra el div verde si el pago fue exitoso
