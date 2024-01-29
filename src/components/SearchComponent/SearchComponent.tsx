@@ -685,12 +685,14 @@ const SearchComponent: React.FC = () => {
                             {!mostrartabla &&
                                 <>
                                     <label className='buscador-label aviso'>Obtuviste tus datos con éxito, puedes descargarlos aquí o puedes acceder a ellos a travéz de Mi cuenta</label>
-                                    <br></br>
+
                                     <br></br>
                                 </>
                             }
                             {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 &&
                                 <>
+                                    <p>Seleccionaste {seleccionUsuarioCount} registros para {searchInputValue}</p>
+                                    <br></br>
                                     <p>Mis créditos:{userCredits}</p>
                                     <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito * seleccionUsuarioCount}</p>
                                 </>

@@ -42,6 +42,7 @@ const Micuenta: React.FC = () => {
     const [user_admin, setuser_admin] = useState<string | null>(null);
     const [nameUser, setnameUser] = useState<string>("");
     const [actualizarEstadoConsulta, setActualizarEstadoConsulta] = useState(1);
+    const [sortOrder, setSortOrder] = useState("desc");
 
     interface PurchasePagina {
         page: number;
@@ -774,7 +775,7 @@ const Micuenta: React.FC = () => {
                                                 <table className="micuenta-history-table">
                                                     <thead className="micuenta-history-table-head" >
                                                         <tr>
-                                                            <th>Fecha</th>
+                                                            <th onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}> Fecha {sortOrder === "asc" ? "▲" : "▼"}  </th>
                                                             <th>Consumo créditos</th>
                                                             <th>Consulta</th>
                                                             <th>Estado consulta</th>
@@ -788,9 +789,9 @@ const Micuenta: React.FC = () => {
                                                             .sort((a, b) => {
                                                                 const dateA = new Date(a.attributes.publishedAt);
                                                                 const dateB = new Date(b.attributes.publishedAt);
-                                                                if (dateA > dateB) return -1; // Ordena por fecha en orden descendente (más reciente primero)
-                                                                if (dateA < dateB) return 1;
-                                                                return 0;
+                                                                const orderFactor = sortOrder === "asc" ? 1 : -1;
+
+                                                                return orderFactor * dateA.getTime() - orderFactor * dateB.getTime();
                                                             })
                                                             .map((search: any) => (
                                                                 <tr key={search.id}>

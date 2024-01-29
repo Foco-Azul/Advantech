@@ -5,7 +5,7 @@ export const AccionistasExcel = async (dataToDownload: any, consulta: string) =>
   //Creacion del libro
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Accionistas');
-
+console.log(dataToDownload)
   //Creacion del header principal
   const principalHeader = worksheet.addRow([
     '',
