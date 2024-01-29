@@ -691,6 +691,8 @@ const SearchComponent: React.FC = () => {
                             }
                             {user && mostrartabla && DatosTabla != null && Object.keys(DatosTabla[Object.keys(DatosTabla)[0]]).length > 0 &&
                                 <>
+                                    <p>Seleccionaste {seleccionUsuarioCount} registros para {searchInputValue}</p>
+                                    <br></br>
                                     <p>Mis créditos:{userCredits}</p>
                                     <p>Créditos a consumir:{selectedFuenteCredito && selectedFuenteCredito * seleccionUsuarioCount}</p>
                                 </>
