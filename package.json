@@ -61,6 +61,7 @@
     "react-dropzone": "^14.2.3",
     "react-image-gallery": "^1.2.12",
     "react-slick": "^0.29.0",
+    "react-tooltip": "^5.26.0",
     "slick-carousel": "^1.8.1",
     "stripe": "^12.10.0",
     "tailwind-merge": "^1.13.1",

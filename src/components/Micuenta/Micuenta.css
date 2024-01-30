@@ -151,6 +151,14 @@
     width: 100%;
 }
 
+th:nth-child(1){
+    width: 100px;
+}
+
+th:nth-child(2){
+    width: 90px;
+}
+
 .micuenta-history-table-head {
     background-color: #0099cc;
     color: white;
@@ -478,4 +486,10 @@ body > div.micuenta > div.micuenta-div-container > div > div.micuenta-datos-cont
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
     margin-top: -75px;
+}
+
+#my-tooltip{
+    background-color: #0099cc;
+    color: white;
+    z-index: 99;
 }
