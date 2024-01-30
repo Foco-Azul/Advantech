@@ -3,7 +3,6 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import "./Hero.css";
 //import Carousel from "./Carousel";
-import Carousel from "@/components/Carrusel";
 import MarcasClientes from '@/components/MarcasClientes/MarcasClientes';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
