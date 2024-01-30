@@ -16,6 +16,10 @@ import { TitulosExcel } from '../SearchComponent/TitulosExcel';
 import AccionistasExcel from '../SearchComponent/AccionistasExcel';
 import SearchStatus from './SearchStatus';
 import crypto from 'crypto';
+import { jsPDF } from 'jspdf';
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
+
 const Micuenta: React.FC = () => {
 
     const { user, error, isLoading } = useUser();
@@ -469,6 +473,87 @@ const Micuenta: React.FC = () => {
         }
     }
 
+
+    const DescargarPDF = async (query_id: string, fuente: string, puntero: any, consulta: string) => {
+
+        const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                query_id: query_id,
+                selection: puntero,
+                key: `${process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_KEY}`
+            }),
+        });
+
+        if (secondResponse.ok) {
+            const secondJsonData = await secondResponse.json();
+            const noticias = secondJsonData.data;
+
+            setData(noticias)
+
+            console.log(noticias)
+
+            if (noticias) {
+                const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
+                const jsonobject = noticias;
+                console.log(jsonobject)
+                const jsonDataString = JSON.stringify(jsonobject, null, 2);
+
+                // Agregar imagen como encabezado solo en la primera página
+                const imgData = "/Logo.png"
+
+                // Calcula el ancho proporcional de la imagen al ancho del PDF (ajustado al margen)
+                const pdfWidth = 250; // Ajusta este valor según el ancho deseado del contenido
+                const imgProps = { width: pdfWidth, height: (pdfWidth * 97) / 903 };
+
+                let y = 10; // Comienza desde una posición más baja para evitar problemas en la primera línea
+                let firstPage = true; // Bandera para verificar la primera página
+
+                // Función para agregar una nueva página y restablecer la posición vertical (y)
+                const addNewPage = () => {
+                    doc.addPage();
+                    y = 10; // Reiniciar la posición vertical
+                };
+
+                // Contenido principal
+                const lines = doc.splitTextToSize(jsonDataString.replace(/[{}",]/g, ""), pdfWidth);
+                for (let i = 0; i < lines.length; i++) {
+                    if (y + 10 > doc.internal.pageSize.getHeight()) {
+                        addNewPage();
+                    }
+
+                    if (firstPage) {
+                        doc.addImage(imgData, 'PNG', 0, 0, imgProps.width, imgProps.height);
+                        firstPage = false;
+                        y += 20; // Incrementar la posición vertical después del encabezado en la primera página
+                    }
+
+                    doc.setFontSize(10); // Ajustar el tamaño de la fuente a 10
+
+                    // Calcular la indentación y agregar espacios correspondientes
+                    const indentation = lines[i].search(/\S/); // Encuentra la primera posición no vacía
+
+                    if (indentation > 0) {
+                        // Si hay indentación, agregar espacios antes del texto
+                        const indentedLine = ' '.repeat(indentation) + lines[i].trim();
+                        doc.text(indentedLine, 18, y);
+                    } else {
+                        // Si no hay indentación, agregar la línea directamente
+                        doc.text(lines[i].trim(), 18, y);
+                    }
+
+                    y += 8; // Incrementar la posición vertical para la siguiente línea, ajustar según sea necesario
+                }
+
+                doc.save(`${consulta} - Advantech.pdf`);
+            }
+        }
+    };
+
+
     const handleButtonClick = (key: number) => {
         setBotonActivo(key);
         getHistorialPagos(key)
@@ -781,6 +866,7 @@ const Micuenta: React.FC = () => {
                                                             <th>Estado consulta</th>
                                                             <th>Excel</th>
                                                             <th>Json</th>
+                                                            <th>PDF</th>
                                                         </tr>
                                                     </thead>
 
@@ -838,6 +924,30 @@ const Micuenta: React.FC = () => {
                                                                         )}
 
                                                                     </td>
+
+                                                                    <td className={search.attributes.status === "IN PROGRESS" ? "underline-text" : ""}>
+
+
+                                                                        {search.attributes.status === "IN PROGRESS" ? (
+                                                                            <button className='micuenta-download-button proceso'>En proceso</button>
+                                                                        ) : search.attributes.status === "FAILED" ? (
+                                                                            <button className='micuenta-download-button proceso' >Fallido</button>
+                                                                        ) : search.attributes.puntero && Object.keys(search.attributes.puntero).length > 0 &&
+                                                                            search.attributes.puntero[Object.keys(search.attributes.puntero)[0]].length <= 10 ? (
+                                                                            <button className='micuenta-download-button' onClick={() => DescargarPDF(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero, search.attributes.consulta)}>Descargar</button>
+                                                                        ) :
+                                                                            <>
+                                                                                <Tooltip id="my-tooltip"  />
+                                                                                <a data-tooltip-id="my-tooltip" data-tooltip-content="Demasiados registros para ser mostrados en PDF">
+                                                                                    <button className='micuenta-download-button proceso' >Descargar</button>
+                                                                                </a>
+
+                                                                            </>
+
+                                                                        }
+
+                                                                    </td>
+
                                                                 </tr>
                                                             ))}
 

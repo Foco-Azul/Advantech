@@ -151,6 +151,14 @@
     width: 100%;
 }
 
+th:nth-child(1){
+    width: 100px;
+}
+
+th:nth-child(2){
+    width: 90px;
+}
+
 .micuenta-history-table-head {
     background-color: #0099cc;
     color: white;
@@ -468,4 +476,10 @@ body > div.micuenta > div.micuenta-div-container > div > div.micuenta-datos-cont
     button.navigation-menu-button.cambiar-nombre{
         display: inline;
     }
+}
+
+#my-tooltip{
+    background-color: #0099cc;
+    color: white;
+    z-index: 99;
 }
