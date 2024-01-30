@@ -10,12 +10,14 @@ import SeccionFormulario from "@/components/Micuenta/SeccionFormulario/SeccionFo
 import { ArrowRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleQuestion} from "@fortawesome/free-regular-svg-icons";
 import { NoticiasExcel } from '../SearchComponent/NoticiasExcel';
 import { JudicialesExcel } from '../SearchComponent/JudicialesExcel';
 import { TitulosExcel } from '../SearchComponent/TitulosExcel';
 import AccionistasExcel from '../SearchComponent/AccionistasExcel';
 import SearchStatus from './SearchStatus';
 import crypto from 'crypto';
+
 const Micuenta: React.FC = () => {
 
     const { user, error, isLoading } = useUser();
@@ -36,7 +38,7 @@ const Micuenta: React.FC = () => {
     const [showApiSection, setShowApiSection] = useState(false);
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
     const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.tipo == "compra" || purchase.attributes.tipo == "bienvenida" || purchase.attributes.tipo == "ajuste");
-    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.consulta !== null && purchase.attributes.creditos <= 0);
+    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.tipo == "busqueda" && purchase.attributes.creditos == 0);
     const [generatedApi, setGeneratedApi] = useState('');
     const [apiSectionVisible, setApiSectionVisible] = useState(true);
     const [user_admin, setuser_admin] = useState<string | null>(null);
@@ -74,6 +76,17 @@ const Micuenta: React.FC = () => {
         inputValue = inputValue.slice(0, 20);
 
         setnameUser(inputValue);
+    };
+    // Estado para controlar la visibilidad del texto
+    const [showText, setShowText] = useState(false);
+
+    // Manejadores de eventos para mostrar y ocultar el texto
+    const handleMouseEnter = () => {
+        setShowText(true);
+    };
+
+    const handleMouseLeave = () => {
+        setShowText(false);
     };
 
     useEffect(() => {
@@ -621,7 +634,22 @@ const Micuenta: React.FC = () => {
                                                 <span className='micuenta-datos-subtitle'>{userPlan}</span>
                                             </div>
                                             <div className='micuenta-datos-card'>
-                                                <span className='micuenta-datos-title'>Fecha de vencimiento</span>
+                                                {showText && (
+                                                    <div className='text-hover'>
+                                                        <p>
+                                                            El día anunciado ya no podrá hacer uso <br />
+                                                            de los servicios de advantech
+                                                        </p>
+                                                    </div>
+                                                )}
+                                                {/* Icono con evento onMouseEnter y onMouseLeave */}
+                                                <span
+                                                    className='micuenta-datos-title'
+                                                    onMouseEnter={handleMouseEnter}
+                                                    onMouseLeave={handleMouseLeave}
+                                                >
+                                                    <FontAwesomeIcon icon={faCircleQuestion} /> Fecha de vencimiento
+                                                </span>
                                                 {isPlanVencido && userPlan && (
                                                     <>
                                                         <span className='micuenta-datos-subtitle'>{userVencimiento}</span>

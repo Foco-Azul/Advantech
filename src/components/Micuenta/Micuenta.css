@@ -469,3 +469,13 @@ body > div.micuenta > div.micuenta-div-container > div > div.micuenta-datos-cont
         display: inline;
     }
 }
+.text-hover{
+    position: absolute;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-top: -75px;
+}
