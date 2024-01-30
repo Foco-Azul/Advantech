@@ -41,7 +41,7 @@ const Micuenta: React.FC = () => {
     const [showApiSection, setShowApiSection] = useState(false);
     const [apiSectionClicked, setApiSectionClicked] = useState(false);
     const purchaseHistoryFiltered = purchaseHistory.filter((purchase: any) => purchase.attributes.tipo == "compra" || purchase.attributes.tipo == "bienvenida" || purchase.attributes.tipo == "ajuste");
-    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.tipo == "busqueda" && purchase.attributes.creditos == 0);
+    const searchHistory = purchaseHistory.filter((purchase: any) => purchase.attributes.tipo == "busqueda");
     const [generatedApi, setGeneratedApi] = useState('');
     const [apiSectionVisible, setApiSectionVisible] = useState(true);
     const [user_admin, setuser_admin] = useState<string | null>(null);
