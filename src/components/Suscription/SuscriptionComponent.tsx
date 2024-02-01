@@ -76,12 +76,12 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ price, buscador, ap
             <div className="subscription-card-header">
                 <h2 className="subscription-plan">{plan}</h2>
                 <h3 className="subscription-price"> {(price != 0) ? `$ ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}` : "Desde $3"}</h3>
-                <h3 className="subscription-pricecredits">   {(price != 0) ? ` ${price / creditos} / crédito` : ""}</h3>
+                <h3 className="subscription-pricecredits">   {(price != 0) ? `${price / creditos} / crédito` : ""}</h3>
             </div>
             <hr className="subscription-hr" />
             <div className="subscription-caracteristics">
                 <h3><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "#009fde", }} />
-                    {(price != 0) ? ` ${creditos.toLocaleString()} créditos` : `Hasta  ${creditos.toLocaleString()} créditos`}
+                    {(price != 0) ? `${creditos.toLocaleString()} créditos` : `Hasta  ${creditos.toLocaleString()} créditos`}
                 </h3>
                 <h3><FontAwesomeIcon icon={faCalendarDays} style={{ color: "#009fde", }}  />
                     Duración de {planvencimiento} meses

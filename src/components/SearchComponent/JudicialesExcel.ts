@@ -36,6 +36,8 @@ export const JudicialesExcel = async (dataToDownload: any, consulta: string) => 
     "Condicion"
   ]);
 
+  worksheet.getColumn(1).numFmt = '@';
+
   // Aplicar estilo al encabezado
   headerRow.eachCell((cell) => {
     cell.fill = {

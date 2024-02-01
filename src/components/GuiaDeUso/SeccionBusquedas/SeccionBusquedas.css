@@ -55,6 +55,7 @@
 }
 
 .seccion-uso_de_datos .seccion-titulo{
+  min-width: 50%;
   max-width: 580px;
 }
 .seccion-uso_de_datos .seccion-titulo > h4{
@@ -167,4 +168,9 @@
   .seccion-uso_de_datos .seccion-titulo > p{
     max-width: 100%;
   }
+}
+
+.guia-imagen{
+  padding-top: 55px;
+  margin: auto;
 }

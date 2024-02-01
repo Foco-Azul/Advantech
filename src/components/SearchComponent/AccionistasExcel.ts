@@ -1,11 +1,11 @@
 import ExcelJS from 'exceljs';
 
 export const AccionistasExcel = async (dataToDownload: any, consulta: string) => {
-
+  console.log("excel", dataToDownload)
   //Creacion del libro
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Accionistas');
-console.log(dataToDownload)
+  console.log(dataToDownload)
   //Creacion del header principal
   const principalHeader = worksheet.addRow([
     '',
@@ -154,6 +154,8 @@ console.log(dataToDownload)
     cell.alignment = { horizontal: 'center' };
   });
 
+  worksheet.getColumn(1).numFmt = '@';
+
   // Recorrer los datos y agregar filas a la hoja de trabajo
   for (const ruc in dataToDownload) {
 
@@ -161,299 +163,304 @@ console.log(dataToDownload)
     if (Object.keys(dataToDownload[ruc]).length != 0)
 
       //Entrar a las propiedades del Ruc
-      if (dataToDownload.hasOwnProperty(ruc)) {
-        const userData = dataToDownload[ruc]["0"];
-        const accionista_actual_en = userData["accionista_actual_en"];
-        const accionista_anterior_en = userData["accionista_anterior_en"];
-        const administracion_actual_en = userData["administracion_actual_en"];
-        const administradores_anterior_en = userData["administradores_anterior_en"];
-        const accionista_sociedades_extranjeras = userData["accionista_en_las_siguientes_sociedades_extranjeras"];
+      for (const propertyIndex in dataToDownload[ruc]) {
+        if (dataToDownload[ruc].hasOwnProperty(propertyIndex)) {
+          const userData = dataToDownload[ruc][propertyIndex];
 
-        // Añadir datos del Accionista Actual
-        if (accionista_actual_en) {
-          for (const key in accionista_actual_en) {
-            if (accionista_actual_en.hasOwnProperty(key)) {
-              const accionista = accionista_actual_en[key];
-              const rowData = [
-                ruc,
-                //accionistaActual
-                accionista.expediente || 'sin datos',
-                accionista.nombre || 'sin datos',
-                accionista.ruc || 'sin datos',
-                accionista.capital_invertido || 'sin datos',
-                accionista.capital_total_cia || 'sin datos',
-                accionista.valor_nominal || 'sin datos',
-                accionista.situacionlegal || 'sin datos',
-                accionista.posesion_efectiva || 'sin datos',
-                //accionistaAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaSociedadExtranjera
-                'sin datos',
-                'sin datos',
-                'sin datos',
-              ];
-              worksheet.addRow(rowData);
+          console.log("userData", userData)
+          
+          console.log("ruc", ruc)
+          const accionista_actual_en = userData["accionista_actual_en"];
+          const accionista_anterior_en = userData["accionista_anterior_en"];
+          const administracion_actual_en = userData["administracion_actual_en"];
+          const administradores_anterior_en = userData["administradores_anterior_en"];
+          const accionista_sociedades_extranjeras = userData["accionista_en_las_siguientes_sociedades_extranjeras"];
+
+          // Añadir datos del Accionista Actual
+          if (accionista_actual_en) {
+            for (const key in accionista_actual_en) {
+              if (accionista_actual_en.hasOwnProperty(key)) {
+                const accionista = accionista_actual_en[key];
+                const rowData = [
+                  ruc,
+                  //accionistaActual
+                  accionista.expediente || 'sin datos',
+                  accionista.nombre || 'sin datos',
+                  accionista.ruc || 'sin datos',
+                  accionista.capital_invertido || 'sin datos',
+                  accionista.capital_total_cia || 'sin datos',
+                  accionista.valor_nominal || 'sin datos',
+                  accionista.situacionlegal || 'sin datos',
+                  accionista.posesion_efectiva || 'sin datos',
+                  //accionistaAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaSociedadExtranjera
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                ];
+                worksheet.addRow(rowData);
+              }
+            }
+          }
+
+          // Añadir datos del Accionista Anterior
+          if (accionista_anterior_en) {
+            for (const key in accionista_anterior_en) {
+              if (accionista_anterior_en.hasOwnProperty(key)) {
+                const accionistaAnterior = accionista_anterior_en[key];
+                const rowData = [
+                  ruc,
+                  //accionistaActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaAnterior
+                  accionistaAnterior.expediente || 'sin datos',
+                  accionistaAnterior.nombre || 'sin datos',
+                  accionistaAnterior.ruc || 'sin datos',
+                  accionistaAnterior.situacionlegal || 'sin datos',
+                  //administracionActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaSociedadExtranjera
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                ];
+                worksheet.addRow(rowData);
+              }
+            }
+          }
+
+          // Añadir datos de la Administración Actual
+          if (administracion_actual_en) {
+            for (const key in administracion_actual_en) {
+              if (administracion_actual_en.hasOwnProperty(key)) {
+                const administracionActual = administracion_actual_en[key];
+                const rowData = [
+                  ruc,
+                  //accionistaActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionActual
+                  administracionActual.expediente || 'sin datos',
+                  administracionActual.nombre || 'sin datos',
+                  administracionActual.ruc || 'sin datos',
+                  administracionActual.nacionalidad || 'sin datos',
+                  administracionActual.cargo || 'sin datos',
+                  administracionActual.fechanombramiento || 'sin datos',
+                  administracionActual.fechatermino || 'sin datos',
+                  administracionActual.periodo || 'sin datos',
+                  administracionActual.fecha_registromercantil || 'sin datos',
+                  administracionActual.articulo || 'sin datos',
+                  administracionActual.n_registromercantil || 'sin datos',
+                  administracionActual.rladm || 'sin datos',
+                  //administracionAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaSociedadExtranjera
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                ];
+                worksheet.addRow(rowData);
+              }
+            }
+          }
+
+          // Añadir datos de los Administradores Anteriores
+          if (administradores_anterior_en) {
+            for (const key in administradores_anterior_en) {
+              if (administradores_anterior_en.hasOwnProperty(key)) {
+                const administracionAnterior = administradores_anterior_en[key];
+                const rowData = [
+                  ruc,
+                  //accionistaActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionAnterior
+                  administracionAnterior.expediente || 'sin datos',
+                  administracionAnterior.nombre || 'sin datos',
+                  administracionAnterior.ruc || 'sin datos',
+                  administracionAnterior.nacionalidad || 'sin datos',
+                  administracionAnterior.cargo || 'sin datos',
+                  administracionAnterior.fechanombramiento || 'sin datos',
+                  administracionAnterior.fechatermino || 'sin datos',
+                  administracionAnterior.periodo || 'sin datos',
+                  administracionAnterior.fecha_registromercantil || 'sin datos',
+                  administracionAnterior.articulo || 'sin datos',
+                  administracionAnterior.n_registromercantil || 'sin datos',
+                  administracionAnterior.rladm || 'sin datos',
+                  //accionistaSociedadExtranjera
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                ];
+                worksheet.addRow(rowData);
+              }
+            }
+          }
+
+          // Añadir datos de los Accionistas en Sociedades Extranjeras
+          if (accionista_sociedades_extranjeras) {
+            for (const key in accionista_sociedades_extranjeras) {
+              if (accionista_sociedades_extranjeras.hasOwnProperty(key)) {
+                const accionistaSociedadExtranjera = accionista_sociedades_extranjeras[key];
+                const rowData = [
+                  ruc,
+                  //accionistaActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionActual
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //administracionAnterior
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  'sin datos',
+                  //accionistaSociedadExtranjera
+                  accionistaSociedadExtranjera.expediente || 'sin datos',
+                  accionistaSociedadExtranjera.nombre || 'sin datos',
+                  accionistaSociedadExtranjera.nacionalidad || 'sin datos',
+                ];
+                worksheet.addRow(rowData);
+              }
             }
           }
         }
-
-        // Añadir datos del Accionista Anterior
-        if (accionista_anterior_en) {
-          for (const key in accionista_anterior_en) {
-            if (accionista_anterior_en.hasOwnProperty(key)) {
-              const accionistaAnterior = accionista_anterior_en[key];
-              const rowData = [
-                ruc,
-                //accionistaActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaAnterior
-                accionistaAnterior.expediente || 'sin datos',
-                accionistaAnterior.nombre || 'sin datos',
-                accionistaAnterior.ruc || 'sin datos',
-                accionistaAnterior.situacionlegal || 'sin datos',
-                //administracionActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaSociedadExtranjera
-                'sin datos',
-                'sin datos',
-                'sin datos',
-              ];
-              worksheet.addRow(rowData);
-            }
-          }
-        }
-
-        // Añadir datos de la Administración Actual
-        if (administracion_actual_en) {
-          for (const key in administracion_actual_en) {
-            if (administracion_actual_en.hasOwnProperty(key)) {
-              const administracionActual = administracion_actual_en[key];
-              const rowData = [
-                ruc,
-                //accionistaActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionActual
-                administracionActual.expediente || 'sin datos',
-                administracionActual.nombre || 'sin datos',
-                administracionActual.ruc || 'sin datos',
-                administracionActual.nacionalidad || 'sin datos',
-                administracionActual.cargo || 'sin datos',
-                administracionActual.fechanombramiento || 'sin datos',
-                administracionActual.fechatermino || 'sin datos',
-                administracionActual.periodo || 'sin datos',
-                administracionActual.fecha_registromercantil || 'sin datos',
-                administracionActual.articulo || 'sin datos',
-                administracionActual.n_registromercantil || 'sin datos',
-                administracionActual.rladm || 'sin datos',
-                //administracionAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaSociedadExtranjera
-                'sin datos',
-                'sin datos',
-                'sin datos',
-              ];
-              worksheet.addRow(rowData);
-            }
-          }
-        }
-
-        // Añadir datos de los Administradores Anteriores
-        if (administradores_anterior_en) {
-          for (const key in administradores_anterior_en) {
-            if (administradores_anterior_en.hasOwnProperty(key)) {
-              const administracionAnterior = administradores_anterior_en[key];
-              const rowData = [
-                ruc,
-                //accionistaActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionAnterior
-                administracionAnterior.expediente || 'sin datos',
-                administracionAnterior.nombre || 'sin datos',
-                administracionAnterior.ruc || 'sin datos',
-                administracionAnterior.nacionalidad || 'sin datos',
-                administracionAnterior.cargo || 'sin datos',
-                administracionAnterior.fechanombramiento || 'sin datos',
-                administracionAnterior.fechatermino || 'sin datos',
-                administracionAnterior.periodo || 'sin datos',
-                administracionAnterior.fecha_registromercantil || 'sin datos',
-                administracionAnterior.articulo || 'sin datos',
-                administracionAnterior.n_registromercantil || 'sin datos',
-                administracionAnterior.rladm || 'sin datos',
-                //accionistaSociedadExtranjera
-                'sin datos',
-                'sin datos',
-                'sin datos',
-              ];
-              worksheet.addRow(rowData);
-            }
-          }
-        }
-
-        // Añadir datos de los Accionistas en Sociedades Extranjeras
-        if (accionista_sociedades_extranjeras) {
-          for (const key in accionista_sociedades_extranjeras) {
-            if (accionista_sociedades_extranjeras.hasOwnProperty(key)) {
-              const accionistaSociedadExtranjera = accionista_sociedades_extranjeras[key];
-              const rowData = [
-                ruc,
-                //accionistaActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionActual
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //administracionAnterior
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                'sin datos',
-                //accionistaSociedadExtranjera
-                accionistaSociedadExtranjera.expediente || 'sin datos',
-                accionistaSociedadExtranjera.nombre || 'sin datos',
-                accionistaSociedadExtranjera.nacionalidad || 'sin datos',
-              ];
-              worksheet.addRow(rowData);
-            }
-          }
-        }
-
       }
   }
 
@@ -493,7 +500,7 @@ console.log(dataToDownload)
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = consulta+".xlsx";
+  a.download = consulta + ".xlsx";
 
   // Simular un clic en el enlace para iniciar la descarga
   a.click();

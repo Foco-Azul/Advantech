@@ -26,6 +26,8 @@ function SeccionBusquedas() {
         </div>
         <div>
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'BUSQUEDA SIMPLE' ? 'contenido-activo' : '')}>
+
+
             <div className="seccion-titulo">
               <h4>Guia para realizar una busqueda simple</h4>
               <h2>Obteniendo datos de una persona</h2>
@@ -35,12 +37,15 @@ function SeccionBusquedas() {
                 <br />
                 Además, tendrás la opción de seleccionar las fuentes de resultados que deseas obtener, las cuales incluyen:
               </p>
-                <ul>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
-                </ul>
+              <ul>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
+              </ul>
+            </div>
+
+            <div className="seccion-titulo" >
               <p>
                 <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
                 Los resultados de la búsqueda por nombre pueden coincidir con más de una persona, mientras que la búsqueda por RUC te dará resultados precisos de una sola persona.
@@ -54,11 +59,13 @@ function SeccionBusquedas() {
                 Para acceder a los resultados de la búsqueda, es necesario iniciar sesión y suscribirse a un plan que incluya los <strong>créditos</strong> necesarios para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formato <strong>PDF</strong>, <strong>XLSX</strong> .
               </p>
             </div>
-            <div className='imagen'>
-              <Image src="/video/por-descarga.gif" width={600} height={100} alt='Advantech Datos'></Image>
-            </div>
+            <Image className="guia-imagen" src="/video/por-descarga.gif" width={1000} height={100} alt='Advantech Datos'></Image>
           </div>
+
+
+
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'BUSQUEDA POR LOTE' ? 'contenido-activo' : '')}>
+
             <div className="seccion-titulo">
               <h4>Guia para realizar una busqueda por lote</h4>
               <h2>Obteniendo datos de multiples personas</h2>
@@ -68,13 +75,15 @@ function SeccionBusquedas() {
                 <br />
                 Además, tendrás la opción de seleccionar las fuentes de resultados que deseas obtener, las cuales incluyen:
               </p>
-                <ul>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
-                </ul>
-                <Link href="https://dev.advantech.com.ec:1334/uploads/Prueba_4e7858f26d.xlsx" legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Descarga nuestro Excel de ejemplo<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
+              <ul>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
+              </ul>
+              <Link href="https://dev.advantech.com.ec:1334/uploads/Prueba_4e7858f26d.xlsx" legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Descarga nuestro Excel de ejemplo<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
+            </div>
+            <div className="seccion-titulo">
               <p>
                 <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
                 Los resultados de la búsqueda por nombre pueden coincidir con más de una persona, mientras que la búsqueda por RUC te dará resultados precisos de una sola persona.
@@ -84,10 +93,12 @@ function SeccionBusquedas() {
                 Para acceder a los resultados de la búsqueda, es necesario que inicies sesión, te suscribas a un plan y contar con los créditos requeridos para descargar los datos. Dependiendo de tu plan actual, tendrás la opción de obtener los resultados en formatos como <strong>PDF</strong>, <strong>XLSX</strong> o <strong>JSON</strong>.
               </p>
             </div>
-            <div className='imagen'>
-              <Image src="/video/busqueda-por-lote.gif" width={600} height={100} alt='Advantech Datos'></Image>
-            </div>
+
+            <Image className="guia-imagen" src="/video/busqueda-por-lote.gif" width={1000} height={100} alt='Advantech Datos'></Image>
           </div>
+
+
+
           <div className={'uso_de_datos-pestaña-contenido ' + (activeTab === 'BUSQUEDA POR API' ? 'contenido-activo' : '')}>
             <div className="seccion-titulo">
               <h4>Guia para realizar una busqueda por API</h4>
@@ -98,15 +109,17 @@ function SeccionBusquedas() {
                 <br />
                 Además, tendrás la opción de ingresar las fuentes de resultados que deseas obtener, las cuales incluyen:
               </p>
-                <ul>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
-                  <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
-                </ul>
-                <Link href={`${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_URL}:${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_PUERTO}/docs/`} legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Ingresa a la documentacion de la API<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
+              <ul>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Denuncias o noticias del delito personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Procesos Judiciales electrónicos personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Títulos Universitarios personales</span></li>
+                <li><FontAwesomeIcon icon={faCircleCheck} size="xl" /><span>Representates legales y Accionistas</span></li>
+              </ul>
+              <Link href={`${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_URL}:${process.env.NEXT_PUBLIC_ADVANTECH_API_CLIENTE_PUERTO}/docs/`} legacyBehavior passHref><a target="_blank" className="sobrenosotros-icon-container">Ingresa a la documentacion de la API<FontAwesomeIcon icon={faArrowRight} className="hero-icon" /></a></Link>
+            </div>
+            <div className="seccion-titulo">
+              <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
               <p>
-                <span className="guia-subtitulo">Resultados de tu Búsqueda: </span>
                 Los resultados de la búsqueda por RUC te dará resultados precisos de una sola persona.
               </p>
               <p>
@@ -114,12 +127,17 @@ function SeccionBusquedas() {
                 Para acceder a los resultados de la búsqueda, es necesario contar con plan Enterprise, usar tu APIKEY y contar con los créditos requeridos para obtener los datos. Podras obtener los resultados en formato <strong>JSON</strong>.
               </p>
             </div>
-            <div className='imagen'>
-              <Image src="/video/por-api.gif" width={600} height={100} alt='Advantech Datos'></Image>
-            </div>
+
+
+            <Image className="guia-imagen" src="/video/por-api.gif" width={1000} height={100} alt='Advantech Datos'></Image>
+
           </div>
+
         </div>
+
+
       </div>
+
     </section>
   );
 }

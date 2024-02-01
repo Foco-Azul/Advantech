@@ -15,9 +15,9 @@ interface Accionista {
 interface AccionistasData {
   type: string;
   administracion_actual_en: any;
-  accionista_actual_en: { [key: string]: Accionista };
+  accionista_actual_en: any;
   administradores_anterior_en: any;
-  accionista_anterior_en: { [key: string]: Accionista };
+  accionista_anterior_en: any;
   accionista_en_las_siguientes_sociedades_extranjeras: any;
 }
 
@@ -101,11 +101,13 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
     </tr>
   );
 
-  const countSubColumnOccurrences = (sujeto: string, subColumn: keyof AccionistasData) => {
+  const countSubColumnOccurrences = (propertyIndex: string, subColumn: keyof AccionistasData) => {
     if (data) {
-      const firstPropertySubject = Object.keys(data[sujeto])[0];
-      if (data[sujeto] &&  data[sujeto][firstPropertySubject] && data[sujeto][firstPropertySubject][subColumn]) {
-        const subColumnData = data[sujeto][firstPropertySubject][subColumn];
+      const firstPropertySubject = Object.keys(data)[0];
+      console.log("primera propiedad",firstPropertySubject)
+      console.log("busqueda",data[firstPropertySubject][propertyIndex])
+      if (data[firstPropertySubject][propertyIndex]) {
+        const subColumnData = data[firstPropertySubject][propertyIndex][subColumn];
         if (typeof subColumnData === 'object') {
           const count = Object.keys(subColumnData).length;
           return count;
@@ -115,13 +117,16 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
     }
   };
 
+
   const renderTableData = () => {
     if (!data) {
       return null;
     }
   
     return Object.keys(data).map((sujeto, index) => {
+      console.log("data",data)
       return Object.keys(data[sujeto]).map((propertyIndex) => {
+        console.log("data-sujeto",data[sujeto][propertyIndex].cedula)
         const isSelected = selectedItems.includes(propertyIndex);
   
         const rowStyle = isSelected
@@ -143,13 +148,13 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
                 className="styled-checkbox"
               />
             </td>
-            <td>{sujeto}</td>
-            <td>{countSubColumnOccurrences(sujeto, 'administracion_actual_en')} registros</td>
-            <td>{countSubColumnOccurrences(sujeto, 'accionista_actual_en')} registros</td>
-            <td>{countSubColumnOccurrences(sujeto, 'administradores_anterior_en')} registros</td>
-            <td>{countSubColumnOccurrences(sujeto, 'accionista_anterior_en')} registros</td>
+            <td>{data[sujeto][propertyIndex].cedula}</td>
+            <td>{countSubColumnOccurrences(propertyIndex, 'administracion_actual_en')} registros</td>
+            <td>{countSubColumnOccurrences(propertyIndex, 'accionista_actual_en')} registros</td>
+            <td>{countSubColumnOccurrences(propertyIndex, 'administradores_anterior_en')} registros</td>
+            <td>{countSubColumnOccurrences(propertyIndex, 'accionista_anterior_en')} registros</td>
             <td>
-              {countSubColumnOccurrences(sujeto, 'accionista_en_las_siguientes_sociedades_extranjeras')} registros
+              {countSubColumnOccurrences(propertyIndex, 'accionista_en_las_siguientes_sociedades_extranjeras')} registros
             </td>
           </tr>
         );

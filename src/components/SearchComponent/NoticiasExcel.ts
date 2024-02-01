@@ -34,6 +34,8 @@ export const NoticiasExcel = async (dataToDownload: any, consulta: string) => {
     "Estado"
   ]);
 
+  worksheet.getColumn(1).numFmt = '@';
+
   // Aplicar estilo al encabezado
   headerRow.eachCell((cell) => {
     cell.fill = {

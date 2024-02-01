@@ -35,6 +35,8 @@ export const TitulosExcel = async (dataToDownload: any, consulta: string) => {
     cell.alignment = { horizontal: 'center' };
   });
 
+  worksheet.getColumn(1).numFmt = '@';
+
   // Recorrer el JSON y agregar los datos a la hoja de trabajo
   for (const ruc in dataToDownload) {
     if (Object.prototype.hasOwnProperty.call(dataToDownload, ruc)) {
@@ -128,7 +130,7 @@ export const TitulosExcel = async (dataToDownload: any, consulta: string) => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download =  consulta+".xlsx";
+  a.download = consulta + ".xlsx";
 
   // Simular un clic en el enlace para iniciar la descarga
   a.click();
