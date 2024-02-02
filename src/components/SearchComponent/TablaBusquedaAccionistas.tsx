@@ -72,11 +72,10 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
 
   const selectAllItems = () => {
     if (data) {
-      const allItems = Object.keys(data).map((sujeto) => {
-        const propertyIndex = Object.keys(data[sujeto])[0];
-        return propertyIndex;
+      const allItems = Object.keys(data).flatMap((sujeto) => {
+        return Object.keys(data[sujeto]);
       });
-
+  
       setSelectedItems((prevSelectedItems) => {
         if (prevSelectedItems.length === allItems.length) {
           // Si todos los elementos ya están seleccionados, deseleccionar todo
@@ -88,6 +87,7 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
       });
     }
   };
+  
 
   const renderTableHeader = () => (
     <tr>
