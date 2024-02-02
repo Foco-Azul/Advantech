@@ -181,8 +181,9 @@ export const AccionistasExcel = async (dataToDownload: any, consulta: string) =>
             for (const key in accionista_actual_en) {
               if (accionista_actual_en.hasOwnProperty(key)) {
                 const accionista = accionista_actual_en[key];
+                console.log("prueba de propiedad",userData["cedula"])
                 const rowData = [
-                  ruc,
+                  userData["cedula"] || 'sin datos',
                   //accionistaActual
                   accionista.expediente || 'sin datos',
                   accionista.nombre || 'sin datos',
@@ -238,8 +239,9 @@ export const AccionistasExcel = async (dataToDownload: any, consulta: string) =>
             for (const key in accionista_anterior_en) {
               if (accionista_anterior_en.hasOwnProperty(key)) {
                 const accionistaAnterior = accionista_anterior_en[key];
+                console.log("prueba de propiedad",userData["cedula"])
                 const rowData = [
-                  ruc,
+                  userData["cedula"] || 'sin datos',
                   //accionistaActual
                   'sin datos',
                   'sin datos',
@@ -295,8 +297,10 @@ export const AccionistasExcel = async (dataToDownload: any, consulta: string) =>
             for (const key in administracion_actual_en) {
               if (administracion_actual_en.hasOwnProperty(key)) {
                 const administracionActual = administracion_actual_en[key];
+                console.log("prueba de propiedad",userData["cedula"])
                 const rowData = [
-                  ruc,
+                  
+                  userData["cedula"] || 'sin datos',
                   //accionistaActual
                   'sin datos',
                   'sin datos',
@@ -352,8 +356,9 @@ export const AccionistasExcel = async (dataToDownload: any, consulta: string) =>
             for (const key in administradores_anterior_en) {
               if (administradores_anterior_en.hasOwnProperty(key)) {
                 const administracionAnterior = administradores_anterior_en[key];
+                console.log("prueba de propiedad",userData["cedula"])
                 const rowData = [
-                  ruc,
+                  userData["cedula"] || 'sin datos',
                   //accionistaActual
                   'sin datos',
                   'sin datos',
@@ -409,8 +414,9 @@ export const AccionistasExcel = async (dataToDownload: any, consulta: string) =>
             for (const key in accionista_sociedades_extranjeras) {
               if (accionista_sociedades_extranjeras.hasOwnProperty(key)) {
                 const accionistaSociedadExtranjera = accionista_sociedades_extranjeras[key];
+                console.log("prueba de propiedad",userData["cedula"])
                 const rowData = [
-                  ruc,
+                  userData["cedula"] || 'sin datos',
                   //accionistaActual
                   'sin datos',
                   'sin datos',
