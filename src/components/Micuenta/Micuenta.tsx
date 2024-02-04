@@ -506,12 +506,10 @@ const Micuenta: React.FC = () => {
 
             setData(noticias)
 
-            console.log(noticias)
 
             if (noticias) {
                 const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
                 const jsonobject = noticias;
-                console.log(jsonobject)
                 const jsonDataString = JSON.stringify(jsonobject, null, 2);
 
                 // Agregar imagen como encabezado solo en la primera página

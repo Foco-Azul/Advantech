@@ -104,8 +104,6 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
   const countSubColumnOccurrences = (propertyIndex: string, subColumn: keyof AccionistasData) => {
     if (data) {
       const firstPropertySubject = Object.keys(data)[0];
-      console.log("primera propiedad",firstPropertySubject)
-      console.log("busqueda",data[firstPropertySubject][propertyIndex])
       if (data[firstPropertySubject][propertyIndex]) {
         const subColumnData = data[firstPropertySubject][propertyIndex][subColumn];
         if (typeof subColumnData === 'object') {
@@ -124,9 +122,7 @@ const TablaBusquedaAccionistas: React.FC<TablaBusquedaProps> = ({ data, onSelect
     }
   
     return Object.keys(data).map((sujeto, index) => {
-      console.log("data",data)
       return Object.keys(data[sujeto]).map((propertyIndex) => {
-        console.log("data-sujeto",data[sujeto][propertyIndex].cedula)
         const isSelected = selectedItems.includes(propertyIndex);
   
         const rowStyle = isSelected

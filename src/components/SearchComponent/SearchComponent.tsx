@@ -409,7 +409,6 @@ const SearchComponent: React.FC = () => {
         if (Datos && Datos.data) {
             const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
             const jsonobject = Datos.data;
-            console.log(jsonobject)
             const jsonDataString = JSON.stringify(jsonobject, null, 2);
 
             // Agregar imagen como encabezado solo en la primera página
