@@ -89,3 +89,6 @@
         gap: 40px;
     }
 }
+.seccion-recursos > div.aliados-contenido{
+    margin: 50px auto;
+}

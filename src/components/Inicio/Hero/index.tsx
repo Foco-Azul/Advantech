@@ -45,16 +45,7 @@ function Hero() {
             ¿Cómo funciona? <ArrowRight className="hero-icon" />
           </a>
           <div className="space"></div>
-          <div className='aliados-contenido'>
-            <div className="tipos-consultas-head-container">
-                <h2 className="tipos-consultas-head-title">Ellos confían en nuestros servicios</h2>
-            </div>
-            <div className='empresas-marcas'>
-              <div><Image src={Marca_1} alt='Advantech Datos' ></Image></div>
-              <div><Image src={Marca_2} alt='Advantech Datos' ></Image></div>
-              <div><Image src={Marca_3} alt='Advantech Datos' ></Image></div>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>
