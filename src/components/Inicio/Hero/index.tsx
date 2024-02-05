@@ -34,7 +34,7 @@ function Hero() {
             </h2>
           */}
           <h2 className="hero-description">
-          Encuentra datos públicos actualizados de personas en Ecuador !!!
+          Encuentra datos públicos actualizados de personas en Ecuador 🇪🇨
           </h2>
           <div className="space"></div>
           <a href="/api/auth/login" className={`hero-button ${user !== undefined ? 'ocultar' : ''}`}>
