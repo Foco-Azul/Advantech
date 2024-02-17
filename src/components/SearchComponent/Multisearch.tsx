@@ -455,6 +455,7 @@ const Multisearch: React.FC = () => {
       {!data && <>
         <br></br>
         <label className='buscador-label-excel'>Sube tu archivo en formato Excel (*.xlsx)</label>
+        <p className="buscador-label-aviso-explicacion">Para evitar que Excel elimine el cero inicial en números como cédulas que comienzan con cero (por ejemplo, 0123), asegúrate de formatear la primera columna como texto. De lo contrario, Excel interpretará el valor como un número y eliminará el cero inicial, lo que cambiará el número original (0123 se convertirá en 123).</p>
         <input
           type="file"
           accept=".xlsx, .xls"
