@@ -4,8 +4,11 @@ import "./TablaBusqueda.css"
 interface Data {
   cedula: string;
   id_canton: string;
+  condicion: string;
   nombre: string;
   provincia: string;
+  ciudad: string;
+  materia: string;
   id_juicio: string;
 }
 
@@ -26,7 +29,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
   const [paginatedData, setPaginatedData] = useState<SortedData[] | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortColumn, setSortColumn] = useState<keyof Data>("provincia");
+  const [sortColumn, setSortColumn] = useState<keyof Data>("ciudad");
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [cityCounts, setCityCounts] = useState<{ [city: string]: number }>({});
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
@@ -36,13 +39,14 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
   useEffect(() => {
     if (data) {
+      console.log(data)
       const counts: { [city: string]: number } = {};
       const yearCounts: { [year: string]: number } = {};
 
       // Contar ocurrencias por ciudad y año
       Object.entries(data).forEach(([propertyKey, items]) =>
         Object.entries(items).forEach(([itemKey, item]) => {
-          const city = (item.provincia || "Provincia Desconocida").toLowerCase();
+          const city = (item.ciudad || "Ciudad Desconocida").toLowerCase();
           counts[city] = (counts[city] || 0) + 1;
         })
       );
@@ -55,8 +59,8 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
       // Filtrar datos por ciudades seleccionadas
       const filteredByCities = Object.entries(data).flatMap(([propertyKey, items]) =>
         Object.entries(items).map(([itemKey, item]) => ({ key: itemKey, ...item }))
-      ).filter(item => (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.provincia.toLowerCase())) ||
-        (selectedYears.includes(item.provincia.split('-')[0])));
+      ).filter(item => (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.ciudad.toLowerCase())) ||
+        (selectedYears.includes(item.ciudad.split('-')[0])));
 
 
       // Función para realizar búsqueda por aproximación retrocediendo letra por letra
@@ -69,10 +73,10 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
           const truncatedSearchTerm = term.toLowerCase().substring(0, i);
           const approximateFilteredData = data.filter(item =>
             [
-              (item.provincia || "Provincia Desconocida").toLowerCase(),
+              (item.ciudad || "Ciudad Desconocida").toLowerCase(),
               item.id_juicio.toLowerCase(),
-              (item.nombre || "Nombre Desconocida").toLowerCase(),
-              (item.cedula || "Cedula Desconocida").toLowerCase(),
+              (item.materia || "Materia Desconocida").toLowerCase(),
+              (item.condicion || "Condicion Desconocida").toLowerCase(),
 
             ].some(field => field.includes(truncatedSearchTerm))
           );
@@ -130,6 +134,7 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         return [...prevSelectedItems, itemKey];
       }
     });
+    console.log(data)
   };
 
   const handleNextPage = () => {
@@ -180,17 +185,17 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
     return (
       <tr>
         <th className='tablabusqueda-esquinaizquierda' onClick={handleSelectAll}>Seleccionar página</th>
-        <th onClick={() => handleSort("cedula")}>
-          cedula {isSortingColumn("cedula") && (isAscending ? "▲" : "▼")}
+        <th onClick={() => handleSort("condicion")}>
+        condicion {isSortingColumn("condicion") && (isAscending ? "▲" : "▼")}
         </th>
         <th className='tablabusqueda-esquinaderecha' onClick={() => handleSort("id_juicio")}>
           id_juicio {isSortingColumn("id_juicio") && (isAscending ? "▲" : "▼")}
         </th>
-        <th onClick={() => handleSort("nombre")}>
-          nombre {isSortingColumn("nombre") && (isAscending ? "▲" : "▼")}
+        <th onClick={() => handleSort("materia")}>
+        materia {isSortingColumn("materia") && (isAscending ? "▲" : "▼")}
         </th>
-        <th onClick={() => handleSort("provincia")}>
-          provincia {isSortingColumn("provincia") && (isAscending ? "▲" : "▼")}
+        <th onClick={() => handleSort("ciudad")}>
+        ciudad {isSortingColumn("ciudad") && (isAscending ? "▲" : "▼")}
         </th>
 
       </tr>
@@ -206,14 +211,14 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
 
     let filteredData = paginatedData.filter(item => {
       return (
-        (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.provincia.toLowerCase()))
+        (selectedCities.length === 0 && selectedYears.length === 0 || selectedCities.includes(item.ciudad.toLowerCase()))
         &&
         searchTerms.every(term =>
           [
-            (item.provincia || "Provincia Desconocida").toLowerCase(),
+            (item.ciudad || "Ciudad Desconocida").toLowerCase(),
             item.id_juicio.toLowerCase(),
-            (item.nombre || "Nombre Desconocida").toLowerCase(),
-            (item.cedula || "Cedula Desconocida").toLowerCase(),
+            (item.materia || "Materia Desconocida").toLowerCase(),
+            (item.condicion || "Condicion Desconocida").toLowerCase(),
           ].some(field => field.includes(term))
         )
       );
@@ -226,10 +231,10 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         const truncatedSearchTerm = searchTerm.toLowerCase().substring(0, i);
         const approximateFilteredData = paginatedData.filter(item =>
           [
-            (item.provincia || "Provincia Desconocida").toLowerCase(),
+            (item.ciudad || "Ciudad Desconocida").toLowerCase(),
             item.id_juicio.toLowerCase(),
-            (item.nombre || "Nombre Desconocida").toLowerCase(),
-            (item.cedula || "Cedula Desconocida").toLowerCase(),
+            (item.materia || "Materia Desconocida").toLowerCase(),
+            (item.condicion || "Condicion Desconocida").toLowerCase(),
           ].some(field => field.includes(truncatedSearchTerm))
         );
         if (approximateFilteredData.length > 0) {
@@ -261,10 +266,10 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
               className="styled-checkbox"
             />
           </td>
-          <td>{item.provincia}</td>
+          <td>{item.condicion}</td>
           <td>{item.id_juicio}</td>
-          <td>{item.nombre}</td>
-          <td>{item.cedula}</td>
+          <td>{item.materia}</td>
+          <td>{item.ciudad}</td>
         </tr>
       );
     });
@@ -307,18 +312,12 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
         <ul>
           {Object.entries(regionCityCounts).map(([region, count]) => (
             <li key={region}>
-              <button
-                className={`region-toggle-button ${openRegion === region ? "open" : ""
-                  }`}
-                onClick={() => toggleRegionDropdown(region)}
-              >
-                {region.charAt(0).toUpperCase() + region.slice(1)} <span className="count">({count})</span>
-              </button>
-              {openRegion === region && (
+
+             
                 <ul className="city-dropdown-content">
                   {Object.keys(cityCounts).map(city => {
-                    const [cityRegion, cityName] = city.split(" - ");
-                    if (cityRegion === region) {
+                    const cityName = city;
+                    if (city.startsWith(region)) {
                       return (
                         <li key={city}>
                           <label className="city-list-label">
@@ -328,7 +327,8 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
                               onChange={() => handleCityToggle(city)}
                               className="city-list-input"
                             />
-                            {cityName.charAt(0).toUpperCase() + cityName.slice(1)}  <span className="count">({cityCounts[city]}) </span>
+                            {cityName.charAt(0).toUpperCase() + cityName.slice(1)}{" "}
+                            <span className="count">({cityCounts[city]})</span>
                           </label>
                         </li>
                       );
@@ -336,12 +336,13 @@ const TablaBusqueda: React.FC<TablaBusquedaProps> = ({ data, onSelectedItems }) 
                     return null;
                   })}
                 </ul>
-              )}
+              
             </li>
           ))}
         </ul>
       </div>
     );
+    
   };
 
 
