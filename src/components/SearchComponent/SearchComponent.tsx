@@ -569,6 +569,10 @@ const SearchComponent: React.FC = () => {
                         <div className='buscador-container'>
 
                             <label className='buscador-label'>Selecciona la fuente de datos</label>
+                            {selectedType === "nombres" && selectedSource === "accionistas" &&
+                                <p className="buscador-label-aviso-explicacion">
+                                Para esta fuente el orden del nombre debe ser Apellidos y nombres (por ejemplo, 'Vargas Carlos').</p>
+                            }
                             <select
                                 id="sourceSelector"
                                 value={selectedSource}
