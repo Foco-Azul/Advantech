@@ -10,7 +10,7 @@ import SeccionFormulario from "@/components/Micuenta/SeccionFormulario/SeccionFo
 import { ArrowRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import { faCircleQuestion} from "@fortawesome/free-regular-svg-icons";
+import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
 import { NoticiasExcel } from '../SearchComponent/NoticiasExcel';
 import { JudicialesExcel } from '../SearchComponent/JudicialesExcel';
 import { TitulosExcel } from '../SearchComponent/TitulosExcel';
@@ -48,6 +48,7 @@ const Micuenta: React.FC = () => {
     const [nameUser, setnameUser] = useState<string>("");
     const [actualizarEstadoConsulta, setActualizarEstadoConsulta] = useState(1);
     const [sortOrder, setSortOrder] = useState("desc");
+    const [fuentes, Setfuentes] = useState<Array<any>>([]);
 
     interface PurchasePagina {
         page: number;
@@ -132,8 +133,32 @@ const Micuenta: React.FC = () => {
             .catch((error) => {
                 console.error('Failed to fetch user data:', error);
             });
+        creditosfuentes()
 
     }, [user, mostrarCambiarUsuario, actualizarEstadoConsulta]);
+
+
+    async function creditosfuentes() {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/creditos-fuentes`, {
+
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+                },
+                cache: "no-store",
+            });
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data, ${response.status}`);
+            }
+            const data = await response.json();
+            Setfuentes(data.data)
+            return data;
+        } catch (error) {
+            throw new Error(`Failed to fetch data, ${error}`);
+        }
+    }
 
     // Agregar la función para verificar y mostrar el valor de 'ver' en la consola
     const checkAndLogVerParam = () => {
@@ -486,6 +511,44 @@ const Micuenta: React.FC = () => {
     }
 
 
+    function capitalizeKeys(obj: any): any {
+        // Verificar si el argumento es un objeto
+        if (typeof obj !== 'object' || obj === null) {
+            // Si no es un objeto, devolverlo sin modificar
+            return obj;
+        }
+
+        // Verificar si el objeto es un array
+        if (Array.isArray(obj)) {
+            // Si es un array, mapear cada elemento y capitalizarlo
+            return obj.map(item => capitalizeKeys(item));
+        }
+
+        // Crear un nuevo objeto para almacenar las claves capitalizadas
+        const newObj: any = {};
+
+        // Iterar sobre las claves del objeto
+        for (let key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                // Capitalizar la primera letra de la clave
+                const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+                // Capitalizar el valor
+                let value = obj[key];
+                if (typeof value === 'string') {
+                    value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                }
+                // Recursivamente capitalizar las claves y los valores anidados
+                newObj[capitalizedKey] = capitalizeKeys(value);
+            }
+        }
+
+        return newObj;
+    }
+
+
+    // Función para filtrar los objetos por el nombre de la fuente y devolver solo fuente_long
+
+
     const DescargarPDF = async (query_id: string, fuente: string, puntero: any, consulta: string) => {
 
         const secondResponse = await fetch(process.env.NEXT_PUBLIC_ADVANTECH_PRIVATE_URL + '/data/get_full_data', {
@@ -506,10 +569,30 @@ const Micuenta: React.FC = () => {
 
             setData(noticias)
 
+            const palabras = consulta.split(' ');
+            const ultimaPalabra = palabras[palabras.length - 1];
+
+            const fuenteencontrada = fuentes.filter((item: any) => {
+                // Verificar si item es un objeto válido y tiene la propiedad attributes
+                if (item && item.attributes && item.attributes.fuente) {
+                    // Convertir fuente_long y ultimaPalabra a minúsculas para una comparación insensible a mayúsculas
+                    const fuente = item.attributes.fuente.toLowerCase();
+                    const ultimaPalabraLower = ultimaPalabra.toLowerCase();
+                    // Comprobar si fuenteLong incluye la última palabra
+                    if (fuente.includes(ultimaPalabraLower))
+                        return item.attributes.fuente_long
+                }
+                return false; // Si no cumple las condiciones anteriores, filtrarlo
+            });
+ 
+            const origendatos= fuenteencontrada[0].attributes.fuente_long
+
+            console.log("fuentes encontrada",fuenteencontrada)
 
             if (noticias) {
                 const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
-                const jsonobject = noticias;
+
+                const jsonobject = capitalizeKeys(noticias);
                 const jsonDataString = JSON.stringify(jsonobject, null, 2);
 
                 // Agregar imagen como encabezado solo en la primera página
@@ -529,7 +612,17 @@ const Micuenta: React.FC = () => {
                 };
 
                 // Contenido principal
-                const lines = doc.splitTextToSize(jsonDataString.replace(/[{}",]/g, ""), pdfWidth);
+                const cleanedData = jsonDataString
+                    .replace(/[{},"]/g, "")  // Eliminar caracteres especiales
+                    .replace(/_/g, " ")       // Reemplazar guiones bajos por espacios
+                    .replace(/[\[\]]/g, "");  // Eliminar corchetes
+
+                // Dividir el texto por saltos de línea, eliminar elementos duplicados y luego unirlos nuevamente
+                const cleanedLines = cleanedData.split('\n').filter((line, index, array) => array.indexOf(line) === index).join('\n');
+
+                const lines = doc.splitTextToSize(cleanedLines, pdfWidth);
+
+
                 for (let i = 0; i < lines.length; i++) {
                     if (y + 10 > doc.internal.pageSize.getHeight()) {
                         addNewPage();
@@ -537,8 +630,9 @@ const Micuenta: React.FC = () => {
 
                     if (firstPage) {
                         doc.addImage(imgData, 'PNG', 0, 0, imgProps.width, imgProps.height);
+                        doc.text(origendatos, 10, 40).setFontSize(15)
                         firstPage = false;
-                        y += 20; // Incrementar la posición vertical después del encabezado en la primera página
+                        y += 32; // Incrementar la posición vertical después del encabezado en la primera página
                     }
 
                     doc.setFontSize(10); // Ajustar el tamaño de la fuente a 10
@@ -549,13 +643,13 @@ const Micuenta: React.FC = () => {
                     if (indentation > 0) {
                         // Si hay indentación, agregar espacios antes del texto
                         const indentedLine = ' '.repeat(indentation) + lines[i].trim();
-                        doc.text(indentedLine, 18, y);
+                        doc.text(indentedLine, 14, y);
                     } else {
                         // Si no hay indentación, agregar la línea directamente
-                        doc.text(lines[i].trim(), 18, y);
+                        doc.text(lines[i].trim(), 14, y);
                     }
 
-                    y += 8; // Incrementar la posición vertical para la siguiente línea, ajustar según sea necesario
+                    y += 6; // Incrementar la posición vertical para la siguiente línea, ajustar según sea necesario
                 }
 
                 doc.save(`${consulta} - Advantech.pdf`);
@@ -962,7 +1056,7 @@ const Micuenta: React.FC = () => {
                                                                             <button className='micuenta-download-button' onClick={() => DescargarPDF(search.attributes.query_id, search.attributes.consulta, search.attributes.puntero, search.attributes.consulta)}>Descargar</button>
                                                                         ) :
                                                                             <>
-                                                                                <Tooltip id="my-tooltip"  />
+                                                                                <Tooltip id="my-tooltip" />
                                                                                 <a data-tooltip-id="my-tooltip" data-tooltip-content="Demasiados registros para ser mostrados en PDF">
                                                                                     <button className='micuenta-download-button proceso' >Descargar</button>
                                                                                 </a>
