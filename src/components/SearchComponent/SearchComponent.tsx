@@ -42,7 +42,7 @@ const SearchComponent: React.FC = () => {
     const isPlanVencido = vencimientoDate ? vencimientoDate < currentDate : false;
     const [DatosTabla, setDatosTabla] = useState<any>(null);
     const [SeleccionUsuario, setSeleccionUsuario] = useState<string[]>([]);
-    const [CreditosFuentes, setCreditosFuente] = useState<any[]>([]);
+    const [CreditosFuentes, setCreditosFuente] = useState<Array<any>>([]);
     const [selectedSource, setSelectedSource] = useState<string>(''); // Initialize the selected source state as an empty string
     const [selectedFuenteCredito, setSelectedFuenteCredito] = useState<number | null>(null);
     const seleccionUsuarioCount = SeleccionUsuario.length;
@@ -404,12 +404,60 @@ const SearchComponent: React.FC = () => {
     };
 
 
+    function capitalizeKeys(obj: any): any {
+        // Verificar si el argumento es un objeto
+        if (typeof obj !== 'object' || obj === null) {
+            // Si no es un objeto, devolverlo sin modificar
+            return obj;
+        }
+
+        // Verificar si el objeto es un array
+        if (Array.isArray(obj)) {
+            // Si es un array, mapear cada elemento y capitalizarlo
+            return obj.map(item => capitalizeKeys(item));
+        }
+
+        // Crear un nuevo objeto para almacenar las claves capitalizadas
+        const newObj: any = {};
+
+        // Iterar sobre las claves del objeto
+        for (let key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                // Capitalizar la primera letra de la clave
+                const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+                // Capitalizar el valor
+                let value = obj[key];
+                if (typeof value === 'string') {
+                    value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+                }
+                // Recursivamente capitalizar las claves y los valores anidados
+                newObj[capitalizedKey] = capitalizeKeys(value);
+            }
+        }
+
+        return newObj;
+    }
 
     const handleConvertToPdf = () => {
         if (Datos && Datos.data) {
             const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
-            const jsonobject = Datos.data;
+            const jsonobject = capitalizeKeys(Datos.data);
             const jsonDataString = JSON.stringify(jsonobject, null, 2);
+
+            console.log(CreditosFuentes)
+            const fuenteencontrada = CreditosFuentes.filter((item: any) => {
+                // Verificar si item es un objeto válido y tiene la propiedad attributes
+                if (item && item.attributes && item.attributes.fuente) {
+                    // Convertir fuente_long y ultimaPalabra a minúsculas para una comparación insensible a mayúsculas
+                    const fuente = item.attributes.fuente.toLowerCase();
+                    // Comprobar si fuenteLong incluye la última palabra
+                    if (fuente.includes(fuenteseleccionada))
+                        return item.attributes.fuente_long
+                }
+                return false; // Si no cumple las condiciones anteriores, filtrarlo
+            });
+ 
+            const origendatos= fuenteencontrada[0].attributes.fuente_long
 
             // Agregar imagen como encabezado solo en la primera página
             const imgData = "/Logo.png"
@@ -428,7 +476,17 @@ const SearchComponent: React.FC = () => {
             };
 
             // Contenido principal
-            const lines = doc.splitTextToSize(jsonDataString.replace(/[{}",]/g, ""), pdfWidth);
+            const cleanedData = jsonDataString
+                .replace(/[{},"]/g, "")  // Eliminar caracteres especiales
+                .replace(/_/g, " ")       // Reemplazar guiones bajos por espacios
+                .replace(/[\[\]]/g, "");  // Eliminar corchetes
+
+            // Dividir el texto por saltos de línea, eliminar elementos duplicados y luego unirlos nuevamente
+            const cleanedLines = cleanedData.split('\n').filter((line, index, array) => array.indexOf(line) === index).join('\n');
+
+            const lines = doc.splitTextToSize(cleanedLines, pdfWidth);
+
+
             for (let i = 0; i < lines.length; i++) {
                 if (y + 10 > doc.internal.pageSize.getHeight()) {
                     addNewPage();
@@ -436,8 +494,9 @@ const SearchComponent: React.FC = () => {
 
                 if (firstPage) {
                     doc.addImage(imgData, 'PNG', 0, 0, imgProps.width, imgProps.height);
+                    doc.text(origendatos, 10, 40).setFontSize(15)
                     firstPage = false;
-                    y += 20; // Incrementar la posición vertical después del encabezado en la primera página
+                    y += 32; // Incrementar la posición vertical después del encabezado en la primera página
                 }
 
                 doc.setFontSize(10); // Ajustar el tamaño de la fuente a 10
@@ -448,29 +507,17 @@ const SearchComponent: React.FC = () => {
                 if (indentation > 0) {
                     // Si hay indentación, agregar espacios antes del texto
                     const indentedLine = ' '.repeat(indentation) + lines[i].trim();
-                    doc.text(indentedLine, 18, y);
+                    doc.text(indentedLine, 14, y);
                 } else {
                     // Si no hay indentación, agregar la línea directamente
-                    doc.text(lines[i].trim(), 18, y);
+                    doc.text(lines[i].trim(), 14, y);
                 }
 
-                y += 8; // Incrementar la posición vertical para la siguiente línea, ajustar según sea necesario
+                y += 6; // Incrementar la posición vertical para la siguiente línea, ajustar según sea necesario
             }
-
             doc.save(`${NombreRuc} - Advantech.pdf`);
         }
     };
-
-
-
-    const handleConvertToXls = () => {
-        // Simular llamado a la API y descargar los datos como XLS
-        const data = JSON.parse(Datos.data);
-
-        const xlsData = convertToXls(data);
-        const blob = new Blob([xlsData], { type: 'application/vnd.ms-excel' });
-        saveAs(blob, 'data.xls');
-    }
 
     const convertToXls = (data: any) => {
         let xlsData = 'data:text/csv;charset=utf-8,';
