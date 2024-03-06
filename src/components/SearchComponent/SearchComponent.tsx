@@ -403,8 +403,94 @@ const SearchComponent: React.FC = () => {
         return selector.value;
     };
 
+    const renamingMap = {
+        //Mapeo Juicios
+        type: "Tipo",
+        id_juicio: "Nro. Juicio",
+        delito: "Delito",
+        condicion: "Condición",
+        materia: "Materia",
+        fecha_ingreso: "Fecha",
+        estado_juicio: "Estado Juicio",
+        tipo_resolucion: "Tipo Resolución",
+        tipo_accion: "Tipo Acción",
+        id_canton: "ID Canton",
+        fecha_providencia: "Fecha Providencia",
+        providencia: "Providencia",
+        provincia: "Provincia",
+        ciudad: "Ciudad",
+        id_incidente_judicatura: "Nro Incidente",
+        id_movimiento_juicio_incidente: "Nro Movimiento incidente",
+        id_judicatura_destino: "Nro Judicatura destino",
+        fecha_crea: "Fecha creación incidente",
+        lst_litigante_actor_tipo_litigante: "Condición Actor",
+        lst_litigante_actor_nombre_litigante: "Nombre Actor",
+        lst_litigante_actor_representado_por: "Representado por Actor",
+        id_litigante: "Nro Litigante Actor",
+        total_actores: "Total Actores",
+        lst_litigante_demandado_tipo_litigante: "Condición Demandado",
+        lst_litigante_demandado_nombre_litigante: "Nombre Demandado",
+        lst_litigante_demandado_representado_por: "Representado por Demandado",
+        lst_litigante_demandado_id_litigante: "Nro Litigante Demandado",
+        total_demandado: "Total Demandado",
+        total_juicios: "Total Juicios",
+        lst_litigante_actor: "Detalles litigante Actor",
+        lst_litigante_demandado: "Detalles litigante Demandado",
+        //Mapeo Accionistas
+        administracion_actual_en: "Administración actual en",
+        expediente: "Expediente",
+        nombre: "Nombre",
+        cedula : "Cédula",
+        ruc: "RUC",
+        nacionalidad: "Nacionalidad",
+        cargo: "Cargo",
+        fechanombramiento: "Fecha Nombramiento",
+        fechatermino: "Fecha Termino",
+        periodo: "Periodo",
+        fecha_registromercantil: "Fecha registro Mercantil",
+        articulo: "Articulo",
+        n_registromercantil: "Nro Registro Mercantil",
+        rladm: "Representante Legal /Administrador",
+        accionista_actual_en: "Accionista actual en",
+        capital_invertido: "Capital invertido",
+        capital_total_cia: "Capital Total Cia.",
+        valor_nominal: "Valor Nominal",
+        situacionlegal: "Situación legal",
+        posesión_efectiva: "Posesion Efectiva",
+        administradores_anterior_en: "Administrador anterior en",
+        accionista_anterior_en: "Accionista anterior en",
+        accionista_en_las_siguientes_sociedades_extranjeras: "Accionista en sociedades extranjeras",
+        //Mapeo Noticias
+        lugar: "Lugar",
+        noticias_del_delito: "No. Noticia del delito",
+        estado: "Estado",
+        unidad: "Unidad de denuncia",
+        fecha: "Fecha de denuncia",
+        digitador: "Nombre del Digitador",
+        numero_informe: "No. Informe",
+        resumen_unidad: "Resumen Unidad",
+        sujetos_cedula: "No. Cédula",
+        sujetos_nombre: "Nombre",
+        sujetos_estado: "Estado",
+        total_sujetos: "Total Sujetos",
+        marca: "Marca",
+        modelo: "Modelo",
+        placa: "No. Placa",
+        total_vehiculos: "Total Vehiculos",
+        //Mapeo Titulos
+        titulos_nivel: "Nivel",
+        titulos_titulo: "Descripción Titulo",
+        titulos_institucion: "Nombre de la institución",
+        titulos_tipo: "Tipo",
+        titulos_reconocido: "Titulo reconocido",
+        titulos_numero_de_registro: "No. registro",
+        titulos_desde: "Fecha desde",
+        titulos_observacion: "Observación",
+        total_titulos: "Total títulos"
+    };
 
-    function capitalizeKeys(obj: any): any {
+
+    function capitalizeKeys(obj: any, renamingMap: { [key: string]: string }): any {
         // Verificar si el argumento es un objeto
         if (typeof obj !== 'object' || obj === null) {
             // Si no es un objeto, devolverlo sin modificar
@@ -414,7 +500,7 @@ const SearchComponent: React.FC = () => {
         // Verificar si el objeto es un array
         if (Array.isArray(obj)) {
             // Si es un array, mapear cada elemento y capitalizarlo
-            return obj.map(item => capitalizeKeys(item));
+            return obj.map(item => capitalizeKeys(item, renamingMap));
         }
 
         // Crear un nuevo objeto para almacenar las claves capitalizadas
@@ -423,15 +509,20 @@ const SearchComponent: React.FC = () => {
         // Iterar sobre las claves del objeto
         for (let key in obj) {
             if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                // Verificar si la clave necesita ser renombrada
+                const newKey = renamingMap[key] || key;
+
                 // Capitalizar la primera letra de la clave
-                const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
-                // Capitalizar el valor
+                const capitalizedKey = newKey.charAt(0).toUpperCase() + newKey.slice(1);
+
+                // Capitalizar el valor si es una cadena
                 let value = obj[key];
                 if (typeof value === 'string') {
                     value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
                 }
+
                 // Recursivamente capitalizar las claves y los valores anidados
-                newObj[capitalizedKey] = capitalizeKeys(value);
+                newObj[capitalizedKey] = capitalizeKeys(value, renamingMap);
             }
         }
 
@@ -441,7 +532,7 @@ const SearchComponent: React.FC = () => {
     const handleConvertToPdf = () => {
         if (Datos && Datos.data) {
             const doc = new jsPDF('p', 'mm', 'a4'); // Configurar tamaño A4 (210 x 297 mm)
-            const jsonobject = capitalizeKeys(Datos.data);
+            const jsonobject = capitalizeKeys(Datos.data, renamingMap);
             const jsonDataString = JSON.stringify(jsonobject, null, 2);
 
             console.log(CreditosFuentes)
