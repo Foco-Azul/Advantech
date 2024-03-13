@@ -36,7 +36,7 @@ export default function VerificarCorreo(){
                 </div>
                 
                 <div className='flex gap-2'>
-                    <button className='navigation-menu-button' onClick={() => setCookieConsent(false)}>Confirmar</button>
+                    <button className='navigation-menu-button' onClick={() => setCookieConsent(true)}>Confirmar</button>
                 </div>   
             </div>
         </>
