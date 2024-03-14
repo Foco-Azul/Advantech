@@ -709,10 +709,9 @@ const Micuenta: React.FC = () => {
                     .replace(/[\[\]]/g, "");  // Eliminar corchetes
 
                 // Dividir el texto por saltos de línea, eliminar elementos duplicados y luego unirlos nuevamente
-                const cleanedLines = cleanedData.split('\n').filter((line, index, array) => array.indexOf(line) === index).join('\n');
+                const cleanedLines = cleanedData;
 
                 const lines = doc.splitTextToSize(cleanedLines, pdfWidth);
-
 
                 for (let i = 0; i < lines.length; i++) {
                     if (y + 10 > doc.internal.pageSize.getHeight()) {
@@ -727,7 +726,7 @@ const Micuenta: React.FC = () => {
                     }
 
                     doc.setFontSize(10); // Ajustar el tamaño de la fuente a 10
-
+                    
                     // Calcular la indentación y agregar espacios correspondientes
                     const indentation = lines[i].search(/\S/); // Encuentra la primera posición no vacía
 

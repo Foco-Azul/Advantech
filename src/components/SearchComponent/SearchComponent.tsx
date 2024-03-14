@@ -573,10 +573,9 @@ const SearchComponent: React.FC = () => {
                 .replace(/[\[\]]/g, "");  // Eliminar corchetes
 
             // Dividir el texto por saltos de línea, eliminar elementos duplicados y luego unirlos nuevamente
-            const cleanedLines = cleanedData.split('\n').filter((line, index, array) => array.indexOf(line) === index).join('\n');
+            const cleanedLines = cleanedData
 
             const lines = doc.splitTextToSize(cleanedLines, pdfWidth);
-
 
             for (let i = 0; i < lines.length; i++) {
                 if (y + 10 > doc.internal.pageSize.getHeight()) {
@@ -610,33 +609,7 @@ const SearchComponent: React.FC = () => {
         }
     };
 
-    const convertToXls = (data: any) => {
-        let xlsData = 'data:text/csv;charset=utf-8,';
 
-        const flattenData = (obj: any): string[] => {
-            const result: string[] = [];
-            Object.keys(obj).forEach((key) => {
-                const value = obj[key];
-                if (typeof value === 'object' && !Array.isArray(value)) {
-                    result.push(...flattenData(value));
-                } else {
-                    result.push(value);
-                }
-            });
-            return result;
-        };
-
-        const keys = Object.keys(data["VERA VERA MARIA ALEJANDRA"]["0"]);
-        const values = Object.values(data["VERA VERA MARIA ALEJANDRA"]["0"]);
-        const flattenedValues = flattenData(values);
-
-        // Insertar un espacio vacío en la segunda posición del arreglo de valores
-        flattenedValues.splice(1, 0, '');
-
-        xlsData += keys.join(',') + '\n';
-        xlsData += flattenedValues.join(',') + '\n';
-        return xlsData;
-    };
 
     const handleSelectedItems = (selectedItems: string[]) => {
         // Aquí puedes manejar los elementos seleccionados como desees
